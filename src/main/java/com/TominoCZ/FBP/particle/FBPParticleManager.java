@@ -73,24 +73,6 @@ public class FBPParticleManager extends ParticleManager {
 		lookup = MethodHandles.publicLookup();
 
 		try {
-			/*
-			getParticleTypes = lookup.unreflectGetter(ReflectionHelper.findField(ParticleManager.class, "field_178932_g", "particleTypes"));
-
-			X = lookup.unreflectGetter(ReflectionHelper.findField(Particle.class, "field_187126_f", "posX"));
-			Y = lookup.unreflectGetter(ReflectionHelper.findField(Particle.class, "field_187127_g", "posY"));
-			Z = lookup.unreflectGetter(ReflectionHelper.findField(Particle.class, "field_187128_h", "posZ"));
-
-			mX = lookup.unreflectGetter(ReflectionHelper.findField(Particle.class, "field_187129_i", "motionX"));
-			mY = lookup.unreflectGetter(ReflectionHelper.findField(Particle.class, "field_187130_j", "motionY"));
-			mZ = lookup.unreflectGetter(ReflectionHelper.findField(Particle.class, "field_187131_k", "motionZ"));
-
-			getParticleScale = lookup.unreflectGetter(ReflectionHelper.findField(Particle.class, "field_70544_f", "particleScale"));
-			getParticleTexture = lookup.unreflectGetter(ReflectionHelper.findField(Particle.class, "field_187119_C", "particleTexture"));
-			getParticleMaxAge = lookup.unreflectGetter(ReflectionHelper.findField(Particle.class, "field_70547_e", "particleMaxAge"));
-
-			getSourceState = lookup.unreflectGetter(ReflectionHelper.findField(ParticleDigging.class, "field_174847_a", "sourceState"));
-			getBlockDamage = lookup.unreflectGetter(ReflectionHelper.findField(RenderGlobal.class, "field_72738_E", "damagedBlocks"));
-			*/
 			X = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "posX"));
 			Y = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "posY"));
 			Z = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "posZ"));
@@ -115,12 +97,6 @@ public class FBPParticleManager extends ParticleManager {
 	{
 		if (Minecraft.getMinecraft().effectRenderer == this)
 			return;
-
-		/*
-		Field f1 = ReflectionHelper.findField(ParticleManager.class, "field_78876_b", "fxLayers");
-		Field f2 = ReflectionHelper.findField(ParticleManager.class, "field_178933_d", "particleEmitters");
-		Field f3 = ReflectionHelper.findField(ParticleManager.class, "field_187241_h", "queue");
-		*/
 
 		Field f1 = ObfuscationReflectionHelper.findField(ParticleManager.class, "fxLayers");
 		Field f2 = ObfuscationReflectionHelper.findField(ParticleManager.class, "particleEmitters");
