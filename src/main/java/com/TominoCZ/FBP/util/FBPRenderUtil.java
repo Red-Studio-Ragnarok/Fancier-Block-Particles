@@ -18,6 +18,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 public class FBPRenderUtil {
+
+
 	public static void renderCubeShaded_S(BufferBuilder buf, Vec2f[] par, float f5, float f6, float f7, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a, boolean cartoon) {
 		Tessellator.getInstance().draw();
 		Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
@@ -83,8 +85,7 @@ public class FBPRenderUtil {
 		float radsY = (float) Math.toRadians(rotVec.y);
 		float radsZ = (float) Math.toRadians(rotVec.z);
 
-		for (int i = 0; i < FBP.CUBE.length; i += 4)
-		{
+		for (int i = 0; i < FBP.CUBE.length; i += 4) {
 			Vec3d v1 = FBP.CUBE[i];
 			Vec3d v2 = FBP.CUBE[i + 1];
 			Vec3d v3 = FBP.CUBE[i + 2];
