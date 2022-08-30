@@ -4,6 +4,7 @@ import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.material.FBPMaterial;
 import com.TominoCZ.FBP.node.BlockNode;
 import com.TominoCZ.FBP.particle.FBPParticleBlock;
+import com.TominoCZ.FBP.util.ModReference;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -41,7 +42,7 @@ public class FBPAnimationDummyBlock extends Block {
 	public FBPAnimationDummyBlock() {
 		super(new FBPMaterial());
 
-		this.setRegistryName(new ResourceLocation(FBP.MODID, "FBPPlaceholderBlock"));
+		this.setRegistryName(new ResourceLocation(ModReference.MOD_ID, "FBPPlaceholderBlock"));
 
 		this.translucent = true;
 	}

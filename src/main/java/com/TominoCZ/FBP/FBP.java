@@ -6,6 +6,7 @@ import com.TominoCZ.FBP.handler.FBPGuiHandler;
 import com.TominoCZ.FBP.handler.FBPKeyInputHandler;
 import com.TominoCZ.FBP.keys.FBPKeyBindings;
 import com.TominoCZ.FBP.particle.FBPParticleManager;
+import com.TominoCZ.FBP.util.ModReference;
 import com.google.common.base.Throwables;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -37,20 +38,18 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.util.*;
 
-@Mod(clientSideOnly = true, modid = FBP.MODID, acceptedMinecraftVersions = "[1.12,1.13)")
+@Mod(clientSideOnly = true, modid = ModReference.MOD_ID, acceptedMinecraftVersions = "[1.12,1.13)")
 public class FBP
 {
-	@Instance(FBP.MODID)
+	@Instance(ModReference.MOD_ID)
 	public static FBP INSTANCE;
-
-	public final static String MODID = "fbp";
 
 	public static final ResourceLocation LOCATION_PARTICLE_TEXTURE = new ResourceLocation(
 			"textures/particle/particles.png");
 
-	public static final ResourceLocation FBP_BUG = new ResourceLocation(FBP.MODID + ":textures/gui/bug.png");
-	public static final ResourceLocation FBP_FBP = new ResourceLocation(FBP.MODID + ":textures/gui/fbp.png");
-	public static final ResourceLocation FBP_WIDGETS = new ResourceLocation(FBP.MODID + ":textures/gui/widgets.png");
+	public static final ResourceLocation FBP_BUG = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/bug.png");
+	public static final ResourceLocation FBP_FBP = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/fbp.png");
+	public static final ResourceLocation FBP_WIDGETS = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/widgets.png");
 
 	public static File animBlacklistFile = null;
 	public static File particleBlacklistFile = null;
