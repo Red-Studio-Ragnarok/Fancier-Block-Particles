@@ -7,18 +7,21 @@
 ## Changed
 
 - Updated mcmod.info decription & credits
+- Updated default config
+- Updated default bindings
 
 ## Fixed
 
 - Fancy Block Placing ghost blocks when placing blocks rapidly when lagging
 
-## Performance
+## Optimization
 
 - Made the particles use slightly less ram
 - Made the particle renderer slightly faster
 - Made the particle manager slightly faster
 - Made the particle manager use slightly less ram
 - Made the Fancy Block Placing slightly faster
+- Lossless compresion
 
 ## Internal
 
