@@ -1,7 +1,7 @@
 package com.TominoCZ.FBP.particle;
 
 import com.TominoCZ.FBP.FBP;
-import com.TominoCZ.FBP.util.FBPRenderUtil;
+import com.TominoCZ.FBP.renderer.FBPRenderer;
 import com.TominoCZ.FBP.vector.FBPVector3d;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
@@ -141,7 +141,7 @@ public class FBPParticleBlock extends Particle {
 				c.resetRelightChecks();
 				c.setLightPopulated(true);
 
-				FBPRenderUtil.markBlockForRender(pos);
+				FBPRenderer.markBlockForRender(pos);
 
 				blockSet = true;
 			}
@@ -196,7 +196,7 @@ public class FBPParticleBlock extends Particle {
 
 				mc.world.sendPacketToServer(new CPacketPlayerDigging(Action.ABORT_DESTROY_BLOCK, pos, facing));
 
-				FBPRenderUtil.markBlockForRender(pos);
+				FBPRenderer.markBlockForRender(pos);
 
 				// cleanup just to make sure it gets removed
 				FBP.INSTANCE.eventHandler.removePosEntry(pos);

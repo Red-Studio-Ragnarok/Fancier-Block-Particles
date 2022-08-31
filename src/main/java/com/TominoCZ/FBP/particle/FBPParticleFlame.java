@@ -1,7 +1,7 @@
 package com.TominoCZ.FBP.particle;
 
 import com.TominoCZ.FBP.FBP;
-import com.TominoCZ.FBP.util.FBPRenderUtil;
+import com.TominoCZ.FBP.renderer.FBPRenderer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -71,7 +71,7 @@ public class FBPParticleFlame extends ParticleFlame {
 
 		for (int i = 0; i < FBP.CUBE.length; i++) {
 			Vec3d vec = FBP.CUBE[i];
-			cube[i] = FBPRenderUtil.rotatef_d(vec, 0, angleY, 0);
+			cube[i] = FBPRenderer.rotatef_d(vec, 0, angleY, 0);
 		}
 
 		particleAlpha = 1f;
@@ -211,7 +211,7 @@ public class FBPParticleFlame extends ParticleFlame {
 
 		par = new Vec2f(f, f1);
 
-		// FBPRenderUtil.renderCubeShaded_S(buf, new Vec2f[] {par, par, par, par}, f5,
+		// FBPRenderer.renderCubeShaded_S(buf, new Vec2f[] {par, par, par, par}, f5,
 		// f6, f7, f4 / 80, FBPVector3d.UnitY.multiply(AngleY), i >> 16 & 65535, i &
 		// 65535, particleRed, particleGreen, particleBlue, alpha, true);
 

@@ -79,13 +79,11 @@ public class FBPConfigHandler {
 			writer.println("fancySnow=" + FBP.fancySnow);
 			writer.println("spawnPlaceParticles=" + FBP.spawnPlaceParticles);
 			writer.println("fancyPlaceAnim=" + FBP.fancyPlaceAnim);
-			writer.println("animSmoothLighting=" + FBP.animSmoothLighting);
 			writer.println("smartBreaking=" + FBP.smartBreaking);
 			writer.println("lowTraction=" + FBP.lowTraction);
 			writer.println("bounceOffWalls=" + FBP.bounceOffWalls);
 			writer.println("showInMillis=" + FBP.showInMillis);
 			writer.println("randomRotation=" + FBP.randomRotation);
-			writer.println("cartoonMode=" + FBP.cartoonMode);
 			writer.println("entityCollision=" + FBP.entityCollision);
 			writer.println("randomizedScale=" + FBP.randomizedScale);
 			writer.println("randomFadingSpeed=" + FBP.randomFadingSpeed);
@@ -228,8 +226,6 @@ public class FBPConfigHandler {
 					FBP.spawnPlaceParticles = Boolean.valueOf(line.replace("spawnPlaceParticles=", ""));
 				else if (line.contains("fancyPlaceAnim="))
 					FBP.fancyPlaceAnim = Boolean.valueOf(line.replace("fancyPlaceAnim=", ""));
-				else if (line.contains("animSmoothLighting="))
-					FBP.animSmoothLighting = Boolean.valueOf(line.replace("animSmoothLighting=", ""));
 				else if (line.contains("smartBreaking="))
 					FBP.smartBreaking = Boolean.valueOf(line.replace("smartBreaking=", ""));
 				else if (line.contains("lowTraction="))
@@ -240,8 +236,6 @@ public class FBPConfigHandler {
 					FBP.showInMillis = Boolean.valueOf(line.replace("showInMillis=", ""));
 				else if (line.contains("randomRotation="))
 					FBP.randomRotation = Boolean.valueOf(line.replace("randomRotation=", ""));
-				else if (line.contains("cartoonMode="))
-					FBP.cartoonMode = Boolean.valueOf(line.replace("cartoonMode=", ""));
 				else if (line.contains("entityCollision="))
 					FBP.entityCollision = Boolean.valueOf(line.replace("entityCollision=", ""));
 				else if (line.contains("randomFadingSpeed="))
@@ -395,7 +389,6 @@ public class FBPConfigHandler {
 		FBP.lowTraction = false;
 		FBP.bounceOffWalls = true;
 		FBP.randomRotation = true;
-		FBP.cartoonMode = false;
 		FBP.entityCollision = true;
 		FBP.randomizedScale = true;
 		FBP.randomFadingSpeed = true;
@@ -404,7 +397,6 @@ public class FBPConfigHandler {
 		FBP.spawnWhileFrozen = true;
 		FBP.smartBreaking = true;
 		FBP.fancyPlaceAnim = true;
-		FBP.animSmoothLighting = true;
 		FBP.spawnPlaceParticles = true;
 		FBP.fancyRain = false;
 		FBP.fancySnow = false;

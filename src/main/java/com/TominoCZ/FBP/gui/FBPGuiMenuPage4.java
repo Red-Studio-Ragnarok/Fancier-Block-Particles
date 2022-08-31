@@ -65,7 +65,7 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 			break;
 		case -4:
 			try {
-				Desktop.getDesktop().browse(new URI("https://github.com/TominoCZ/FancyBlockParticles/issues"));
+				Desktop.getDesktop().browse(new URI("https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/new?assignees=JustDesoroxxx&labels=&template=bug_report.md&title="));
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}

@@ -1,7 +1,7 @@
 package com.TominoCZ.FBP.particle;
 
 import com.TominoCZ.FBP.FBP;
-import com.TominoCZ.FBP.util.FBPRenderUtil;
+import com.TominoCZ.FBP.renderer.FBPRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -90,7 +90,7 @@ public class FBPParticleSmokeNormal extends ParticleSmokeNormal {
 
 		for (int i = 0; i < FBP.CUBE.length; i++) {
 			Vec3d vec = FBP.CUBE[i];
-			cube[i] = FBPRenderUtil.rotatef_d(vec, 0, angleY, 0);
+			cube[i] = FBPRenderer.rotatef_d(vec, 0, angleY, 0);
 		}
 
 		particleAlpha = 1f;

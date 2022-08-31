@@ -5,9 +5,21 @@
 - Fixed bug report button linking to the wrong repository
 - Filled empty catch blocks
 
+## Removed
+
+- Removed cartoon mode
+- Removed smooth/fast animation lighting button
+
+## Optimization
+
+- Made the renderer faster
+- Made the Fancy Block Placing faster
+- Made the particle manager slightly faster
+
 ## Internal
 
 - Finished changing the syntax
+- Refactored FBPRenderUtil (In Util) to FBPRenderer (in Renderer)
 
 # Fancier Block Particles Version 0.1 Changelog
 

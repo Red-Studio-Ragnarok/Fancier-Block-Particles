@@ -3,7 +3,7 @@ package com.TominoCZ.FBP.particle;
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.keys.FBPKeyBindings;
 import com.TominoCZ.FBP.util.FBPMathUtil;
-import com.TominoCZ.FBP.util.FBPRenderUtil;
+import com.TominoCZ.FBP.renderer.FBPRenderer;
 import com.TominoCZ.FBP.vector.FBPVector3d;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -483,10 +483,8 @@ public class FBPParticleDigging extends ParticleDigging {
 		float f4 = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 
 		if (particleTexture != null) {
-			if (!FBP.cartoonMode) {
-				f = particleTexture.getInterpolatedU(particleTextureJitterX / 4 * 16);
-				f2 = particleTexture.getInterpolatedV(particleTextureJitterY / 4 * 16);
-			}
+			f = particleTexture.getInterpolatedU(particleTextureJitterX / 4 * 16);
+			f2 = particleTexture.getInterpolatedV(particleTextureJitterY / 4 * 16);
 
 			f1 = particleTexture.getInterpolatedU((particleTextureJitterX + 1) / 4 * 16);
 			f3 = particleTexture.getInterpolatedV((particleTextureJitterY + 1) / 4 * 16);
@@ -538,8 +536,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		float[] arr = new float[] { f1, f3, f1, f2, f, f2, f, f3 };
 
 		// RENDER
-		FBPRenderUtil.renderCubeShaded_S(buf, par, f5, f6, f7, f4 / 10, smoothRot, i >> 16 & 65535, i & 65535,
-				particleRed, particleGreen, particleBlue, alpha, FBP.cartoonMode);
+		FBPRenderer.renderCubeShaded_S(buf, par, f5, f6, f7, f4 / 10, smoothRot, i >> 16 & 65535, i & 65535, particleRed, particleGreen, particleBlue, alpha);
 	}
 
 	private void createRotationMatrix() {

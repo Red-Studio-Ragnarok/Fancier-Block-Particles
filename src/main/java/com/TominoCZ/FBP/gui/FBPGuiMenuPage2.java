@@ -42,7 +42,7 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 		int x = this.width / 2 - (96 * 2 + 8) / 2;
 
 		b1 = new FBPGuiButton(1, x, this.height / 5 - 10 + GUIOffsetY, b1Text, FBP.randomRotation, true);
-		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, b2Text, FBP.cartoonMode, true);
+		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, b2Text, false, false);
 
 		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, b3Text, FBP.randomizedScale, true);
 		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, b4Text, FBP.randomFadingSpeed, true);
@@ -98,7 +98,6 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 			FBP.randomRotation = !FBP.randomRotation;
 			break;
 		case 2:
-			FBP.cartoonMode = !FBP.cartoonMode;
 			break;
 		case 3:
 			FBP.randomizedScale = !FBP.randomizedScale;
@@ -187,7 +186,6 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 					description = "Enables \u00A76random \u00A7aand \u00A76simple rotation \u00A7amath.";
 					break;
 				case 2:
-					description = "Makes the particles look \u00A76cartoon\u00A7a-ish.";
 					break;
 				case 3:
 					description = "Makes the particle \u00A76scale\u00A7a slightly \u00A76randomized\u00A7a.";

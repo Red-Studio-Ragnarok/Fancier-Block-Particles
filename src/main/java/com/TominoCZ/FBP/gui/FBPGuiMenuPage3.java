@@ -14,7 +14,7 @@ import java.net.URI;
 @SideOnly(Side.CLIENT)
 public class FBPGuiMenuPage3 extends GuiScreen {
 
-	GuiButton Reload, Done, Defaults, Back, Next, ReportBug, Enable, b1, b2, b3, b4, b5, b6, b7;
+	GuiButton Reload, Done, Defaults, Back, Next, ReportBug, Enable, b1, b2, b3, b4, b5, b6;
 
 	String b1Text = "Collide With Entities";
 	String b2Text = "Bounce Off Walls";
@@ -44,8 +44,6 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 		b5 = new FBPGuiButton(5, x, b4.y + b1.height + 6, b5Text, FBP.fancyPlaceAnim, true);
 		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, b6Text, FBP.spawnPlaceParticles, true);
 
-		b7 = new FBPGuiButton(7, x + b5.width + 5, b5.y, FBP.animSmoothLighting ? "\u00A7a\u00A7LS" : "\u00A7c\u00A7LF", false, false);
-
 		Back = new FBPGuiButton(-3, b6.x - 44, 6 * b1.height + b1.y - 5 + 10 - GUIOffsetY, "<<", false, false);
 		Next = new FBPGuiButton(-6, b6.x + b6.width + 25, b6.y + 10 - GUIOffsetY, ">>", false, false);
 
@@ -58,9 +56,9 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 		Defaults.width = Done.width = 98;
 		Reload.width = b1.width = 200;
 
-		Back.width = Next.width = b7.width = 20;
+		Back.width = Next.width = 20;
 
-		this.buttonList.addAll(java.util.Arrays.asList(new GuiButton[] { b1, b2, b3, b4, b5, b6, b7, Defaults, Done, Reload, Back, Next, Enable, ReportBug }));
+		this.buttonList.addAll(java.util.Arrays.asList(new GuiButton[] { b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug }));
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 			break;
 		case -4:
 			try {
-				Desktop.getDesktop().browse(new URI("https://github.com/TominoCZ/FancyBlockParticles/issues"));
+				Desktop.getDesktop().browse(new URI("https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/new?assignees=JustDesoroxxx&labels=&template=bug_report.md&title="));
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -109,9 +107,6 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 		case 6:
 			FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;
 			break;
-		case 7:
-			b7.displayString = (FBP.animSmoothLighting = !FBP.animSmoothLighting) ? "\u00A7a\u00A7LS" : "\u00A7c\u00A7LF";
-			break;
 		}
 
 		FBPConfigHandler.write();
@@ -132,7 +127,7 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 
 		getDescription();
 
-		if ((mouseX >= b1.x && mouseX < b1.x + b1.width) && (mouseY >= b1.y && mouseY < b6.y + b1.height) || b7.isMouseOver()) {
+		if ((mouseX >= b1.x && mouseX < b1.x + b1.width) && (mouseY >= b1.y && mouseY < b6.y + b1.height)) {
 			moveText();
 
 			this.drawCenteredString(fontRenderer, description, (int) (this.width / 2 + offsetX), posY, fontRenderer.getColorCode('a'));
@@ -164,9 +159,6 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 					break;
 				case 6:
 					description = "Enables\u00A76 block place particles\u00A7a.";
-					break;
-				case 7:
-					description = "Set animation \u00A76render mode\u00A7a to \u00A76\u00A7L" + (FBP.animSmoothLighting ? "Flat" : "Smooth") + "\u00A7a.";
 					break;
 				}
 			}

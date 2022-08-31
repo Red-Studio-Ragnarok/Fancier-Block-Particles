@@ -29,6 +29,8 @@ import java.util.Queue;
 @SideOnly(Side.CLIENT)
 public class FBPParticleManager extends ParticleManager {
 
+	public static int ParticleSpawned;
+
 	private static MethodHandle getBlockDamage;
 	private static MethodHandle getParticleScale;
 	private static MethodHandle getParticleTexture;
@@ -167,6 +169,7 @@ public class FBPParticleManager extends ParticleManager {
 			effect.setExpired();
 
 		super.addEffect(toAdd);
+		ParticleSpawned ++;
 	}
 
 	@Override

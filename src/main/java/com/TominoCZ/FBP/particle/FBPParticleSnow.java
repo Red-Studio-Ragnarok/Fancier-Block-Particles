@@ -1,7 +1,7 @@
 package com.TominoCZ.FBP.particle;
 
 import com.TominoCZ.FBP.FBP;
-import com.TominoCZ.FBP.util.FBPRenderUtil;
+import com.TominoCZ.FBP.renderer.FBPRenderer;
 import com.TominoCZ.FBP.vector.FBPVector3d;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -250,10 +250,8 @@ public class FBPParticleSnow extends ParticleDigging {
 		float f = 0, f1 = 0, f2 = 0, f3 = 0;
 
 		if (particleTexture != null) {
-			if (!FBP.cartoonMode) {
-				f = particleTexture.getInterpolatedU(particleTextureJitterX / 4 * 16);
-				f2 = particleTexture.getInterpolatedV(particleTextureJitterY / 4 * 16);
-			}
+			f = particleTexture.getInterpolatedU(particleTextureJitterX / 4 * 16);
+			f2 = particleTexture.getInterpolatedV(particleTextureJitterY / 4 * 16);
 
 			f1 = particleTexture.getInterpolatedU((particleTextureJitterX + 1) / 4 * 16);
 			f3 = particleTexture.getInterpolatedV((particleTextureJitterY + 1) / 4 * 16);
@@ -305,7 +303,7 @@ public class FBPParticleSnow extends ParticleDigging {
 
 		par = new Vec2f[] { new Vec2f(f1, f3), new Vec2f(f1, f2), new Vec2f(f, f2), new Vec2f(f, f3) };
 
-		FBPRenderUtil.renderCubeShaded_S(buf, par, f5, f6, f7, f4 / 10, smoothRot, i >> 16 & 65535, i & 65535, particleRed, particleGreen, particleBlue, alpha, FBP.cartoonMode);
+		FBPRenderer.renderCubeShaded_S(buf, par, f5, f6, f7, f4 / 10, smoothRot, i >> 16 & 65535, i & 65535, particleRed, particleGreen, particleBlue, alpha);
 	}
 
 	@Override
