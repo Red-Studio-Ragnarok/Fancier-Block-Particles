@@ -63,10 +63,7 @@ public class FBP
 	public static boolean enabled = true;
 	public static boolean showInMillis = false;
 	public static boolean infiniteDuration = false;
-	public static boolean randomRotation, cartoonMode, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale,
-			randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim,
-			animSmoothLighting, spawnPlaceParticles, fancyRain, fancySnow, fancyFlame, fancySmoke, waterPhysics,
-			restOnFloor, frozen;
+	public static boolean randomRotation, cartoonMode, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, animSmoothLighting, spawnPlaceParticles, fancyRain, fancySnow, fancyFlame, fancySmoke, waterPhysics, restOnFloor, frozen;
 
 	public List<String> blockParticleBlacklist;
 	public List<String> blockAnimBlacklist;
@@ -112,8 +109,7 @@ public class FBP
 	public FBPEventHandler eventHandler = new FBPEventHandler();
 	public FBPGuiHandler guiHandler = new FBPGuiHandler();
 
-	public FBP()
-	{
+	public FBP() {
 		INSTANCE = this;
 
 		POSITION_TEX_COLOR_LMAP_NORMAL = new VertexFormat();
@@ -130,8 +126,7 @@ public class FBP
 	}
 
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent evt)
-	{
+	public void preInit(FMLPreInitializationEvent evt) {
 		config = new File(evt.getModConfigurationDirectory() + "/FBP/Particle.properties");
 		animBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/AnimBlockBlacklist.txt");
 		particleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/ParticleBlockBlacklist.txt");
@@ -143,35 +138,30 @@ public class FBP
 	}
 
 	@EventHandler
-	public void init(FMLInitializationEvent evt)
-	{
+	public void init(FMLInitializationEvent evt) {
 		MinecraftForge.EVENT_BUS.register(eventHandler);
 		FMLCommonHandler.instance().bus().register(eventHandler);
 	}
 
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent evt)
-	{
+	public void postInit(FMLPostInitializationEvent evt) {
 		MinecraftForge.EVENT_BUS.register(guiHandler);
 
 		MethodHandles.Lookup lookup = MethodHandles.publicLookup();
 
 		try {
-			//setSourcePos = lookup.unreflectSetter(ReflectionHelper.findField(ParticleDigging.class, "field_181019_az", "sourcePos"));
-			setSourcePos = lookup.unreflectSetter(ObfuscationReflectionHelper.findField(ParticleDigging.class, "sourcePos"));
+			setSourcePos = lookup.unreflectSetter(ObfuscationReflectionHelper.findField(ParticleDigging.class, "field_181019_az"));
 		} catch (Exception e) {
 			throw Throwables.propagate(e);
 		}
 	}
 
 	@SubscribeEvent
-	public static void registerItems(final RegistryEvent.Register<Block> event)
-	{
+	public static void registerItems(final RegistryEvent.Register<Block> event) {
 		event.getRegistry().register(FBPBlock);
 	}
 
-	public static boolean isEnabled()
-	{
+	public static boolean isEnabled() {
 		boolean result = enabled;
 
 		if (!result)
@@ -180,18 +170,14 @@ public class FBP
 		return result;
 	}
 
-	public static void setEnabled(boolean enabled)
-	{
-		if (FBP.enabled != enabled)
-		{
-			if (enabled)
-			{
+	public static void setEnabled(boolean enabled) {
+		if (FBP.enabled != enabled) {
+			if (enabled) {
 				FBP.fancyEffectRenderer.carryOver();
 
 				Minecraft.getMinecraft().effectRenderer = FBP.fancyEffectRenderer;
 				Minecraft.getMinecraft().world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
-			} else
-			{
+			} else {
 				Minecraft.getMinecraft().effectRenderer = FBP.originalEffectRenderer;
 				Minecraft.getMinecraft().world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
 			}
@@ -204,8 +190,7 @@ public class FBP
 		return (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 	}
 
-	public boolean isBlacklisted(Block b, boolean particle)
-	{
+	public boolean isBlacklisted(Block b, boolean particle) {
 		if (b == null)
 			return true;
 
@@ -217,8 +202,7 @@ public class FBP
 		return floatingMaterials.contains(mat);
 	}
 
-	public void addToBlacklist(Block b, boolean particle)
-	{
+	public void addToBlacklist(Block b, boolean particle) {
 		if (b == null)
 			return;
 
@@ -228,8 +212,7 @@ public class FBP
 			(particle ? blockParticleBlacklist : blockAnimBlacklist).add(name);
 	}
 
-	public void removeFromBlacklist(Block b, boolean particle)
-	{
+	public void removeFromBlacklist(Block b, boolean particle) {
 		if (b == null)
 			return;
 
@@ -239,15 +222,13 @@ public class FBP
 			(particle ? blockParticleBlacklist : blockAnimBlacklist).remove(name);
 	}
 
-	public void addToBlacklist(String name, boolean particle)
-	{
+	public void addToBlacklist(String name, boolean particle) {
 		if (StringUtils.isEmpty(name))
 			return;
 
 		Iterator it = Block.REGISTRY.getKeys().iterator();
 
-		while (it.hasNext())
-		{
+		while (it.hasNext()) {
 			ResourceLocation rl = ((ResourceLocation) it.next());
 			String s = rl.toString();
 
@@ -264,8 +245,7 @@ public class FBP
 		}
 	}
 
-	public void resetBlacklist(boolean particle)
-	{
+	public void resetBlacklist(boolean particle) {
 		if (particle)
 			blockParticleBlacklist.clear();
 		else

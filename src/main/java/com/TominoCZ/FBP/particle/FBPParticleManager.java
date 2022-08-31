@@ -56,28 +56,28 @@ public class FBPParticleManager extends ParticleManager {
 		lookup = MethodHandles.publicLookup();
 
 		try {
-			X = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "posX"));
-			Y = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "posY"));
-			Z = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "posZ"));
 
-			mX = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "motionX"));
-			mY = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "motionY"));
-			mZ = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "motionZ"));
+			X = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187126_f"));
+			Y = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187127_g"));
+			Z = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187128_h"));
 
-			getParticleScale = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "particleScale"));
-			getParticleTexture = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "particleTexture"));
-			getParticleMaxAge = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "particleMaxAge"));
+			mX = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187129_i"));
+			mY = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187130_j"));
+			mZ = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187131_k"));
 
-			getSourceState = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(ParticleDigging.class, "sourceState"));
-			getBlockDamage = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(RenderGlobal.class, "damagedBlocks"));
+			getParticleScale = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_70544_f"));
+			getParticleTexture = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187119_C"));
+			getParticleMaxAge = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_70547_e"));
+
+			getSourceState = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(ParticleDigging.class, "field_174847_a"));
+			getBlockDamage = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(RenderGlobal.class, "field_72738_E"));
 
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void carryOver()
-	{
+	public void carryOver() {
 		if (Minecraft.getMinecraft().effectRenderer == this)
 			return;
 
