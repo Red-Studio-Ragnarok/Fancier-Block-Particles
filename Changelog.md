@@ -6,7 +6,7 @@
 
 ## Changed
 
-- Updated mcmod.info decription & credits
+- Updated mcmod.info description & credits
 - Updated default config
 - Updated default bindings
 
@@ -21,7 +21,7 @@
 - Made the particle manager slightly faster
 - Made the particle manager use slightly less ram
 - Made the Fancy Block Placing slightly faster
-- Lossless compresion
+- Lossless compression
 
 ## Internal
 
