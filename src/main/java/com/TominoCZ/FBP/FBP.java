@@ -38,14 +38,13 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.util.*;
 
-@Mod(clientSideOnly = true, modid = ModReference.MOD_ID, acceptedMinecraftVersions = "[1.12,1.13)")
-public class FBP
-{
+@Mod(clientSideOnly = true, modid = ModReference.MOD_ID, name = ModReference.MOD_NAME, version = ModReference.VERSION)
+public class FBP {
+
 	@Instance(ModReference.MOD_ID)
 	public static FBP INSTANCE;
 
-	public static final ResourceLocation LOCATION_PARTICLE_TEXTURE = new ResourceLocation(
-			"textures/particle/particles.png");
+	public static final ResourceLocation LOCATION_PARTICLE_TEXTURE = new ResourceLocation("textures/particle/particles.png");
 
 	public static final ResourceLocation FBP_BUG = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/bug.png");
 	public static final ResourceLocation FBP_FBP = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/fbp.png");
@@ -88,13 +87,16 @@ public class FBP
 			new Vec3d(-1, -1, -1), new Vec3d(-1, 1, -1), new Vec3d(-1, 1, 1), new Vec3d(-1, -1, 1),
 
 			// RIGHT
-			new Vec3d(1, -1, 1), new Vec3d(1, 1, 1), new Vec3d(1, 1, -1), new Vec3d(1, -1, -1) };
+			new Vec3d(1, -1, 1), new Vec3d(1, 1, 1), new Vec3d(1, 1, -1), new Vec3d(1, -1, -1)
+	};
 
-	public static final Vec3d[] CUBE_NORMALS = { new Vec3d(0, 1, 0), new Vec3d(0, -1, 0),
+	public static final Vec3d[] CUBE_NORMALS = {
+			new Vec3d(0, 1, 0), new Vec3d(0, -1, 0),
 
 			new Vec3d(0, 0, 1), new Vec3d(0, 0, -1),
 
-			new Vec3d(-1, 0, 0), new Vec3d(1, 0, 0) };
+			new Vec3d(-1, 0, 0), new Vec3d(1, 0, 0)
+	};
 
 	public static VertexFormat POSITION_TEX_COLOR_LMAP_NORMAL;
 
@@ -185,8 +187,7 @@ public class FBP
 		FBP.enabled = enabled;
 	}
 
-	public static boolean isDev()
-	{
+	public static boolean isDev() {
 		return (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 	}
 
@@ -197,8 +198,7 @@ public class FBP
 		return (particle ? blockParticleBlacklist : blockAnimBlacklist).contains(b.getRegistryName().toString());
 	}
 
-	public boolean doesMaterialFloat(Material mat)
-	{
+	public boolean doesMaterialFloat(Material mat) {
 		return floatingMaterials.contains(mat);
 	}
 
@@ -232,8 +232,7 @@ public class FBP
 			ResourceLocation rl = ((ResourceLocation) it.next());
 			String s = rl.toString();
 
-			if (s.equals(name))
-			{
+			if (s.equals(name)) {
 				Block b = Block.REGISTRY.getObject(rl);
 
 				if (b == Blocks.REDSTONE_BLOCK)

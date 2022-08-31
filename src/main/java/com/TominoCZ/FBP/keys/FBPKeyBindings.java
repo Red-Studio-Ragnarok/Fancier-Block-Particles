@@ -5,6 +5,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.input.Keyboard;
 
 public class FBPKeyBindings {
+
 	public static KeyBinding FBPMenu, FBPFreeze, FBPToggle, FBPSweep, FBPFastAdd;
 
 	public static void init() {

@@ -1,12 +1,7 @@
 package com.TominoCZ.FBP.particle;
 
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.util.FBPRenderUtil;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -23,9 +18,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
-public class FBPParticleFlame extends ParticleFlame
-{
+import java.util.List;
+
+public class FBPParticleFlame extends ParticleFlame {
+
 	Minecraft mc;
 
 	double startScale, scaleAlpha, prevParticleScale, prevParticleAlpha;
@@ -39,9 +37,7 @@ public class FBPParticleFlame extends ParticleFlame
 
 	Vec2f par;
 
-	protected FBPParticleFlame(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double mX, double mY,
-			double mZ, boolean spawnAnother)
-	{
+	protected FBPParticleFlame(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double mX, double mY, double mZ, boolean spawnAnother) {
 		super(worldIn, xCoordIn, yCoordIn - 0.06, zCoordIn, mX, mY, mZ);
 		IBlockState bs = worldIn.getBlockState(new BlockPos(posX, posY, posZ));
 
@@ -60,8 +56,7 @@ public class FBPParticleFlame extends ParticleFlame
 		this.motionY = -0.00085f;
 		this.particleGravity = -0.05f;
 
-		this.particleTexture = mc.getBlockRendererDispatcher().getBlockModelShapes()
-				.getTexture(Blocks.SNOW.getDefaultState());
+		this.particleTexture = mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(Blocks.SNOW.getDefaultState());
 
 		particleScale *= FBP.scaleMult * 2.5f;
 		particleMaxAge = FBP.random.nextInt(3, 5);
@@ -74,8 +69,7 @@ public class FBPParticleFlame extends ParticleFlame
 
 		cube = new Vec3d[FBP.CUBE.length];
 
-		for (int i = 0; i < FBP.CUBE.length; i++)
-		{
+		for (int i = 0; i < FBP.CUBE.length; i++) {
 			Vec3d vec = FBP.CUBE[i];
 			cube[i] = FBPRenderUtil.rotatef_d(vec, 0, angleY, 0);
 		}
@@ -89,8 +83,7 @@ public class FBPParticleFlame extends ParticleFlame
 	}
 
 	@Override
-	public Particle multipleParticleScaleBy(float scale)
-	{
+	public Particle multipleParticleScaleBy(float scale) {
 		Particle p = super.multipleParticleScaleBy(scale);
 
 		startScale = particleScale;
@@ -104,14 +97,12 @@ public class FBPParticleFlame extends ParticleFlame
 	}
 
 	@Override
-	public int getFXLayer()
-	{
+	public int getFXLayer() {
 		return 0;
 	}
 
 	@Override
-	public void onUpdate()
-	{
+	public void onUpdate() {
 		prevPosX = posX;
 		prevPosY = posY;
 		prevPosZ = posZ;
@@ -122,15 +113,13 @@ public class FBPParticleFlame extends ParticleFlame
 		if (!FBP.fancyFlame)
 			this.isExpired = true;
 
-		if (++this.particleAge >= this.particleMaxAge)
-		{
+		if (++this.particleAge >= this.particleMaxAge) {
 			if (FBP.randomFadingSpeed)
 				particleScale *= 0.95F * endMult;
 			else
 				particleScale *= 0.95F;
 
-			if (particleAlpha > 0.01 && particleScale <= scaleAlpha)
-			{
+			if (particleAlpha > 0.01 && particleScale <= scaleAlpha) {
 				if (FBP.randomFadingSpeed)
 					particleAlpha *= 0.9F * endMult;
 				else
@@ -139,9 +128,7 @@ public class FBPParticleFlame extends ParticleFlame
 
 			if (particleAlpha <= 0.01)
 				setExpired();
-			else if (particleAlpha <= 0.325 && spawnAnother
-					&& world.getBlockState(new BlockPos(posX, posY, posZ)).getBlock() == Blocks.TORCH)
-			{
+			else if (particleAlpha <= 0.325 && spawnAnother && world.getBlockState(new BlockPos(posX, posY, posZ)).getBlock() == Blocks.TORCH) {
 				spawnAnother = false;
 
 				mc.effectRenderer.addEffect(
@@ -153,38 +140,33 @@ public class FBPParticleFlame extends ParticleFlame
 		move(0, motionY, 0);
 		motionY *= 0.95D;
 
-		if (this.onGround)
-		{
+		if (this.onGround) {
 			this.motionX *= 0.899999988079071D;
 			this.motionZ *= 0.899999988079071D;
 		}
 	}
 
 	@Override
-	public void move(double x, double y, double z)
-	{
+	public void move(double x, double y, double z) {
 		double X = x;
 		double Y = y;
 		double Z = z;
 
 		List<AxisAlignedBB> list = this.world.getCollisionBoxes((Entity) null, this.getBoundingBox().expand(x, y, z));
 
-		for (AxisAlignedBB axisalignedbb : list)
-		{
+		for (AxisAlignedBB axisalignedbb : list) {
 			y = axisalignedbb.calculateYOffset(this.getBoundingBox(), y);
 		}
 
 		this.setBoundingBox(this.getBoundingBox().offset(0.0D, y, 0.0D));
 
-		for (AxisAlignedBB axisalignedbb : list)
-		{
+		for (AxisAlignedBB axisalignedbb : list) {
 			x = axisalignedbb.calculateXOffset(this.getBoundingBox(), x);
 		}
 
 		this.setBoundingBox(this.getBoundingBox().offset(x, 0.0D, 0.0D));
 
-		for (AxisAlignedBB axisalignedbb : list)
-		{
+		for (AxisAlignedBB axisalignedbb : list) {
 			z = axisalignedbb.calculateZOffset(this.getBoundingBox(), z);
 		}
 
@@ -196,8 +178,7 @@ public class FBPParticleFlame extends ParticleFlame
 	}
 
 	@Override
-	protected void resetPositionToBB()
-	{
+	protected void resetPositionToBB() {
 		AxisAlignedBB axisalignedbb = this.getBoundingBox();
 		this.posX = (axisalignedbb.minX + axisalignedbb.maxX) / 2.0D;
 		this.posY = (axisalignedbb.minY + axisalignedbb.maxY) / 2.0D;
@@ -205,9 +186,7 @@ public class FBPParticleFlame extends ParticleFlame
 	}
 
 	@Override
-	public void renderParticle(BufferBuilder buf, Entity entityIn, float partialTicks, float rotationX, float rotationZ,
-			float rotationYZ, float rotationXY, float rotationXZ)
-	{
+	public void renderParticle(BufferBuilder buf, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 
@@ -249,8 +228,7 @@ public class FBPParticleFlame extends ParticleFlame
 		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 	}
 
-	public void putCube(BufferBuilder worldRendererIn, double scale, int j, int k, float r, float g, float b, float a)
-	{
+	public void putCube(BufferBuilder worldRendererIn, double scale, int j, int k, float r, float g, float b, float a) {
 		float brightnessForRender = 1;
 
 		float R = 0;
@@ -277,21 +255,17 @@ public class FBPParticleFlame extends ParticleFlame
 		}
 	}
 
-	private void addVt(BufferBuilder worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k,
-			float r, float g, float b, float a)
-	{ // add vertex to buffer
+	private void addVt(BufferBuilder worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a) { // add vertex to buffer
 		worldRendererIn.pos(pos.x * scale, pos.y * scale, pos.z * scale).tex(u, v).color(r, g, b, a).lightmap(j, k)
 				.endVertex();
 	}
 
 	@Override
-	public int getBrightnessForRender(float p_189214_1_)
-	{
+	public int getBrightnessForRender(float p_189214_1_) {
 		int i = super.getBrightnessForRender(p_189214_1_);
 		int j = 0;
 
-		if (this.world.isBlockLoaded(new BlockPos(posX, posY, posZ)))
-		{
+		if (this.world.isBlockLoaded(new BlockPos(posX, posY, posZ))) {
 			j = this.world.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
 		}
 

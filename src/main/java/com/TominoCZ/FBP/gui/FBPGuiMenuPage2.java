@@ -1,21 +1,18 @@
 package com.TominoCZ.FBP.gui;
 
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.io.IOException;
-import java.net.URI;
-
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.handler.FBPConfigHandler;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+
 @SideOnly(Side.CLIENT)
-public class FBPGuiMenuPage2 extends GuiScreen
-{
+public class FBPGuiMenuPage2 extends GuiScreen {
 
 	GuiButton Reload, Done, Defaults, Back, Next, ReportBug, Enable, b1, b2, b3, b4, b5, b6;
 
@@ -39,8 +36,7 @@ public class FBPGuiMenuPage2 extends GuiScreen
 	int GUIOffsetY = 4;
 
 	@Override
-	public void initGui()
-	{
+	public void initGui() {
 		this.buttonList.clear();
 
 		int x = this.width / 2 - (96 * 2 + 8) / 2;
@@ -57,28 +53,22 @@ public class FBPGuiMenuPage2 extends GuiScreen
 		Back = new FBPGuiButton(-3, b6.x - 44, b6.y + 10 - GUIOffsetY, "<<", false, false);
 		Next = new FBPGuiButton(-5, b6.x + b6.width + 25, b6.y + 10 - GUIOffsetY, ">>", false, false);
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, "Defaults", false,
-				false);
+		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, "Defaults", false, false);
 		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, "Done", false, false);
-		Reload = new FBPGuiButton(-2, this.width / 2 - 100, Defaults.y + Defaults.height + 1, "Reload Config", false,
-				false);
+		Reload = new FBPGuiButton(-2, this.width / 2 - 100, Defaults.y + Defaults.height + 1, "Reload Config", false, false);
 		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height),
-				this.fontRenderer);
+		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
 		Defaults.width = Done.width = 98;
 		Reload.width = b1.width = b2.width = b3.width = b4.width = b5.width = b6.width = 200;
 
 		Back.width = Next.width = 20;
 
-		this.buttonList.addAll(java.util.Arrays.asList(
-				new GuiButton[] { b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug }));
+		this.buttonList.addAll(java.util.Arrays.asList(new GuiButton[] { b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug }));
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException
-	{
-		switch (button.id)
-		{
+	protected void actionPerformed(GuiButton button) throws IOException {
+		switch (button.id) {
 		case -6:
 			FBP.setEnabled(!FBP.enabled);
 			break;
@@ -86,12 +76,10 @@ public class FBPGuiMenuPage2 extends GuiScreen
 			this.mc.displayGuiScreen(new FBPGuiMenuPage3());
 			break;
 		case -4:
-			try
-			{
+			try {
 				Desktop.getDesktop().browse(new URI("https://github.com/TominoCZ/FancyBlockParticles/issues"));
-			} catch (Exception e)
-			{
-
+			} catch (Exception e) {
+				throw new RuntimeException(e);
 			}
 			break;
 		case -3:
@@ -132,22 +120,19 @@ public class FBPGuiMenuPage2 extends GuiScreen
 	}
 
 	@Override
-	public boolean doesGuiPauseGame()
-	{
+	public boolean doesGuiPauseGame() {
 		return true;
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
-	{
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		FBPGuiHelper.background(b1.y - 6 - GUIOffsetY, Done.y - 4, width, height);
 
 		int posY = Done.y - 18;
 
 		getDescription();
 
-		if ((mouseX >= b1.x && mouseX < b1.x + b1.width) && (mouseY >= b1.y && mouseY < b6.y + b1.height))
-		{
+		if ((mouseX >= b1.x && mouseX < b1.x + b1.width) && (mouseY >= b1.y && mouseY < b6.y + b1.height)) {
 
 			moveText();
 
@@ -160,13 +145,11 @@ public class FBPGuiMenuPage2 extends GuiScreen
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
-	private void moveText()
-	{
+	private void moveText() {
 		int textWidth = this.fontRenderer.getStringWidth(description);
 		int outsideSizeX = textWidth - this.width;
 
-		if (textWidth > width)
-		{
+		if (textWidth > width) {
 			double speedOfSliding = 2400;
 			long time = System.currentTimeMillis();
 
@@ -181,16 +164,12 @@ public class FBPGuiMenuPage2 extends GuiScreen
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
-	{
-		if (mouseButton == 0)
-		{
-			for (int i = 0; i < this.buttonList.size(); ++i)
-			{
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		if (mouseButton == 0) {
+			for (int i = 0; i < this.buttonList.size(); ++i) {
 				GuiButton guibutton = this.buttonList.get(i);
 
-				if (guibutton.mousePressed(this.mc, mouseX, mouseY))
-				{
+				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
 					if (!guibutton.isMouseOver())
 						return;
 
@@ -200,14 +179,10 @@ public class FBPGuiMenuPage2 extends GuiScreen
 		}
 	}
 
-	private void getDescription()
-	{
-		for (GuiButton b : this.buttonList)
-		{
-			if (b.isMouseOver())
-			{
-				switch (b.id)
-				{
+	private void getDescription() {
+		for (GuiButton b : this.buttonList) {
+			if (b.isMouseOver()) {
+				switch (b.id) {
 				case 1:
 					description = "Enables \u00A76random \u00A7aand \u00A76simple rotation \u00A7amath.";
 					break;

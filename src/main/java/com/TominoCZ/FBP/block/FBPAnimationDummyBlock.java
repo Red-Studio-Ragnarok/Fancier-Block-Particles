@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class FBPAnimationDummyBlock extends Block {
 
-	public ConcurrentHashMap<BlockPos, BlockNode> blockNodes = new ConcurrentHashMap<BlockPos, BlockNode>();
+	public ConcurrentHashMap<BlockPos, BlockNode> blockNodes = new ConcurrentHashMap<>();
 
 	// private IBlockState passableState;
 
@@ -47,7 +47,7 @@ public class FBPAnimationDummyBlock extends Block {
 		this.translucent = true;
 	}
 
-	public void copyState(World w, BlockPos pos, IBlockState state, FBPParticleBlock p) {
+	public void copyState(BlockPos pos, IBlockState state, FBPParticleBlock p) {
 		if (blockNodes.containsKey(pos))
 			return;
 
@@ -404,20 +404,6 @@ public class FBPAnimationDummyBlock extends Block {
 		BlockNode n = blockNodes.get(pos);
 
 		return n.state.getBlock().getSoundType(n.state, world, pos, entity);
-	}
-
-	@Override
-	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		try {
-			if (blockNodes.containsKey(pos))
-				new ItemStack(Item.getItemFromBlock(blockNodes.get(pos).originalBlock), 1, this.damageDropped(state));
-
-			return new ItemStack(Item.getItemFromBlock(this), 1, this.damageDropped(state));
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-
-		return null;
 	}
 
 	@Override

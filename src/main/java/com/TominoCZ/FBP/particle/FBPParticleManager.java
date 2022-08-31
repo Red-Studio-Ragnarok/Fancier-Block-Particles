@@ -28,6 +28,7 @@ import java.util.Queue;
 
 @SideOnly(Side.CLIENT)
 public class FBPParticleManager extends ParticleManager {
+
 	private static MethodHandle getBlockDamage;
 	private static MethodHandle getParticleScale;
 	private static MethodHandle getParticleTexture;
@@ -251,8 +252,7 @@ public class FBPParticleManager extends ParticleManager {
 				break;
 			}
 
-			if ((!(iblockstate.getBlock() instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen)) && (FBP.spawnRedstoneBlockParticles || iblockstate.getBlock() != Blocks.REDSTONE_BLOCK))
-			{
+			if ((!(iblockstate.getBlock() instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen)) && (FBP.spawnRedstoneBlockParticles || iblockstate.getBlock() != Blocks.REDSTONE_BLOCK)) {
 
 				int damage = 0;
 

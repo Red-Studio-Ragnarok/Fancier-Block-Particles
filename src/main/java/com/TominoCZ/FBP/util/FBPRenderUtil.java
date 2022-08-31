@@ -98,14 +98,12 @@ public class FBPRenderUtil {
 
 			Vec3d normal = rotatef_d(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
-			if (!cartoon)
-			{
+			if (!cartoon) {
 				addVt_S(worldRendererIn, scale, v1, par[0].x, par[0].y, j, k, r, g, b, a, normal);
 				addVt_S(worldRendererIn, scale, v2, par[1].x, par[1].y, j, k, r, g, b, a, normal);
 				addVt_S(worldRendererIn, scale, v3, par[2].x, par[2].y, j, k, r, g, b, a, normal);
 				addVt_S(worldRendererIn, scale, v4, par[3].x, par[3].y, j, k, r, g, b, a, normal);
-			} else
-			{
+			} else {
 				addVt_S(worldRendererIn, scale, v1, par[0].x, par[0].y, j, k, r, g, b, a, normal);
 				addVt_S(worldRendererIn, scale, v2, par[0].x, par[0].y, j, k, r, g, b, a, normal);
 				addVt_S(worldRendererIn, scale, v3, par[0].x, par[0].y, j, k, r, g, b, a, normal);
@@ -151,8 +149,7 @@ public class FBPRenderUtil {
 	}
 
 	static void addVt_WH(BufferBuilder worldRendererIn, double width, double height, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a, Vec3d n) {
-		worldRendererIn.pos(pos.x * width, pos.y * height, pos.z * width).tex(u, v).color(r, g, b, a).lightmap(j, k)
-				.normal((float) n.x, (float) n.y, (float) n.z).endVertex();
+		worldRendererIn.pos(pos.x * width, pos.y * height, pos.z * width).tex(u, v).color(r, g, b, a).lightmap(j, k).normal((float) n.x, (float) n.y, (float) n.z).endVertex();
 	}
 
 	public static Vec3d rotatef_d(Vec3d vec, float AngleX, float AngleY, float AngleZ) {

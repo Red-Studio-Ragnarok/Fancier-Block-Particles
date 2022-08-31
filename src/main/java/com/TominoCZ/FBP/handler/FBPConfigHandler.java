@@ -1,36 +1,27 @@
 package com.TominoCZ.FBP.handler;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import com.TominoCZ.FBP.FBP;
+import com.TominoCZ.FBP.util.FBPObfUtil;
+import net.minecraft.block.material.Material;
+
+import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
 
-import com.TominoCZ.FBP.FBP;
-import com.TominoCZ.FBP.util.FBPObfUtil;
-
-import net.minecraft.block.material.Material;
-
-public class FBPConfigHandler
-{
+public class FBPConfigHandler {
 	static FileInputStream fis;
 	static InputStreamReader isr;
 	static BufferedReader br;
 
-	public static void init()
-	{
-		try
-		{
+	public static void init() {
+		try {
 			defaults(false);
 
 			if (!Paths.get(FBP.config.getParent()).toFile().exists())
 				Paths.get(FBP.config.getParent()).toFile().mkdirs();
 
-			if (!FBP.config.exists())
-			{
+			if (!FBP.config.exists()) {
 				FBP.config.createNewFile();
 
 				write();
@@ -42,8 +33,7 @@ public class FBPConfigHandler
 			if (!FBP.particleBlacklistFile.exists())
 				FBP.particleBlacklistFile.createNewFile();
 
-			if (!FBP.floatingMaterialsFile.exists())
-			{
+			if (!FBP.floatingMaterialsFile.exists()) {
 				FBP.floatingMaterialsFile.createNewFile();
 
 				FBP.INSTANCE.floatingMaterials.clear();
@@ -68,18 +58,15 @@ public class FBPConfigHandler
 			writeFloatingMaterials();
 
 			closeStreams();
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			closeStreams();
 
 			write();
 		}
 	}
 
-	public static void write()
-	{
-		try
-		{
+	public static void write() {
+		try {
 			PrintWriter writer = new PrintWriter(FBP.config.getPath(), "UTF-8");
 			writer.println("enabled=" + FBP.enabled);
 			writer.println("weatherParticleDensity=" + FBP.weatherParticleDensity);
@@ -111,20 +98,16 @@ public class FBPConfigHandler
 			writer.println("gravityMult=" + FBP.gravityMult);
 			writer.print("rotationMult=" + FBP.rotationMult);
 			writer.close();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			closeStreams();
 
-			if (!FBP.config.exists())
-			{
+			if (!FBP.config.exists()) {
 				if (!Paths.get(FBP.config.getParent()).toFile().exists())
 					Paths.get(FBP.config.getParent()).toFile().mkdirs();
 
-				try
-				{
+				try {
 					FBP.config.createNewFile();
-				} catch (IOException e1)
-				{
+				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -133,83 +116,66 @@ public class FBPConfigHandler
 		}
 	}
 
-	public static void writeAnimExceptions()
-	{
-		try
-		{
+	public static void writeAnimExceptions() {
+		try {
 			PrintWriter writer = new PrintWriter(FBP.animBlacklistFile.getPath(), "UTF-8");
 
 			for (String ex : FBP.INSTANCE.blockAnimBlacklist)
 				writer.println(ex);
 
 			writer.close();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			closeStreams();
 
-			if (!FBP.animBlacklistFile.exists())
-			{
+			if (!FBP.animBlacklistFile.exists()) {
 				if (!Paths.get(FBP.animBlacklistFile.getParent()).toFile().exists())
 					Paths.get(FBP.animBlacklistFile.getParent()).toFile().mkdirs();
 
-				try
-				{
+				try {
 					FBP.animBlacklistFile.createNewFile();
-				} catch (IOException e1)
-				{
+				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			}
 		}
 	}
 
-	public static void writeParticleExceptions()
-	{
-		try
-		{
+	public static void writeParticleExceptions() {
+		try {
 			PrintWriter writer = new PrintWriter(FBP.particleBlacklistFile.getPath(), "UTF-8");
 
 			for (String ex : FBP.INSTANCE.blockParticleBlacklist)
 				writer.println(ex);
 
 			writer.close();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			closeStreams();
 
-			if (!FBP.particleBlacklistFile.exists())
-			{
+			if (!FBP.particleBlacklistFile.exists()) {
 				if (!Paths.get(FBP.particleBlacklistFile.getParent()).toFile().exists())
 					Paths.get(FBP.particleBlacklistFile.getParent()).toFile().mkdirs();
 
-				try
-				{
+				try {
 					FBP.particleBlacklistFile.createNewFile();
-				} catch (IOException e1)
-				{
+				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			}
 		}
 	}
 
-	static void writeFloatingMaterials()
-	{
-		try
-		{
+	static void writeFloatingMaterials() {
+		try {
 			PrintWriter writer = new PrintWriter(FBP.floatingMaterialsFile.getPath(), "UTF-8");
 
 			Field[] materials = Material.class.getDeclaredFields();
 
-			for (Field f : materials)
-			{
+			for (Field f : materials) {
 				String fieldName = f.getName();
 
-				if (f.getType() == Material.class)
-				{
+				if (f.getType() == Material.class) {
 					String translated = FBPObfUtil.translateObfMaterialName(fieldName).toLowerCase();
-					try
-					{
+					try {
 						Material mat = (Material) f.get(null);
 						if (mat == Material.AIR)
 							continue;
@@ -217,32 +183,27 @@ public class FBPConfigHandler
 						boolean flag = FBP.INSTANCE.doesMaterialFloat(mat);
 
 						writer.println(translated + "=" + flag);
-					} catch (Exception ex)
-					{
-
+					} catch (Exception ex) {
+						throw new RuntimeException(ex);
 					}
 				}
 			}
 
 			writer.close();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			closeStreams();
 		}
 	}
 
-	static void read()
-	{
-		try
-		{
+	static void read() {
+		try {
 			fis = new FileInputStream(FBP.config);
 			isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
 			br = new BufferedReader(isr);
 
 			String line;
 
-			while ((line = br.readLine()) != null)
-			{
+			while ((line = br.readLine()) != null) {
 				line = line.replaceAll(" ", "");
 
 				if (line.contains("enabled="))
@@ -306,18 +267,15 @@ public class FBPConfigHandler
 			}
 
 			closeStreams();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			closeStreams();
 
 			write();
 		}
 	}
 
-	static void readAnimExceptions()
-	{
-		try
-		{
+	static void readAnimExceptions() {
+		try {
 			fis = new FileInputStream(FBP.animBlacklistFile);
 			isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
 			br = new BufferedReader(isr);
@@ -328,18 +286,15 @@ public class FBPConfigHandler
 
 			while ((line = br.readLine()) != null && !(line = line.replaceAll(" ", "").toLowerCase()).equals(""))
 				FBP.INSTANCE.addToBlacklist(line, false);
-		} catch (Exception e)
-		{
-
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 
 		closeStreams();
 	}
 
-	static void readParticleExceptions()
-	{
-		try
-		{
+	static void readParticleExceptions() {
+		try {
 			fis = new FileInputStream(FBP.particleBlacklistFile);
 			isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
 			br = new BufferedReader(isr);
@@ -350,18 +305,15 @@ public class FBPConfigHandler
 
 			while ((line = br.readLine()) != null && !(line = line.replaceAll(" ", "").toLowerCase()).equals(""))
 				FBP.INSTANCE.addToBlacklist(line, true);
-		} catch (Exception e)
-		{
-
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 
 		closeStreams();
 	}
 
-	static void readFloatingMaterials()
-	{
-		try
-		{
+	static void readFloatingMaterials() {
+		try {
 			fis = new FileInputStream(FBP.floatingMaterialsFile);
 			isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
 			br = new BufferedReader(isr);
@@ -372,8 +324,7 @@ public class FBPConfigHandler
 
 			Field[] materials = Material.class.getDeclaredFields();
 
-			while ((line = br.readLine()) != null)
-			{
+			while ((line = br.readLine()) != null) {
 				line = line.trim().toLowerCase();
 
 				String[] split = line.split("=");
@@ -389,19 +340,14 @@ public class FBPConfigHandler
 
 				boolean found = false;
 
-				for (Field f : materials)
-				{
+				for (Field f : materials) {
 					String fieldName = f.getName();
 
-					if (f.getType() == Material.class)
-					{
-						String translated = FBPObfUtil.translateObfMaterialName(fieldName).toLowerCase().replace("_",
-								"");
+					if (f.getType() == Material.class) {
+						String translated = FBPObfUtil.translateObfMaterialName(fieldName).toLowerCase().replace("_", "");
 
-						if (materialName.equals(translated))
-						{
-							try
-							{
+						if (materialName.equals(translated)) {
+							try {
 								Material mat = (Material) f.get(null);
 
 								if (!FBP.INSTANCE.floatingMaterials.contains(mat))
@@ -409,9 +355,8 @@ public class FBPConfigHandler
 
 								found = true;
 								break;
-							} catch (Exception ex)
-							{
-
+							} catch (Exception ex) {
+								throw new RuntimeException(ex);
 							}
 						}
 					}
@@ -422,29 +367,24 @@ public class FBPConfigHandler
 			}
 
 			closeStreams();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			closeStreams();
 
 			write();
 		}
 	}
 
-	static void closeStreams()
-	{
-		try
-		{
+	static void closeStreams() {
+		try {
 			br.close();
 			isr.close();
 			fis.close();
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void defaults(boolean write)
-	{
+	public static void defaults(boolean write) {
 		FBP.minAge = 10;
 		FBP.maxAge = 55;
 		FBP.scaleMult = 0.75;

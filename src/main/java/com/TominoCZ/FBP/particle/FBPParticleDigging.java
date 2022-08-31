@@ -1,15 +1,10 @@
 package com.TominoCZ.FBP.particle;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.keys.FBPKeyBindings;
 import com.TominoCZ.FBP.util.FBPMathUtil;
 import com.TominoCZ.FBP.util.FBPRenderUtil;
 import com.TominoCZ.FBP.vector.FBPVector3d;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -35,9 +30,12 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 @SideOnly(Side.CLIENT)
-public class FBPParticleDigging extends ParticleDigging
-{
+public class FBPParticleDigging extends ParticleDigging {
+
 	private final IBlockState sourceState;
 
 	Minecraft mc;
@@ -57,28 +55,22 @@ public class FBPParticleDigging extends ParticleDigging
 
 	static Entity dummyEntity = new Entity(null) {
 		@Override
-		protected void writeEntityToNBT(NBTTagCompound compound)
-		{
+		protected void writeEntityToNBT(NBTTagCompound compound) {
 			// TODO Auto-generated method stub
 		}
 
 		@Override
-		protected void readEntityFromNBT(NBTTagCompound compound)
-		{
+		protected void readEntityFromNBT(NBTTagCompound compound) {
 			// TODO Auto-generated method stub
 		}
 
 		@Override
-		protected void entityInit()
-		{
+		protected void entityInit() {
 			// TODO Auto-generated method stub
 		}
 	};
 
-	protected FBPParticleDigging(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
-			double ySpeedIn, double zSpeedIn, float scale, float R, float G, float B, IBlockState state,
-			@Nullable EnumFacing facing, @Nullable TextureAtlasSprite texture)
-	{
+	protected FBPParticleDigging(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, float scale, float R, float G, float B, IBlockState state, @Nullable EnumFacing facing, @Nullable TextureAtlasSprite texture) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
 
 		this.particleRed = R;
@@ -94,23 +86,18 @@ public class FBPParticleDigging extends ParticleDigging
 
 		createRotationMatrix();
 
-		try
-		{
+		try {
 			FBP.setSourcePos.invokeExact((ParticleDigging) this, new BlockPos(xCoordIn, yCoordIn, zCoordIn));
-		} catch (Throwable e1)
-		{
+		} catch (Throwable e1) {
 			e1.printStackTrace();
 		}
 
 		if (scale > -1)
 			particleScale = scale;
 
-		if (scale < -1)
-		{
-			if (facing != null)
-			{
-				if (facing == EnumFacing.UP && FBP.smartBreaking)
-				{
+		if (scale < -1) {
+			if (facing != null) {
+				if (facing == EnumFacing.UP && FBP.smartBreaking) {
 					motionX *= 1.5D;
 					motionY *= 0.1D;
 					motionZ *= 1.5D;
@@ -126,8 +113,7 @@ public class FBPParticleDigging extends ParticleDigging
 			}
 		}
 
-		if (modeDebounce = !FBP.randomRotation)
-		{
+		if (modeDebounce = !FBP.randomRotation) {
 			this.rot.zero();
 			calculateYAngle();
 		}
@@ -145,21 +131,18 @@ public class FBPParticleDigging extends ParticleDigging
 
 		destroyed = facing == null;
 
-		if (texture == null)
-		{
+		if (texture == null) {
 			BlockModelShapes blockModelShapes = mc.getBlockRendererDispatcher().getBlockModelShapes();
 
 			// GET THE TEXTURE OF THE BLOCK FACE
-			if (!destroyed)
-			{
-				try
-				{
+			if (!destroyed) {
+				try {
 					List<BakedQuad> quads = blockModelShapes.getModelForState(state).getQuads(state, facing, 0);
 
 					if (quads != null && !quads.isEmpty())
 						this.particleTexture = quads.get(0).getSprite();
-				} catch (Exception e)
-				{
+				} catch (Exception e) {
+					throw new RuntimeException(e);
 				}
 			}
 
@@ -179,8 +162,7 @@ public class FBPParticleDigging extends ParticleDigging
 	}
 
 	@Override
-	public Particle multipleParticleScaleBy(float scale)
-	{
+	public Particle multipleParticleScaleBy(float scale) {
 		Particle p = super.multipleParticleScaleBy(scale);
 
 		float f = particleScale / 10;
@@ -193,8 +175,7 @@ public class FBPParticleDigging extends ParticleDigging
 		return p;
 	}
 
-	public Particle MultiplyVelocity(float multiplier)
-	{
+	public Particle MultiplyVelocity(float multiplier) {
 		this.motionX *= multiplier;
 		this.motionY = (this.motionY - 0.10000000149011612D) * (multiplier / 2) + 0.10000000149011612D;
 		this.motionZ *= multiplier;
@@ -202,8 +183,7 @@ public class FBPParticleDigging extends ParticleDigging
 	}
 
 	@Override
-	protected void multiplyColor(@Nullable BlockPos p_187154_1_)
-	{
+	protected void multiplyColor(@Nullable BlockPos p_187154_1_) {
 		if (sourceState.getBlock() == Blocks.GRASS && facing != EnumFacing.UP)
 			return;
 
@@ -214,34 +194,28 @@ public class FBPParticleDigging extends ParticleDigging
 	}
 
 	@Override
-	public FBPParticleDigging init()
-	{
+	public FBPParticleDigging init() {
 		multiplyColor(new BlockPos(this.posX, this.posY, this.posZ));
 		return this;
 	}
 
 	@Override
-	public FBPParticleDigging setBlockPos(BlockPos pos)
-	{
+	public FBPParticleDigging setBlockPos(BlockPos pos) {
 		this.multiplyColor(pos);
 		return this;
 	}
 
 	@Override
-	public int getFXLayer()
-	{
+	public int getFXLayer() {
 		return 1;
 	}
 
 	@Override
-	public void onUpdate()
-	{
+	public void onUpdate() {
 		boolean allowedToMove = MathHelper.abs((float) motionX) > 0.0001D || MathHelper.abs((float) motionZ) > 0.0001D;
 
-		if (!FBP.frozen && FBP.bounceOffWalls && !mc.isGamePaused() && particleAge > 0)
-		{
-			if (!wasFrozen && allowedToMove)
-			{
+		if (!FBP.frozen && FBP.bounceOffWalls && !mc.isGamePaused() && particleAge > 0) {
+			if (!wasFrozen && allowedToMove) {
 				boolean xCollided = prevPosX == posX;
 				boolean zCollided = prevPosZ == posZ;
 
@@ -267,14 +241,10 @@ public class FBPParticleDigging extends ParticleDigging
 		prevParticleAlpha = particleAlpha;
 		prevParticleScale = particleScale;
 
-		if (!mc.isGamePaused() && (!FBP.frozen || killToggle))
-		{
-			if (!killToggle)
-			{
-				if (!FBP.randomRotation)
-				{
-					if (!modeDebounce)
-					{
+		if (!mc.isGamePaused() && (!FBP.frozen || killToggle)) {
+			if (!killToggle) {
+				if (!FBP.randomRotation) {
+					if (!modeDebounce) {
 						modeDebounce = true;
 
 						rot.z = 0;
@@ -282,18 +252,15 @@ public class FBPParticleDigging extends ParticleDigging
 						calculateYAngle();
 					}
 
-					if (allowedToMove)
-					{
+					if (allowedToMove) {
 						double x = MathHelper.abs((float) (rotStep.x * getMult()));
 
-						if (motionX > 0)
-						{
+						if (motionX > 0) {
 							if (motionZ > 0)
 								rot.x -= x;
 							else if (motionZ < 0)
 								rot.x += x;
-						} else if (motionX < 0)
-						{
+						} else if (motionX < 0) {
 							if (motionZ < 0)
 								rot.x += x;
 							else if (motionZ > 0)
@@ -302,8 +269,7 @@ public class FBPParticleDigging extends ParticleDigging
 							}
 						}
 					}
-				} else
-				{
+				} else {
 					if (modeDebounce)
 					{
 						modeDebounce = false;
@@ -319,8 +285,7 @@ public class FBPParticleDigging extends ParticleDigging
 			if (!FBP.infiniteDuration)
 				particleAge++;
 
-			if (this.particleAge >= this.particleMaxAge || killToggle)
-			{
+			if (this.particleAge >= this.particleMaxAge || killToggle) {
 				particleScale *= 0.887654321F * endMult;
 
 				if (particleAlpha > 0.01 && particleScale <= scaleAlpha)
@@ -330,15 +295,13 @@ public class FBPParticleDigging extends ParticleDigging
 					setExpired();
 			}
 
-			if (!killToggle)
-			{
+			if (!killToggle) {
 				if (!onGround)
 					motionY -= 0.04D * particleGravity;
 
 				move(motionX, motionY, motionZ);
 
-				if (onGround && FBP.restOnFloor)
-				{
+				if (onGround && FBP.restOnFloor) {
 					rot.x = (float) Math.round(rot.x / 90) * 90;
 					rot.z = (float) Math.round(rot.z / 90) * 90;
 				}
@@ -348,8 +311,7 @@ public class FBPParticleDigging extends ParticleDigging
 				if (MathHelper.abs((float) motionZ) > 0.00001D)
 					prevMotionZ = motionZ;
 
-				if (allowedToMove)
-				{
+				if (allowedToMove) {
 					motionX *= 0.9800000190734863D;
 					motionZ *= 0.9800000190734863D;
 				}
@@ -357,20 +319,16 @@ public class FBPParticleDigging extends ParticleDigging
 				motionY *= 0.9800000190734863D;
 
 				// PHYSICS
-				if (FBP.entityCollision)
-				{
+				if (FBP.entityCollision) {
 					List<Entity> list = world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox());
 
-					for (Entity entityIn : list)
-					{
-						if (!entityIn.noClip)
-						{
+					for (Entity entityIn : list) {
+						if (!entityIn.noClip) {
 							double d0 = this.posX - entityIn.posX;
 							double d1 = this.posZ - entityIn.posZ;
 							double d2 = MathHelper.absMax(d0, d1);
 
-							if (d2 >= 0.009999999776482582D)
-							{
+							if (d2 >= 0.009999999776482582D) {
 								d2 = Math.sqrt(d2);
 								d0 /= d2;
 								d1 /= d2;
@@ -392,17 +350,13 @@ public class FBPParticleDigging extends ParticleDigging
 					}
 				}
 
-				if (FBP.waterPhysics)
-				{
-					if (isInWater())
-					{
+				if (FBP.waterPhysics) {
+					if (isInWater()) {
 						handleWaterMovement();
 
-						if (FBP.INSTANCE.doesMaterialFloat(this.sourceState.getMaterial()))
-						{
+						if (FBP.INSTANCE.doesMaterialFloat(this.sourceState.getMaterial())) {
 							motionY = 0.11f + (particleScale / 1.25f) * 0.02f;
-						} else
-						{
+						} else {
 							motionX *= 0.932515086137662D;
 							motionZ *= 0.932515086137662D;
 							particleGravity = 0.35f;
@@ -415,20 +369,16 @@ public class FBPParticleDigging extends ParticleDigging
 
 						if (onGround)
 							onGround = false;
-					} else
-					{
+					} else {
 						particleGravity = prevGravity;
 					}
 				}
 
-				if (onGround)
-				{
-					if (FBP.lowTraction)
-					{
+				if (onGround) {
+					if (FBP.lowTraction) {
 						motionX *= 0.932515086137662D;
 						motionZ *= 0.932515086137662D;
-					} else
-					{
+					} else {
 						motionX *= 0.6654999988079071D;
 						motionZ *= 0.6654999988079071D;
 					}
@@ -437,8 +387,7 @@ public class FBPParticleDigging extends ParticleDigging
 		}
 	}
 
-	public boolean isInWater()
-	{
+	public boolean isInWater() {
 		double scale = particleScale / 20;
 
 		int minX = MathHelper.floor(posX - scale);
@@ -450,20 +399,14 @@ public class FBPParticleDigging extends ParticleDigging
 		int minZ = MathHelper.floor(posZ - scale);
 		int maxZ = MathHelper.ceil(posZ + scale);
 
-		if (world.isAreaLoaded(new StructureBoundingBox(minX, minY, minZ, maxX, maxY, maxZ), true))
-		{
-			for (int x = minX; x < maxX; ++x)
-			{
-				for (int y = minY; y < maxY; ++y)
-				{
-					for (int z = minZ; z < maxZ; ++z)
-					{
+		if (world.isAreaLoaded(new StructureBoundingBox(minX, minY, minZ, maxX, maxY, maxZ), true)) {
+			for (int x = minX; x < maxX; ++x) {
+				for (int y = minY; y < maxY; ++y) {
+					for (int z = minZ; z < maxZ; ++z) {
 						IBlockState block = world.getBlockState(new BlockPos(x, y, z));
 
-						if (block.getMaterial() == Material.WATER)
-						{
-							double d0 = (double) ((float) (y + 1)
-									- BlockLiquid.getLiquidHeightPercent(block.getValue(BlockLiquid.LEVEL)));
+						if (block.getMaterial() == Material.WATER) {
+							double d0 = (double) ((float) (y + 1) - BlockLiquid.getLiquidHeightPercent(block.getValue(BlockLiquid.LEVEL)));
 
 							if (posY <= d0)
 								return true;
@@ -476,17 +419,13 @@ public class FBPParticleDigging extends ParticleDigging
 		return false;
 	}
 
-	private void handleWaterMovement()
-	{
+	private void handleWaterMovement() {
 		dummyEntity.motionX = motionX;
 		dummyEntity.motionY = motionY;
 		dummyEntity.motionZ = motionZ;
 
 		double scale = particleScale / 20;
-		if (this.world.handleMaterialAcceleration(
-				getBoundingBox().expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D),
-				Material.WATER, dummyEntity))
-		{
+		if (this.world.handleMaterialAcceleration(getBoundingBox().expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.WATER, dummyEntity)) {
 
 			motionX = dummyEntity.motionX;
 			motionY = dummyEntity.motionY;
@@ -495,30 +434,26 @@ public class FBPParticleDigging extends ParticleDigging
 	}
 
 	@Override
-	public void move(double x, double y, double z)
-	{
+	public void move(double x, double y, double z) {
 		double X = x;
 		double Y = y;
 		double Z = z;
 
 		List<AxisAlignedBB> list = this.world.getCollisionBoxes((Entity) null, this.getBoundingBox().expand(x, y, z));
 
-		for (AxisAlignedBB axisalignedbb : list)
-		{
+		for (AxisAlignedBB axisalignedbb : list) {
 			y = axisalignedbb.calculateYOffset(this.getBoundingBox(), y);
 		}
 
 		this.setBoundingBox(this.getBoundingBox().offset(0.0D, y, 0.0D));
 
-		for (AxisAlignedBB axisalignedbb : list)
-		{
+		for (AxisAlignedBB axisalignedbb : list) {
 			x = axisalignedbb.calculateXOffset(this.getBoundingBox(), x);
 		}
 
 		this.setBoundingBox(this.getBoundingBox().offset(x, 0.0D, 0.0D));
 
-		for (AxisAlignedBB axisalignedbb : list)
-		{
+		for (AxisAlignedBB axisalignedbb : list) {
 			z = axisalignedbb.calculateZOffset(this.getBoundingBox(), z);
 		}
 
@@ -528,8 +463,7 @@ public class FBPParticleDigging extends ParticleDigging
 		resetPositionToBB();
 		this.onGround = y != Y && Y < 0.0D;
 
-		if (!FBP.lowTraction && !FBP.bounceOffWalls)
-		{
+		if (!FBP.lowTraction && !FBP.bounceOffWalls) {
 			if (x != X)
 				motionX *= 0.699999988079071D;
 			if (z != Z)
@@ -538,9 +472,7 @@ public class FBPParticleDigging extends ParticleDigging
 	}
 
 	@Override
-	public void renderParticle(BufferBuilder buf, Entity entityIn, float partialTicks, float rotationX, float rotationZ,
-			float rotationYZ, float rotationXY, float rotationXZ)
-	{
+	public void renderParticle(BufferBuilder buf, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 		if (FBPKeyBindings.FBPSweep.isKeyDown() && !killToggle)
@@ -550,18 +482,15 @@ public class FBPParticleDigging extends ParticleDigging
 
 		float f4 = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 
-		if (particleTexture != null)
-		{
-			if (!FBP.cartoonMode)
-			{
+		if (particleTexture != null) {
+			if (!FBP.cartoonMode) {
 				f = particleTexture.getInterpolatedU(particleTextureJitterX / 4 * 16);
 				f2 = particleTexture.getInterpolatedV(particleTextureJitterY / 4 * 16);
 			}
 
 			f1 = particleTexture.getInterpolatedU((particleTextureJitterX + 1) / 4 * 16);
 			f3 = particleTexture.getInterpolatedV((particleTextureJitterY + 1) / 4 * 16);
-		} else
-		{
+		} else {
 			f = (particleTextureIndexX + particleTextureJitterX / 4) / 16;
 			f1 = f + 0.015609375F;
 			f2 = (particleTextureIndexY + particleTextureJitterY / 4) / 16;
@@ -583,8 +512,7 @@ public class FBPParticleDigging extends ParticleDigging
 
 		FBPVector3d smoothRot = new FBPVector3d(0, 0, 0);
 
-		if (FBP.rotationMult > 0)
-		{
+		if (FBP.rotationMult > 0) {
 			smoothRot.y = rot.y;
 			smoothRot.z = rot.z;
 
@@ -592,16 +520,13 @@ public class FBPParticleDigging extends ParticleDigging
 				smoothRot.x = rot.x;
 
 			// SMOOTH ROTATION
-			if (!FBP.frozen)
-			{
+			if (!FBP.frozen) {
 				FBPVector3d vec = rot.partialVec(prevRot, partialTicks);
 
-				if (FBP.randomRotation)
-				{
+				if (FBP.randomRotation) {
 					smoothRot.y = vec.y;
 					smoothRot.z = vec.z;
-				} else
-				{
+				} else {
 					smoothRot.x = vec.x;
 				}
 			}
@@ -617,8 +542,7 @@ public class FBPParticleDigging extends ParticleDigging
 				particleRed, particleGreen, particleBlue, alpha, FBP.cartoonMode);
 	}
 
-	private void createRotationMatrix()
-	{
+	private void createRotationMatrix() {
 		double rx0 = FBP.random.nextDouble();
 		double ry0 = FBP.random.nextDouble();
 		double rz0 = FBP.random.nextDouble();
@@ -630,28 +554,22 @@ public class FBPParticleDigging extends ParticleDigging
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public int getBrightnessForRender(float partialTicks)
-	{
+	public int getBrightnessForRender(float partialTicks) {
 		AxisAlignedBB box = getBoundingBox();
 
-		if (this.world.isBlockLoaded(new BlockPos(posX, 0, posZ)))
-		{
+		if (this.world.isBlockLoaded(new BlockPos(posX, 0, posZ))) {
 			double d0 = (box.maxY - box.minY) * 0.66D;
 			double k = this.posY + d0 + 0.01 - (FBP.restOnFloor ? particleScale / 10 : 0);
 			return this.world.getCombinedLight(new BlockPos(posX, k, posZ), 0);
-		} else
-		{
+		} else {
 			return 0;
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static class Factory implements IParticleFactory
-	{
+	public static class Factory implements IParticleFactory {
 		@Override
-		public Particle createParticle(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn,
-				double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_)
-		{
+		public Particle createParticle(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_) {
 			return (new FBPParticleDigging(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, -1, 1,
 					1, 1, Block.getStateById(p_178902_15_[0]), null, null)).init();
 		}
@@ -661,14 +579,12 @@ public class FBPParticleDigging extends ParticleDigging
 	{
 		double angleSin = Math.toDegrees(Math.asin(motionX / Math.sqrt(motionX * motionX + motionZ * motionZ)));
 
-		if (motionX > 0)
-		{
+		if (motionX > 0) {
 			if (motionZ > 0)
 				rot.y = -angleSin;
 			else
 				rot.y = angleSin;
-		} else
-		{
+		} else {
 			if (motionZ > 0)
 				rot.y = -angleSin;
 			else
@@ -676,8 +592,7 @@ public class FBPParticleDigging extends ParticleDigging
 		}
 	}
 
-	double getMult()
-	{
+	double getMult() {
 		return Math.sqrt(motionX * motionX + motionZ * motionZ) * (FBP.randomRotation ? 200 : 500) * FBP.rotationMult;
 	}
 }

@@ -1,17 +1,15 @@
 package com.TominoCZ.FBP.gui;
 
-import java.io.IOException;
-
 import com.TominoCZ.FBP.handler.FBPConfigHandler;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.IOException;
+
 @SideOnly(Side.CLIENT)
-public class FBPGuiYesNo extends GuiScreen
-{
+public class FBPGuiYesNo extends GuiScreen {
 
 	GuiButton yes, no;
 
@@ -23,8 +21,7 @@ public class FBPGuiYesNo extends GuiScreen
 	}
 
 	@Override
-	public void initGui()
-	{
+	public void initGui() {
 		this.buttonList.clear();
 
 		yes = new FBPGuiButton(1, this.width / 2 - 75, (int) (this.height / 1.85), "\u00A7aYes", false, false);
@@ -38,8 +35,7 @@ public class FBPGuiYesNo extends GuiScreen
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException
-	{
+	protected void actionPerformed(GuiButton button) throws IOException {
 		switch (button.id)
 		{
 		case 1:
@@ -52,22 +48,18 @@ public class FBPGuiYesNo extends GuiScreen
 	}
 
 	@Override
-	public void updateScreen()
-	{
+	public void updateScreen() {
 
 	}
 
 	@Override
-	public boolean doesGuiPauseGame()
-	{
+	public boolean doesGuiPauseGame() {
 		return false;
 	}
 
 	@Override
-	protected void keyTyped(char c, int keyCode) throws IOException
-	{
-		if (keyCode == 1)
-		{
+	protected void keyTyped(char c, int keyCode) throws IOException {
+		if (keyCode == 1) {
 			closeGui();
 			return;
 		}
@@ -76,8 +68,7 @@ public class FBPGuiYesNo extends GuiScreen
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
-	{
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		parent.width = this.width;
 		parent.height = this.height;
 
@@ -86,8 +77,7 @@ public class FBPGuiYesNo extends GuiScreen
 
 		this.drawDefaultBackground();
 
-		this.drawCenteredString(fontRenderer, "Are you sure?", this.width / 2, yes.y - 30,
-				Integer.parseInt("FFAA00", 16));
+		this.drawCenteredString(fontRenderer, "Are you sure?", this.width / 2, yes.y - 30, Integer.parseInt("FFAA00", 16));
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 

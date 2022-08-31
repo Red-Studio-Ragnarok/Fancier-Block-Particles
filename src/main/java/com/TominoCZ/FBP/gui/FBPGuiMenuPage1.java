@@ -18,8 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class FBPGuiMenuPage1 extends GuiScreen
-{
+public class FBPGuiMenuPage1 extends GuiScreen {
 	GuiButton Reload, Done, Defaults, Back, Next, ReportBug, Enable;
 	FBPGuiSlider WeatherParticleDensity;
 
@@ -38,8 +37,7 @@ public class FBPGuiMenuPage1 extends GuiScreen
 	int GUIOffsetY = 8;
 
 	@Override
-	public void initGui()
-	{
+	public void initGui() {
 		this.buttonList.clear();
 
 		int x1 = this.width / 2 + 80;
@@ -47,18 +45,15 @@ public class FBPGuiMenuPage1 extends GuiScreen
 
 		int X = this.width / 2 - 100;
 
-		WeatherParticleDensity = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY,
-				(FBP.weatherParticleDensity - 0.75) / 4.25);
+		WeatherParticleDensity = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (FBP.weatherParticleDensity - 0.75) / 4.25);
 
-		int Y = WeatherParticleDensity.y + WeatherParticleDensity.height + 2 + 4 * (WeatherParticleDensity.height + 1)
-				+ 5;
+		int Y = WeatherParticleDensity.y + WeatherParticleDensity.height + 2 + 4 * (WeatherParticleDensity.height + 1) + 5;
 
 		Defaults = new FBPGuiButton(0, this.width / 2 + 2, Y + 20 + 24 - GUIOffsetY + 4, "Defaults", false, false);
 		Done = new FBPGuiButton(-1, x2, Defaults.y, "Done", false, false);
 		Reload = new FBPGuiButton(-2, x2, Defaults.y + Defaults.height + 1, "Reload Config", false, false);
 		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height),
-				this.fontRenderer);
+		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
 		Defaults.width = Done.width = 98;
 		Reload.width = 96 * 2 + 8;
 		Back = new FBPGuiButton(-7, X - 44, Y + 10 - GUIOffsetY + 4, "<<", false, false);
@@ -66,27 +61,22 @@ public class FBPGuiMenuPage1 extends GuiScreen
 
 		Back.width = Next.width = 20;
 
-		this.buttonList.addAll(Arrays.asList(
-				new GuiButton[] { WeatherParticleDensity, Defaults, Done, Reload, Back, Next, Enable, ReportBug }));
+		this.buttonList.addAll(Arrays.asList(new GuiButton[] { WeatherParticleDensity, Defaults, Done, Reload, Back, Next, Enable, ReportBug }));
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException
-	{
+	protected void actionPerformed(GuiButton button) throws IOException {
 		boolean init = true;
 
-		switch (button.id)
-		{
+		switch (button.id) {
 		case -6:
 			FBP.setEnabled(!FBP.enabled);
 			break;
 		case -4:
-			try
-			{
-				Desktop.getDesktop().browse(new URI("https://github.com/TominoCZ/FancyBlockParticles/issues"));
-			} catch (Exception e)
-			{
-
+			try {
+				Desktop.getDesktop().browse(new URI("https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/new?assignees=JustDesoroxxx&labels=&template=bug_report.md&title="));
+			} catch (Exception e) {
+				throw new RuntimeException(e);
 			}
 			break;
 		case -7:
@@ -114,14 +104,12 @@ public class FBPGuiMenuPage1 extends GuiScreen
 	}
 
 	@Override
-	public boolean doesGuiPauseGame()
-	{
+	public boolean doesGuiPauseGame() {
 		return true;
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
-	{
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		FBPGuiHelper.background(WeatherParticleDensity.y - 6 - GUIOffsetY, Done.y - 4, width, height);
 
 		double sWeatherParticleDensity = FBPMathUtil.round(0.75 + 4.25 * WeatherParticleDensity.value, 2);
@@ -137,15 +125,10 @@ public class FBPGuiMenuPage1 extends GuiScreen
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
-	private void drawMouseOverSelection(int mouseX, int mouseY, float partialTicks)
-	{
+	private void drawMouseOverSelection(int mouseX, int mouseY, float partialTicks) {
 		int posY = Done.y - 18;
 
-		if ((mouseX >= WeatherParticleDensity.x - 2
-				&& mouseX <= (WeatherParticleDensity.x + WeatherParticleDensity.width + 2))
-				&& mouseY >= WeatherParticleDensity.y
-				&& mouseY <= (WeatherParticleDensity.y + WeatherParticleDensity.height - 2))
-		{
+		if ((mouseX >= WeatherParticleDensity.x - 2 && mouseX <= (WeatherParticleDensity.x + WeatherParticleDensity.width + 2)) && mouseY >= WeatherParticleDensity.y && mouseY <= (WeatherParticleDensity.y + WeatherParticleDensity.height - 2)) {
 			handle.y = WeatherParticleDensity.y;
 			size = new Vector2d(WeatherParticleDensity.width, 18);
 			selected = 1;
@@ -159,18 +142,15 @@ public class FBPGuiMenuPage1 extends GuiScreen
 
 		lastTime = time;
 
-		if (lastHandle != new Vector2d(0, 0))
-		{
-			if (lastHandle.y > handle.y)
-			{
+		if (lastHandle != new Vector2d(0, 0)) {
+			if (lastHandle.y > handle.y) {
 				if (lastHandle.y - handle.y <= step)
 					lastHandle.y = handle.y;
 				else
 					lastHandle.y -= step;
 			}
 
-			if (lastHandle.y < handle.y)
-			{
+			if (lastHandle.y < handle.y) {
 				if (handle.y - lastHandle.y <= step)
 					lastHandle.y = handle.y;
 				else
@@ -180,8 +160,7 @@ public class FBPGuiMenuPage1 extends GuiScreen
 			lastHandle.x = WeatherParticleDensity.x;
 		}
 
-		if (lastSize != new Vector2d(0, 0))
-		{
+		if (lastSize != new Vector2d(0, 0)) {
 			if (lastSize.y > size.y)
 				if (lastSize.y - size.y <= step)
 					lastSize.y = size.y;
@@ -204,8 +183,7 @@ public class FBPGuiMenuPage1 extends GuiScreen
 
 		String text = "";
 
-		switch (selected)
-		{
+		switch (selected) {
 		case 1:
 			text = "Sets the \u00A76weather particle density \u00A7ato \u00A76"
 					+ (int) (FBP.weatherParticleDensity * 100) + "%\u00A7a.";
@@ -214,39 +192,28 @@ public class FBPGuiMenuPage1 extends GuiScreen
 			text = "";
 		}
 
-		if (((mouseX >= WeatherParticleDensity.x - 2
-				&& mouseX <= WeatherParticleDensity.x + WeatherParticleDensity.width + 2)
-				&& (mouseY < WeatherParticleDensity.y + WeatherParticleDensity.height
-						&& mouseY >= WeatherParticleDensity.y)
-				&& (lastSize.y <= 20 || (lastSize.y < 50 && lastSize.y > 20))
-				&& lastHandle.y >= WeatherParticleDensity.y))
-		{
+		if (((mouseX >= WeatherParticleDensity.x - 2 && mouseX <= WeatherParticleDensity.x + WeatherParticleDensity.width + 2) && (mouseY < WeatherParticleDensity.y + WeatherParticleDensity.height && mouseY >= WeatherParticleDensity.y) && (lastSize.y <= 20 || (lastSize.y < 50 && lastSize.y > 20)) && lastHandle.y >= WeatherParticleDensity.y)) {
 			moveText(text);
 
 			if (selected <= 5)
-				FBPGuiHelper.drawRect(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200,
-						35);
+				FBPGuiHelper.drawRect(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
 
-			this.drawCenteredString(fontRenderer, text, (int) (this.width / 2 + offsetX), posY,
-					fontRenderer.getColorCode('a'));
+			this.drawCenteredString(fontRenderer, text, (int) (this.width / 2 + offsetX), posY, fontRenderer.getColorCode('a'));
 		}
 	}
 
-	private void drawInfo()
-	{
+	private void drawInfo() {
 		int posY = Done.y - 18;
 
 		String s = "Weather Particle Density [\u00A76" + (int) (FBP.weatherParticleDensity * 100) + "%\u00A7f]";
 		WeatherParticleDensity.displayString = s;
 	}
 
-	private void moveText(String text)
-	{
+	private void moveText(String text) {
 		int textWidth = this.fontRenderer.getStringWidth(text);
 		int outsideSizeX = textWidth - this.width;
 
-		if (textWidth > width)
-		{
+		if (textWidth > width) {
 			double speedOfSliding = 2400;
 			long time = System.currentTimeMillis();
 
@@ -261,16 +228,12 @@ public class FBPGuiMenuPage1 extends GuiScreen
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
-	{
-		if (mouseButton == 0)
-		{
-			for (int i = 0; i < this.buttonList.size(); ++i)
-			{
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		if (mouseButton == 0) {
+			for (int i = 0; i < this.buttonList.size(); ++i) {
 				GuiButton guibutton = this.buttonList.get(i);
 
-				if (guibutton.mousePressed(this.mc, mouseX, mouseY))
-				{
+				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
 					if (!guibutton.isMouseOver())
 						return;
 
@@ -281,8 +244,7 @@ public class FBPGuiMenuPage1 extends GuiScreen
 	}
 
 	@Override
-	public void onGuiClosed()
-	{
+	public void onGuiClosed() {
 		FBPConfigHandler.write();
 	}
 }

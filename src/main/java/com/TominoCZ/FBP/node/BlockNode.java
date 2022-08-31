@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 
 public class BlockNode {
+
 	public IBlockState state;
 	public Block originalBlock;
 

@@ -1,3 +1,14 @@
+# Fancier Block Particles Version 0.2 Changelog
+
+## Fixed
+
+- Fixed bug report button linking to the wrong repository
+- Filled empty catch blocks
+
+## Internal
+
+- Finished changing the syntax
+
 # Fancier Block Particles Version 0.1 Changelog
 
 ## Added

@@ -1,13 +1,8 @@
 package com.TominoCZ.FBP.particle;
 
-import javax.vecmath.Vector2d;
-
-import org.lwjgl.opengl.GL11;
-
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.util.FBPRenderUtil;
 import com.TominoCZ.FBP.vector.FBPVector3d;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
@@ -31,6 +26,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import org.lwjgl.opengl.GL11;
+
+import javax.vecmath.Vector2d;
 
 public class FBPParticleBlock extends Particle {
 
@@ -136,7 +134,7 @@ public class FBPParticleBlock extends Particle {
 					return;
 				}
 
-				FBP.FBPBlock.copyState(mc.world, pos, blockState, this);
+				FBP.FBPBlock.copyState(pos, blockState, this);
 				mc.world.setBlockState(pos, FBP.FBPBlock.getDefaultState(), 2);
 
 				Chunk c = mc.world.getChunk(pos);
