@@ -231,10 +231,7 @@ public class FBPWeatherRenderer extends IRenderHandler {
 
 							if (finalTemp < 0.15F) {
 								if (FBP.fancySnow && i % 2 == 0) {
-									mc.effectRenderer.addEffect(
-											new FBPParticleSnow(mc.world, X, Y, Z, FBP.random.nextDouble(-0.5, 0.5),
-													FBP.random.nextDouble(0.25, 1) + mT * 1.5f,
-													FBP.random.nextDouble(-0.5, 0.5), Blocks.SNOW.getDefaultState()));
+									mc.effectRenderer.addEffect(new FBPParticleSnow(mc.world, X, Y, Z, FBP.random.nextDouble(-0.5, 0.5), FBP.random.nextDouble(0.25, 1) + mT * 1.5f, FBP.random.nextDouble(-0.5, 0.5), Blocks.SNOW.getDefaultState()));
 								}
 							} else if (FBP.fancyRain) {
 								mc.effectRenderer.addEffect(new FBPParticleRain(mc.world, X, Y, Z, 0.1,

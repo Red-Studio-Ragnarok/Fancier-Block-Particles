@@ -252,8 +252,7 @@ public class FBPParticleRain extends ParticleDigging {
 		// RENDER
 		par = new Vec2f[] { new Vec2f(f1, f3), new Vec2f(f1, f2), new Vec2f(f, f2), new Vec2f(f, f3) };
 
-		FBPRenderer.renderCubeShaded_WH(buf, par, f5, f6 + height / 10, f7, f4 / 10, height / 10,
-				new FBPVector3d(0, AngleY, 0), i >> 16 & 65535, i & 65535, particleRed, particleGreen, particleBlue, alpha);
+		FBPRenderer.renderCubeShaded_WH(buf, par, f5, f6 + height / 10, f7, f4 / 10, height / 10, new FBPVector3d(0, AngleY, 0), i >> 16 & 65535, i & 65535, particleRed, particleGreen, particleBlue, alpha);
 	}
 
 	@Override
