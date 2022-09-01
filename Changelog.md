@@ -23,6 +23,7 @@
 
 - Finished changing the syntax
 - Refactored FBPRenderUtil (In Util) to FBPRenderer (in Renderer)
+- Code Cleanup
 
 # Fancier Block Particles Version 0.1 Changelog
 
