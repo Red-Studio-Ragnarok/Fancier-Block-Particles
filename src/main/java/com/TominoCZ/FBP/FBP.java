@@ -7,7 +7,6 @@ import com.TominoCZ.FBP.handler.FBPKeyInputHandler;
 import com.TominoCZ.FBP.keys.FBPKeyBindings;
 import com.TominoCZ.FBP.particle.FBPParticleManager;
 import com.TominoCZ.FBP.util.ModReference;
-import com.google.common.base.Throwables;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -16,13 +15,11 @@ import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.init.Blocks;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -136,13 +133,12 @@ public class FBP {
 
 		FBPKeyBindings.init();
 
-		FMLCommonHandler.instance().bus().register(new FBPKeyInputHandler());
+		MinecraftForge.EVENT_BUS.register(new FBPKeyInputHandler());
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent evt) {
 		MinecraftForge.EVENT_BUS.register(eventHandler);
-		FMLCommonHandler.instance().bus().register(eventHandler);
 	}
 
 	@EventHandler
@@ -154,7 +150,7 @@ public class FBP {
 		try {
 			setSourcePos = lookup.unreflectSetter(ObfuscationReflectionHelper.findField(ParticleDigging.class, "field_181019_az"));
 		} catch (Exception e) {
-			throw Throwables.propagate(e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -187,15 +183,11 @@ public class FBP {
 		FBP.enabled = enabled;
 	}
 
-	public static boolean isDev() {
-		return (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
-	}
-
 	public boolean isBlacklisted(Block b, boolean particle) {
 		if (b == null)
 			return true;
 
-		return (particle ? blockParticleBlacklist : blockAnimBlacklist).contains(b.getRegistryName().toString());
+		return (particle ? blockParticleBlacklist : blockAnimBlacklist).contains(Objects.requireNonNull(b.getRegistryName()).toString());
 	}
 
 	public boolean doesMaterialFloat(Material mat) {
@@ -206,7 +198,7 @@ public class FBP {
 		if (b == null)
 			return;
 
-		String name = b.getRegistryName().toString();
+		String name = Objects.requireNonNull(b.getRegistryName()).toString();
 
 		if (!(particle ? blockParticleBlacklist : blockAnimBlacklist).contains(name))
 			(particle ? blockParticleBlacklist : blockAnimBlacklist).add(name);
@@ -216,20 +208,16 @@ public class FBP {
 		if (b == null)
 			return;
 
-		String name = b.getRegistryName().toString();
+		String name = Objects.requireNonNull(b.getRegistryName()).toString();
 
-		if ((particle ? blockParticleBlacklist : blockAnimBlacklist).contains(name))
-			(particle ? blockParticleBlacklist : blockAnimBlacklist).remove(name);
+		(particle ? blockParticleBlacklist : blockAnimBlacklist).remove(name);
 	}
 
 	public void addToBlacklist(String name, boolean particle) {
 		if (StringUtils.isEmpty(name))
 			return;
 
-		Iterator it = Block.REGISTRY.getKeys().iterator();
-
-		while (it.hasNext()) {
-			ResourceLocation rl = ((ResourceLocation) it.next());
+		for (ResourceLocation rl : Block.REGISTRY.getKeys()) {
 			String s = rl.toString();
 
 			if (s.equals(name)) {

@@ -113,7 +113,7 @@ public class FBPParticleDigging extends ParticleDigging {
 			}
 		}
 
-		if (modeDebounce = !FBP.randomRotation) {
+		if (modeDebounce == !FBP.randomRotation) {
 			this.rot.zero();
 			calculateYAngle();
 		}
@@ -139,7 +139,7 @@ public class FBPParticleDigging extends ParticleDigging {
 				try {
 					List<BakedQuad> quads = blockModelShapes.getModelForState(state).getQuads(state, facing, 0);
 
-					if (quads != null && !quads.isEmpty())
+					if (!quads.isEmpty())
 						this.particleTexture = quads.get(0).getSprite();
 				} catch (Exception e) {
 					throw new RuntimeException(e);

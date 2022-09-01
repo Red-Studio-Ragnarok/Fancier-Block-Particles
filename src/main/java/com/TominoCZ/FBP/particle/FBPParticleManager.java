@@ -40,7 +40,6 @@ public class FBPParticleManager extends ParticleManager {
 	private static MethodHandle X, Y, Z;
 	private static MethodHandle mX, mY, mZ;
 
-	private static IBlockState blockState;
 	private static TextureAtlasSprite white;
 
 	private static MethodHandles.Lookup lookup;
@@ -49,8 +48,6 @@ public class FBPParticleManager extends ParticleManager {
 
 	public FBPParticleManager(World worldIn, TextureManager rendererIn, IParticleFactory particleFactory) {
 		super(worldIn, rendererIn);
-
-
 
 		mc = Minecraft.getMinecraft();
 
@@ -111,9 +108,11 @@ public class FBPParticleManager extends ParticleManager {
 		Particle toAdd = effect;
 
 		if (!(toAdd instanceof FBPParticleSnow) && !(toAdd instanceof FBPParticleRain)) {
+			IBlockState blockState;
 			if (FBP.fancyRain && toAdd instanceof ParticleRain) {
 				effect.setAlphaF(0);
 			} else if (toAdd instanceof FBPParticleDigging) {
+				// Todo Use AT's and remove try catch block
 				try {
 					blockState = (IBlockState) getSourceState.invokeExact((ParticleDigging) effect);
 
@@ -260,13 +259,13 @@ public class FBPParticleManager extends ParticleManager {
 				int damage = 0;
 
 				try {
-					DestroyBlockProgress progress = null;
-					Map mp = (Map<Integer, DestroyBlockProgress>) getBlockDamage.invokeExact(Minecraft.getMinecraft().renderGlobal);
+					DestroyBlockProgress progress;
+					Map<Integer, DestroyBlockProgress> mp = (Map<Integer, DestroyBlockProgress>) getBlockDamage.invokeExact(Minecraft.getMinecraft().renderGlobal);
 
 					if (!mp.isEmpty()) {
 
-						for (Object o : mp.values()) {
-							progress = (DestroyBlockProgress) o;
+						for (DestroyBlockProgress o : mp.values()) {
+							progress = o;
 
 							if (progress.getPosition().equals(pos)) {
 								damage = progress.getPartialBlockDamage();

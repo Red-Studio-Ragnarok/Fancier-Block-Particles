@@ -4,17 +4,14 @@ import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.vector.FBPVector3d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector3f;
 
 public class FBPRenderer {
 
@@ -25,7 +22,6 @@ public class FBPRenderer {
 		buf.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
 
 		// some GL commands
-		GlStateManager.enableCull();
 		RenderHelper.enableStandardItemLighting();
 
 		// render particle
@@ -48,7 +44,6 @@ public class FBPRenderer {
 		buf.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
 
 		// some GL commands
-		GlStateManager.enableCull();
 		RenderHelper.enableStandardItemLighting();
 
 		// render particle
@@ -133,44 +128,6 @@ public class FBPRenderer {
 		vec = new Vec3d(vec.x * cos.y + vec.z * sin.y, vec.y, vec.x * sin.y - vec.z * cos.y);
 
 		return vec;
-	}
-
-	public static Vector3f rotatef_f(Vector3f pos, float AngleX, float AngleY, float AngleZ, EnumFacing facing) {
-		FBPVector3d sin = new FBPVector3d(MathHelper.sin(AngleX), MathHelper.sin(AngleY), MathHelper.sin(AngleZ));
-		FBPVector3d cos = new FBPVector3d(MathHelper.cos(AngleX), MathHelper.cos(AngleY), MathHelper.cos(AngleZ));
-
-		FBPVector3d pos1 = new FBPVector3d(pos.x, pos.y, pos.z);
-		FBPVector3d pos2;
-
-		switch(facing) {
-			case EAST:
-				pos1.x -= 1.0f;
-				break;
-			case WEST:
-				pos1.x += 1.0f;
-				break;
-			case SOUTH:
-				pos1.z -= 1.0f;
-				pos1.x -= 1.0f;
-		}
-
-		pos2 = new FBPVector3d(pos1.x, pos1.y * cos.x - pos1.z * sin.x, pos1.y * sin.x + pos1.z * cos.x);
-		pos2 = new FBPVector3d(pos2.x * cos.z - pos2.y * sin.z, pos2.x * sin.z + pos2.y * cos.z, pos2.z);
-		pos2 = new FBPVector3d(pos2.x * cos.y + pos2.z * sin.y, pos2.y, pos2.x * sin.y - pos2.z * cos.y);
-
-		switch(facing) {
-			case EAST:
-				pos2.x += 1.0f;
-				break;
-			case WEST:
-				pos2.x -= 1.0f;
-				break;
-			case SOUTH:
-				pos2.z += 1.0f;
-				pos2.x += 1.0f;
-		}
-
-		return new Vector3f((float) pos2.x, (float) pos2.y, (float) pos2.z);
 	}
 
 	public static void markBlockForRender(BlockPos pos) {

@@ -4,6 +4,7 @@
 
 - Fixed bug report button linking to the wrong repository
 - Filled empty catch blocks
+- Fixed potential NullPointerException when checking for blacklisted blocks name
 
 ## Removed
 
@@ -15,6 +16,8 @@
 - Made the renderer faster
 - Made the Fancy Block Placing faster
 - Made the particle manager slightly faster
+- Made FBP PreInit slightly faster
+- Made removing blacklisted blocks slighty faster
 
 ## Internal
 
