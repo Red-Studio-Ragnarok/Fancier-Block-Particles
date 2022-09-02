@@ -10,7 +10,6 @@ import com.TominoCZ.FBP.util.ModReference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleDigging;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
@@ -23,7 +22,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -31,8 +29,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
 import java.util.*;
 
 @Mod(clientSideOnly = true, modid = ModReference.MOD_ID, name = ModReference.MOD_NAME, version = ModReference.VERSION)
@@ -97,8 +93,6 @@ public class FBP {
 
 	public static VertexFormat POSITION_TEX_COLOR_LMAP_NORMAL;
 
-	public static MethodHandle setSourcePos;
-
 	public static FBPAnimationDummyBlock FBPBlock = new FBPAnimationDummyBlock();
 
 	public static IRenderHandler fancyWeatherRenderer, originalWeatherRenderer;
@@ -144,14 +138,6 @@ public class FBP {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent evt) {
 		MinecraftForge.EVENT_BUS.register(guiHandler);
-
-		MethodHandles.Lookup lookup = MethodHandles.publicLookup();
-
-		try {
-			setSourcePos = lookup.unreflectSetter(ObfuscationReflectionHelper.findField(ParticleDigging.class, "field_181019_az"));
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	@SubscribeEvent

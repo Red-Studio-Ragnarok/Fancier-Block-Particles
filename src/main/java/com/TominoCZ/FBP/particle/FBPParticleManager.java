@@ -7,7 +7,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.DestroyBlockProgress;
-import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.init.Blocks;
@@ -15,34 +14,17 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
-import java.util.ArrayDeque;
 import java.util.Map;
-import java.util.Queue;
 
 @SideOnly(Side.CLIENT)
 public class FBPParticleManager extends ParticleManager {
 
 	public static int ParticleSpawned;
 
-	private static MethodHandle getBlockDamage;
-	private static MethodHandle getParticleScale;
-	private static MethodHandle getParticleTexture;
-	private static MethodHandle getSourceState;
-	private static MethodHandle getParticleMaxAge;
-
-	private static MethodHandle X, Y, Z;
-	private static MethodHandle mX, mY, mZ;
-
 	private static TextureAtlasSprite white;
-
-	private static MethodHandles.Lookup lookup;
 
 	Minecraft mc;
 
@@ -52,55 +34,16 @@ public class FBPParticleManager extends ParticleManager {
 		mc = Minecraft.getMinecraft();
 
 		white = mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture((Blocks.SNOW.getDefaultState()));
-
-		lookup = MethodHandles.publicLookup();
-
-		try {
-
-			X = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187126_f"));
-			Y = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187127_g"));
-			Z = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187128_h"));
-
-			mX = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187129_i"));
-			mY = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187130_j"));
-			mZ = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187131_k"));
-
-			getParticleScale = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_70544_f"));
-			getParticleTexture = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_187119_C"));
-			getParticleMaxAge = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(Particle.class, "field_70547_e"));
-
-			getSourceState = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(ParticleDigging.class, "field_174847_a"));
-			getBlockDamage = lookup.unreflectGetter(ObfuscationReflectionHelper.findField(RenderGlobal.class, "field_72738_E"));
-
-		} catch (Throwable e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	public void carryOver() {
 		if (Minecraft.getMinecraft().effectRenderer == this)
 			return;
 
-		Field f1 = ObfuscationReflectionHelper.findField(ParticleManager.class, "fxLayers");
-		Field f2 = ObfuscationReflectionHelper.findField(ParticleManager.class, "particleEmitters");
-		Field f3 = ObfuscationReflectionHelper.findField(ParticleManager.class, "queue");
+		this.fxLayers = (mc.effectRenderer).fxLayers;
+		this.particleEmitters = (mc.effectRenderer).particleEmitters;
+		this.queue = (mc.effectRenderer).queue;
 
-		try {
-			MethodHandle getF1 = lookup.unreflectGetter(f1);
-			MethodHandle setF1 = lookup.unreflectSetter(f1);
-
-			MethodHandle getF2 = lookup.unreflectGetter(f2);
-			MethodHandle setF2 = lookup.unreflectSetter(f2);
-
-			MethodHandle getF3 = lookup.unreflectGetter(f3);
-			MethodHandle setF3 = lookup.unreflectSetter(f3);
-
-			setF1.invokeExact((ParticleManager) this, (ArrayDeque[][]) getF1.invokeExact(mc.effectRenderer));
-			setF2.invokeExact((ParticleManager) this, (Queue) getF2.invokeExact(mc.effectRenderer));
-			setF3.invokeExact((ParticleManager) this, (Queue) getF3.invokeExact(mc.effectRenderer));
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -112,54 +55,36 @@ public class FBPParticleManager extends ParticleManager {
 			if (FBP.fancyRain && toAdd instanceof ParticleRain) {
 				effect.setAlphaF(0);
 			} else if (toAdd instanceof FBPParticleDigging) {
-				// Todo Use AT's and remove try catch block
-				try {
-					blockState = (IBlockState) getSourceState.invokeExact((ParticleDigging) effect);
+				blockState = ((ParticleDigging)effect).sourceState;
 
-					if (blockState != null && !(FBP.frozen && !FBP.spawnWhileFrozen) && (FBP.spawnRedstoneBlockParticles || blockState.getBlock() != Blocks.REDSTONE_BLOCK)) {
-
-						if (blockState.getBlock() instanceof BlockLiquid || FBP.INSTANCE.isBlacklisted(blockState.getBlock(), true)) {
-							effect.setExpired();
-							return;
-						}
+				if (blockState != null && !(FBP.frozen && !FBP.spawnWhileFrozen) && (FBP.spawnRedstoneBlockParticles || blockState.getBlock() != Blocks.REDSTONE_BLOCK)) {
+					if (blockState.getBlock() instanceof BlockLiquid || FBP.INSTANCE.isBlacklisted(blockState.getBlock(), true)) {
+						effect.setExpired();
+						return;
 					}
-				} catch (Throwable e) {
-					e.printStackTrace();
 				}
 			} else if (FBP.fancyFlame && toAdd instanceof ParticleFlame && !(toAdd instanceof FBPParticleFlame) && Minecraft.getMinecraft().gameSettings.particleSetting < 2) {
-				try {
-					toAdd = new FBPParticleFlame(world, (double) X.invokeExact(effect), (double) Y.invokeExact(effect), (double) Z.invokeExact(effect), 0, FBP.random.nextDouble() * 0.25, 0, true);
-					effect.setExpired();
-				} catch (Throwable t) {
-					t.printStackTrace();
-				}
+				toAdd = new FBPParticleFlame(world, effect.posX, effect.posY, effect.posZ, 0, FBP.random.nextDouble() * 0.25, 0, true);
+				effect.setExpired();
 			} else if (FBP.fancySmoke && toAdd instanceof ParticleSmokeNormal && !(toAdd instanceof FBPParticleSmokeNormal) && Minecraft.getMinecraft().gameSettings.particleSetting < 2) {
 				ParticleSmokeNormal p = (ParticleSmokeNormal) effect;
 
-				try {
-					toAdd = new FBPParticleSmokeNormal(world, (double) X.invokeExact(effect), (double) Y.invokeExact(effect), (double) Z.invokeExact(effect), (double) mX.invokeExact(effect), (double) mY.invokeExact(effect), (double) mZ.invokeExact(effect), (float) getParticleScale.invokeExact(effect), true, white, p);
+				toAdd = new FBPParticleSmokeNormal(world, effect.posX, effect.posY, effect.posZ, effect.motionX, effect.motionY, effect.motionZ, effect.particleScale, true, white, p);
 
-					toAdd.setRBGColorF(MathHelper.clamp(effect.getRedColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getGreenColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getBlueColorF() + 0.1f, 0.1f, 1));
+				toAdd.setRBGColorF(MathHelper.clamp(effect.getRedColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getGreenColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getBlueColorF() + 0.1f, 0.1f, 1));
 
-					toAdd.setMaxAge((int) getParticleMaxAge.invokeExact(effect));
-				} catch (Throwable t) {
-					t.printStackTrace();
-				}
+				toAdd.setMaxAge(effect.particleMaxAge);
 			} else if (toAdd instanceof ParticleDigging) {
-				try {
-					blockState = (IBlockState) getSourceState.invokeExact((ParticleDigging) effect);
+				blockState = ((ParticleDigging)effect).sourceState;
 
-					if (blockState != null && !(FBP.frozen && !FBP.spawnWhileFrozen)
-							&& (FBP.spawnRedstoneBlockParticles || blockState.getBlock() != Blocks.REDSTONE_BLOCK)) {
-						effect.setExpired();
 
-						if (!(blockState.getBlock() instanceof BlockLiquid) && !FBP.INSTANCE.isBlacklisted(blockState.getBlock(), true)) {
-							toAdd = new FBPParticleDigging(world, (double) X.invokeExact(effect), (double) Y.invokeExact(effect) - 0.1D, (double) Z.invokeExact(effect), 0, 0, 0, (float) getParticleScale.invokeExact(effect), toAdd.getRedColorF(), toAdd.getGreenColorF(), toAdd.getBlueColorF(), blockState, null, (TextureAtlasSprite) getParticleTexture.invokeExact(effect));
-						} else
-							return;
-					}
-				} catch (Throwable e) {
-					e.printStackTrace();
+				if (blockState != null && !(FBP.frozen && !FBP.spawnWhileFrozen) && (FBP.spawnRedstoneBlockParticles || blockState.getBlock() != Blocks.REDSTONE_BLOCK)) {
+					effect.setExpired();
+
+					if (!(blockState.getBlock() instanceof BlockLiquid) && !FBP.INSTANCE.isBlacklisted(blockState.getBlock(), true)) {
+						toAdd = new FBPParticleDigging(world, effect.posX, effect.posY - 0.1D, effect.posZ, 0, 0, 0, effect.particleScale, toAdd.getRedColorF(), toAdd.getGreenColorF(), toAdd.getBlueColorF(), blockState, null, effect.particleTexture);
+					} else
+						return;
 				}
 			}
 		}
@@ -260,7 +185,7 @@ public class FBPParticleManager extends ParticleManager {
 
 				try {
 					DestroyBlockProgress progress;
-					Map<Integer, DestroyBlockProgress> mp = (Map<Integer, DestroyBlockProgress>) getBlockDamage.invokeExact(Minecraft.getMinecraft().renderGlobal);
+					Map<Integer, DestroyBlockProgress> mp = (mc.renderGlobal).damagedBlocks;
 
 					if (!mp.isEmpty()) {
 

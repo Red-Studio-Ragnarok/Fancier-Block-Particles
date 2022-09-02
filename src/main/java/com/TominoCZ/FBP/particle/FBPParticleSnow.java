@@ -37,11 +37,7 @@ public class FBPParticleSnow extends ParticleDigging {
 	public FBPParticleSnow(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
 
-		try {
-			FBP.setSourcePos.invokeExact((ParticleDigging) this, new BlockPos(xCoordIn, yCoordIn, zCoordIn));
-		} catch (Throwable e1) {
-			e1.printStackTrace();
-		}
+		this.sourcePos = new BlockPos(xCoordIn, yCoordIn, zCoordIn);
 
 		rot = new FBPVector3d();
 		prevRot = new FBPVector3d();

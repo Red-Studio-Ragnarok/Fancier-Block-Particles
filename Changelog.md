@@ -1,3 +1,9 @@
+# Fancier Block Particles Version 0.3 Changelog
+
+## Optimization
+
+- Switched to AT's instead of Method Handle which leads to increased performance and cleaner code
+
 # Fancier Block Particles Version 0.2 Changelog
 
 ## Fixed

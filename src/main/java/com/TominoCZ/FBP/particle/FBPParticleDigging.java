@@ -86,11 +86,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		createRotationMatrix();
 
-		try {
-			FBP.setSourcePos.invokeExact((ParticleDigging) this, new BlockPos(xCoordIn, yCoordIn, zCoordIn));
-		} catch (Throwable e1) {
-			e1.printStackTrace();
-		}
+		this.sourcePos = new BlockPos(xCoordIn, yCoordIn, zCoordIn);
 
 		if (scale > -1)
 			particleScale = scale;

@@ -33,11 +33,7 @@ public class FBPParticleRain extends ParticleDigging {
 	public FBPParticleRain(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
 
-		try {
-			FBP.setSourcePos.invokeExact((ParticleDigging) this, new BlockPos(xCoordIn, yCoordIn, zCoordIn));
-		} catch (Throwable e1) {
-			e1.printStackTrace();
-		}
+		((ParticleDigging)this).sourcePos = new BlockPos(xCoordIn, yCoordIn, zCoordIn);
 
 		AngleY = FBP.random.nextDouble() * 45;
 
