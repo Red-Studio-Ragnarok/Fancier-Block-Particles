@@ -56,6 +56,7 @@ public class FBPGuiBlacklist extends GuiScreen {
 			if (te != null)
 				mc.storeTEInStack(is, te);
 		} catch (Throwable t) {
+			throw new RuntimeException(t);
 		}
 
 		displayItemStack = is.copy();
