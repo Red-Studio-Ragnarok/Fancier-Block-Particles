@@ -28,7 +28,7 @@ public class FBPParticleSmokeNormal extends ParticleSmokeNormal {
 
 	ParticleSmokeNormal original;
 
-	protected FBPParticleSmokeNormal(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, final double mX, final double mY, final double mZ, float scale, boolean b, TextureAtlasSprite tex, ParticleSmokeNormal original) {
+	protected FBPParticleSmokeNormal(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, final double mX, final double mY, final double mZ, float scale, TextureAtlasSprite tex, ParticleSmokeNormal original) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, mX, mY, mZ, scale);
 
 		this.original = original;
@@ -167,11 +167,9 @@ public class FBPParticleSmokeNormal extends ParticleSmokeNormal {
 
 	@Override
 	public void move(double x, double y, double z) {
-		double X = x;
 		double Y = y;
-		double Z = z;
 
-		List<AxisAlignedBB> list = this.world.getCollisionBoxes((Entity) null, this.getBoundingBox().expand(x, y, z));
+		List<AxisAlignedBB> list = this.world.getCollisionBoxes(null, this.getBoundingBox().expand(x, y, z));
 
 		for (AxisAlignedBB axisalignedbb : list) {
 			y = axisalignedbb.calculateYOffset(this.getBoundingBox(), y);
@@ -234,9 +232,9 @@ public class FBPParticleSmokeNormal extends ParticleSmokeNormal {
 	public void putCube(BufferBuilder worldRendererIn, double scale, int j, int k, float r, float g, float b, float a) {
 		float brightnessForRender = 1;
 
-		float R = 0;
-		float G = 0;
-		float B = 0;
+		float R;
+		float G;
+		float B;
 
 		for (int i = 0; i < cube.length; i += 4) {
 			Vec3d v1 = cube[i];

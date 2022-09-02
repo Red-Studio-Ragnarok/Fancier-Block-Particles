@@ -5,7 +5,6 @@ import com.TominoCZ.FBP.renderer.FBPRenderer;
 import com.TominoCZ.FBP.vector.FBPVector3d;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleDigging;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
@@ -33,7 +32,7 @@ public class FBPParticleRain extends ParticleDigging {
 	public FBPParticleRain(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
 
-		((ParticleDigging)this).sourcePos = new BlockPos(xCoordIn, yCoordIn, zCoordIn);
+		this.sourcePos = new BlockPos(xCoordIn, yCoordIn, zCoordIn);
 
 		AngleY = FBP.random.nextDouble() * 45;
 
@@ -60,13 +59,6 @@ public class FBPParticleRain extends ParticleDigging {
 
 	@Override
 	public void setParticleTextureIndex(int particleTextureIndex) {
-	}
-
-	public Particle MultiplyVelocity(float multiplier) {
-		this.motionX *= multiplier;
-		this.motionY = (this.motionY - 0.10000000149011612D) * (multiplier / 2) + 0.10000000149011612D;
-		this.motionZ *= multiplier;
-		return this;
 	}
 
 	@Override
@@ -183,7 +175,7 @@ public class FBPParticleRain extends ParticleDigging {
 		double Y = y;
 		double Z = z;
 
-		List<AxisAlignedBB> list = this.world.getCollisionBoxes((Entity) null, this.getBoundingBox().expand(x, y, z));
+		List<AxisAlignedBB> list = this.world.getCollisionBoxes(null, this.getBoundingBox().expand(x, y, z));
 
 		for (AxisAlignedBB axisalignedbb : list) {
 			y = axisalignedbb.calculateYOffset(this.getBoundingBox(), y);
@@ -218,7 +210,7 @@ public class FBPParticleRain extends ParticleDigging {
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 
-		float f = 0, f1 = 0, f2 = 0, f3 = 0;
+		float f, f1, f2, f3;
 
 		if (particleTexture != null) {
 			f = particleTexture.getInterpolatedU(particleTextureJitterX / 4 * 16);

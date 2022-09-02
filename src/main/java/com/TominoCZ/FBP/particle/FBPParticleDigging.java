@@ -2,15 +2,14 @@ package com.TominoCZ.FBP.particle;
 
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.keys.FBPKeyBindings;
-import com.TominoCZ.FBP.util.FBPMathUtil;
 import com.TominoCZ.FBP.renderer.FBPRenderer;
+import com.TominoCZ.FBP.util.FBPMathUtil;
 import com.TominoCZ.FBP.vector.FBPVector3d;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleDigging;
 import net.minecraft.client.renderer.BlockModelShapes;
@@ -402,7 +401,7 @@ public class FBPParticleDigging extends ParticleDigging {
 						IBlockState block = world.getBlockState(new BlockPos(x, y, z));
 
 						if (block.getMaterial() == Material.WATER) {
-							double d0 = (double) ((float) (y + 1) - BlockLiquid.getLiquidHeightPercent(block.getValue(BlockLiquid.LEVEL)));
+							double d0 = (float) (y + 1) - BlockLiquid.getLiquidHeightPercent(block.getValue(BlockLiquid.LEVEL));
 
 							if (posY <= d0)
 								return true;
@@ -420,7 +419,6 @@ public class FBPParticleDigging extends ParticleDigging {
 		dummyEntity.motionY = motionY;
 		dummyEntity.motionZ = motionZ;
 
-		double scale = particleScale / 20;
 		if (this.world.handleMaterialAcceleration(getBoundingBox().expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.WATER, dummyEntity)) {
 
 			motionX = dummyEntity.motionX;
@@ -435,7 +433,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		double Y = y;
 		double Z = z;
 
-		List<AxisAlignedBB> list = this.world.getCollisionBoxes((Entity) null, this.getBoundingBox().expand(x, y, z));
+		List<AxisAlignedBB> list = this.world.getCollisionBoxes(null, this.getBoundingBox().expand(x, y, z));
 
 		for (AxisAlignedBB axisalignedbb : list) {
 			y = axisalignedbb.calculateYOffset(this.getBoundingBox(), y);
@@ -474,7 +472,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		if (FBPKeyBindings.FBPSweep.isKeyDown() && !killToggle)
 			killToggle = true;
 
-		float f = 0, f1 = 0, f2 = 0, f3 = 0;
+		float f, f1, f2, f3;
 
 		float f4 = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 
@@ -526,11 +524,6 @@ public class FBPParticleDigging extends ParticleDigging {
 			}
 		}
 
-		int j = i >> 16 & 65535;
-		int k = i & 65535;
-
-		float[] arr = new float[] { f1, f3, f1, f2, f, f2, f, f3 };
-
 		// RENDER
 		FBPRenderer.renderCubeShaded_S(buf, par, f5, f6, f7, f4 / 10, smoothRot, i >> 16 & 65535, i & 65535, particleRed, particleGreen, particleBlue, alpha);
 	}
@@ -559,30 +552,14 @@ public class FBPParticleDigging extends ParticleDigging {
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	public static class Factory implements IParticleFactory {
-		@Override
-		public Particle createParticle(int particleID, World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int... p_178902_15_) {
-			return (new FBPParticleDigging(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, -1, 1,
-					1, 1, Block.getStateById(p_178902_15_[0]), null, null)).init();
-		}
-	}
-
 	private void calculateYAngle()
 	{
 		double angleSin = Math.toDegrees(Math.asin(motionX / Math.sqrt(motionX * motionX + motionZ * motionZ)));
 
-		if (motionX > 0) {
-			if (motionZ > 0)
-				rot.y = -angleSin;
-			else
-				rot.y = angleSin;
-		} else {
-			if (motionZ > 0)
-				rot.y = -angleSin;
-			else
-				rot.y = angleSin;
-		}
+		if (motionZ > 0)
+			rot.y = -angleSin;
+		else
+			rot.y = angleSin;
 	}
 
 	double getMult() {

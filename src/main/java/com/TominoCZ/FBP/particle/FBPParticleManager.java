@@ -28,7 +28,7 @@ public class FBPParticleManager extends ParticleManager {
 
 	Minecraft mc;
 
-	public FBPParticleManager(World worldIn, TextureManager rendererIn, IParticleFactory particleFactory) {
+	public FBPParticleManager(World worldIn, TextureManager rendererIn, ParticleDigging.Factory factory) {
 		super(worldIn, rendererIn);
 
 		mc = Minecraft.getMinecraft();
@@ -69,7 +69,7 @@ public class FBPParticleManager extends ParticleManager {
 			} else if (FBP.fancySmoke && toAdd instanceof ParticleSmokeNormal && !(toAdd instanceof FBPParticleSmokeNormal) && Minecraft.getMinecraft().gameSettings.particleSetting < 2) {
 				ParticleSmokeNormal p = (ParticleSmokeNormal) effect;
 
-				toAdd = new FBPParticleSmokeNormal(world, effect.posX, effect.posY, effect.posZ, effect.motionX, effect.motionY, effect.motionZ, effect.particleScale, true, white, p);
+				toAdd = new FBPParticleSmokeNormal(world, effect.posX, effect.posY, effect.posZ, effect.motionX, effect.motionY, effect.motionZ, effect.particleScale, white, p);
 
 				toAdd.setRBGColorF(MathHelper.clamp(effect.getRedColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getGreenColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getBlueColorF() + 0.1f, 0.1f, 1));
 
