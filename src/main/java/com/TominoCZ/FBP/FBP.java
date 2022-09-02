@@ -169,15 +169,15 @@ public class FBP {
 		FBP.enabled = enabled;
 	}
 
+	public boolean doesMaterialFloat(Material mat) {
+		return floatingMaterials.contains(mat);
+	}
+
 	public boolean isBlacklisted(Block b, boolean particle) {
 		if (b == null)
 			return true;
 
 		return (particle ? blockParticleBlacklist : blockAnimBlacklist).contains(Objects.requireNonNull(b.getRegistryName()).toString());
-	}
-
-	public boolean doesMaterialFloat(Material mat) {
-		return floatingMaterials.contains(mat);
 	}
 
 	public void addToBlacklist(Block b, boolean particle) {
@@ -188,15 +188,6 @@ public class FBP {
 
 		if (!(particle ? blockParticleBlacklist : blockAnimBlacklist).contains(name))
 			(particle ? blockParticleBlacklist : blockAnimBlacklist).add(name);
-	}
-
-	public void removeFromBlacklist(Block b, boolean particle) {
-		if (b == null)
-			return;
-
-		String name = Objects.requireNonNull(b.getRegistryName()).toString();
-
-		(particle ? blockParticleBlacklist : blockAnimBlacklist).remove(name);
 	}
 
 	public void addToBlacklist(String name, boolean particle) {
@@ -216,6 +207,15 @@ public class FBP {
 				break;
 			}
 		}
+	}
+
+	public void removeFromBlacklist(Block b, boolean particle) {
+		if (b == null)
+			return;
+
+		String name = Objects.requireNonNull(b.getRegistryName()).toString();
+
+		(particle ? blockParticleBlacklist : blockAnimBlacklist).remove(name);
 	}
 
 	public void resetBlacklist(boolean particle) {

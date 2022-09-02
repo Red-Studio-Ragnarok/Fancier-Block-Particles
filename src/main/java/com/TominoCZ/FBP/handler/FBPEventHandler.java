@@ -36,6 +36,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Objects;
+
 public class FBPEventHandler {
 	Minecraft mc;
 
@@ -46,7 +48,7 @@ public class FBPEventHandler {
 	public FBPEventHandler() {
 		mc = Minecraft.getMinecraft();
 
-		list = new ConcurrentSet<BlockPosNode>();
+		list = new ConcurrentSet<>();
 
 		listener = new IWorldEventListener() {
 			@Override
@@ -119,7 +121,6 @@ public class FBPEventHandler {
 						boolean isNotFalling = true;
 
 						if (state.getBlock() instanceof BlockFalling) {
-							BlockFalling bf = (BlockFalling) state.getBlock();
 							if (BlockFalling.canFallThrough(worldIn.getBlockState(pos.offset(EnumFacing.DOWN))))
 								isNotFalling = false;
 						}
@@ -141,13 +142,13 @@ public class FBPEventHandler {
 
 	@SubscribeEvent
 	public void onInteractionEvent(RightClickBlock e) {
-		if (e.getHitVec() == null || e.getItemStack() == null || !e.getWorld().isRemote || !(e.getItemStack().getItem() instanceof ItemBlock))
+		if (e.getHitVec() == null || !e.getWorld().isRemote || !(e.getItemStack().getItem() instanceof ItemBlock))
 			return;
 
 		BlockPos pos = e.getPos();
-		BlockPos pos_o = e.getPos().offset(e.getFace());
+		BlockPos pos_o = e.getPos().offset(Objects.requireNonNull(e.getFace()));
 
-		Block inHand = null;
+		Block inHand;
 
 		IBlockState atPos = e.getWorld().getBlockState(pos);
 		IBlockState offset = e.getWorld().getBlockState(pos_o);
@@ -161,7 +162,8 @@ public class FBPEventHandler {
 		if (atPos.getBlock() == FBP.FBPBlock) {
 			BlockNode n = FBP.FBPBlock.blockNodes.get(pos);
 
-			if (n != null && n.state.getBlock() != null) {
+			if (n != null) {
+				n.state.getBlock();
 				boolean activated = n.originalBlock.onBlockActivated(e.getWorld(), pos, n.state, mc.player, e.getHand(), e.getFace(), f, f1, f2);
 
 				if (activated)
@@ -189,28 +191,31 @@ public class FBPEventHandler {
 		if (offset.getBlock() == FBP.FBPBlock) {
 			BlockNode n = FBP.FBPBlock.blockNodes.get(pos_o);
 
-			if (n != null && n.state.getBlock() != null)
+			if (n != null) {
+				n.state.getBlock();
 				offset = n.state;
+			}
 		}
 
-		if (e.getItemStack() != null && e.getItemStack().getItem() != null)
-			inHand = Block.getBlockFromItem(e.getItemStack().getItem());
+		e.getItemStack();
+		e.getItemStack().getItem();
+		inHand = Block.getBlockFromItem(e.getItemStack().getItem());
 
 		boolean addedOffset = false;
 
 		BlockPosNode node = new BlockPosNode();
 
 		try {
-			if (!bool && (inHand != null && offset.getMaterial().isReplaceable() && !atPos.getBlock().isReplaceable(e.getWorld(), pos) && inHand.canPlaceBlockAt(e.getWorld(), pos_o))) {
+			if (!bool && offset.getMaterial().isReplaceable() && !atPos.getBlock().isReplaceable(e.getWorld(), pos) && inHand.canPlaceBlockAt(e.getWorld(), pos_o)) {
 				node.add(pos_o);
 				addedOffset = true;
 			} else
 				node.add(pos);
 
-			boolean okToAdd = inHand != null && inHand != Blocks.AIR && inHand.canPlaceBlockAt(e.getWorld(), addedOffset ? pos_o : pos);
+			boolean okToAdd = inHand != Blocks.AIR && inHand.canPlaceBlockAt(e.getWorld(), addedOffset ? pos_o : pos);
 
 			// do torch check
-			if (inHand != null && inHand instanceof BlockTorch) {
+			if (inHand instanceof BlockTorch) {
 				BlockTorch bt = (BlockTorch) inHand;
 
 				if (!bt.canPlaceBlockAt(e.getWorld(), pos_o))
