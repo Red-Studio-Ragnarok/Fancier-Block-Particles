@@ -1,3 +1,9 @@
+# Fancier Block Particles Version 0.4 Changelog
+
+## Changed
+
+- Updated mcmod.info
+
 # Fancier Block Particles Version 0.3 Changelog
 
 ## Optimization
