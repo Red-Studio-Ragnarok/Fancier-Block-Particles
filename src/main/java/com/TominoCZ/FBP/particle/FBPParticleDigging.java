@@ -207,7 +207,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	@Override
 	public void onUpdate() {
-		boolean allowedToMove = MathHelper.abs((float) motionX) > 0.0001D || MathHelper.abs((float) motionZ) > 0.0001D;
+		boolean allowedToMove = MathHelper.abs((float) motionX) > 0.0001f || MathHelper.abs((float) motionZ) > 0.0001f;
 
 		if (!FBP.frozen && FBP.bounceOffWalls && !mc.isGamePaused() && particleAge > 0) {
 			if (!wasFrozen && allowedToMove) {
@@ -248,7 +248,7 @@ public class FBPParticleDigging extends ParticleDigging {
 					}
 
 					if (allowedToMove) {
-						double x = MathHelper.abs((float) (rotStep.x * getMult()));
+						float x = MathHelper.abs((float) (rotStep.x * getMult()));
 
 						if (motionX > 0) {
 							if (motionZ > 0)
@@ -281,10 +281,10 @@ public class FBPParticleDigging extends ParticleDigging {
 				particleAge++;
 
 			if (this.particleAge >= this.particleMaxAge || killToggle) {
-				particleScale *= 0.887654321F * endMult;
+				particleScale *= 0.88f * endMult;
 
 				if (particleAlpha > 0.01 && particleScale <= scaleAlpha)
-					particleAlpha *= 0.68752F * endMult;
+					particleAlpha *= 0.68f * endMult;
 
 				if (particleAlpha <= 0.01)
 					setExpired();
@@ -292,7 +292,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 			if (!killToggle) {
 				if (!onGround)
-					motionY -= 0.04D * particleGravity;
+					motionY -= 0.04f * particleGravity;
 
 				move(motionX, motionY, motionZ);
 
@@ -301,17 +301,17 @@ public class FBPParticleDigging extends ParticleDigging {
 					rot.z = (float) Math.round(rot.z / 90) * 90;
 				}
 
-				if (MathHelper.abs((float) motionX) > 0.00001D)
+				if (MathHelper.abs((float) motionX) > 0.00001f)
 					prevMotionX = motionX;
-				if (MathHelper.abs((float) motionZ) > 0.00001D)
+				if (MathHelper.abs((float) motionZ) > 0.00001f)
 					prevMotionZ = motionZ;
 
 				if (allowedToMove) {
-					motionX *= 0.9800000190734863D;
-					motionZ *= 0.9800000190734863D;
+					motionX *= 0.98f;
+					motionZ *= 0.98f;
 				}
 
-				motionY *= 0.9800000190734863D;
+				motionY *= 0.98f;
 
 				// PHYSICS
 				if (FBP.entityCollision) {
@@ -319,22 +319,22 @@ public class FBPParticleDigging extends ParticleDigging {
 
 					for (Entity entityIn : list) {
 						if (!entityIn.noClip) {
-							double d0 = this.posX - entityIn.posX;
-							double d1 = this.posZ - entityIn.posZ;
-							double d2 = MathHelper.absMax(d0, d1);
+							float f0 = (float) (this.posX - entityIn.posX);
+							float f1 = (float) (this.posZ - entityIn.posZ);
+							float f2 = (float) MathHelper.absMax(f0, f1);
 
-							if (d2 >= 0.009999999776482582D) {
-								d2 = Math.sqrt(d2);
-								d0 /= d2;
-								d1 /= d2;
+							if (f2 >= 0.0099f) {
+								f2 = (float) Math.sqrt(f2);
+								f0 /= f2;
+								f1 /= f2;
 
-								double d3 = 1.0D / d2;
+								float f3 = 1.0f / f2;
 
-								if (d3 > 1.0D)
-									d3 = 1.0D;
+								if (f3 > 1.0f)
+									f3 = 1.0f;
 
-								this.motionX += d0 * d3 / 20;
-								this.motionZ += d1 * d3 / 20;
+								this.motionX += f0 * f3 / 20;
+								this.motionZ += f1 * f3 / 20;
 
 								if (!FBP.randomRotation)
 									calculateYAngle();
@@ -352,8 +352,8 @@ public class FBPParticleDigging extends ParticleDigging {
 						if (FBP.INSTANCE.doesMaterialFloat(this.sourceState.getMaterial())) {
 							motionY = 0.11f + (particleScale / 1.25f) * 0.02f;
 						} else {
-							motionX *= 0.932515086137662D;
-							motionZ *= 0.932515086137662D;
+							motionX *= 0.93f;
+							motionZ *= 0.93f;
 							particleGravity = 0.35f;
 
 							motionY *= 0.85f;
@@ -371,11 +371,11 @@ public class FBPParticleDigging extends ParticleDigging {
 
 				if (onGround) {
 					if (FBP.lowTraction) {
-						motionX *= 0.932515086137662D;
-						motionZ *= 0.932515086137662D;
+						motionX *= 0.93f;
+						motionZ *= 0.93f;
 					} else {
-						motionX *= 0.6654999988079071D;
-						motionZ *= 0.6654999988079071D;
+						motionX *= 0.66f;
+						motionZ *= 0.66f;
 					}
 				}
 			}

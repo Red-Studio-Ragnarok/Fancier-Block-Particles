@@ -141,7 +141,6 @@ public class FBPParticleBlock extends Particle {
 				c.resetRelightChecks();
 				c.setLightPopulated(true);
 
-				FBPRenderer.markBlockForRender(pos);
 
 				blockSet = true;
 			}
@@ -195,8 +194,6 @@ public class FBPParticleBlock extends Particle {
 					mc.world.setTileEntity(pos, tileEntity);
 
 				mc.world.sendPacketToServer(new CPacketPlayerDigging(Action.ABORT_DESTROY_BLOCK, pos, facing));
-
-				FBPRenderer.markBlockForRender(pos);
 
 				// cleanup just to make sure it gets removed
 				FBP.INSTANCE.eventHandler.removePosEntry(pos);

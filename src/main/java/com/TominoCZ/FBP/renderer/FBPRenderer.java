@@ -2,12 +2,10 @@ package com.TominoCZ.FBP.renderer;
 
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.vector.FBPVector3d;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
@@ -82,7 +80,6 @@ public class FBPRenderer {
 			addVt_S(worldRendererIn, scale, v2, par[1].x, par[1].y, j, k, r, g, b, a, normal);
 			addVt_S(worldRendererIn, scale, v3, par[2].x, par[2].y, j, k, r, g, b, a, normal);
 			addVt_S(worldRendererIn, scale, v4, par[3].x, par[3].y, j, k, r, g, b, a, normal);
-
 		}
 	}
 
@@ -123,18 +120,8 @@ public class FBPRenderer {
 		FBPVector3d sin = new FBPVector3d(MathHelper.sin(AngleX), MathHelper.sin(AngleY), MathHelper.sin(AngleZ));
 		FBPVector3d cos = new FBPVector3d(MathHelper.cos(AngleX), MathHelper.cos(AngleY), MathHelper.cos(AngleZ));
 
-		vec = new Vec3d(vec.x, vec.y * cos.x - vec.z * sin.x, vec.y * sin.x + vec.z * cos.x);
-		vec = new Vec3d(vec.x * cos.z - vec.y * sin.z, vec.x * sin.z + vec.y * cos.z, vec.z);
 		vec = new Vec3d(vec.x * cos.y + vec.z * sin.y, vec.y, vec.x * sin.y - vec.z * cos.y);
 
 		return vec;
-	}
-
-	public static void markBlockForRender(BlockPos pos) {
-		BlockPos bp1, bp2;
-		bp1 = pos.add(1, 1, 1);
-		bp2 = pos.add(-1, -1, -1);
-
-		Minecraft.getMinecraft().renderGlobal.markBlockRangeForRenderUpdate(bp1.getX(), bp1.getY(), bp1.getZ(), bp2.getX(), bp2.getY(), bp2.getZ());
 	}
 }
