@@ -10,6 +10,10 @@ Fancier Block Particles is a fork of the popular [Fancy Block Particles] by [Mor
 This mods replace the Minecraft 2D particles with fancier 3D particles, it also adds a fancier block placing animation
 
 ![Example](https://i.imgur.com/ZfiAoir.gif)
+### Blacklist System
+![Example](https://user-images.githubusercontent.com/82710983/188453568-3068e778-d902-4642-ab09-93c1aba2b02d.gif)
+### Configuration Menu
+![Example](https://user-images.githubusercontent.com/82710983/188453582-29bca653-6942-4f33-a670-ce89fbe42942.gif)
 
 [MorphoxL]: https://www.curseforge.com/members/morphoxl/projects
 [Fancy Block Particles]: https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles
