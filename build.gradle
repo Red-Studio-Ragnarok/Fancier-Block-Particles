@@ -102,6 +102,7 @@ processResources {
 jar {
     manifest {
 		def attribute_map = [:]
+		attribute_map['FMLAT'] = 'fbp_at.cfg'
 		if (project.use_coremod.toBoolean()) {
 			attribute_map['FMLCorePlugin'] = project.coremod_plugin_class_name
 			if (project.include_mod.toBoolean()) {

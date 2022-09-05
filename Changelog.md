@@ -1,3 +1,9 @@
+# Fancier Block Particles Version 0.5 Changelog
+
+## Fixed
+
+- Critical crash because AT's where not getting applied
+
 # Fancier Block Particles Version 0.4 Changelog
 
 ## Changed
