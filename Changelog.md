@@ -2,7 +2,7 @@
 
 ## Fixed
 
-- Critical crash because AT's where not getting applied
+- Critical crash because ATs were not getting applied
 
 # Fancier Block Particles Version 0.4 Changelog
 
@@ -15,15 +15,15 @@
 ## Optimization
 
 - Switched to AT's instead of Method Handle which leads to increased performance and cleaner code
-- Optimized Particle Digging as a result it should be slightly faster and use slighty less RAM
-- Optimized Particle Smoke as a result it should be slightly faster and use slighty less RAM
-- Optimized Particle Rain as a result it should be slightly faster and use slighty less RAM
-- Optimized Particle Snow as a result it should be slightly faster and use slighty less RAM
-- Optimized Particle Manager as a result it should be slightly faster and use slighty less RAM
-- Optimized the Event Handler as a result it should be faster and use slighty less RAM
+- Optimized Particle Digging as a result it should be slightly faster and use slightly less RAM
+- Optimized Particle Smoke as a result it should be slightly faster and use slightly less RAM
+- Optimized Particle Rain as a result it should be slightly faster and use slightly less RAM
+- Optimized Particle Snow as a result it should be slightly faster and use slightly less RAM
+- Optimized Particle Manager as a result it should be slightly faster and use slightly less RAM
+- Optimized the Event Handler as a result it should be faster and use slightly less RAM
 - Optimized the Renderer as a result it should be faster and use less RAM and VRAM
 
-All of these optimization result in a 9% faster mod loading time, which make Fancier Block Particles load 25% faster than Fancy Block Particles
+All these optimizations result in a 9% faster mod loading time, which makes Fancier Block Particles load 25% faster than Fancy Block Particles
 
 ## Internal
 
