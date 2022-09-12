@@ -10,6 +10,11 @@ Fancier Block Particles is a fork of the popular [Fancy Block Particles] by [Mor
 - Fancier Block Particles now use on average 100MB less VRAM than Fancy Block Particles
 - Fancier Block Particles now use on average 6% less RAM than Fancy Block Particles
 
+Issues From Fancy Block Particles Fixed:
+
+- Fancy Block Placement Ghosting ([#69])
+- Multiple Potential Crashes (Not reported on Fancy Blocks Particles GitHub)
+
 ## Overview
 
 This mods replace the Minecraft 2D particles with fancier 3D particles, it also adds a fancier block placing animation
@@ -22,3 +27,4 @@ This mods replace the Minecraft 2D particles with fancier 3D particles, it also 
 
 [MorphoxL]: https://www.curseforge.com/members/morphoxl/projects
 [Fancy Block Particles]: https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles
+[#69]: https://github.com/TominoCZ/FancyBlockParticles/issues/69
