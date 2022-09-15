@@ -1,3 +1,18 @@
+# Fancier Block Particles Version 0.6 Changelog
+
+## Changed
+
+- Disabled buttons now appears greyed out in the menu
+- Changed Blacklist GUI bar and cursor
+- Change some Blacklist GUI from green to white
+
+## Fixed
+
+- Being able to click disabled buttons in the menu
+- Being able to hover disabled buttons in the menu
+
+## Optimization
+
 # Fancier Block Particles Version 0.5 Changelog
 
 ## Fixed
