@@ -3,6 +3,8 @@
 [![Forge Version](https://img.shields.io/badge/Minecraft%20Forge-14.23.5.2847-yellow.svg?style=for-the-badge)](http://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.12.2.html)
 # Fancier Block Particles
 
+Turn boring particles into fancier particles!
+
 Fancier Block Particles is a fork of the popular [Fancy Block Particles] by [MorphoxL] which is more optimized and less buggy than the original mod.
 
 - Fancier Block Particles now run 8% faster than Fancy Block Particles
