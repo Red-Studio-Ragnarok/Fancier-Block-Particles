@@ -13,13 +13,13 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -47,8 +47,7 @@ public class FBPGuiBlacklist extends GuiScreen {
 
 		selectedBlock = state.getBlock() == FBP.FBPBlock ? FBP.FBPBlock.blockNodes.get(selectedPos).state : state;
 
-		ItemStack is = selectedBlock.getActualState(mc.world, selectedPos).getBlock().getPickBlock(selectedBlock,
-				mc.objectMouseOver, mc.world, selectedPos, mc.player);
+		ItemStack is = selectedBlock.getActualState(mc.world, selectedPos).getBlock().getPickBlock(selectedBlock, mc.objectMouseOver, mc.world, selectedPos, mc.player);
 
 		TileEntity te = mc.world.getTileEntity(selectedPos);
 
@@ -89,10 +88,10 @@ public class FBPGuiBlacklist extends GuiScreen {
 		animation.enabled = b != null && !(b instanceof BlockDoublePlant) && FBPModelHelper.isModelValid(b.getDefaultState());
 		particle.enabled = selectedBlock.getBlock() != Blocks.REDSTONE_BLOCK;
 
-		FBPGuiButton guide = new FBPGuiButton(-1, animation.x + 30, animation.y + 30 - 10, (animation.enabled ? "\u00A7a<" : "\u00A7c<") + "             " + (particle.enabled ? "\u00A7a>" : "\u00A7c>"), false, false);
+		FBPGuiButton guide = new FBPGuiButton(-1, animation.x + 30, animation.y + 30 - 10, (animation.enabled ? "\u00A7a<" : "\u00A7c<") + "             " + (particle.enabled ? "\u00A7a>" : "\u00A7c>"), false, false, true);
 		guide.enabled = false;
 
-		this.buttonList.addAll(Arrays.asList(new GuiButton[] { guide, animation, particle }));
+		this.buttonList.addAll(Arrays.asList(guide, animation, particle));
 	}
 
 	@Override
@@ -140,8 +139,7 @@ public class FBPGuiBlacklist extends GuiScreen {
 					else
 						FBPConfigHandler.writeAnimExceptions();
 
-					mc.getSoundHandler()
-							.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 				}
 			}
 
@@ -187,37 +185,26 @@ public class FBPGuiBlacklist extends GuiScreen {
 		GlStateManager.translate(-x, -y, 0);
 
 		// BLOCK INFO
-		String itemName = (selectedPos == null ? displayItemStack.getItem() : selectedBlock.getBlock())
-				.getRegistryName().toString();
-		itemName = ((itemName.contains(":") ? "\u00A76\u00A7l" : "\u00A7a\u00A7l") + itemName).replaceAll(":",
-				"\u00A7c\u00A7l:\u00A7a\u00A7l");
+		String itemName = (selectedPos == null ? displayItemStack.getItem() : selectedBlock.getBlock()).getRegistryName().toString();
+		itemName = ((itemName.contains(":") ? "\u00A76\u00A7l" : "\u00A7a\u00A7l") + itemName).replaceAll(":", "\u00A7c\u00A7l:\u00A7a\u00A7l");
 
 		FBPGuiHelper._drawCenteredString(fontRenderer, itemName, width / 2, height / 2 - 19, 0);
 
 		// EXCEPTIONS INFO
-		String animationText1 = animation.enabled
-				? (animation.isMouseOver() ? (animation.isInExceptions ? "\u00A7c\u00A7lREMOVE" : "\u00A7a\u00A7lADD")
-						: "")
-				: "\u00A7c\u00A7lCAN'T BE ANIMATED";
-		String particleText1 = particle.enabled
-				? (particle.isMouseOver() ? (particle.isInExceptions ? "\u00A7c\u00A7lREMOVE" : "\u00A7a\u00A7lADD")
-						: "")
-				: "\u00A7c\u00A7lCAN'T BE ADDED";
+		String animationText1 = animation.enabled ? (animation.isMouseOver() ? (animation.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : "") : I18n.format("menu.blacklist.cantanimate");
+		String particleText1 = particle.enabled ? (particle.isMouseOver() ? (particle.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : "") : I18n.format("menu.blacklist.cantadd");
 
 		FBPGuiHelper._drawCenteredString(fontRenderer, animationText1, animation.x + 30, animation.y + 65, 0);
 		FBPGuiHelper._drawCenteredString(fontRenderer, particleText1, particle.x + 30, particle.y + 65, 0);
 
 		if (animation.isMouseOver())
-			FBPGuiHelper._drawCenteredString(fontRenderer, "\u00A7a\u00A7lPLACE ANIMATION", animation.x + 30,
-					animation.y - 12, 0);
+			FBPGuiHelper._drawCenteredString(fontRenderer, I18n.format("menu.blacklist.placeanimation"), animation.x + 30, animation.y - 12, 0);
 		if (particle.isMouseOver())
-			FBPGuiHelper._drawCenteredString(fontRenderer, "\u00A7a\u00A7lPARTICLES", particle.x + 30, particle.y - 12,
-					0);
+			FBPGuiHelper._drawCenteredString(fontRenderer, I18n.format("menu.blacklist.particles"), particle.x + 30, particle.y - 12, 0);
 
-		this.drawCenteredString(fontRenderer, "\u00A7LBlacklist a Block", width / 2, 20,
-				fontRenderer.getColorCode('a'));
+		this.drawCenteredString(fontRenderer, I18n.format("menu.blacklist.title"), width / 2, 20, fontRenderer.getColorCode('a'));
 
-		mc.getTextureManager().bindTexture(new ResourceLocation("textures/gui/widgets.png"));
+		mc.getTextureManager().bindTexture(FBP.FBP_WIDGETS);
 
 		// RENDER SCREEN
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -228,17 +215,13 @@ public class FBPGuiBlacklist extends GuiScreen {
 
 		GlStateManager.enableBlend();
 
-		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
-				GlStateManager.DestFactor.ZERO);
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 
 		GuiButton mouseOver = animation.isMouseOver() ? animation : (particle.isMouseOver() ? particle : null);
 
 		int imageDiameter = 20;
 
-		this.drawTexturedModalRect(mouseX - imageDiameter / 2, mouseY - imageDiameter / 2,
-				mouseOver != null && !mouseOver.enabled ? 256 - imageDiameter * 2 : 256 - imageDiameter,
-				256 - imageDiameter, imageDiameter, imageDiameter);
+		this.drawTexturedModalRect(mouseX - imageDiameter / 2, mouseY - imageDiameter / 2, mouseOver != null && !mouseOver.enabled ? 256 - imageDiameter * 2 : 256 - imageDiameter, 256 - imageDiameter, imageDiameter, imageDiameter);
 	}
 }

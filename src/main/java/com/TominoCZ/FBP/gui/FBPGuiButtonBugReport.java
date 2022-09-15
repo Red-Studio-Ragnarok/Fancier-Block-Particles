@@ -6,6 +6,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -14,7 +15,7 @@ import java.awt.*;
 @SideOnly(Side.CLIENT)
 public class FBPGuiButtonBugReport extends GuiButton {
 	FontRenderer _fr;
-	String _textOnHover = "Found a bug? Click to report it!";
+	String _textOnHover = I18n.format("menu.bugreport");
 
 	Dimension _screen;
 

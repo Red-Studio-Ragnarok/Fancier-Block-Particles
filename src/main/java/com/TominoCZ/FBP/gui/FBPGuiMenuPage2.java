@@ -41,21 +41,21 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 
 		int x = this.width / 2 - (96 * 2 + 8) / 2;
 
-		b1 = new FBPGuiButton(1, x, this.height / 5 - 10 + GUIOffsetY, b1Text, FBP.randomRotation, true);
-		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, b2Text, false, false);
+		b1 = new FBPGuiButton(1, x, this.height / 5 - 10 + GUIOffsetY, b1Text, FBP.randomRotation, true, true);
+		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, b2Text, false, false, false);
 
-		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, b3Text, FBP.randomizedScale, true);
-		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, b4Text, FBP.randomFadingSpeed, true);
+		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, b3Text, FBP.randomizedScale, true, true);
+		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, b4Text, FBP.randomFadingSpeed, true, true);
 
-		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, b5Text, FBP.spawnRedstoneBlockParticles, true);
-		b6 = new FBPGuiButton(6, x, b5.y + b5.height + 1, b6Text, FBP.spawnWhileFrozen, true);
+		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, b5Text, FBP.spawnRedstoneBlockParticles, true, true);
+		b6 = new FBPGuiButton(6, x, b5.y + b5.height + 1, b6Text, FBP.spawnWhileFrozen, true, true);
 
-		Back = new FBPGuiButton(-3, b6.x - 44, b6.y + 10 - GUIOffsetY, "<<", false, false);
-		Next = new FBPGuiButton(-5, b6.x + b6.width + 25, b6.y + 10 - GUIOffsetY, ">>", false, false);
+		Back = new FBPGuiButton(-3, b6.x - 44, b6.y + 10 - GUIOffsetY, "<<", false, false, true);
+		Next = new FBPGuiButton(-5, b6.x + b6.width + 25, b6.y + 10 - GUIOffsetY, ">>", false, false, true);
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, "Defaults", false, false);
-		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, "Done", false, false);
-		Reload = new FBPGuiButton(-2, this.width / 2 - 100, Defaults.y + Defaults.height + 1, "Reload Config", false, false);
+		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, "Defaults", false, false, true);
+		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, "Done", false, false, true);
+		Reload = new FBPGuiButton(-2, this.width / 2 - 100, Defaults.y + Defaults.height + 1, "Reload Config", false, false, true);
 		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
 		Defaults.width = Done.width = 98;
@@ -186,6 +186,7 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 					description = "Enables \u00A76random \u00A7aand \u00A76simple rotation \u00A7amath.";
 					break;
 				case 2:
+					description = "\u00A74DEPRECATED\u00A7a/\u00A74REMOVED \u00A7aMakes the particles look \u00A76cartoon\u00A7a-ish.";
 					break;
 				case 3:
 					description = "Makes the particle \u00A76scale\u00A7a slightly \u00A76randomized\u00A7a.";

@@ -1,21 +1,18 @@
 package com.TominoCZ.FBP.gui;
 
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.io.IOException;
-import java.net.URI;
-import java.util.Arrays;
-
-import javax.vecmath.Vector2d;
-
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.handler.FBPConfigHandler;
 import com.TominoCZ.FBP.util.FBPMathUtil;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.vecmath.Vector2d;
+import java.awt.*;
+import java.net.URI;
+import java.util.Arrays;
 
 @SideOnly(Side.CLIENT)
 public class FBPGuiMenuPage0 extends GuiScreen {
@@ -55,27 +52,27 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 		ScaleMultSlider = new FBPGuiSlider(X, ParticleCountBase.y + ParticleCountBase.height + 1, (FBP.scaleMult - 0.75) / 0.5);
 		GravitiyForceSlider = new FBPGuiSlider(X, ScaleMultSlider.y + ScaleMultSlider.height + 6, (FBP.gravityMult - 0.05) / 2.95);
 		RotSpeedSlider = new FBPGuiSlider(X, GravitiyForceSlider.y + GravitiyForceSlider.height + 1, FBP.rotationMult / 1.5);
-		InfiniteDuration = new FBPGuiButton(11, x1 + 25, MinDurationSlider.y + 10, (FBP.infiniteDuration ? "\u00A7a" : "\u00A7c") + "\u221e", false, false);
+		InfiniteDuration = new FBPGuiButton(11, x1 + 25, MinDurationSlider.y + 10, (FBP.infiniteDuration ? "\u00A7a" : "\u00A7c") + "\u221e", false, false, true);
 
-		TimeUnit = new FBPGuiButton(12, x2 - 25, MinDurationSlider.y + 10, "\u00A7a\u00A7L" + (FBP.showInMillis ? "ms" : "ti"), false, false);
+		TimeUnit = new FBPGuiButton(12, x2 - 25, MinDurationSlider.y + 10, "\u00A7a\u00A7L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, RotSpeedSlider.y + RotSpeedSlider.height + 24 - GUIOffsetY, "Defaults", false, false);
-		Done = new FBPGuiButton(-1, x2, Defaults.y, "Done", false, false);
-		Reload = new FBPGuiButton(-2, x2, Defaults.y + Defaults.height + 1, "Reload Config", false, false);
+		Defaults = new FBPGuiButton(0, this.width / 2 + 2, RotSpeedSlider.y + RotSpeedSlider.height + 24 - GUIOffsetY, "Defaults", false, false, true);
+		Done = new FBPGuiButton(-1, x2, Defaults.y, "Done", false, false, true);
+		Reload = new FBPGuiButton(-2, x2, Defaults.y + Defaults.height + 1, "Reload Config", false, false, true);
 		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
 		Defaults.width = Done.width = 98;
 		Reload.width = 96 * 2 + 8;
 
-		Next = new FBPGuiButton(-3, RotSpeedSlider.x + RotSpeedSlider.width + 25, RotSpeedSlider.y + 10 - GUIOffsetY, ">>", false, false);
+		Next = new FBPGuiButton(-3, RotSpeedSlider.x + RotSpeedSlider.width + 25, RotSpeedSlider.y + 10 - GUIOffsetY, ">>", false, false, true);
 
 		InfiniteDuration.width = TimeUnit.width = Next.width = 20;
 
-		this.buttonList.addAll(Arrays.asList(new GuiButton[] { MinDurationSlider, MaxDurationSlider, ParticleCountBase, ScaleMultSlider, GravitiyForceSlider, RotSpeedSlider, InfiniteDuration, TimeUnit, Defaults, Done, Reload, Next, Enable, ReportBug }));
+		this.buttonList.addAll(Arrays.asList(MinDurationSlider, MaxDurationSlider, ParticleCountBase, ScaleMultSlider, GravitiyForceSlider, RotSpeedSlider, InfiniteDuration, TimeUnit, Defaults, Done, Reload, Next, Enable, ReportBug));
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException {
+	protected void actionPerformed(GuiButton button) {
 		boolean init = true;
 
 		switch (button.id) {
@@ -103,7 +100,7 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 			FBPConfigHandler.init();
 			break;
 		case -1:
-			this.mc.displayGuiScreen((GuiScreen) null);
+			this.mc.displayGuiScreen(null);
 			break;
 		case 0:
 			this.mc.displayGuiScreen(new FBPGuiYesNo(this));
@@ -118,8 +115,6 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 			init = false;
 			break;
 		}
-
-		FBPConfigHandler.write();
 
 		if (init)
 			initGui();
@@ -167,7 +162,7 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 		canChangeTimeUnit = !isMouseOverSliders(mouseX, mouseY);
 
-		drawMouseOverSelection(mouseX, mouseY, partialTicks);
+		drawMouseOverSelection(mouseX, mouseY);
 
 		FBPGuiHelper.drawTitle(MinDurationSlider.y - GUIOffsetY, width, height, fontRenderer);
 
@@ -177,7 +172,7 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
-	private void drawMouseOverSelection(int mouseX, int mouseY, float partialTicks) {
+	private void drawMouseOverSelection(int mouseX, int mouseY) {
 		int posY = Done.y - 18;
 
 		if ((mouseX >= MinDurationSlider.x - 2 && mouseX <= (MinDurationSlider.x + MinDurationSlider.width + 2)) && mouseY >= MinDurationSlider.y && mouseY <= (MaxDurationSlider.y + MaxDurationSlider.height - 2)) {
@@ -244,29 +239,19 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 				else
 					lastSize.y += step;
 
-			if (lastSize.x > size.x)
-				lastSize.x -= step;
-			if (lastSize.x < size.x)
-				lastSize.x += step;
-
 			lastSize.x = GravitiyForceSlider.width;
 		}
 
-		String text = "";
+		String text;
 
 		switch (selected) {
 		case 1:
 			if (!FBP.infiniteDuration) {
-				String _text = (FBP.minAge != FBP.maxAge
-						? ("range\u00A7a to between \u00A76" + (FBP.showInMillis ? FBP.minAge * 50 : FBP.minAge)
-								+ "\u00A7a and \u00A76" + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge)
-								+ (FBP.showInMillis ? "ms" : (FBP.maxAge > 1 ? " ticks" : " tick")))
-						: ("\u00A7ato \u00A76" + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge)
-								+ (FBP.showInMillis ? "ms" : (FBP.maxAge > 1 ? " ticks" : " tick"))));
+				String _text = (FBP.minAge != FBP.maxAge ? (I18n.format("menu.particlelife.description.duration.range") + (FBP.showInMillis ? FBP.minAge * 50 : FBP.minAge) + I18n.format("menu.particlelife.description.duration.and") + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + (FBP.showInMillis ? "ms" : " ticks")) : (I18n.format("menu.particlelife.description.duration.to") + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + (FBP.showInMillis ? "ms" : " ticks")));
 
-				text = "Sets \u00A76particle life duration " + _text + "\u00A7a.";
+				text = I18n.format("menu.particlelife.description.duration") + _text + I18n.format("menu.general.period");
 			} else {
-				text = "Sets \u00A76particle life duration \u00A7ato \u00A76infinity\u00A7a.";
+				text = I18n.format("menu.particlelife.description.infinity");
 			}
 			break;
 		case 2:
@@ -294,7 +279,7 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 			text = "";
 		}
 
-		if (((mouseX >= MinDurationSlider.x - 2 && mouseX <= MinDurationSlider.x + MinDurationSlider.width + 2) && (mouseY < RotSpeedSlider.y + RotSpeedSlider.height && mouseY >= MinDurationSlider.y) && (lastSize.y <= 20 || (lastSize.y < 50 && lastSize.y > 20)) && lastHandle.y >= MinDurationSlider.y) || InfiniteDuration.isMouseOver() || TimeUnit.isMouseOver()) {
+		if (mouseX >= MinDurationSlider.x - 2 && mouseX <= MinDurationSlider.x + MinDurationSlider.width + 2 && mouseY < RotSpeedSlider.y + RotSpeedSlider.height && mouseY >= MinDurationSlider.y && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= MinDurationSlider.y || InfiniteDuration.isMouseOver() || TimeUnit.isMouseOver()) {
 			moveText(text);
 
 			if (selected <= 5)
@@ -305,7 +290,6 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 	}
 
 	private void drawInfo() {
-		int posY = Done.y - 18;
 
 		String s = "Destroy Particle Count [\u00A76" + (int) Math.pow(FBP.particlesPerAxis, 3) + "\u00A7f]";
 		ParticleCountBase.displayString = s;
@@ -354,7 +338,7 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
 		if (mouseButton == 0) {
 			for (int i = 0; i < this.buttonList.size(); ++i) {
 				GuiButton guibutton = this.buttonList.get(i);

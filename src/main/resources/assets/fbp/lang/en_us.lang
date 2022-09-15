@@ -1,0 +1,21 @@
+# Menu
+menu.bugreport=Found a §4bug§a? Click to report it!
+
+# Menu Blacklist
+menu.blacklist.title=§LBlacklist a Block
+menu.blacklist.placeanimation=§f§lPLACE ANIMATION
+menu.blacklist.particles=§f§lPARTICLES
+menu.blacklist.add=§a§lADD
+menu.blacklist.remove=§c§lREMOVE
+menu.blacklist.cantanimate=§c§lCAN'T BE ANIMATED
+menu.blacklist.cantadd=§c§lCAN'T BE ADDED
+
+# Menu Page 0
+menu.particlelife.description.duration=Sets §particle life duration
+menu.particlelife.description.duration.range= range§a to between §6
+menu.particlelife.description.duration.and=§a and §6
+menu.particlelife.description.duration.to= §ato §6
+menu.particlelife.description.infinity=Sets §6particle life duration §ato §6infinity§a.
+
+# General
+menu.general.period=§a.

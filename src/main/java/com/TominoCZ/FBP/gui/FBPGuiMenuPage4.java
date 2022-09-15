@@ -35,17 +35,17 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 
 		int x = this.width / 2 - (96 * 2 + 8) / 2;
 
-		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, b1Text, FBP.fancyFlame, true);
-		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, b2Text, FBP.fancySmoke, true);
-		b3 = new FBPGuiButton(3, x, b2.y + b1.height + 6, b3Text, FBP.fancyRain, true);
-		b4 = new FBPGuiButton(4, x, b3.y + b1.height + 1, b4Text, FBP.fancySnow, true);
-		b5 = new FBPGuiButton(5, x, b4.y + b1.height + 6, b5Text, FBP.waterPhysics, true);
-		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, b6Text, FBP.restOnFloor, true);
+		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, b1Text, FBP.fancyFlame, true, true);
+		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, b2Text, FBP.fancySmoke, true, true);
+		b3 = new FBPGuiButton(3, x, b2.y + b1.height + 6, b3Text, FBP.fancyRain, true, true);
+		b4 = new FBPGuiButton(4, x, b3.y + b1.height + 1, b4Text, FBP.fancySnow, true, true);
+		b5 = new FBPGuiButton(5, x, b4.y + b1.height + 6, b5Text, FBP.waterPhysics, true, true);
+		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, b6Text, FBP.restOnFloor, true, true);
 
-		Back = new FBPGuiButton(-3, this.width / 2 - 125 - 19, (6 * b1.height + b1.y - 5 + 10 - GUIOffsetY), "<<", false, false);
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, (6 * b1.height + b1.y - 5) + 24 + 20 - GUIOffsetY, "Defaults", false, false);
-		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, "Done", false, false);
-		Reload = new FBPGuiButton(-2, Done.x, Defaults.y + Defaults.height + 1, "Reload Config", false, false);
+		Back = new FBPGuiButton(-3, this.width / 2 - 125 - 19, (6 * b1.height + b1.y - 5 + 10 - GUIOffsetY), "<<", false, false, true);
+		Defaults = new FBPGuiButton(0, this.width / 2 + 2, (6 * b1.height + b1.y - 5) + 24 + 20 - GUIOffsetY, "Defaults", false, false, true);
+		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, "Done", false, false, true);
+		Reload = new FBPGuiButton(-2, Done.x, Defaults.y + Defaults.height + 1, "Reload Config", false, false, true);
 		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 		Enable = new FBPGuiButtonEnable(-5, ReportBug.x - 25 - 4, 2, new Dimension(width, height), this.fontRenderer);
 
