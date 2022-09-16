@@ -16,6 +16,7 @@ import java.util.Arrays;
 
 @SideOnly(Side.CLIENT)
 public class FBPGuiMenuPage0 extends GuiScreen {
+
 	GuiButton Reload, Done, Defaults, Next, ReportBug, Enable, InfiniteDuration, TimeUnit;
 
 	FBPGuiSlider MinDurationSlider, MaxDurationSlider, ParticleCountBase, ScaleMultSlider, GravitiyForceSlider, RotSpeedSlider;
@@ -32,13 +33,10 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 	double offsetX = 0;
 
-	boolean canChangeTimeUnit = true;
-
 	int GUIOffsetY = 8;
 
 	@Override
 	public void initGui() {
-		this.buttonList.clear();
 
 		int x1 = this.width / 2 + 80;
 		int x2 = this.width / 2 - 100;
@@ -64,7 +62,7 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 		Defaults.width = Done.width = 98;
 		Reload.width = 96 * 2 + 8;
 
-		Next = new FBPGuiButton(-3, RotSpeedSlider.x + RotSpeedSlider.width + 25, RotSpeedSlider.y + 10 - GUIOffsetY, ">>", false, false, true);
+		Next = new FBPGuiButton(-3, RotSpeedSlider.x + RotSpeedSlider.width + 25, RotSpeedSlider.y + 2 - GUIOffsetY, ">>", false, false, true);
 
 		InfiniteDuration.width = TimeUnit.width = Next.width = 20;
 
@@ -73,18 +71,13 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
-		boolean init = true;
 
 		switch (button.id) {
 		case -6:
 			FBP.setEnabled(!FBP.enabled);
 			break;
 		case -5:
-			if (!canChangeTimeUnit)
-				return;
-
 			FBP.showInMillis = !FBP.showInMillis;
-			init = false;
 			break;
 		case -4:
 			try {
@@ -104,20 +97,15 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 			break;
 		case 0:
 			this.mc.displayGuiScreen(new FBPGuiYesNo(this));
-			init = false;
 			break;
 		case 11:
 			InfiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "\u00A7a" : "\u00A7c") + "\u221e";
-			init = false;
+			update();
 			break;
 		case 12:
 			TimeUnit.displayString = "\u00A7a\u00A7L" + ((FBP.showInMillis = !FBP.showInMillis) ? "ms" : "ti");
-			init = false;
 			break;
 		}
-
-		if (init)
-			initGui();
 	}
 
 	@Override
@@ -160,38 +148,35 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 		ParticleCountBase.value = (FBP.particlesPerAxis - 2) / 3.0;
 
-		canChangeTimeUnit = !isMouseOverSliders(mouseX, mouseY);
-
 		drawMouseOverSelection(mouseX, mouseY);
 
-		FBPGuiHelper.drawTitle(MinDurationSlider.y - GUIOffsetY, width, height, fontRenderer);
+		FBPGuiHelper.drawTitle(MinDurationSlider.y - GUIOffsetY, width, fontRenderer);
 
-		update();
 		drawInfo();
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	private void drawMouseOverSelection(int mouseX, int mouseY) {
-		int posY = Done.y - 18;
+		final int posY = Done.y - 18;
 
-		if ((mouseX >= MinDurationSlider.x - 2 && mouseX <= (MinDurationSlider.x + MinDurationSlider.width + 2)) && mouseY >= MinDurationSlider.y && mouseY <= (MaxDurationSlider.y + MaxDurationSlider.height - 2)) {
+		if (MinDurationSlider.isMouseOver(mouseX, mouseY) || MaxDurationSlider.isMouseOver(mouseX, mouseY)) {
 			handle.y = MinDurationSlider.y;
 			size = new Vector2d(MinDurationSlider.width, 39);
 			selected = 1;
-		} else if (((mouseX >= ParticleCountBase.x) && (mouseX <= ParticleCountBase.x + ParticleCountBase.width)) && (mouseY >= (ParticleCountBase.y + 1)) && (mouseY <= (ParticleCountBase.y + ParticleCountBase.height - 1) - 1)) {
+		} else if (ParticleCountBase.isMouseOver(mouseX, mouseY)) {
 			handle.y = ParticleCountBase.y;
 			size = new Vector2d(ParticleCountBase.width, 18);
 			selected = 2;
-		} else if (((mouseX >= ScaleMultSlider.x) && (mouseX <= ScaleMultSlider.x + ScaleMultSlider.width)) && (mouseY >= (ScaleMultSlider.y + 1)) && (mouseY <= (ScaleMultSlider.y + ScaleMultSlider.height - 1) - 1)) {
+		} else if (ScaleMultSlider.isMouseOver(mouseX, mouseY)) {
 			handle.y = ScaleMultSlider.y;
 			size = new Vector2d(ScaleMultSlider.width, 18);
 			selected = 3;
-		} else if (((mouseX >= GravitiyForceSlider.x) && (mouseX <= GravitiyForceSlider.x + GravitiyForceSlider.width)) && (mouseY >= GravitiyForceSlider.y + 1) && (mouseY <= GravitiyForceSlider.y + GravitiyForceSlider.height - 1)) {
+		} else if (GravitiyForceSlider.isMouseOver(mouseX, mouseY)) {
 			handle.y = GravitiyForceSlider.y;
 			size = new Vector2d(GravitiyForceSlider.width, 18);
 			selected = 4;
-		} else if (((mouseX >= RotSpeedSlider.x) && (mouseX <= RotSpeedSlider.x + RotSpeedSlider.width)) && (mouseY >= RotSpeedSlider.y + 1) && (mouseY <= RotSpeedSlider.y + RotSpeedSlider.height - 1)) {
+		} else if (RotSpeedSlider.isMouseOver(mouseX, mouseY)) {
 			handle.y = RotSpeedSlider.y;
 			size = new Vector2d(RotSpeedSlider.x - (RotSpeedSlider.x + RotSpeedSlider.width), 18);
 			selected = 5;
@@ -249,100 +234,71 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 			if (!FBP.infiniteDuration) {
 				String _text = (FBP.minAge != FBP.maxAge ? (I18n.format("menu.particlelife.description.duration.range") + (FBP.showInMillis ? FBP.minAge * 50 : FBP.minAge) + I18n.format("menu.particlelife.description.duration.and") + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + (FBP.showInMillis ? "ms" : " ticks")) : (I18n.format("menu.particlelife.description.duration.to") + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + (FBP.showInMillis ? "ms" : " ticks")));
 
-				text = I18n.format("menu.particlelife.description.duration") + _text + I18n.format("menu.general.period");
+				text = I18n.format("menu.particlelife.description.duration") + _text + I18n.format("menu.period");
 			} else {
 				text = I18n.format("menu.particlelife.description.infinity");
 			}
 			break;
 		case 2:
-			text = "Sets the \u00A76block destroy particle count\u00A7a to \u00A76"
-					+ (int) Math.pow(FBP.particlesPerAxis, 3) + " \u00A7c[\u00A76" + FBP.particlesPerAxis
-					+ "^3\u00A7c]\u00A7a.";
+			text = I18n.format("menu.destroyparticles.description") + (int) Math.pow(FBP.particlesPerAxis, 3) + " \u00A7c[\u00A76" + FBP.particlesPerAxis + "^3\u00A7c]"+ I18n.format("menu.period");
 			break;
 		case 3:
-			text = "Sets \u00A76particle scale multiplier \u00A7ato \u00A76" + FBP.scaleMult + "\u00A7a.";
+			text = I18n.format("menu.particlescale.description") + FBP.scaleMult +  I18n.format("menu.period");
 			break;
 		case 4:
-			text = "Multiplies \u00A76default particle gravity force\u00A7a by \u00A76" + FBP.gravityMult + "\u00A7a.";
+			text = I18n.format("menu.particlegravity.description")  + FBP.gravityMult + I18n.format("menu.period");
 			break;
 		case 5:
-			text = "Multiplies \u00A76particle rotation\u00A7a by \u00A76" + FBP.rotationMult + "\u00A7a.";
+			text = I18n.format("menu.particlerotation.description")  + FBP.rotationMult + I18n.format("menu.period");
 			break;
 		case 6:
-			text = (FBP.infiniteDuration ? "\u00A7cDisable" : "Enable")
-					+ " \u00A76infinite particle life duration\u00A7a.";
+			text = (FBP.infiniteDuration ? I18n.format("menu.disable") : I18n.format("menu.enable")) + I18n.format("menu.infiniteduration.description");
 			break;
 		case 7:
-			text = "Show the time in \u00A76" + (!FBP.showInMillis ? "milliseconds" : "ticks") + "\u00A7a.";
+			text = I18n.format("menu.time.description") + (!FBP.showInMillis ? I18n.format("menu.timems.description") : "ticks") + I18n.format("menu.period");
 			break;
 		default:
-			text = "";
+			text = "No description available please report this";
 		}
 
 		if (mouseX >= MinDurationSlider.x - 2 && mouseX <= MinDurationSlider.x + MinDurationSlider.width + 2 && mouseY < RotSpeedSlider.y + RotSpeedSlider.height && mouseY >= MinDurationSlider.y && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= MinDurationSlider.y || InfiniteDuration.isMouseOver() || TimeUnit.isMouseOver()) {
-			moveText(text);
-
 			if (selected <= 5)
 				FBPGuiHelper.drawRect(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
 
-			this.drawCenteredString(fontRenderer, text, (int) (this.width / 2 + offsetX), posY, fontRenderer.getColorCode('a'));
+			this.drawCenteredString(fontRenderer, text, (int) (this.width / 2 + offsetX), posY, fontRenderer.getColorCode('f'));
 		}
 	}
 
 	private void drawInfo() {
 
-		String s = "Destroy Particle Count [\u00A76" + (int) Math.pow(FBP.particlesPerAxis, 3) + "\u00A7f]";
+		String s = I18n.format("menu.destroyparticles.info") + " [\u00A76" + (int) Math.pow(FBP.particlesPerAxis, 3) + "\u00A7f]";
 		ParticleCountBase.displayString = s;
 
 		if (FBP.infiniteDuration)
-			s = "Min. Duration" + " [\u00A76" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "\u00A7f]";
+			s = I18n.format("menu.minduration.info") + " [\u00A76" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "\u00A7f]";
 		else
-			s = "Min. Duration [\u00A76" + (FBP.showInMillis ? ((FBP.minAge * 50) + "ms") : (FBP.minAge + (FBP.minAge > 1 ? " ticks" : " tick"))) + "\u00A7f]";
+			s = I18n.format("menu.minduration.info") + " [\u00A76" + (FBP.showInMillis ? ((FBP.minAge * 50) + "ms") : (FBP.minAge + " tick")) + "\u00A7f]";
 
 		MinDurationSlider.displayString = s;
 
 		if (FBP.infiniteDuration)
-			s = "Max. Duration" + " [\u00A76" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "\u00A7f]";
+			s = I18n.format("menu.maxduration.info") + " [\u00A76" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "\u00A7f]";
 		else
-			s = "Max. Duration [\u00A76" + (FBP.showInMillis ? ((FBP.maxAge * 50) + "ms") : (FBP.maxAge + (FBP.maxAge > 1 ? " ticks" : " tick"))) + "\u00A7f]";
+			s = I18n.format("menu.maxduration.info") + " [\u00A76" + (FBP.showInMillis ? ((FBP.maxAge * 50) + "ms") : (FBP.maxAge + (FBP.maxAge > 1 ? " ticks" : " tick"))) + "\u00A7f]";
 
 		MaxDurationSlider.displayString = s;
 
-		ScaleMultSlider.displayString = "Scale Mult. [\u00A76" + FBP.scaleMult + "\u00A7f]";
+		ScaleMultSlider.displayString = I18n.format("menu.scalemult.info") + " [\u00A76" + FBP.scaleMult + "\u00A7f]";
 
-		GravitiyForceSlider.displayString = "Gravity Force Mult. [\u00A76" + FBP.gravityMult + "\u00A7f]";
+		GravitiyForceSlider.displayString = I18n.format("menu.gravityscale.info") + " [\u00A76" + FBP.gravityMult + "\u00A7f]";
 
-		RotSpeedSlider.displayString = "Rotation Speed Mult. [\u00A76" + (FBP.rotationMult != 0 ? FBP.rotationMult : FBPGuiHelper.off) + "\u00A7f]";
-	}
-
-	boolean isMouseOverSliders(int mouseX, int mouseY) {
-		return MinDurationSlider.isMouseOver(mouseX, mouseY) || MaxDurationSlider.isMouseOver(mouseX, mouseY);
-	}
-
-	private void moveText(String text) {
-		int textWidth = this.fontRenderer.getStringWidth(text);
-		int outsideSizeX = textWidth - this.width;
-
-		if (textWidth > width) {
-			double speedOfSliding = 2400;
-			long time = System.currentTimeMillis();
-
-			float normalValue = (float) ((time / speedOfSliding) % 2);
-
-			if (normalValue > 1)
-				normalValue = 2 - normalValue;
-
-			offsetX = (outsideSizeX * 2) * normalValue - outsideSizeX;
-		} else
-			offsetX = 0;
+		RotSpeedSlider.displayString = I18n.format("menu.rotationspeed.info") + " [\u00A76" + (FBP.rotationMult != 0 ? FBP.rotationMult : I18n.format("menu.off")) + "\u00A7f]";
 	}
 
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
 		if (mouseButton == 0) {
-			for (int i = 0; i < this.buttonList.size(); ++i) {
-				GuiButton guibutton = this.buttonList.get(i);
-
+			for (GuiButton guibutton : this.buttonList) {
 				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
 					if (!guibutton.isMouseOver())
 						return;
@@ -355,7 +311,6 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 	void update() {
 		MinDurationSlider.enabled = !FBP.infiniteDuration;
-
 		MaxDurationSlider.enabled = !FBP.infiniteDuration;
 	}
 

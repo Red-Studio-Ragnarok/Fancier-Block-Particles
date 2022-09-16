@@ -1,5 +1,12 @@
 # Menu
-menu.bugreport=Found a §4bug§a? Click to report it!
+menu.fbp=§l= Fancier Block Particles =
+menu.bugreport=Found a §cbug§a? Click to report it!
+menu.enable=§cEnable
+menu.disable=§aDisable
+menu.disabled=§l= Disabled =
+menu.on=§aON
+menu.off=§cOFF
+menu.period=§f.
 
 # Menu Blacklist
 menu.blacklist.title=§LBlacklist a Block
@@ -11,11 +18,22 @@ menu.blacklist.cantanimate=§c§lCAN'T BE ANIMATED
 menu.blacklist.cantadd=§c§lCAN'T BE ADDED
 
 # Menu Page 0
-menu.particlelife.description.duration=Sets §particle life duration
-menu.particlelife.description.duration.range= range§a to between §6
-menu.particlelife.description.duration.and=§a and §6
-menu.particlelife.description.duration.to= §ato §6
-menu.particlelife.description.infinity=Sets §6particle life duration §ato §6infinity§a.
+menu.particlelife.description.duration=Sets particle life duration
+menu.particlelife.description.duration.range= range to between §6
+menu.particlelife.description.duration.and= §fand §6
+menu.particlelife.description.duration.to= to §6
+menu.particlelife.description.infinity=Sets particle life duration to §6infinity§f.
+menu.destroyparticles.description=Sets the block destroy particle count to §6
+menu.particlescale.description=Sets particle scale multiplier to §6
+menu.particlegravity.description=Multiplies default particle gravity force by §6
+menu.particlerotation.description=Multiplies particle rotation by §6
+menu.infiniteduration.description= §finfinite particle life duration.
+menu.time.description=Show the time in §6
+menu.timems.description=milliseconds
 
-# General
-menu.general.period=§a.
+menu.destroyparticles.info=Destroy Particle Count
+menu.minduration.info=Min. Duration
+menu.maxduration.info=Max. Duration
+menu.scalemult.info=Scale Mult.
+menu.gravityscale.info=Gravity Force Mult.
+menu.rotationspeed.info=Rotation Speed Mult.

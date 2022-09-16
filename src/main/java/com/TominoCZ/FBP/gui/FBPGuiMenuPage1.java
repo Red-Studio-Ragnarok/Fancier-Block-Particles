@@ -118,7 +118,7 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 
 		drawMouseOverSelection(mouseX, mouseY, partialTicks);
 
-		FBPGuiHelper.drawTitle(WeatherParticleDensity.y - GUIOffsetY, width, height, fontRenderer);
+		FBPGuiHelper.drawTitle(WeatherParticleDensity.y - GUIOffsetY, width, fontRenderer);
 
 		drawInfo();
 

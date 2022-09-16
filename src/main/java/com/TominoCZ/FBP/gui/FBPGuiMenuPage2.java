@@ -139,7 +139,7 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 					fontRenderer.getColorCode('a'));
 		}
 
-		FBPGuiHelper.drawTitle(b1.y - GUIOffsetY, width, height, fontRenderer);
+		FBPGuiHelper.drawTitle(b1.y - GUIOffsetY, width, fontRenderer);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}

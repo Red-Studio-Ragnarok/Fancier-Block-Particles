@@ -5,8 +5,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 
 public class FBPGuiButton extends GuiButton {
+
 	boolean toggleButton;
 	boolean toggle;
 
@@ -86,7 +88,7 @@ public class FBPGuiButton extends GuiButton {
 		} else {
 			this.drawString(fontrenderer, this.displayString, this.x + 8, this.y + (this.height - 8) / 2, j);
 
-			this.drawString(fontrenderer, toggle ? FBPGuiHelper.on : FBPGuiHelper.off, this.x + this.width - 25, this.y + (this.height - 8) / 2, j);
+			this.drawString(fontrenderer, toggle ? I18n.format("menu.on") : I18n.format("menu.off"), this.x + this.width - 25, this.y + (this.height - 8) / 2, j);
 		}
 	}
 
