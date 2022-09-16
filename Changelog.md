@@ -4,12 +4,19 @@
 
 - Disabled buttons now appears greyed out in the menu
 - Changed Blacklist GUI bar and cursor
-- Change some Blacklist GUI from green to white
+- Changed some Blacklist GUI from green to white
+- Changed description text from gree to white
 
 ## Fixed
 
+- Description getting behind back and next buttons
+- Menu showing Fancy Block Particles instead of Fancier Block Particles
 - Being able to click disabled buttons in the menu
 - Being able to hover disabled buttons in the menu
+
+## Removed
+
+- Removed the sliding on text when the screen is to small
 
 ## Optimization
 
