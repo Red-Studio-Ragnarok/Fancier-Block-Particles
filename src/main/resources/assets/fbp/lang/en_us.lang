@@ -37,3 +37,8 @@ menu.maxduration.info=Max. Duration
 menu.scalemult.info=Scale Mult.
 menu.gravityscale.info=Gravity Force Mult.
 menu.rotationspeed.info=Rotation Speed Mult.
+
+# Menu Page 1
+menu.weatherdensity.description=Sets the weather particle density to §6
+
+menu.weatherdensity.info=Weather Particle Density

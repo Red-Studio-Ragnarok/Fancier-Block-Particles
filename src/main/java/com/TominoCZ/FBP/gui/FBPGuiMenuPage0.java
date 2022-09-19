@@ -3,6 +3,7 @@ package com.TominoCZ.FBP.gui;
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.handler.FBPConfigHandler;
 import com.TominoCZ.FBP.util.FBPMathUtil;
+import com.TominoCZ.FBP.util.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -11,7 +12,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.vecmath.Vector2d;
 import java.awt.*;
-import java.net.URI;
 import java.util.Arrays;
 
 @SideOnly(Side.CLIENT)
@@ -56,13 +56,14 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 		Defaults = new FBPGuiButton(0, this.width / 2 + 2, RotSpeedSlider.y + RotSpeedSlider.height + 24 - GUIOffsetY, "Defaults", false, false, true);
 		Done = new FBPGuiButton(-1, x2, Defaults.y, "Done", false, false, true);
-		Reload = new FBPGuiButton(-2, x2, Defaults.y + Defaults.height + 1, "Reload Config", false, false, true);
-		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
 		Defaults.width = Done.width = 98;
+		Reload = new FBPGuiButton(-2, x2, Defaults.y + Defaults.height + 1, "Reload Config", false, false, true);
 		Reload.width = 96 * 2 + 8;
 
 		Next = new FBPGuiButton(-3, RotSpeedSlider.x + RotSpeedSlider.width + 25, RotSpeedSlider.y + 2 - GUIOffsetY, ">>", false, false, true);
+
+		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
+		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 
 		InfiniteDuration.width = TimeUnit.width = Next.width = 20;
 
@@ -71,7 +72,6 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
-
 		switch (button.id) {
 		case -6:
 			FBP.setEnabled(!FBP.enabled);
@@ -81,9 +81,9 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 			break;
 		case -4:
 			try {
-				Desktop.getDesktop().browse(new URI("https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/new?assignees=&labels=&template=bug_report.md&title="));
+				Desktop.getDesktop().browse(ModReference.ISSUE);
 			} catch (Exception e) {
-				throw new RuntimeException(e);
+				e.printStackTrace();
 			}
 			break;
 		case -3:
