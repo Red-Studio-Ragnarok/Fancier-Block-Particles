@@ -3,6 +3,7 @@ package com.TominoCZ.FBP.gui;
 import com.TominoCZ.FBP.handler.FBPConfigHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -11,36 +12,27 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public class FBPGuiYesNo extends GuiScreen {
 
-	GuiButton yes, no;
+	GuiButton Yes, No;
 
 	GuiScreen parent;
 
-	public FBPGuiYesNo(GuiScreen s)
-	{
+	public FBPGuiYesNo(GuiScreen s) {
 		parent = s;
 	}
 
 	@Override
 	public void initGui() {
-		this.buttonList.clear();
+		Yes = new FBPGuiButton(1, this.width / 2 - 75, (int) (this.height / 1.85), I18n.format("menu.yes"), false, false, true);
+		No = new FBPGuiButton(0, this.width / 2 + 26, (int) (this.height / 1.85), I18n.format("menu.no"), false, false, true);
+		Yes.width = No.width = 50;
 
-		yes = new FBPGuiButton(1, this.width / 2 - 75, (int) (this.height / 1.85), "\u00A7aYes", false, false, true);
-		no = new FBPGuiButton(0, this.width / 2 + 26, (int) (this.height / 1.85), "\u00A7cNo", false, false, true);
-
-		yes.setWidth(50);
-		no.setWidth(50);
-
-		this.buttonList.add(yes);
-		this.buttonList.add(no);
+		this.buttonList.addAll(java.util.Arrays.asList(Yes, No));
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException {
-		switch (button.id)
-		{
-		case 1:
+	protected void actionPerformed(GuiButton button) {
+		if (button.id == 1) {
 			FBPConfigHandler.defaults(true);
-			break;
 		}
 		this.mc.displayGuiScreen(parent);
 
@@ -48,19 +40,9 @@ public class FBPGuiYesNo extends GuiScreen {
 	}
 
 	@Override
-	public void updateScreen() {
-
-	}
-
-	@Override
-	public boolean doesGuiPauseGame() {
-		return false;
-	}
-
-	@Override
 	protected void keyTyped(char c, int keyCode) throws IOException {
 		if (keyCode == 1) {
-			closeGui();
+			mc.displayGuiScreen(parent);
 			return;
 		}
 
@@ -72,17 +54,9 @@ public class FBPGuiYesNo extends GuiScreen {
 		parent.width = this.width;
 		parent.height = this.height;
 
-		parent.initGui();
-		parent.drawScreen(0, 0, partialTicks);
-
 		this.drawDefaultBackground();
 
-		this.drawCenteredString(fontRenderer, "Are you sure?", this.width / 2, yes.y - 30, Integer.parseInt("FFAA00", 16));
+		this.drawCenteredString(fontRenderer, I18n.format("menu.confirmation"), this.width / 2, Yes.y - 30, Integer.parseInt("FFAA00", 16));
 		super.drawScreen(mouseX, mouseY, partialTicks);
-	}
-
-	void closeGui()
-	{
-		mc.displayGuiScreen(parent);
 	}
 }

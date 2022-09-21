@@ -17,7 +17,7 @@ import java.util.Arrays;
 @SideOnly(Side.CLIENT)
 public class FBPGuiMenuPage0 extends GuiScreen {
 
-	GuiButton Reload, Done, Defaults, Next, ReportBug, Enable, InfiniteDuration, TimeUnit;
+	GuiButton InfiniteDuration, TimeUnit, Defaults, Done, Reload, Next, Enable, ReportBug;
 
 	FBPGuiSlider MinDurationSlider, MaxDurationSlider, ParticleCountBase, ScaleMultSlider, GravitiyForceSlider, RotSpeedSlider;
 
@@ -30,8 +30,6 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 	long time, lastTime;
 
 	int selected = 0;
-
-	double offsetX = 0;
 
 	int GUIOffsetY = 8;
 
@@ -54,10 +52,10 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 		TimeUnit = new FBPGuiButton(12, x2 - 25, MinDurationSlider.y + 10, "\u00A7a\u00A7L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, RotSpeedSlider.y + RotSpeedSlider.height + 24 - GUIOffsetY, "Defaults", false, false, true);
-		Done = new FBPGuiButton(-1, x2, Defaults.y, "Done", false, false, true);
+		Defaults = new FBPGuiButton(0, this.width / 2 + 2, RotSpeedSlider.y + RotSpeedSlider.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
+		Done = new FBPGuiButton(-1, x2, Defaults.y, I18n.format("menu.done"), false, false, true);
 		Defaults.width = Done.width = 98;
-		Reload = new FBPGuiButton(-2, x2, Defaults.y + Defaults.height + 1, "Reload Config", false, false, true);
+		Reload = new FBPGuiButton(-2, x2, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
 		Reload.width = 96 * 2 + 8;
 
 		Next = new FBPGuiButton(-3, RotSpeedSlider.x + RotSpeedSlider.width + 25, RotSpeedSlider.y + 2 - GUIOffsetY, ">>", false, false, true);
@@ -68,6 +66,8 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 		InfiniteDuration.width = TimeUnit.width = Next.width = 20;
 
 		this.buttonList.addAll(Arrays.asList(MinDurationSlider, MaxDurationSlider, ParticleCountBase, ScaleMultSlider, GravitiyForceSlider, RotSpeedSlider, InfiniteDuration, TimeUnit, Defaults, Done, Reload, Next, Enable, ReportBug));
+
+		update();
 	}
 
 	@Override
@@ -265,7 +265,7 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 			if (selected <= 5)
 				FBPGuiHelper.drawRect(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
 
-			this.drawCenteredString(fontRenderer, text, (int) (this.width / 2 + offsetX), posY, fontRenderer.getColorCode('f'));
+			this.drawCenteredString(fontRenderer, text, this.width / 2, posY, fontRenderer.getColorCode('f'));
 		}
 	}
 
@@ -312,10 +312,5 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 	void update() {
 		MinDurationSlider.enabled = !FBP.infiniteDuration;
 		MaxDurationSlider.enabled = !FBP.infiniteDuration;
-	}
-
-	@Override
-	public void onGuiClosed() {
-		FBPConfigHandler.write();
 	}
 }

@@ -2,72 +2,60 @@ package com.TominoCZ.FBP.gui;
 
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.handler.FBPConfigHandler;
+import com.TominoCZ.FBP.util.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
 
 @SideOnly(Side.CLIENT)
 public class FBPGuiMenuPage2 extends GuiScreen {
 
-	GuiButton Reload, Done, Defaults, Back, Next, ReportBug, Enable, b1, b2, b3, b4, b5, b6;
+	GuiButton b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug;
 
-	String b1Text = "Random Rotation";
-	String b2Text = "Cartoon Mode";
+	final String b1Text = I18n.format("menu.randomrotation.info");
+	final String b2Text = I18n.format("menu.cartonmode.info");
+	final String b3Text = I18n.format("menu.randomizedscale.info");
+	final String b4Text = I18n.format("menu.randomfadespeed.info");
+	final String b5Text = I18n.format("menu.redstoneblock.info");
+	final String b6Text = I18n.format("menu.spawnfreeze.info");
 
-	String b3Text = "Randomized Scale";
-	String b4Text = "Random Fade Speed";
-
-	String b5Text = "Spawn Redstone Block Particles";
-	String b6Text = "Spawn Particles in Freeze Mode";
-
-	String description = "";
-
-	boolean reachedEnd = false;
-
-	long time, lastTime;
-
-	double offsetX = 0;
+	String description;
 
 	int GUIOffsetY = 4;
 
 	@Override
 	public void initGui() {
-		this.buttonList.clear();
-
 		int x = this.width / 2 - (96 * 2 + 8) / 2;
 
 		b1 = new FBPGuiButton(1, x, this.height / 5 - 10 + GUIOffsetY, b1Text, FBP.randomRotation, true, true);
 		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, b2Text, false, false, false);
-
 		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, b3Text, FBP.randomizedScale, true, true);
 		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, b4Text, FBP.randomFadingSpeed, true, true);
-
 		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, b5Text, FBP.spawnRedstoneBlockParticles, true, true);
 		b6 = new FBPGuiButton(6, x, b5.y + b5.height + 1, b6Text, FBP.spawnWhileFrozen, true, true);
 
-		Back = new FBPGuiButton(-3, b6.x - 44, b6.y + 10 - GUIOffsetY, "<<", false, false, true);
-		Next = new FBPGuiButton(-5, b6.x + b6.width + 25, b6.y + 10 - GUIOffsetY, ">>", false, false, true);
-
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, "Defaults", false, false, true);
-		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, "Done", false, false, true);
-		Reload = new FBPGuiButton(-2, this.width / 2 - 100, Defaults.y + Defaults.height + 1, "Reload Config", false, false, true);
-		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
+		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
+		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, I18n.format("menu.done"), false, false, true);
 		Defaults.width = Done.width = 98;
+		Reload = new FBPGuiButton(-2, this.width / 2 - 100, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
 		Reload.width = b1.width = b2.width = b3.width = b4.width = b5.width = b6.width = 200;
 
+		Back = new FBPGuiButton(-3, b6.x - 44, b6.y + 2 - GUIOffsetY, "<<", false, false, true);
+		Next = new FBPGuiButton(-5, b6.x + b6.width + 25, b6.y + 2 - GUIOffsetY, ">>", false, false, true);
 		Back.width = Next.width = 20;
 
-		this.buttonList.addAll(java.util.Arrays.asList(new GuiButton[] { b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug }));
+		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
+		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
+
+		this.buttonList.addAll(java.util.Arrays.asList(b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug));
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException {
+	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
 		case -6:
 			FBP.setEnabled(!FBP.enabled);
@@ -77,9 +65,9 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 			break;
 		case -4:
 			try {
-				Desktop.getDesktop().browse(new URI("https://github.com/TominoCZ/FancyBlockParticles/issues"));
+				Desktop.getDesktop().browse(ModReference.ISSUE);
 			} catch (Exception e) {
-				throw new RuntimeException(e);
+				e.printStackTrace();
 			}
 			break;
 		case -3:
@@ -89,7 +77,7 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 			FBPConfigHandler.init();
 			break;
 		case -1:
-			this.mc.displayGuiScreen((GuiScreen) null);
+			this.mc.displayGuiScreen(null);
 			break;
 		case 0:
 			this.mc.displayGuiScreen(new FBPGuiYesNo(this));
@@ -112,10 +100,6 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 			FBP.spawnWhileFrozen = !FBP.spawnWhileFrozen;
 			break;
 		}
-
-		FBPConfigHandler.write();
-
-		initGui();
 	}
 
 	@Override
@@ -132,11 +116,7 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 		getDescription();
 
 		if ((mouseX >= b1.x && mouseX < b1.x + b1.width) && (mouseY >= b1.y && mouseY < b6.y + b1.height)) {
-
-			moveText();
-
-			this.drawCenteredString(fontRenderer, description, (int) (this.width / 2 + offsetX), posY,
-					fontRenderer.getColorCode('a'));
+			this.drawCenteredString(fontRenderer, description, this.width / 2, posY, fontRenderer.getColorCode('f'));
 		}
 
 		FBPGuiHelper.drawTitle(b1.y - GUIOffsetY, width, fontRenderer);
@@ -144,62 +124,44 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
-	private void moveText() {
-		int textWidth = this.fontRenderer.getStringWidth(description);
-		int outsideSizeX = textWidth - this.width;
-
-		if (textWidth > width) {
-			double speedOfSliding = 2400;
-			long time = System.currentTimeMillis();
-
-			float normalValue = (float) ((time / speedOfSliding) % 2);
-
-			if (normalValue > 1)
-				normalValue = 2 - normalValue;
-
-			offsetX = (outsideSizeX * 2) * normalValue - outsideSizeX;
-		} else
-			offsetX = 0;
-	}
-
-	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-		if (mouseButton == 0) {
-			for (int i = 0; i < this.buttonList.size(); ++i) {
-				GuiButton guibutton = this.buttonList.get(i);
-
-				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
-					if (!guibutton.isMouseOver())
-						return;
-
-					this.actionPerformed(guibutton);
+	private void getDescription() {
+		for (GuiButton b : this.buttonList) {
+			if (b.isMouseOver()) {
+				switch (b.id) {
+					case 1:
+						description = I18n.format("menu.randomrotation.description");
+						break;
+					case 2:
+						description = I18n.format("menu.cartonmode.description");
+						break;
+					case 3:
+						description = I18n.format("menu.randomizedscale.description");
+						break;
+					case 4:
+						description = I18n.format("menu.randomfadespeed.description");
+						break;
+					case 5:
+						description = I18n.format("menu.redstoneblock.description");
+						break;
+					case 6:
+						description = I18n.format("menu.spawnfreeze.description");
+						break;
+					default:
+						description = "No description available please report this";
 				}
 			}
 		}
 	}
 
-	private void getDescription() {
-		for (GuiButton b : this.buttonList) {
-			if (b.isMouseOver()) {
-				switch (b.id) {
-				case 1:
-					description = "Enables \u00A76random \u00A7aand \u00A76simple rotation \u00A7amath.";
-					break;
-				case 2:
-					description = "\u00A74DEPRECATED\u00A7a/\u00A74REMOVED \u00A7aMakes the particles look \u00A76cartoon\u00A7a-ish.";
-					break;
-				case 3:
-					description = "Makes the particle \u00A76scale\u00A7a slightly \u00A76randomized\u00A7a.";
-					break;
-				case 4:
-					description = "Enables \u00A76random \u00A7aparticle \u00A76fade away\u00A7a-transition speed.";
-					break;
-				case 5:
-					description = "Allows spawning \u00A76redstone block\u00A7a particles.";
-					break;
-				case 6:
-					description = "Allows spawning particles in \u00A76freeze mode\u00A7a.";
-					break;
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+		if (mouseButton == 0) {
+			for (GuiButton guibutton : this.buttonList) {
+				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
+					if (!guibutton.isMouseOver())
+						return;
+
+					this.actionPerformed(guibutton);
 				}
 			}
 		}

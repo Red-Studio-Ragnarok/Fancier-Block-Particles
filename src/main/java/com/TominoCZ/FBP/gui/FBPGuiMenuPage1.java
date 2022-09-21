@@ -30,8 +30,6 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 
 	int selected = 0;
 
-	double offsetX = 0;
-
 	int GUIOffsetY = 8;
 
 	@Override
@@ -43,10 +41,10 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 		WeatherParticleDensity = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (FBP.weatherParticleDensity - 0.75) / 4.25);
 		int Y = WeatherParticleDensity.y + WeatherParticleDensity.height + 2 + 4 * (WeatherParticleDensity.height + 1) + 5;
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, Y + 20 + 24 - GUIOffsetY + 4, "Defaults", false, false, true);
-		Done = new FBPGuiButton(-1, x2, Defaults.y, "Done", false, false, true);
+		Defaults = new FBPGuiButton(0, this.width / 2 + 2, Y + 20 + 24 - GUIOffsetY + 4, I18n.format("menu.defaults"), false, false, true);
+		Done = new FBPGuiButton(-1, x2, Defaults.y, I18n.format("menu.done"), false, false, true);
 		Defaults.width = Done.width = 98;
-		Reload = new FBPGuiButton(-2, x2, Defaults.y + Defaults.height + 1, "Reload Config", false, false, true);
+		Reload = new FBPGuiButton(-2, x2, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
 		Reload.width = 96 * 2 + 8;
 
 		Back = new FBPGuiButton(-7, X - 44, Y + 2 - GUIOffsetY + 4, "<<", false, false, true);
@@ -174,7 +172,7 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 			if (selected <= 5)
 				FBPGuiHelper.drawRect(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
 
-			this.drawCenteredString(fontRenderer, text, (int) (this.width / 2 + offsetX), posY, fontRenderer.getColorCode('f'));
+			this.drawCenteredString(fontRenderer, text, this.width / 2, posY, fontRenderer.getColorCode('f'));
 		}
 	}
 
@@ -194,10 +192,5 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 				}
 			}
 		}
-	}
-
-	@Override
-	public void onGuiClosed() {
-		FBPConfigHandler.write();
 	}
 }
