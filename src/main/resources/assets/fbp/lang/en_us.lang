@@ -54,11 +54,6 @@ menu.time.description=Show the time in §6
 menu.timems.description=milliseconds
 
 # Menu Page 1
-menu.weatherdensity.info=Weather Particle Density
-
-menu.weatherdensity.description=Sets the weather particle density to §6
-
-# Menu Page 2
 menu.randomrotation.info=Random Rotation
 menu.cartonmode.info=Cartoon Mode
 menu.randomizedscale.info=Randomized Scale
@@ -73,7 +68,7 @@ menu.randomfadespeed.description=Enables random particle fade away speed.
 menu.redstoneblock.description=Allows spawning redstone block particles.
 menu.spawnfreeze.description=Allows spawning particles in freeze mode.
 
-# Menu Page 3
+# Menu Page 2
 menu.entitycollide.info=Collide With Entities
 menu.bounceoffwalls.info=Bounce Off Walls
 menu.lowtraction.info=Low Traction
@@ -88,7 +83,7 @@ menu.smartbreaking.description=Smart particle motion and scaling.
 menu.fancyplaceanimation.description=Adds a fancy block placing animation.
 menu.spawnplaceparticles.description=Enables block place particles.
 
-# Menu Page 4
+# Menu Page 3
 menu.fancyflame.info=Fancy Flame
 menu.fancysmoke.info=Fancy Smoke
 menu.fancyrain.info=Fancy Rain
@@ -102,3 +97,8 @@ menu.fancyrain.description=Makes rain particles fancy.
 menu.fancysnow.description=Makes snow particles fancy.
 menu.waterphysics.description=Makes wood particles float and others to sink slower.
 menu.restonfloor.description=Makes particles rest aligned on the ground.
+
+# Menu Page 4
+menu.weatherdensity.info=Weather Particle Density
+
+menu.weatherdensity.description=Sets the weather particle density to §6

@@ -53,7 +53,7 @@ public class FBPGuiYesNo extends GuiScreen {
 
 		this.drawDefaultBackground();
 
-		this.drawCenteredString(fontRenderer, I18n.format("menu.confirmation"), this.width / 2, Yes.y - 30, Integer.parseInt("FFAA00", 16));
+		this.drawCenteredString(fontRenderer, I18n.format("menu.confirmation"), this.width / 2, Yes.y - 30, Integer.parseInt("FFFFFF", 16));
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 }
