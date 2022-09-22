@@ -21,12 +21,12 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 	public void initGui() {
 		int x = this.width / 2 - (96 * 2 + 8) / 2;
 
-		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, I18n.format("menu.entitycollide.info"), FBP.entityCollision, true, true);
-		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, I18n.format("menu.bounceoffwalls.info"), FBP.bounceOffWalls, true, true);
-		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.lowtraction.info"), FBP.lowTraction, true, true);
-		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.smartbreaking.info"), FBP.smartBreaking, true, true);
-		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.fancyplaceanimation.info"), FBP.fancyPlaceAnim, true, true);
-		b6 = new FBPGuiButton(6, x, b5.y + b5.height + 1, I18n.format("menu.spawnplaceparticles.info"), FBP.spawnPlaceParticles, true, true);
+		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, I18n.format("menu.fancyflame.info"), FBP.fancyFlame, true, true);
+		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, I18n.format("menu.fancysmoke.info"), FBP.fancySmoke, true, true);
+		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.fancyrain.info"), FBP.fancyRain, true, true);
+		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.fancysnow.info"), FBP.fancySnow, true, true);
+		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.waterphysics.info"), FBP.waterPhysics, true, true);
+		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, I18n.format("menu.restonfloor.info"), FBP.restOnFloor, true, true);
 
 		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
 		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, I18n.format("menu.done"), false, false, true);
@@ -35,10 +35,10 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 		Reload.width = b1.width = b2.width = b3.width = b4.width = b5.width = b6.width = 200;
 
 		Back = new FBPGuiButton(-3, b6.x - 44, b6.y + 2 - GUIOffsetY, "<<", false, false, true);
-		Next = new FBPGuiButton(-5, b6.x + b6.width + 25, b6.y + 2 - GUIOffsetY, ">>", false, false, true);
+		Next = new FBPGuiButton(-6, b6.x + b6.width + 25, b6.y + 2 - GUIOffsetY, ">>", false, false, true);
 		Back.width = Next.width = 20;
 
-		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
+		Enable = new FBPGuiButtonEnable(-5, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
 		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 
 		this.buttonList.addAll(java.util.Arrays.asList(b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug));
@@ -47,11 +47,11 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
-		case -6:
-			FBP.setEnabled(!FBP.enabled);
+			case -6:
+			this.mc.displayGuiScreen(new FBPGuiMenuPage4());
 			break;
 		case -5:
-			this.mc.displayGuiScreen(new FBPGuiMenuPage4());
+			FBP.setEnabled(!FBP.enabled);
 			break;
 		case -4:
 			try {
@@ -73,24 +73,29 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 			this.mc.displayGuiScreen(new FBPGuiYesNo(this));
 			break;
 		case 1:
-			FBP.entityCollision = !FBP.entityCollision;
+			FBP.fancyFlame = !FBP.fancyFlame;
 			break;
 		case 2:
-			FBP.bounceOffWalls = !FBP.bounceOffWalls;
+			FBP.fancySmoke = !FBP.fancySmoke;
 			break;
 		case 3:
-			FBP.lowTraction = !FBP.lowTraction;
+			FBP.fancyRain = !FBP.fancyRain;
 			break;
 		case 4:
-			FBP.smartBreaking = !FBP.smartBreaking;
+			FBP.fancySnow = !FBP.fancySnow;
 			break;
 		case 5:
-			FBP.fancyPlaceAnim = !FBP.fancyPlaceAnim;
+			FBP.waterPhysics = !FBP.waterPhysics;
 			break;
 		case 6:
-			FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;
+			FBP.restOnFloor = !FBP.restOnFloor;
 			break;
 		}
+
+		if (FBP.fancyRain || FBP.fancySnow)
+			mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
+		else
+			mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
 	}
 
 	@Override
@@ -120,22 +125,22 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 			if (b.isMouseOver()) {
 				switch (b.id) {
 				case 1:
-					description = I18n.format("menu.entitycollide.description");
+					description = I18n.format("menu.fancyflame.description");
 					break;
 				case 2:
-					description = I18n.format("menu.bounceoffwalls.description");
+					description = I18n.format("menu.fancysmoke.description");
 					break;
 				case 3:
-					description = I18n.format("menu.lowtraction.description");
+					description = I18n.format("menu.fancyrain.description");
 					break;
 				case 4:
-					description = I18n.format("menu.smartbreaking.description");
+					description = I18n.format("menu.fancysnow.description");
 					break;
 				case 5:
-					description = I18n.format("menu.fancyplaceanimation.description");
+					description = I18n.format("menu.waterphysics.description");
 					break;
 				case 6:
-					description = I18n.format("menu.spawnplaceparticles.description");
+					description = I18n.format("menu.restonfloor.description");
 					break;
 				default:
 					description = "No description available please report this";

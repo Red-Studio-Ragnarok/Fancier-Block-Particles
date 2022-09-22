@@ -2,54 +2,46 @@ package com.TominoCZ.FBP.gui;
 
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.handler.FBPConfigHandler;
-import com.TominoCZ.FBP.util.FBPMathUtil;
 import com.TominoCZ.FBP.util.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 
-import javax.vecmath.Vector2d;
 import java.awt.*;
-import java.util.Arrays;
 
 public class FBPGuiMenuPage1 extends GuiScreen {
 
-	GuiButton Reload, Done, Defaults, Back, Next, ReportBug, Enable;
-	FBPGuiSlider WeatherParticleDensity;
+	GuiButton b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug;
 
-	Vector2d lastHandle = new Vector2d(0, 0);
-	Vector2d lastSize = new Vector2d(0, 0);
+	String description;
 
-	Vector2d handle = new Vector2d(0, 0);
-	Vector2d size = new Vector2d(0, 0);
-
-	long time, lastTime;
-
-	int selected = 0;
-
-	final int GUIOffsetY = 8;
+	final int GUIOffsetY = 4;
 
 	@Override
 	public void initGui() {
-		int X = this.width / 2 - 100;
+		int x = this.width / 2 - (96 * 2 + 8) / 2;
 
-		WeatherParticleDensity = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (FBP.weatherParticleDensity - 0.75) / 4.25);
-		int Y = WeatherParticleDensity.y + WeatherParticleDensity.height + 2 + 4 * (WeatherParticleDensity.height + 1) + 5;
+		b1 = new FBPGuiButton(1, x, this.height / 5 - 10 + GUIOffsetY, I18n.format("menu.randomrotation.info"), FBP.randomRotation, true, true);
+		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, I18n.format("menu.cartonmode.info"), false, false, false);
+		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.randomizedscale.info"), FBP.randomizedScale, true, true);
+		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.randomfadespeed.info"), FBP.randomFadingSpeed, true, true);
+		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.redstoneblock.info"), FBP.spawnRedstoneBlockParticles, true, true);
+		b6 = new FBPGuiButton(6, x, b5.y + b5.height + 1, I18n.format("menu.spawnfreeze.info"), FBP.spawnWhileFrozen, true, true);
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, Y + 48 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
-		Done = new FBPGuiButton(-1, X, Defaults.y, I18n.format("menu.done"), false, false, true);
+		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
+		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, I18n.format("menu.done"), false, false, true);
 		Defaults.width = Done.width = 98;
-		Reload = new FBPGuiButton(-2, X, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
-		Reload.width = 96 * 2 + 8;
+		Reload = new FBPGuiButton(-2, this.width / 2 - 100, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
+		Reload.width = b1.width = b2.width = b3.width = b4.width = b5.width = b6.width = 200;
 
-		Back = new FBPGuiButton(-7, X - 44, Y + 2 - GUIOffsetY + 4, "<<", false, false, true);
-		Next = new FBPGuiButton(-3, X + 200 + 25, Y + 2 - GUIOffsetY + 4, ">>", false, false, true);
+		Back = new FBPGuiButton(-3, b6.x - 44, b6.y + 2 - GUIOffsetY, "<<", false, false, true);
+		Next = new FBPGuiButton(-5, b6.x + b6.width + 25, b6.y + 2 - GUIOffsetY, ">>", false, false, true);
 		Back.width = Next.width = 20;
 
 		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
 		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 
-		this.buttonList.addAll(Arrays.asList(WeatherParticleDensity, Defaults, Done, Reload, Back, Next, Enable, ReportBug));
+		this.buttonList.addAll(java.util.Arrays.asList(b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug));
 	}
 
 	@Override
@@ -58,6 +50,9 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 		case -6:
 			FBP.setEnabled(!FBP.enabled);
 			break;
+		case -5:
+			this.mc.displayGuiScreen(new FBPGuiMenuPage2());
+			break;
 		case -4:
 			try {
 				Desktop.getDesktop().browse(ModReference.ISSUE);
@@ -65,11 +60,8 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 				e.printStackTrace();
 			}
 			break;
-		case -7:
-			this.mc.displayGuiScreen(new FBPGuiMenuPage0());
-			break;
 		case -3:
-			this.mc.displayGuiScreen(new FBPGuiMenuPage2());
+			this.mc.displayGuiScreen(new FBPGuiMenuPage0());
 			break;
 		case -2:
 			FBPConfigHandler.init();
@@ -79,6 +71,23 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 			break;
 		case 0:
 			this.mc.displayGuiScreen(new FBPGuiYesNo(this));
+			break;
+		case 1:
+			FBP.randomRotation = !FBP.randomRotation;
+			break;
+		case 2:
+			break;
+		case 3:
+			FBP.randomizedScale = !FBP.randomizedScale;
+			break;
+		case 4:
+			FBP.randomFadingSpeed = !FBP.randomFadingSpeed;
+			break;
+		case 5:
+			FBP.spawnRedstoneBlockParticles = !FBP.spawnRedstoneBlockParticles;
+			break;
+		case 6:
+			FBP.spawnWhileFrozen = !FBP.spawnWhileFrozen;
 			break;
 		}
 	}
@@ -90,89 +99,48 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		FBPGuiHelper.background(WeatherParticleDensity.y - 6 - GUIOffsetY, Done.y - 4, width, height);
+		FBPGuiHelper.background(b1.y - 6 - GUIOffsetY, Done.y - 4, width, height);
 
-		FBP.weatherParticleDensity = FBPMathUtil.round(0.75 + 4.25 * WeatherParticleDensity.value, 2);
+		int posY = Done.y - 18;
 
-		drawMouseOverSelection(mouseX, mouseY);
+		getDescription();
 
-		FBPGuiHelper.drawTitle(WeatherParticleDensity.y - GUIOffsetY, width, fontRenderer);
+		if ((mouseX >= b1.x && mouseX < b1.x + b1.width) && (mouseY >= b1.y && mouseY < b6.y + b1.height)) {
+			this.drawCenteredString(fontRenderer, description, this.width / 2, posY, fontRenderer.getColorCode('f'));
+		}
 
-		drawInfo();
+		FBPGuiHelper.drawTitle(b1.y - GUIOffsetY, width, fontRenderer);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
-	private void drawMouseOverSelection(int mouseX, int mouseY) {
-		int posY = Done.y - 18;
-
-		if (WeatherParticleDensity.isMouseOver(mouseX, mouseY)) {
-			handle.y = WeatherParticleDensity.y;
-			size = new Vector2d(WeatherParticleDensity.width, 18);
-			selected = 1;
-		}
-
-		int step = 1;
-		time = System.currentTimeMillis();
-
-		if (lastTime > 0)
-			step = (int) (time - lastTime);
-
-		lastTime = time;
-
-		if (lastHandle != new Vector2d(0, 0)) {
-			if (lastHandle.y > handle.y) {
-				if (lastHandle.y - handle.y <= step)
-					lastHandle.y = handle.y;
-				else
-					lastHandle.y -= step;
+	private void getDescription() {
+		for (GuiButton b : this.buttonList) {
+			if (b.isMouseOver()) {
+				switch (b.id) {
+					case 1:
+						description = I18n.format("menu.randomrotation.description");
+						break;
+					case 2:
+						description = I18n.format("menu.cartonmode.description");
+						break;
+					case 3:
+						description = I18n.format("menu.randomizedscale.description");
+						break;
+					case 4:
+						description = I18n.format("menu.randomfadespeed.description");
+						break;
+					case 5:
+						description = I18n.format("menu.redstoneblock.description");
+						break;
+					case 6:
+						description = I18n.format("menu.spawnfreeze.description");
+						break;
+					default:
+						description = "No description available please report this";
+				}
 			}
-
-			if (lastHandle.y < handle.y) {
-				if (handle.y - lastHandle.y <= step)
-					lastHandle.y = handle.y;
-				else
-					lastHandle.y += step;
-			}
-
-			lastHandle.x = WeatherParticleDensity.x;
 		}
-
-		if (lastSize != new Vector2d(0, 0)) {
-			if (lastSize.y > size.y)
-				if (lastSize.y - size.y <= step)
-					lastSize.y = size.y;
-				else
-					lastSize.y -= step;
-
-			if (lastSize.y < size.y)
-				if (size.y - lastSize.y <= step)
-					lastSize.y = size.y;
-				else
-					lastSize.y += step;
-
-			lastSize.x = WeatherParticleDensity.width;
-		}
-
-		String text;
-
-		if (selected == 1) {
-			text = I18n.format("menu.weatherdensity.description") + (int) (FBP.weatherParticleDensity * 100) + "%" + I18n.format("menu.period");
-		} else {
-			text = "";
-		}
-
-		if (WeatherParticleDensity.isMouseOver(mouseX, mouseY) && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= WeatherParticleDensity.y) {
-
-			if (selected <= 5)
-				FBPGuiHelper.drawRect(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
-
-			this.drawCenteredString(fontRenderer, text, this.width / 2, posY, fontRenderer.getColorCode('f'));
-		}
-	}
-
-	private void drawInfo() {
-		WeatherParticleDensity.displayString = I18n.format("menu.weatherdensity.info")+" [\u00A76" + (int) (FBP.weatherParticleDensity * 100) + "%\u00A7f]";
 	}
 
 	@Override

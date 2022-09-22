@@ -21,12 +21,12 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 	public void initGui() {
 		int x = this.width / 2 - (96 * 2 + 8) / 2;
 
-		b1 = new FBPGuiButton(1, x, this.height / 5 - 10 + GUIOffsetY, I18n.format("menu.randomrotation.info"), FBP.randomRotation, true, true);
-		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, I18n.format("menu.cartonmode.info"), false, false, false);
-		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.randomizedscale.info"), FBP.randomizedScale, true, true);
-		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.randomfadespeed.info"), FBP.randomFadingSpeed, true, true);
-		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.redstoneblock.info"), FBP.spawnRedstoneBlockParticles, true, true);
-		b6 = new FBPGuiButton(6, x, b5.y + b5.height + 1, I18n.format("menu.spawnfreeze.info"), FBP.spawnWhileFrozen, true, true);
+		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, I18n.format("menu.entitycollide.info"), FBP.entityCollision, true, true);
+		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, I18n.format("menu.bounceoffwalls.info"), FBP.bounceOffWalls, true, true);
+		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.lowtraction.info"), FBP.lowTraction, true, true);
+		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.smartbreaking.info"), FBP.smartBreaking, true, true);
+		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.fancyplaceanimation.info"), FBP.fancyPlaceAnim, true, true);
+		b6 = new FBPGuiButton(6, x, b5.y + b5.height + 1, I18n.format("menu.spawnplaceparticles.info"), FBP.spawnPlaceParticles, true, true);
 
 		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
 		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, I18n.format("menu.done"), false, false, true);
@@ -73,21 +73,22 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 			this.mc.displayGuiScreen(new FBPGuiYesNo(this));
 			break;
 		case 1:
-			FBP.randomRotation = !FBP.randomRotation;
+			FBP.entityCollision = !FBP.entityCollision;
 			break;
 		case 2:
+			FBP.bounceOffWalls = !FBP.bounceOffWalls;
 			break;
 		case 3:
-			FBP.randomizedScale = !FBP.randomizedScale;
+			FBP.lowTraction = !FBP.lowTraction;
 			break;
 		case 4:
-			FBP.randomFadingSpeed = !FBP.randomFadingSpeed;
+			FBP.smartBreaking = !FBP.smartBreaking;
 			break;
 		case 5:
-			FBP.spawnRedstoneBlockParticles = !FBP.spawnRedstoneBlockParticles;
+			FBP.fancyPlaceAnim = !FBP.fancyPlaceAnim;
 			break;
 		case 6:
-			FBP.spawnWhileFrozen = !FBP.spawnWhileFrozen;
+			FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;
 			break;
 		}
 	}
@@ -118,26 +119,26 @@ public class FBPGuiMenuPage2 extends GuiScreen {
 		for (GuiButton b : this.buttonList) {
 			if (b.isMouseOver()) {
 				switch (b.id) {
-					case 1:
-						description = I18n.format("menu.randomrotation.description");
-						break;
-					case 2:
-						description = I18n.format("menu.cartonmode.description");
-						break;
-					case 3:
-						description = I18n.format("menu.randomizedscale.description");
-						break;
-					case 4:
-						description = I18n.format("menu.randomfadespeed.description");
-						break;
-					case 5:
-						description = I18n.format("menu.redstoneblock.description");
-						break;
-					case 6:
-						description = I18n.format("menu.spawnfreeze.description");
-						break;
-					default:
-						description = "No description available please report this";
+				case 1:
+					description = I18n.format("menu.entitycollide.description");
+					break;
+				case 2:
+					description = I18n.format("menu.bounceoffwalls.description");
+					break;
+				case 3:
+					description = I18n.format("menu.lowtraction.description");
+					break;
+				case 4:
+					description = I18n.format("menu.smartbreaking.description");
+					break;
+				case 5:
+					description = I18n.format("menu.fancyplaceanimation.description");
+					break;
+				case 6:
+					description = I18n.format("menu.spawnplaceparticles.description");
+					break;
+				default:
+					description = "No description available please report this";
 				}
 			}
 		}
