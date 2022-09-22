@@ -2,114 +2,81 @@ package com.TominoCZ.FBP.gui;
 
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.handler.FBPConfigHandler;
+import com.TominoCZ.FBP.util.FBPMathUtil;
+import com.TominoCZ.FBP.util.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.client.resources.I18n;
 
+import javax.vecmath.Vector2d;
 import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
+import java.util.Arrays;
 
-@SideOnly(Side.CLIENT)
 public class FBPGuiMenuPage4 extends GuiScreen {
 
-	GuiButton Reload, Done, Defaults, Back, ReportBug, Enable, b1, b2, b3, b4, b5, b6;
+	GuiButton Reload, Done, Defaults, Back, ReportBug, Enable;
+	FBPGuiSlider WeatherParticleDensity;
 
-	String b1Text = "Fancy Flame";
-	String b2Text = "Fancy Smoke";
-	String b3Text = "Fancy Rain";
-	String b4Text = "Fancy Snow";
-	String b5Text = "Water Physics";
-	String b6Text = "Rest On Floor";
+	Vector2d lastHandle = new Vector2d(0, 0);
+	Vector2d lastSize = new Vector2d(0, 0);
 
-	String description = "";
+	Vector2d handle = new Vector2d(0, 0);
+	Vector2d size = new Vector2d(0, 0);
 
-	double offsetX = 0;
+	long time, lastTime;
 
-	int GUIOffsetY = 4;
+	int selected = 0;
+
+	final int GUIOffsetY = 8;
 
 	@Override
 	public void initGui() {
-		this.buttonList.clear();
+		int X = this.width / 2 - 100;
 
-		int x = this.width / 2 - (96 * 2 + 8) / 2;
+		WeatherParticleDensity = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (FBP.weatherParticleDensity - 0.75) / 4.25);
+		int Y = WeatherParticleDensity.y + WeatherParticleDensity.height + 2 + 4 * (WeatherParticleDensity.height + 1) + 5;
 
-		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, b1Text, FBP.fancyFlame, true);
-		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, b2Text, FBP.fancySmoke, true);
-		b3 = new FBPGuiButton(3, x, b2.y + b1.height + 6, b3Text, FBP.fancyRain, true);
-		b4 = new FBPGuiButton(4, x, b3.y + b1.height + 1, b4Text, FBP.fancySnow, true);
-		b5 = new FBPGuiButton(5, x, b4.y + b1.height + 6, b5Text, FBP.waterPhysics, true);
-		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, b6Text, FBP.restOnFloor, true);
-
-		Back = new FBPGuiButton(-3, this.width / 2 - 125 - 19, (6 * b1.height + b1.y - 5 + 10 - GUIOffsetY), "<<", false, false);
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, (6 * b1.height + b1.y - 5) + 24 + 20 - GUIOffsetY, "Defaults", false, false);
-		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, "Done", false, false);
-		Reload = new FBPGuiButton(-2, Done.x, Defaults.y + Defaults.height + 1, "Reload Config", false, false);
-		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-		Enable = new FBPGuiButtonEnable(-5, ReportBug.x - 25 - 4, 2, new Dimension(width, height), this.fontRenderer);
-
+		Defaults = new FBPGuiButton(0, this.width / 2 + 2, Y + 48 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
+		Done = new FBPGuiButton(-1, X, Defaults.y, I18n.format("menu.done"), false, false, true);
 		Defaults.width = Done.width = 98;
-		Reload.width = b1.width = 200;
+		Reload = new FBPGuiButton(-2, X, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
+		Reload.width = 96 * 2 + 8;
 
+		Back = new FBPGuiButton(-7, X - 44, Y + 2 - GUIOffsetY + 4, "<<", false, false, true);
 		Back.width = 20;
 
-		this.buttonList.addAll(java.util.Arrays.asList(new GuiButton[] { b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Enable, ReportBug }));
+		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
+		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
+
+		this.buttonList.addAll(Arrays.asList(WeatherParticleDensity, Defaults, Done, Reload, Back, Enable, ReportBug));
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException {
+	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
-		case -5:
+		case -6:
 			FBP.setEnabled(!FBP.enabled);
 			break;
 		case -4:
 			try {
-				Desktop.getDesktop().browse(new URI("https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/new?assignees=JustDesoroxxx&labels=&template=bug_report.md&title="));
+				Desktop.getDesktop().browse(ModReference.ISSUE);
 			} catch (Exception e) {
-				throw new RuntimeException(e);
+				e.printStackTrace();
 			}
 			break;
-		case -3:
+		case -7:
 			this.mc.displayGuiScreen(new FBPGuiMenuPage3());
 			break;
 		case -2:
 			FBPConfigHandler.init();
 			break;
 		case -1:
-			this.mc.displayGuiScreen((GuiScreen) null);
+			this.mc.displayGuiScreen(null);
 			break;
 		case 0:
 			this.mc.displayGuiScreen(new FBPGuiYesNo(this));
 			break;
-		case 1:
-			FBP.fancyFlame = !FBP.fancyFlame;
-			break;
-		case 2:
-			FBP.fancySmoke = !FBP.fancySmoke;
-			break;
-		case 3:
-			FBP.fancyRain = !FBP.fancyRain;
-			break;
-		case 4:
-			FBP.fancySnow = !FBP.fancySnow;
-			break;
-		case 5:
-			FBP.waterPhysics = !FBP.waterPhysics;
-			break;
-		case 6:
-			FBP.restOnFloor = !FBP.restOnFloor;
-			break;
 		}
-
-		if (FBP.fancyRain || FBP.fancySnow)
-			mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
-		else
-			mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
-
-		FBPConfigHandler.write();
-
-		initGui();
 	}
 
 	@Override
@@ -119,75 +86,95 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		FBPGuiHelper.background(b1.y - 6 - GUIOffsetY, Done.y - 4, width, height);
+		FBPGuiHelper.background(WeatherParticleDensity.y - 6 - GUIOffsetY, Done.y - 4, width, height);
 
-		int posY = Done.y - 18;
+		FBP.weatherParticleDensity = FBPMathUtil.round(0.75 + 4.25 * WeatherParticleDensity.value, 2);
 
-		getDescription();
+		drawMouseOverSelection(mouseX, mouseY);
 
-		if ((mouseX >= b1.x && mouseX < b1.x + b1.width) && (mouseY >= b1.y && mouseY < b6.y + b1.height)) {
+		FBPGuiHelper.drawTitle(WeatherParticleDensity.y - GUIOffsetY, width, fontRenderer);
 
-			moveText();
-
-			this.drawCenteredString(fontRenderer, description, (int) (this.width / 2 + offsetX), posY, fontRenderer.getColorCode('a'));
-		}
-
-		FBPGuiHelper.drawTitle(b1.y - GUIOffsetY, width, height, fontRenderer);
+		drawInfo();
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
-	private void getDescription() {
-		for (GuiButton b : this.buttonList) {
-			if (b.isMouseOver()) {
-				switch (b.id) {
-				case 1:
-					description = "Makes \u00A76flame particles\u00A7a fancy.";
-					break;
-				case 2:
-					description = "Makes \u00A76smoke particles\u00A7a fancy.";
-					break;
-				case 3:
-					description = "Makes \u00A76rain particles\u00A7a fancy.";
-					break;
-				case 4:
-					description = "Makes \u00A76snow particles\u00A7a fancy.";
-					break;
-				case 5:
-					description = "Makes \u00A76wood\u00A7a particles \u00A76float\u00A7a and others to \u00A76sink slower\u00A7a.";
-					break;
-				case 6:
-					description = "Makes particles rest \u00A76aligned\u00A7a on the ground.";
-					break;
-				}
+	private void drawMouseOverSelection(int mouseX, int mouseY) {
+		int posY = Done.y - 18;
+
+		if (WeatherParticleDensity.isMouseOver(mouseX, mouseY)) {
+			handle.y = WeatherParticleDensity.y;
+			size = new Vector2d(WeatherParticleDensity.width, 18);
+			selected = 1;
+		}
+
+		int step = 1;
+		time = System.currentTimeMillis();
+
+		if (lastTime > 0)
+			step = (int) (time - lastTime);
+
+		lastTime = time;
+
+		if (lastHandle != new Vector2d(0, 0)) {
+			if (lastHandle.y > handle.y) {
+				if (lastHandle.y - handle.y <= step)
+					lastHandle.y = handle.y;
+				else
+					lastHandle.y -= step;
 			}
+
+			if (lastHandle.y < handle.y) {
+				if (handle.y - lastHandle.y <= step)
+					lastHandle.y = handle.y;
+				else
+					lastHandle.y += step;
+			}
+
+			lastHandle.x = WeatherParticleDensity.x;
+		}
+
+		if (lastSize != new Vector2d(0, 0)) {
+			if (lastSize.y > size.y)
+				if (lastSize.y - size.y <= step)
+					lastSize.y = size.y;
+				else
+					lastSize.y -= step;
+
+			if (lastSize.y < size.y)
+				if (size.y - lastSize.y <= step)
+					lastSize.y = size.y;
+				else
+					lastSize.y += step;
+
+			lastSize.x = WeatherParticleDensity.width;
+		}
+
+		String text;
+
+		if (selected == 1) {
+			text = I18n.format("menu.weatherdensity.description") + (int) (FBP.weatherParticleDensity * 100) + "%" + I18n.format("menu.period");
+		} else {
+			text = "";
+		}
+
+		if (WeatherParticleDensity.isMouseOver(mouseX, mouseY) && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= WeatherParticleDensity.y) {
+
+			if (selected <= 5)
+				FBPGuiHelper.drawRect(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
+
+			this.drawCenteredString(fontRenderer, text, this.width / 2, posY, fontRenderer.getColorCode('f'));
 		}
 	}
 
-	private void moveText() {
-		int textWidth = this.fontRenderer.getStringWidth(description);
-		int outsideSizeX = textWidth - this.width;
-
-		if (textWidth > width) {
-			double speedOfSliding = 2400;
-			long time = System.currentTimeMillis();
-
-			float normalValue = (float) ((time / speedOfSliding) % 2);
-
-			if (normalValue > 1)
-				normalValue = 2 - normalValue;
-
-			offsetX = (outsideSizeX * 2) * normalValue - outsideSizeX;
-		} else
-			offsetX = 0;
+	private void drawInfo() {
+		WeatherParticleDensity.displayString = I18n.format("menu.weatherdensity.info")+" [\u00A76" + (int) (FBP.weatherParticleDensity * 100) + "%\u00A7f]";
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
 		if (mouseButton == 0) {
-			for (int i = 0; i < this.buttonList.size(); ++i) {
-				GuiButton guibutton = this.buttonList.get(i);
-
+			for (GuiButton guibutton : this.buttonList) {
 				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
 					if (!guibutton.isMouseOver())
 						return;

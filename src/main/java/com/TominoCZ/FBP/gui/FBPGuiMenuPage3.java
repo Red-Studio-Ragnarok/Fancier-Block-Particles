@@ -2,69 +2,52 @@ package com.TominoCZ.FBP.gui;
 
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.handler.FBPConfigHandler;
+import com.TominoCZ.FBP.util.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.client.resources.I18n;
 
 import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
 
-@SideOnly(Side.CLIENT)
 public class FBPGuiMenuPage3 extends GuiScreen {
 
-	GuiButton Reload, Done, Defaults, Back, Next, ReportBug, Enable, b1, b2, b3, b4, b5, b6;
+	GuiButton b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug;
 
-	String b1Text = "Collide With Entities";
-	String b2Text = "Bounce Off Walls";
-	String b3Text = "Low Traction";
-	String b4Text = "Smart Breaking";
-	String b5Text = "Fancy Place Animation";
-	String b6Text = "Spawn Place Particles";
+	String description;
 
-	String description = "";
-
-	double offsetX = 0;
-
-	int GUIOffsetY = 4;
+	final int GUIOffsetY = 4;
 
 	@Override
 	public void initGui() {
-		this.buttonList.clear();
-
 		int x = this.width / 2 - (96 * 2 + 8) / 2;
 
-		int x1 = this.width / 2 + 80;
+		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, I18n.format("menu.fancyflame.info"), FBP.fancyFlame, true, true);
+		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, I18n.format("menu.fancysmoke.info"), FBP.fancySmoke, true, true);
+		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.fancyrain.info"), FBP.fancyRain, true, true);
+		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.fancysnow.info"), FBP.fancySnow, true, true);
+		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.waterphysics.info"), FBP.waterPhysics, true, true);
+		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, I18n.format("menu.restonfloor.info"), FBP.restOnFloor, true, true);
 
-		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, b1Text, FBP.entityCollision, true);
-		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, b2Text, FBP.bounceOffWalls, true);
-		b3 = new FBPGuiButton(3, x, b2.y + b1.height + 6, b3Text, FBP.lowTraction, true);
-		b4 = new FBPGuiButton(4, x, b3.y + b1.height + 1, b4Text, FBP.smartBreaking, true);
-		b5 = new FBPGuiButton(5, x, b4.y + b1.height + 6, b5Text, FBP.fancyPlaceAnim, true);
-		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, b6Text, FBP.spawnPlaceParticles, true);
-
-		Back = new FBPGuiButton(-3, b6.x - 44, 6 * b1.height + b1.y - 5 + 10 - GUIOffsetY, "<<", false, false);
-		Next = new FBPGuiButton(-6, b6.x + b6.width + 25, b6.y + 10 - GUIOffsetY, ">>", false, false);
-
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + Back.height + 24 - GUIOffsetY, "Defaults", false, false);
-		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, "Done", false, false);
-		Reload = new FBPGuiButton(-2, Done.x, Defaults.y + Defaults.height + 1, "Reload Config", false, false);
-		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-		Enable = new FBPGuiButtonEnable(-5, ReportBug.x - 25 - 4, 2, new Dimension(width, height), this.fontRenderer);
-
+		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
+		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, I18n.format("menu.done"), false, false, true);
 		Defaults.width = Done.width = 98;
-		Reload.width = b1.width = 200;
+		Reload = new FBPGuiButton(-2, this.width / 2 - 100, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
+		Reload.width = b1.width = b2.width = b3.width = b4.width = b5.width = b6.width = 200;
 
+		Back = new FBPGuiButton(-3, b6.x - 44, b6.y + 2 - GUIOffsetY, "<<", false, false, true);
+		Next = new FBPGuiButton(-6, b6.x + b6.width + 25, b6.y + 2 - GUIOffsetY, ">>", false, false, true);
 		Back.width = Next.width = 20;
 
-		this.buttonList.addAll(java.util.Arrays.asList(new GuiButton[] { b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug }));
+		Enable = new FBPGuiButtonEnable(-5, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
+		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
+
+		this.buttonList.addAll(java.util.Arrays.asList(b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug));
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException {
+	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
-		case -6:
+			case -6:
 			this.mc.displayGuiScreen(new FBPGuiMenuPage4());
 			break;
 		case -5:
@@ -72,9 +55,9 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 			break;
 		case -4:
 			try {
-				Desktop.getDesktop().browse(new URI("https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/new?assignees=JustDesoroxxx&labels=&template=bug_report.md&title="));
+				Desktop.getDesktop().browse(ModReference.ISSUE);
 			} catch (Exception e) {
-				throw new RuntimeException(e);
+				e.printStackTrace();
 			}
 			break;
 		case -3:
@@ -84,34 +67,35 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 			FBPConfigHandler.init();
 			break;
 		case -1:
-			this.mc.displayGuiScreen((GuiScreen) null);
+			this.mc.displayGuiScreen(null);
 			break;
 		case 0:
 			this.mc.displayGuiScreen(new FBPGuiYesNo(this));
 			break;
 		case 1:
-			FBP.entityCollision = !FBP.entityCollision;
+			FBP.fancyFlame = !FBP.fancyFlame;
 			break;
 		case 2:
-			FBP.bounceOffWalls = !FBP.bounceOffWalls;
+			FBP.fancySmoke = !FBP.fancySmoke;
 			break;
 		case 3:
-			FBP.lowTraction = !FBP.lowTraction;
+			FBP.fancyRain = !FBP.fancyRain;
 			break;
 		case 4:
-			FBP.smartBreaking = !FBP.smartBreaking;
+			FBP.fancySnow = !FBP.fancySnow;
 			break;
 		case 5:
-			FBP.fancyPlaceAnim = !FBP.fancyPlaceAnim;
+			FBP.waterPhysics = !FBP.waterPhysics;
 			break;
 		case 6:
-			FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;
+			FBP.restOnFloor = !FBP.restOnFloor;
 			break;
 		}
 
-		FBPConfigHandler.write();
-
-		initGui();
+		if (FBP.fancyRain || FBP.fancySnow)
+			mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
+		else
+			mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
 	}
 
 	@Override
@@ -128,12 +112,10 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 		getDescription();
 
 		if ((mouseX >= b1.x && mouseX < b1.x + b1.width) && (mouseY >= b1.y && mouseY < b6.y + b1.height)) {
-			moveText();
-
-			this.drawCenteredString(fontRenderer, description, (int) (this.width / 2 + offsetX), posY, fontRenderer.getColorCode('a'));
+			this.drawCenteredString(fontRenderer, description, this.width / 2, posY, fontRenderer.getColorCode('f'));
 		}
 
-		FBPGuiHelper.drawTitle(b1.y - GUIOffsetY, width, height, fontRenderer);
+		FBPGuiHelper.drawTitle(b1.y - GUIOffsetY, width, fontRenderer);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
@@ -143,52 +125,34 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 			if (b.isMouseOver()) {
 				switch (b.id) {
 				case 1:
-					description = "Enables \u00A76entity collisions \u00A7awith the particles.";
+					description = I18n.format("menu.fancyflame.description");
 					break;
 				case 2:
-					description = "Makes the particles \u00A76ricochet/bounce\u00A7a off walls.";
+					description = I18n.format("menu.fancysmoke.description");
 					break;
 				case 3:
-					description = "Lowers the \u00A76traction deceleration\u00A7a on the ground.";
+					description = I18n.format("menu.fancyrain.description");
 					break;
 				case 4:
-					description = "Smart particle \u00A76motion\u00A7a and \u00A76scaling\u00A7a.";
+					description = I18n.format("menu.fancysnow.description");
 					break;
 				case 5:
-					description = "Adds a \u00A76fancy block placing\u00A7a animation \u00A76[\u00A7cALPHA\u00A76]\u00A7a.";
+					description = I18n.format("menu.waterphysics.description");
 					break;
 				case 6:
-					description = "Enables\u00A76 block place particles\u00A7a.";
+					description = I18n.format("menu.restonfloor.description");
 					break;
+				default:
+					description = "No description available please report this";
 				}
 			}
 		}
 	}
 
-	private void moveText() {
-		int textWidth = this.fontRenderer.getStringWidth(description);
-		int outsideSizeX = textWidth - this.width;
-
-		if (textWidth > width) {
-			double speedOfSliding = 2400;
-			long time = System.currentTimeMillis();
-
-			float normalValue = (float) ((time / speedOfSliding) % 2);
-
-			if (normalValue > 1)
-				normalValue = 2 - normalValue;
-
-			offsetX = (outsideSizeX * 2) * normalValue - outsideSizeX;
-		} else
-			offsetX = 0;
-	}
-
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
 		if (mouseButton == 0) {
-			for (int i = 0; i < this.buttonList.size(); ++i) {
-				GuiButton guibutton = this.buttonList.get(i);
-
+			for (GuiButton guibutton : this.buttonList) {
 				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
 					if (!guibutton.isMouseOver())
 						return;

@@ -9,7 +9,9 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3.4'
+		classpath('com.anatawa12.forge:ForgeGradle:2.3-1.0.+') {
+			changing = true
+		}
 		if (project.use_mixins.toBoolean()) {
 			classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
 		}
@@ -23,10 +25,7 @@ if (project.use_mixins.toBoolean()) {
 }
 
 version = project.mod_version
-group = project.maven_group
-archivesBaseName = project.archives_base_name
-
-sourceCompatibility = targetCompatibility = '1.8'
+group = project.maven_group 	
 
 compileJava {
 	sourceCompatibility = targetCompatibility = '1.8'
@@ -83,6 +82,9 @@ sourceSets {
 }
 
 processResources {
+	// required to allow file expansion later
+	duplicatesStrategy = 'include'
+
 	// this will ensure that this task is redone when the versions change.
 	inputs.property 'version', project.version
 	inputs.property 'mcversion', project.minecraft.version

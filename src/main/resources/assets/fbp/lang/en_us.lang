@@ -1,0 +1,104 @@
+# HUD
+hud.freeze=§LFreeze Effect
+
+# Menu
+menu.fbp=§l= Fancier Block Particles =
+menu.disabled=§l= Disabled =
+menu.bugreport=Found a §cbug§a? Click to report it!
+
+menu.enable=§cEnable
+menu.disable=§aDisable
+
+menu.on=§aON
+menu.off=§cOFF
+
+menu.yes=§aYes
+menu.no=§cNo
+
+menu.defaults=Defaults
+menu.done=Done
+menu.reloadconfig=Reload Config
+
+menu.period=§f.
+
+menu.confirmation=Are you sure you want to reset your config §cthis cannot be undone§f?
+
+# Menu Blacklist
+menu.blacklist.title=§LBlacklist a Block
+menu.blacklist.placeanimation=§f§lPLACE ANIMATION
+menu.blacklist.particles=§f§lPARTICLES
+menu.blacklist.add=§a§lADD
+menu.blacklist.remove=§c§lREMOVE
+menu.blacklist.cantanimate=§c§lCAN'T BE ANIMATED
+menu.blacklist.cantadd=§c§lCAN'T BE ADDED
+
+# Menu Page 0
+menu.destroyparticles.info=Destroy Particle Count
+menu.minduration.info=Min. Duration
+menu.maxduration.info=Max. Duration
+menu.scalemult.info=Scale Mult.
+menu.gravityscale.info=Gravity Force Mult.
+menu.rotationspeed.info=Rotation Speed Mult.
+
+menu.particlelife.description.duration=Sets particle life duration
+menu.particlelife.description.duration.range= range to between §6
+menu.particlelife.description.duration.and= §fand §6
+menu.particlelife.description.duration.to= to §6
+menu.particlelife.description.infinity=Sets particle life duration to §6infinity§f.
+menu.destroyparticles.description=Sets the block destroy particle count to §6
+menu.particlescale.description=Sets particle scale multiplier to §6
+menu.particlegravity.description=Multiplies default particle gravity force by §6
+menu.particlerotation.description=Multiplies particle rotation by §6
+menu.infiniteduration.description= §finfinite particle life duration.
+menu.time.description=Show the time in §6
+menu.timems.description=milliseconds
+
+# Menu Page 1
+menu.randomrotation.info=Random Rotation
+menu.cartonmode.info=Cartoon Mode
+menu.randomizedscale.info=Randomized Scale
+menu.randomfadespeed.info=Random Fade Speed
+menu.redstoneblock.info=Spawn Redstone Block Particles
+menu.spawnfreeze.info=Spawn Particles in Freeze Mode
+
+menu.randomrotation.description=Enables random and simple rotation math.
+menu.cartonmode.description=§4DEPRECATED§f/§4REMOVED §fMakes the particles look cartoon-ish.
+menu.randomizedscale.description=Makes the particle scale slightly randomized.
+menu.randomfadespeed.description=Enables random particle fade away speed.
+menu.redstoneblock.description=Allows spawning redstone block particles.
+menu.spawnfreeze.description=Allows spawning particles in freeze mode.
+
+# Menu Page 2
+menu.entitycollide.info=Collide With Entities
+menu.bounceoffwalls.info=Bounce Off Walls
+menu.lowtraction.info=Low Traction
+menu.smartbreaking.info=Smart Breaking
+menu.fancyplaceanimation.info=Fancy Place Animation
+menu.spawnplaceparticles.info=Spawn Place Particles
+
+menu.entitycollide.description=Enables entity colliding with the particles.
+menu.bounceoffwalls.description=Makes the particles ricochet/bounce off walls.
+menu.lowtraction.description=Lowers the traction deceleration on the ground.
+menu.smartbreaking.description=Smart particle motion and scaling.
+menu.fancyplaceanimation.description=Adds a fancy block placing animation.
+menu.spawnplaceparticles.description=Enables block place particles.
+
+# Menu Page 3
+menu.fancyflame.info=Fancy Flame
+menu.fancysmoke.info=Fancy Smoke
+menu.fancyrain.info=Fancy Rain
+menu.fancysnow.info=Fancy Snow
+menu.waterphysics.info=Water Physics
+menu.restonfloor.info=Rest On Floor
+
+menu.fancyflame.description=Makes flame particles fancy.
+menu.fancysmoke.description=Makes smoke particles fancy.
+menu.fancyrain.description=Makes rain particles fancy.
+menu.fancysnow.description=Makes snow particles fancy.
+menu.waterphysics.description=Makes wood particles float and others to sink slower.
+menu.restonfloor.description=Makes particles rest aligned on the ground.
+
+# Menu Page 4
+menu.weatherdensity.info=Weather Particle Density
+
+menu.weatherdensity.description=Sets the weather particle density to §6
