@@ -7,14 +7,11 @@ import com.TominoCZ.FBP.util.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.util.Arrays;
 
-@SideOnly(Side.CLIENT)
 public class FBPGuiMenuPage1 extends GuiScreen {
 
 	GuiButton Reload, Done, Defaults, Back, Next, ReportBug, Enable;
@@ -30,21 +27,19 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 
 	int selected = 0;
 
-	int GUIOffsetY = 8;
+	final int GUIOffsetY = 8;
 
 	@Override
 	public void initGui() {
-		int x2 = this.width / 2 - 100;
-
 		int X = this.width / 2 - 100;
 
 		WeatherParticleDensity = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (FBP.weatherParticleDensity - 0.75) / 4.25);
 		int Y = WeatherParticleDensity.y + WeatherParticleDensity.height + 2 + 4 * (WeatherParticleDensity.height + 1) + 5;
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, Y + 20 + 24 - GUIOffsetY + 4, I18n.format("menu.defaults"), false, false, true);
-		Done = new FBPGuiButton(-1, x2, Defaults.y, I18n.format("menu.done"), false, false, true);
+		Defaults = new FBPGuiButton(0, this.width / 2 + 2, Y + 48 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
+		Done = new FBPGuiButton(-1, X, Defaults.y, I18n.format("menu.done"), false, false, true);
 		Defaults.width = Done.width = 98;
-		Reload = new FBPGuiButton(-2, x2, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
+		Reload = new FBPGuiButton(-2, X, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
 		Reload.width = 96 * 2 + 8;
 
 		Back = new FBPGuiButton(-7, X - 44, Y + 2 - GUIOffsetY + 4, "<<", false, false, true);

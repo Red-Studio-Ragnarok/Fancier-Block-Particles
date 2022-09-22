@@ -6,37 +6,27 @@ import com.TominoCZ.FBP.util.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.awt.*;
 
-@SideOnly(Side.CLIENT)
 public class FBPGuiMenuPage4 extends GuiScreen {
 
 	GuiButton b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Enable, ReportBug;
 
-	final String b1Text = I18n.format("menu.fancyflame.info");
-	final String b2Text = I18n.format("menu.fancysmoke.info");
-	final String b3Text = I18n.format("menu.fancyrain.info");
-	final String b4Text = I18n.format("menu.fancysnow.info");
-	final String b5Text = I18n.format("menu.waterphysics.info");
-	final String b6Text = I18n.format("menu.restonfloor.info");
-
 	String description;
 
-	int GUIOffsetY = 4;
+	final int GUIOffsetY = 4;
 
 	@Override
 	public void initGui() {
 		int x = this.width / 2 - (96 * 2 + 8) / 2;
 
-		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, b1Text, FBP.fancyFlame, true, true);
-		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, b2Text, FBP.fancySmoke, true, true);
-		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, b3Text, FBP.fancyRain, true, true);
-		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, b4Text, FBP.fancySnow, true, true);
-		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, b5Text, FBP.waterPhysics, true, true);
-		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, b6Text, FBP.restOnFloor, true, true);
+		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, I18n.format("menu.fancyflame.info"), FBP.fancyFlame, true, true);
+		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, I18n.format("menu.fancysmoke.info"), FBP.fancySmoke, true, true);
+		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.fancyrain.info"), FBP.fancyRain, true, true);
+		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.fancysnow.info"), FBP.fancySnow, true, true);
+		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.waterphysics.info"), FBP.waterPhysics, true, true);
+		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, I18n.format("menu.restonfloor.info"), FBP.restOnFloor, true, true);
 
 		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
 		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, I18n.format("menu.done"), false, false, true);

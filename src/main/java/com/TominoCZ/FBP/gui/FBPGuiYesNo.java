@@ -4,12 +4,9 @@ import com.TominoCZ.FBP.handler.FBPConfigHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
 
-@SideOnly(Side.CLIENT)
 public class FBPGuiYesNo extends GuiScreen {
 
 	GuiButton Yes, No;

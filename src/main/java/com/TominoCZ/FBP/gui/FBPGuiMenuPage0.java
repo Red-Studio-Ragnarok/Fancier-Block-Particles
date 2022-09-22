@@ -7,18 +7,14 @@ import com.TominoCZ.FBP.util.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.util.Arrays;
 
-@SideOnly(Side.CLIENT)
 public class FBPGuiMenuPage0 extends GuiScreen {
 
 	GuiButton InfiniteDuration, TimeUnit, Defaults, Done, Reload, Next, Enable, ReportBug;
-
 	FBPGuiSlider MinDurationSlider, MaxDurationSlider, ParticleCountBase, ScaleMultSlider, GravitiyForceSlider, RotSpeedSlider;
 
 	Vector2d lastHandle = new Vector2d(0, 0);
@@ -31,14 +27,10 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 	int selected = 0;
 
-	int GUIOffsetY = 8;
+	final int GUIOffsetY = 8;
 
 	@Override
 	public void initGui() {
-
-		int x1 = this.width / 2 + 80;
-		int x2 = this.width / 2 - 100;
-
 		int X = this.width / 2 - 100;
 
 		MinDurationSlider = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (FBP.minAge - 10) / 90.0);
@@ -48,14 +40,14 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 		ScaleMultSlider = new FBPGuiSlider(X, ParticleCountBase.y + ParticleCountBase.height + 1, (FBP.scaleMult - 0.75) / 0.5);
 		GravitiyForceSlider = new FBPGuiSlider(X, ScaleMultSlider.y + ScaleMultSlider.height + 6, (FBP.gravityMult - 0.05) / 2.95);
 		RotSpeedSlider = new FBPGuiSlider(X, GravitiyForceSlider.y + GravitiyForceSlider.height + 1, FBP.rotationMult / 1.5);
-		InfiniteDuration = new FBPGuiButton(11, x1 + 25, MinDurationSlider.y + 10, (FBP.infiniteDuration ? "\u00A7a" : "\u00A7c") + "\u221e", false, false, true);
+		InfiniteDuration = new FBPGuiButton(11, X + 205, MinDurationSlider.y + 10, (FBP.infiniteDuration ? "\u00A7a" : "\u00A7c") + "\u221e", false, false, true);
 
-		TimeUnit = new FBPGuiButton(12, x2 - 25, MinDurationSlider.y + 10, "\u00A7a\u00A7L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
+		TimeUnit = new FBPGuiButton(12, X - 25, MinDurationSlider.y + 10, "\u00A7a\u00A7L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
 
 		Defaults = new FBPGuiButton(0, this.width / 2 + 2, RotSpeedSlider.y + RotSpeedSlider.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
-		Done = new FBPGuiButton(-1, x2, Defaults.y, I18n.format("menu.done"), false, false, true);
+		Done = new FBPGuiButton(-1, X, Defaults.y, I18n.format("menu.done"), false, false, true);
 		Defaults.width = Done.width = 98;
-		Reload = new FBPGuiButton(-2, x2, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
+		Reload = new FBPGuiButton(-2, X, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
 		Reload.width = 96 * 2 + 8;
 
 		Next = new FBPGuiButton(-3, RotSpeedSlider.x + RotSpeedSlider.width + 25, RotSpeedSlider.y + 2 - GUIOffsetY, ">>", false, false, true);
