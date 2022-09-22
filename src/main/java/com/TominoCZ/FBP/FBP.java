@@ -100,7 +100,7 @@ public class FBP {
 	public static ParticleManager originalEffectRenderer;
 
 	public FBPEventHandler eventHandler = new FBPEventHandler();
-	public static FBPGuiHandler guiHandler = new FBPGuiHandler();
+	public static final FBPGuiHandler guiHandler = new FBPGuiHandler();
 
 	public FBP() {
 		INSTANCE = this;
