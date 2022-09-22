@@ -5,20 +5,27 @@
 - Disabled buttons now appears greyed out in the menu
 - Changed Blacklist GUI bar and cursor
 - Changed some Blacklist GUI from green to white
-- Changed description text from gree to white
+- Changed description text from green to white
+- Changed confirmation GUI text to be clearer about the warning and changed the color from yellow to white & red
+- Changed page order so that the page with only one slider in it is the last page
 
 ## Fixed
 
 - Description getting behind back and next buttons
 - Menu showing Fancy Block Particles instead of Fancier Block Particles
 - Being able to click disabled buttons in the menu
-- Being able to hover disabled buttons in the menu
 
 ## Removed
 
-- Removed the sliding on text when the screen is to small
+- Removed the sliding on text when the screen is too small
 
 ## Optimization
+
+- Reworked all the GUI code, which is now faster, smaller, and easier to work with
+
+## Internal
+
+- Switched every bit of text to .lang which allows anyone to create a translation for their language
 
 # Fancier Block Particles Version 0.5 Changelog
 
