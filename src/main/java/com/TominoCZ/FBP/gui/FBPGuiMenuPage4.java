@@ -184,4 +184,9 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 			}
 		}
 	}
+
+	@Override
+	public void onGuiClosed() {
+		FBPConfigHandler.write();
+	}
 }

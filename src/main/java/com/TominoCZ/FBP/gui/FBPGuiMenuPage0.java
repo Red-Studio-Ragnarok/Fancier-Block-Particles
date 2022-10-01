@@ -305,4 +305,9 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 		MinDurationSlider.enabled = !FBP.infiniteDuration;
 		MaxDurationSlider.enabled = !FBP.infiniteDuration;
 	}
+
+	@Override
+	public void onGuiClosed() {
+		FBPConfigHandler.write();
+	}
 }
