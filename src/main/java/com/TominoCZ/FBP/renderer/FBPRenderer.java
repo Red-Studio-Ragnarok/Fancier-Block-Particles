@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 public class FBPRenderer {
 
 
-	public static void renderCubeShaded_S(BufferBuilder buf, Vec2f[] par, float f5, float f6, float f7, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
+	public static void renderCubeShaded_S(BufferBuilder buf, Vec2f[] par, float x, float y, float z, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
 		// switch to vertex format that supports normals
 		Tessellator.getInstance().draw();
 		buf.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
@@ -23,7 +23,7 @@ public class FBPRenderer {
 		RenderHelper.enableStandardItemLighting();
 
 		// render particle
-		buf.setTranslation(f5, f6, f7);
+		buf.setTranslation(x, y, z);
 
 		putCube_S(buf, par, scale, rotVec, j, k, r, g, b, a);
 

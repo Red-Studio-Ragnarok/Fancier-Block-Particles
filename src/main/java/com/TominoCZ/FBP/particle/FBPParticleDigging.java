@@ -489,9 +489,9 @@ public class FBPParticleDigging extends ParticleDigging {
 			f3 = f2 + 0.015609375F;
 		}
 
-		float f5 = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
-		float f6 = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
-		float f7 = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
+		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
+		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
+		float z = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
 
 		int i = getBrightnessForRender(partialTicks);
 
@@ -500,7 +500,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		float alpha = (float) (prevParticleAlpha + (particleAlpha - prevParticleAlpha) * partialTicks);
 
 		if (FBP.restOnFloor)
-			f6 += f4 / 10;
+			y += f4 / 10;
 
 		FBPVector3d smoothRot = new FBPVector3d(0, 0, 0);
 
@@ -525,7 +525,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		}
 
 		// RENDER
-		FBPRenderer.renderCubeShaded_S(buf, par, f5, f6, f7, f4 / 10, smoothRot, i >> 16 & 65535, i & 65535, particleRed, particleGreen, particleBlue, alpha);
+		FBPRenderer.renderCubeShaded_S(buf, par, x, y, z, f4 / 10, smoothRot, i >> 16 & 65535, i & 65535, particleRed, particleGreen, particleBlue, alpha);
 	}
 
 	private void createRotationMatrix() {
