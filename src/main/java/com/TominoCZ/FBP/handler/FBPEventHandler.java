@@ -1,6 +1,7 @@
 package com.TominoCZ.FBP.handler;
 
 import com.TominoCZ.FBP.FBP;
+import com.TominoCZ.FBP.model.FBPModelHelper;
 import com.TominoCZ.FBP.node.BlockNode;
 import com.TominoCZ.FBP.node.BlockPosNode;
 import com.TominoCZ.FBP.particle.FBPParticleBlock;
@@ -118,7 +119,7 @@ public class FBPEventHandler {
 
 						IBlockState state = newState.getActualState(worldIn, pos);
 
-						if (state.getBlock() instanceof BlockDoublePlant) {
+						if (state.getBlock() instanceof BlockDoublePlant || !FBPModelHelper.isModelValid(state)) {
 							removePosEntry(pos);
 							return;
 						}
