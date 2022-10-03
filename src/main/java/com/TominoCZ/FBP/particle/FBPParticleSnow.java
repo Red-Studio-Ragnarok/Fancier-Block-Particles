@@ -233,6 +233,10 @@ public class FBPParticleSnow extends ParticleDigging {
 
 	@Override
 	public void renderParticle(BufferBuilder buf, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+		if (!FBPRenderer.render) {
+			FBPRenderer.queuedParticles.add(this);
+			return;
+		}
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 
@@ -288,7 +292,7 @@ public class FBPParticleSnow extends ParticleDigging {
 		}
 
 		// RENDER
-		GlStateManager.enableCull();
+		// GlStateManager.enableCull();
 
 		par = new Vec2f[] { new Vec2f(f1, f3), new Vec2f(f1, f2), new Vec2f(f, f2), new Vec2f(f, f3) };
 
