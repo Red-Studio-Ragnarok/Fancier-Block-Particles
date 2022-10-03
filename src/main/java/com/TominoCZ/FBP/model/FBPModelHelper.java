@@ -19,7 +19,7 @@ public class FBPModelHelper {
 
 		TextureAtlasSprite s = model.getParticleTexture();
 
-		if (s == null || s.getIconName().equals("missingno"))
+		if (s.getIconName().equals("missingno"))
 			return false;
 
 		vertexes = 0;
@@ -33,7 +33,7 @@ public class FBPModelHelper {
 
 					TextureAtlasSprite s = quad.getSprite();
 
-					if (s != null && !s.getIconName().equals("missingno"))
+					if (!s.getIconName().equals("missingno"))
 						isAllCorruptedTexture = false;
 
 					return data;

@@ -12,7 +12,7 @@
 
 ## Removed
 
-- (Testing) Removed FBPModel helper because I am assuming mods aren't weird
+- (Testing) Removed some checks in FBPModelHelper because I am assuming mods aren't weird
 - Removed FBPVertexUtil as it was unused
 
 ## Optimization
