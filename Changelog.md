@@ -1,3 +1,29 @@
+# Fancier Block Particles Version 0.7 Changelog
+
+## !!! The performance numbers in this changelog have been mesured by memory so don't take it as 100% true until 0.7 is actually released !!!
+
+## Showcase
+
+- Particles now renders 4 times faster (Immense thanks to Rongmario!)
+
+## Fixed
+
+- Fixed GUI not saving config to file
+
+## Removed
+
+- (Testing) Removed FBPModel helper because I am assuming mods aren't weird
+- Removed FBPVertexUtil as it was unused
+
+## Optimization
+
+- Optimized main class as a result it should be slightly faster and use slightly less RAM
+- Draw calls are now batched thanks to Rongmario which improve rendering performance by a ton
+
+## Internal
+
+- General code cleanup
+
 # Fancier Block Particles Version 0.6 Changelog
 
 ## Changed
