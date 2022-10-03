@@ -6,6 +6,10 @@
 
 - Particles now renders 4 times faster (Immense thanks to Rongmario!)
 
+## Changed
+
+- Default key for the blacklist menu changed from none to B
+
 ## Fixed
 
 - Fixed GUI not saving config to file
