@@ -17,7 +17,7 @@
 
 ## Optimization
 
-- Optimized main class as a result it should be slightly faster and use slightly less RAM
+- Optimized main class as a result, it should be slightly faster and use slightly less RAM
 - Draw calls are now batched thanks to Rongmario which improve rendering performance by a ton
 
 ## Internal
@@ -70,13 +70,13 @@
 ## Optimization
 
 - Switched to AT's instead of Method Handle which leads to increased performance and cleaner code
-- Optimized Particle Digging as a result it should be slightly faster and use slightly less RAM
-- Optimized Particle Smoke as a result it should be slightly faster and use slightly less RAM
-- Optimized Particle Rain as a result it should be slightly faster and use slightly less RAM
-- Optimized Particle Snow as a result it should be slightly faster and use slightly less RAM
-- Optimized Particle Manager as a result it should be slightly faster and use slightly less RAM
-- Optimized the Event Handler as a result it should be faster and use slightly less RAM
-- Optimized the Renderer as a result it should be faster and use less RAM and VRAM
+- Optimized Particle Digging as a result, it should be slightly faster and use slightly less RAM
+- Optimized Particle Smoke as a result, it should be slightly faster and use slightly less RAM
+- Optimized Particle Rain as a result, it should be slightly faster and use slightly less RAM
+- Optimized Particle Snow as a result, it should be slightly faster and use slightly less RAM
+- Optimized Particle Manager as a result, it should be slightly faster and use slightly less RAM
+- Optimized the Event Handler as a result, it should be faster and use slightly less RAM
+- Optimized the Renderer as a result, it should be faster and use less RAM and VRAM
 
 All these optimizations result in a 9% faster mod loading time, which makes Fancier Block Particles load 25% faster than Fancy Block Particles
 
