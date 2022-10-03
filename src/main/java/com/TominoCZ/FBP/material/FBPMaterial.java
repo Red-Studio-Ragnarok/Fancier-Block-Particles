@@ -18,9 +18,4 @@ public class FBPMaterial extends Material {
 	public boolean blocksLight() {
 		return false;
 	}
-
-	@Override
-	public boolean blocksMovement() {
-		return true;
-	}
 }
