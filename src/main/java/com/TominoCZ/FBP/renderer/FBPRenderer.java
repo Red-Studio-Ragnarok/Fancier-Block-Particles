@@ -2,6 +2,7 @@ package com.TominoCZ.FBP.renderer;
 
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.vector.FBPVector3d;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -11,16 +12,21 @@ import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FBPRenderer {
 
+	public static boolean render = false;
+	public static List<Particle> queuedParticles = new ArrayList<>();
 
 	public static void renderCubeShaded_S(BufferBuilder buf, Vec2f[] par, float x, float y, float z, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
 		// switch to vertex format that supports normals
-		Tessellator.getInstance().draw();
-		buf.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
+		// Tessellator.getInstance().draw();
+		// buf.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
 
 		// some GL commands
-		RenderHelper.enableStandardItemLighting();
+		// RenderHelper.enableStandardItemLighting();
 
 		// render particle
 		buf.setTranslation(x, y, z);
@@ -30,10 +36,10 @@ public class FBPRenderer {
 		buf.setTranslation(0, 0, 0);
 
 		// continue with the regular vertex format
-		Tessellator.getInstance().draw();
-		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+		// Tessellator.getInstance().draw();
+		// buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
-		RenderHelper.disableStandardItemLighting();
+		// RenderHelper.disableStandardItemLighting();
 	}
 
 	public static void renderCubeShaded_WH(BufferBuilder buf, Vec2f[] par, float f5, float f6, float f7, double width, double height, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {

@@ -467,6 +467,10 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	@Override
 	public void renderParticle(BufferBuilder buf, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+		if (!FBPRenderer.render) {
+			FBPRenderer.queuedParticles.add(this);
+			return;
+		}
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 		if (FBPKeyBindings.FBPSweep.isKeyDown() && !killToggle)
