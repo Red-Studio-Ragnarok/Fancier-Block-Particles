@@ -10,6 +10,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Paths;
 
 public class FBPConfigHandler {
+	//TODO BIG Cleanup
+
 	static FileInputStream fis;
 	static InputStreamReader isr;
 	static BufferedReader br;

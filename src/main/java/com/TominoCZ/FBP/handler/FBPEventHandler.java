@@ -17,7 +17,6 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleDigging.Factory;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -47,9 +46,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class FBPEventHandler {
+	//TODO BIG Cleanup
+
 	Minecraft mc;
 
-	IWorldEventListener listener;
+	static IWorldEventListener listener;
 
 	ConcurrentSet<BlockPosNode> list;
 
