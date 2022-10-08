@@ -44,7 +44,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class FBPEventHandler {
-	//TODO BIG Cleanup
 
 	Minecraft mc;
 
