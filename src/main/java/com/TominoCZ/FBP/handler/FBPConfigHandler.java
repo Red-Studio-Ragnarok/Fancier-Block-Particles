@@ -38,15 +38,15 @@ public class FBPConfigHandler {
 			if (!FBP.floatingMaterialsFile.exists()) {
 				FBP.floatingMaterialsFile.createNewFile();
 
-				FBP.INSTANCE.floatingMaterials.clear();
+				FBP.floatingMaterials.clear();
 
-				FBP.INSTANCE.floatingMaterials.add(Material.LEAVES);
-				FBP.INSTANCE.floatingMaterials.add(Material.PLANTS);
-				FBP.INSTANCE.floatingMaterials.add(Material.ICE);
-				FBP.INSTANCE.floatingMaterials.add(Material.PACKED_ICE);
-				FBP.INSTANCE.floatingMaterials.add(Material.CARPET);
-				FBP.INSTANCE.floatingMaterials.add(Material.WOOD);
-				FBP.INSTANCE.floatingMaterials.add(Material.WEB);
+				FBP.floatingMaterials.add(Material.LEAVES);
+				FBP.floatingMaterials.add(Material.PLANTS);
+				FBP.floatingMaterials.add(Material.ICE);
+				FBP.floatingMaterials.add(Material.PACKED_ICE);
+				FBP.floatingMaterials.add(Material.CARPET);
+				FBP.floatingMaterials.add(Material.WOOD);
+				FBP.floatingMaterials.add(Material.WEB);
 			} else
 				readFloatingMaterials();
 
@@ -120,7 +120,7 @@ public class FBPConfigHandler {
 		try {
 			PrintWriter writer = new PrintWriter(FBP.animBlacklistFile.getPath(), "UTF-8");
 
-			for (String ex : FBP.INSTANCE.blockAnimBlacklist)
+			for (String ex : FBP.blockAnimBlacklist)
 				writer.println(ex);
 
 			writer.close();
@@ -144,7 +144,7 @@ public class FBPConfigHandler {
 		try {
 			PrintWriter writer = new PrintWriter(FBP.particleBlacklistFile.getPath(), "UTF-8");
 
-			for (String ex : FBP.INSTANCE.blockParticleBlacklist)
+			for (String ex : FBP.blockParticleBlacklist)
 				writer.println(ex);
 
 			writer.close();
@@ -316,7 +316,7 @@ public class FBPConfigHandler {
 
 			String line;
 
-			FBP.INSTANCE.floatingMaterials.clear();
+			FBP.floatingMaterials.clear();
 
 			Field[] materials = Material.class.getDeclaredFields();
 
@@ -346,8 +346,8 @@ public class FBPConfigHandler {
 							try {
 								Material mat = (Material) f.get(null);
 
-								if (!FBP.INSTANCE.floatingMaterials.contains(mat))
-									FBP.INSTANCE.floatingMaterials.add(mat);
+								if (!FBP.floatingMaterials.contains(mat))
+									FBP.floatingMaterials.add(mat);
 
 								found = true;
 								break;
