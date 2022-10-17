@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class FBPObfUtil {
 
-	private static HashMap<String, String> map;
+	private static final HashMap<String, String> map;
 
 	static {
 		map = new HashMap<String, String>();

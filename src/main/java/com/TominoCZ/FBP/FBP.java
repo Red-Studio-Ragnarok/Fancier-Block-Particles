@@ -62,7 +62,7 @@ public class FBP {
 	public static List<String> blockAnimBlacklist;
 	public static List<Material> floatingMaterials;
 
-	public static SplittableRandom random = new SplittableRandom();
+	public static final SplittableRandom random = new SplittableRandom();
 
 	public static final Vec3d[] CUBE = {
 			// TOP

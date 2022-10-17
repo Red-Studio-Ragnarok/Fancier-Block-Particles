@@ -13,7 +13,7 @@ import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 
 public final class FBPModelTransformer {
 
-	public static FBPSimpleBakedModel transform(IBakedModel model, IBlockState state, long rand, IVertexTransformer transformer) {
+	public static void transform(IBakedModel model, IBlockState state, long rand, IVertexTransformer transformer) {
 		try {
 			FBPSimpleBakedModel out = new FBPSimpleBakedModel(model);
 
@@ -25,9 +25,7 @@ public final class FBPModelTransformer {
 				}
 			}
 
-			return out;
 		} catch (Throwable t) {
-			return null;
 		}
 	}
 
