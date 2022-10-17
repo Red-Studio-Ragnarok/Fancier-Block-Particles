@@ -7,10 +7,12 @@ Turn boring particles into fancier particles!
 
 Fancier Block Particles is a fork of the popular [Fancy Block Particles] by [MorphoxL] which is more optimized and less buggy than the original mod.
 
-- Fancier Block Particles now run 8% faster than Fancy Block Particles
+- Fancier Block Particles now run 276% faster than Fancy Block Particles
 - Fancier Block Particles now load 25% faster than Fancy Block Particles
-- Fancier Block Particles now use on average 100MB less VRAM than Fancy Block Particles
+- Fancier Block Particles now use on average 150MB less VRAM than Fancy Block Particles
 - Fancier Block Particles now use on average 6% less RAM than Fancy Block Particles
+- Fancier Block Particles now use on average 6% less CPU than Fancy Block Particles
+- Fancier Block Particles now use on average 1.5% less GPU than Fancy Block Particles
 
 Issues From Fancy Block Particles Fixed:
 
