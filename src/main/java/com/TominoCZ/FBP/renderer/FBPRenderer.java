@@ -21,25 +21,12 @@ public class FBPRenderer {
 	public static List<Particle> queuedParticles = new ArrayList<>();
 
 	public static void renderCubeShaded_S(BufferBuilder buf, Vec2f[] par, float x, float y, float z, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
-		// switch to vertex format that supports normals
-		// Tessellator.getInstance().draw();
-		// buf.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
-
-		// some GL commands
-		// RenderHelper.enableStandardItemLighting();
-
 		// render particle
 		buf.setTranslation(x, y, z);
 
 		putCube_S(buf, par, scale, rotVec, j, k, r, g, b, a);
 
 		buf.setTranslation(0, 0, 0);
-
-		// continue with the regular vertex format
-		// Tessellator.getInstance().draw();
-		// buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-
-		// RenderHelper.disableStandardItemLighting();
 	}
 
 	public static void renderCubeShaded_WH(BufferBuilder buf, Vec2f[] par, float f5, float f6, float f7, double width, double height, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
