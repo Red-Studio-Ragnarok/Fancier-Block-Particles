@@ -26,6 +26,7 @@ public final class FBPModelTransformer {
 			}
 
 		} catch (Throwable t) {
+			throw new RuntimeException(t);
 		}
 	}
 

@@ -52,7 +52,7 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 		Next = new FBPGuiButton(-3, RotSpeedSlider.x + RotSpeedSlider.width + 25, RotSpeedSlider.y + 2 - GUIOffsetY, ">>", false, false, true);
 
-		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
+		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
 		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 
 		InfiniteDuration.width = TimeUnit.width = Next.width = 20;

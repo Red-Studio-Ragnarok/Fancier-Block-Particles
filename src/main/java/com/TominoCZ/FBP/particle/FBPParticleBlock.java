@@ -22,7 +22,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import org.lwjgl.opengl.GL11;
@@ -49,7 +48,6 @@ public class FBPParticleBlock extends Particle {
 
 	long textureSeed;
 
-	float startingHeight;
 	float startingAngle;
 	float step = 0.00275f;
 
@@ -58,7 +56,6 @@ public class FBPParticleBlock extends Particle {
 
 	float smoothHeight;
 
-	boolean lookingUp;
 	boolean spawned = false;
 	long tick = -1;
 
@@ -76,9 +73,6 @@ public class FBPParticleBlock extends Particle {
 
 		facing = mc.player.getHorizontalFacing();
 
-		lookingUp = MathHelper.wrapDegrees(mc.player.rotationPitch) <= 0;
-
-		prevHeight = height = startingHeight = (float) FBP.random.nextDouble(0.065, 0.115);
 		startingAngle = (float) FBP.random.nextDouble(0.03125, 0.0635);
 
 		prevRot = new FBPVector3d();

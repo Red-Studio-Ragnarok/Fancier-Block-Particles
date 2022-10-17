@@ -28,7 +28,7 @@ public class FBPParticleManager extends ParticleManager {
 
 	Minecraft mc;
 
-	public FBPParticleManager(World worldIn, TextureManager rendererIn, ParticleDigging.Factory factory) {
+	public FBPParticleManager(World worldIn, TextureManager rendererIn) {
 		super(worldIn, rendererIn);
 
 		mc = Minecraft.getMinecraft();
@@ -64,7 +64,7 @@ public class FBPParticleManager extends ParticleManager {
 					}
 				}
 			} else if (FBP.fancyFlame && toAdd instanceof ParticleFlame && !(toAdd instanceof FBPParticleFlame) && Minecraft.getMinecraft().gameSettings.particleSetting < 2) {
-				toAdd = new FBPParticleFlame(world, effect.posX, effect.posY, effect.posZ, 0, FBP.random.nextDouble() * 0.25, 0, true);
+				toAdd = new FBPParticleFlame(world, effect.posX, effect.posY, effect.posZ, FBP.random.nextDouble() * 0.25, true);
 				effect.setExpired();
 			} else if (FBP.fancySmoke && toAdd instanceof ParticleSmokeNormal && !(toAdd instanceof FBPParticleSmokeNormal) && Minecraft.getMinecraft().gameSettings.particleSetting < 2) {
 				ParticleSmokeNormal p = (ParticleSmokeNormal) effect;

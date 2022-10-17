@@ -43,7 +43,7 @@ public class FBPGuiButton extends GuiButton {
 		int centerY2 = y + this.height / 2;
 
 		double distance1 = Math.sqrt((mouseX - centerX1) * (mouseX - centerX1) + (mouseY - centerY1) * (mouseY - centerY1));
-		double radius = (this.height - 1) / 2;
+		int radius = (this.height - 1) / 2;
 
 		double distance2 = Math.sqrt((mouseX - centerX2) * (mouseX - centerX2) + (mouseY - centerY2) * (mouseY - centerY2));
 

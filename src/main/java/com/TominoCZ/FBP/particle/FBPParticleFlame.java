@@ -29,7 +29,7 @@ public class FBPParticleFlame extends ParticleFlame {
 	double startScale, scaleAlpha, prevParticleScale, prevParticleAlpha;
 	double endMult = 1;
 
-	boolean spawnAnother = true;
+	boolean spawnAnother;
 
 	Vec3d startPos;
 
@@ -37,14 +37,11 @@ public class FBPParticleFlame extends ParticleFlame {
 
 	Vec2f par;
 
-	protected FBPParticleFlame(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double mX, double mY, double mZ, boolean spawnAnother) {
-		super(worldIn, xCoordIn, yCoordIn - 0.06, zCoordIn, mX, mY, mZ);
+	protected FBPParticleFlame(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double mY, boolean spawnAnother) {
+		super(worldIn, xCoordIn, yCoordIn - 0.06, zCoordIn, 0, mY, 0);
 		IBlockState bs = worldIn.getBlockState(new BlockPos(posX, posY, posZ));
 
 		this.spawnAnother = spawnAnother;
-
-		if (bs.getBlock() != Blocks.TORCH)
-			spawnAnother = false;
 
 		if (bs == Blocks.TORCH.getDefaultState())
 			prevPosY = posY = posY + 0.04f;
@@ -132,7 +129,7 @@ public class FBPParticleFlame extends ParticleFlame {
 				spawnAnother = false;
 
 				mc.effectRenderer.addEffect(
-						new FBPParticleFlame(world, startPos.x, startPos.y, startPos.z, 0, 0, 0, spawnAnother));
+						new FBPParticleFlame(world, startPos.x, startPos.y, startPos.z, 0, false));
 			}
 		}
 
@@ -148,11 +145,9 @@ public class FBPParticleFlame extends ParticleFlame {
 
 	@Override
 	public void move(double x, double y, double z) {
-		double X = x;
 		double Y = y;
-		double Z = z;
 
-		List<AxisAlignedBB> list = this.world.getCollisionBoxes((Entity) null, this.getBoundingBox().expand(x, y, z));
+		List<AxisAlignedBB> list = this.world.getCollisionBoxes(null, this.getBoundingBox().expand(x, y, z));
 
 		for (AxisAlignedBB axisalignedbb : list) {
 			y = axisalignedbb.calculateYOffset(this.getBoundingBox(), y);
@@ -211,10 +206,6 @@ public class FBPParticleFlame extends ParticleFlame {
 
 		par = new Vec2f(f, f1);
 
-		// FBPRenderer.renderCubeShaded_S(buf, new Vec2f[] {par, par, par, par}, f5,
-		// f6, f7, f4 / 80, FBPVector3d.UnitY.multiply(AngleY), i >> 16 & 65535, i &
-		// 65535, particleRed, particleGreen, particleBlue, alpha, true);
-
 		Tessellator.getInstance().draw();
 		mc.getRenderManager().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
@@ -231,9 +222,9 @@ public class FBPParticleFlame extends ParticleFlame {
 	public void putCube(BufferBuilder worldRendererIn, double scale, int j, int k, float r, float g, float b, float a) {
 		float brightnessForRender = 1;
 
-		float R = 0;
-		float G = 0;
-		float B = 0;
+		float R;
+		float G;
+		float B;
 
 		for (int i = 0; i < cube.length; i += 4)
 		{

@@ -3,7 +3,6 @@ package com.TominoCZ.FBP.particle;
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.renderer.FBPRenderer;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleSmokeNormal;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -17,9 +16,7 @@ import java.util.List;
 
 public class FBPParticleSmokeNormal extends ParticleSmokeNormal {
 
-	Minecraft mc;
-
-	double startScale, scaleAlpha, prevParticleScale, prevParticleAlpha;
+	double scaleAlpha, prevParticleScale, prevParticleAlpha;
 	double endMult = 0.75;
 
 	Vec3d[] cube;
@@ -37,7 +34,6 @@ public class FBPParticleSmokeNormal extends ParticleSmokeNormal {
 		this.motionY = mY;
 		this.motionZ = mZ;
 
-		mc = Minecraft.getMinecraft();
 		this.particleTexture = tex;
 
 		scaleAlpha = particleScale * 0.85;
@@ -81,8 +77,6 @@ public class FBPParticleSmokeNormal extends ParticleSmokeNormal {
 		}
 
 		particleScale *= FBP.scaleMult;
-
-		startScale = particleScale;
 
 		float angleY = rand.nextFloat() * 80;
 

@@ -45,7 +45,7 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 		Back = new FBPGuiButton(-7, X - 44, Y + 2 - GUIOffsetY + 4, "<<", false, false, true);
 		Back.width = 20;
 
-		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, new Dimension(width, height), this.fontRenderer);
+		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
 		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 
 		this.buttonList.addAll(Arrays.asList(WeatherParticleDensity, Defaults, Done, Reload, Back, Enable, ReportBug));

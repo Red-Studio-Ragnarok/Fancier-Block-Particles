@@ -7,7 +7,7 @@ public class FBPObfUtil {
 	private static final HashMap<String, String> map;
 
 	static {
-		map = new HashMap<String, String>();
+		map = new HashMap<>();
 
 		String obfNames = "field_151579_a," + "field_151577_b," + "field_151578_c," + "field_151575_d,"
 				+ "field_151576_e," + "field_151573_f," + "field_151574_g," + "field_151586_h," + "field_151587_i,"

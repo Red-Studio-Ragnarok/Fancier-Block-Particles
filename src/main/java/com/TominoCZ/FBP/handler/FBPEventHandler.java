@@ -14,8 +14,10 @@ import net.minecraft.block.BlockSlab.EnumBlockHalf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleDigging.Factory;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -318,7 +320,7 @@ public class FBPEventHandler {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onEntityJoinWorldEvent(EntityJoinWorldEvent e) {
 		if (e.getEntity() == mc.player) {
-			FBP.fancyEffectRenderer = new FBPParticleManager(e.getWorld(), mc.renderEngine, new Factory());
+			FBP.fancyEffectRenderer = new FBPParticleManager(e.getWorld(), mc.renderEngine);
 			FBP.fancyWeatherRenderer = new FBPWeatherRenderer();
 
 			IRenderHandler currentWeatherRenderer = mc.world.provider.getCloudRenderer();
