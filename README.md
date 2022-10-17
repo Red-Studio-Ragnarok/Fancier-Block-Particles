@@ -19,7 +19,7 @@ Issues From Fancy Block Particles Fixed:
 
 ## Overview
 
-This mods replace the Minecraft 2D particles with fancier 3D particles, it also adds a fancier block placing animation
+This mod replace the Minecraft 2D particles with fancier 3D particles, it also adds a fancier block placing animation
 
 ![Example](https://i.imgur.com/ZfiAoir.gif)
 ### Blacklist System
