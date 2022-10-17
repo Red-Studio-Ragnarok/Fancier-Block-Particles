@@ -20,10 +20,6 @@ public class FBPSimpleBakedModel implements IBakedModel {
 	private final IBakedModel parent;
 	private TextureAtlasSprite particle;
 
-	public FBPSimpleBakedModel() {
-		this(null);
-	}
-
 	public FBPSimpleBakedModel(IBakedModel parent) {
 		this.parent = parent;
 		for (int i = 0; i < quads.length; i++) {
@@ -46,12 +42,12 @@ public class FBPSimpleBakedModel implements IBakedModel {
 
 	@Override
 	public boolean isAmbientOcclusion() {
-		return parent != null ? parent.isAmbientOcclusion() : true;
+		return parent == null || parent.isAmbientOcclusion();
 	}
 
 	@Override
 	public boolean isGui3d() {
-		return parent != null ? parent.isGui3d() : true;
+		return parent == null || parent.isGui3d();
 	}
 
 	@Override

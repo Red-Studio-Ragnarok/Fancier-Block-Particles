@@ -1,17 +1,22 @@
 package com.TominoCZ.FBP.handler;
 
 import com.TominoCZ.FBP.FBP;
+import com.TominoCZ.FBP.model.FBPModelHelper;
 import com.TominoCZ.FBP.node.BlockNode;
 import com.TominoCZ.FBP.node.BlockPosNode;
 import com.TominoCZ.FBP.particle.FBPParticleBlock;
 import com.TominoCZ.FBP.particle.FBPParticleManager;
+import com.TominoCZ.FBP.renderer.FBPRenderer;
 import com.TominoCZ.FBP.renderer.FBPWeatherRenderer;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.block.*;
 import net.minecraft.block.BlockSlab.EnumBlockHalf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleDigging.Factory;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -25,6 +30,7 @@ import net.minecraft.world.IWorldEventListener;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.world.BlockEvent;
@@ -32,15 +38,16 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 
+import java.util.List;
 import java.util.Objects;
 
 public class FBPEventHandler {
+
 	Minecraft mc;
 
-	IWorldEventListener listener;
+	static IWorldEventListener listener;
 
 	ConcurrentSet<BlockPosNode> list;
 
@@ -110,7 +117,7 @@ public class FBPEventHandler {
 
 						IBlockState state = newState.getActualState(worldIn, pos);
 
-						if (state.getBlock() instanceof BlockDoublePlant) {
+						if (state.getBlock() instanceof BlockDoublePlant || !FBPModelHelper.isModelValid(state)) {
 							removePosEntry(pos);
 							return;
 						}
@@ -137,6 +144,45 @@ public class FBPEventHandler {
 				}
 			}
 		};
+	}
+
+	@SubscribeEvent
+	public void onRenderWorldLastEvent(RenderWorldLastEvent event) {
+		List<Particle> particles = FBPRenderer.queuedParticles;
+
+		if (particles.isEmpty()) {
+			return;
+		}
+
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+		bufferbuilder.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
+
+		Entity renderViewEntity = mc.getRenderViewEntity();
+		float partialTicks = mc.getRenderPartialTicks();
+		float rotX = ActiveRenderInfo.getRotationX();
+		float rotZ = ActiveRenderInfo.getRotationZ();
+		float rotYZ = ActiveRenderInfo.getRotationYZ();
+		float rotXY = ActiveRenderInfo.getRotationXY();
+		float rotXZ = ActiveRenderInfo.getRotationXZ();
+
+		FBPRenderer.render = true;
+		for (int i = 0; i < particles.size(); i++) {
+			particles.get(i).renderParticle(bufferbuilder, renderViewEntity, partialTicks, rotX, rotZ, rotYZ, rotXY, rotXZ);
+		}
+		FBPRenderer.render = false;
+
+		mc.entityRenderer.enableLightmap();
+		RenderHelper.enableStandardItemLighting();
+
+		mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		tessellator.draw();
+
+		RenderHelper.disableStandardItemLighting();
+		mc.entityRenderer.disableLightmap();
+
+		particles.clear();
 	}
 
 	@SubscribeEvent
@@ -204,56 +250,53 @@ public class FBPEventHandler {
 
 		BlockPosNode node = new BlockPosNode();
 
-		try {
-			if (!bool && offset.getMaterial().isReplaceable() && !atPos.getBlock().isReplaceable(e.getWorld(), pos) && inHand.canPlaceBlockAt(e.getWorld(), pos_o)) {
-				node.add(pos_o);
-				addedOffset = true;
-			} else
-				node.add(pos);
 
-			boolean okToAdd = inHand != Blocks.AIR && inHand.canPlaceBlockAt(e.getWorld(), addedOffset ? pos_o : pos);
+		if (!bool && offset.getMaterial().isReplaceable() && !atPos.getBlock().isReplaceable(e.getWorld(), pos) && inHand.canPlaceBlockAt(e.getWorld(), pos_o)) {
+			node.add(pos_o);
+			addedOffset = true;
+		} else
+			node.add(pos);
 
-			// do torch check
-			if (inHand instanceof BlockTorch) {
-				BlockTorch bt = (BlockTorch) inHand;
+		boolean okToAdd = inHand != Blocks.AIR && inHand.canPlaceBlockAt(e.getWorld(), addedOffset ? pos_o : pos);
 
-				if (!bt.canPlaceBlockAt(e.getWorld(), pos_o))
-					okToAdd = false;
+		// do torch check
+		if (inHand instanceof BlockTorch) {
+			BlockTorch bt = (BlockTorch) inHand;
 
-				if (atPos.getBlock() == Blocks.TORCH) {
-					for (EnumFacing fc : EnumFacing.VALUES) {
-						BlockPos p = pos_o.offset(fc);
-						Block bl = e.getWorld().getBlockState(p).getBlock();
+			if (!bt.canPlaceBlockAt(e.getWorld(), pos_o))
+				okToAdd = false;
 
-						if (bl != Blocks.TORCH && bl != FBP.FBPBlock && bl.isSideSolid(bl.getDefaultState(), e.getWorld(), p, fc)) {
-							okToAdd = true;
-							break;
-						} else
-							okToAdd = false;
-					}
+			if (atPos.getBlock() == Blocks.TORCH) {
+				for (EnumFacing fc : EnumFacing.VALUES) {
+					BlockPos p = pos_o.offset(fc);
+					Block bl = e.getWorld().getBlockState(p).getBlock();
+
+					if (bl != Blocks.TORCH && bl != FBP.FBPBlock && bl.isSideSolid(bl.getDefaultState(), e.getWorld(), p, fc)) {
+						okToAdd = true;
+						break;
+					} else
+						okToAdd = false;
 				}
 			}
+		}
 
-			BlockPosNode last = getNodeWithPos(pos);
-			BlockPosNode last_o = getNodeWithPos(pos_o);
+		BlockPosNode last = getNodeWithPos(pos);
+		BlockPosNode last_o = getNodeWithPos(pos_o);
 
-			// add if all ok
-			if (okToAdd) {
-				boolean replaceable = (addedOffset ? offset : atPos).getBlock().isReplaceable(e.getWorld(), (addedOffset ? pos_o : pos));
+		// add if all ok
+		if (okToAdd) {
+			boolean replaceable = (addedOffset ? offset : atPos).getBlock().isReplaceable(e.getWorld(), (addedOffset ? pos_o : pos));
 
-				if (last != null && !addedOffset && last.checked) // replace
-					return;
-				if (last_o != null && addedOffset && (last_o.checked || replaceable)) // place on side
-					return;
+			if (last != null && !addedOffset && last.checked) // replace
+				return;
+			if (last_o != null && addedOffset && (last_o.checked || replaceable)) // place on side
+				return;
 
-				Chunk c = mc.world.getChunk((addedOffset ? pos_o : pos));
-				c.resetRelightChecks();
-				c.setLightPopulated(true);
+			Chunk c = mc.world.getChunk((addedOffset ? pos_o : pos));
+			c.resetRelightChecks();
+			c.setLightPopulated(true);
 
-				list.add(node);
-			}
-		} catch (Throwable t) {
-			list.clear();
+			list.add(node);
 		}
 	}
 
@@ -264,7 +307,6 @@ public class FBPEventHandler {
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onWorldLoadEvent(WorldEvent.Load e) {
 		FBPConfigHandler.init();
@@ -273,7 +315,6 @@ public class FBPEventHandler {
 		list.clear();
 	}
 
-	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onEntityJoinWorldEvent(EntityJoinWorldEvent e) {
 		if (e.getEntity() == mc.player) {
@@ -296,7 +337,6 @@ public class FBPEventHandler {
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onPlayerPlaceBlockEvent(BlockEvent.PlaceEvent e) {
 		IBlockState bs = e.getPlacedBlock();

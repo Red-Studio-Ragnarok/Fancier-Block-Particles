@@ -53,13 +53,13 @@ public class FBPKeyInputHandler {
 		boolean isShiftDown = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
 		boolean isKeyDown = FBPKeyBindings.FBPFastAdd.isKeyDown();
 
-		if (isShiftDown && isKeyDown || isKeyDown) {
-			Block b = null;
+		if (isKeyDown) {
+			Block b;
 			ItemStack stack = null;
 
-			boolean useHeldBlock = isShiftDown && mc.player.getHeldItemMainhand() != null && mc.player.getHeldItemMainhand().getItem() != null && (b = Block.getBlockFromName((stack = mc.player.getHeldItemMainhand()).getItem().getRegistryName().toString())) != null && b != Blocks.AIR;
+			boolean useHeldBlock = isShiftDown && (b = Block.getBlockFromName((stack = mc.player.getHeldItemMainhand()).getItem().getRegistryName().toString())) != null && b != Blocks.AIR;
 
-			if (!wasOpened && isKeyDown && ((mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK)) || useHeldBlock)) {
+			if (!wasOpened && (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || useHeldBlock)) {
 				mc.displayGuiScreen(useHeldBlock ? (new FBPGuiBlacklist(stack)) : (new FBPGuiBlacklist(mc.objectMouseOver.getBlockPos())));
 
 				Mouse.setGrabbed(true);

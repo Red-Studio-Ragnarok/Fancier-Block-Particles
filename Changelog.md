@@ -1,3 +1,33 @@
+# Fancier Block Particles Version 0.7 Changelog
+
+## !!! The performance numbers in this changelog have been mesured by memory so don't take it as 100% true until 0.7 is actually released !!!
+
+## Showcase
+
+- Particles now renders 4 times faster (Immense thanks to Rongmario!)
+
+## Changed
+
+- Default key for the blacklist menu changed from none to B
+
+## Fixed
+
+- Fixed GUI not saving config to file
+
+## Removed
+
+- (Testing) Removed some checks in FBPModelHelper because I am assuming mods aren't weird
+- Removed FBPVertexUtil as it was unused
+
+## Optimization
+
+- Optimized main class as a result, it should be slightly faster and use slightly less RAM
+- Draw calls are now batched thanks to Rongmario which improve rendering performance by a ton
+
+## Internal
+
+- General code cleanup
+
 # Fancier Block Particles Version 0.6 Changelog
 
 ## Changed
@@ -44,13 +74,13 @@
 ## Optimization
 
 - Switched to AT's instead of Method Handle which leads to increased performance and cleaner code
-- Optimized Particle Digging as a result it should be slightly faster and use slightly less RAM
-- Optimized Particle Smoke as a result it should be slightly faster and use slightly less RAM
-- Optimized Particle Rain as a result it should be slightly faster and use slightly less RAM
-- Optimized Particle Snow as a result it should be slightly faster and use slightly less RAM
-- Optimized Particle Manager as a result it should be slightly faster and use slightly less RAM
-- Optimized the Event Handler as a result it should be faster and use slightly less RAM
-- Optimized the Renderer as a result it should be faster and use less RAM and VRAM
+- Optimized Particle Digging as a result, it should be slightly faster and use slightly less RAM
+- Optimized Particle Smoke as a result, it should be slightly faster and use slightly less RAM
+- Optimized Particle Rain as a result, it should be slightly faster and use slightly less RAM
+- Optimized Particle Snow as a result, it should be slightly faster and use slightly less RAM
+- Optimized Particle Manager as a result, it should be slightly faster and use slightly less RAM
+- Optimized the Event Handler as a result, it should be faster and use slightly less RAM
+- Optimized the Renderer as a result, it should be faster and use less RAM and VRAM
 
 All these optimizations result in a 9% faster mod loading time, which makes Fancier Block Particles load 25% faster than Fancy Block Particles
 
