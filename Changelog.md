@@ -1,10 +1,8 @@
 # Fancier Block Particles Version 0.7 Changelog
 
-## !!! The performance numbers in this changelog have been mesured by memory so don't take it as 100% true until 0.7 is actually released !!!
-
 ## Showcase
 
-- Particles now renders 4 times faster (Immense thanks to Rongmario!)
+- Particles now renders 2.5 times faster (Immense thanks to Rongmario!)
 
 ## Changed
 
@@ -23,6 +21,7 @@
 
 - Optimized main class as a result, it should be slightly faster and use slightly less RAM
 - Draw calls are now batched thanks to Rongmario which improve rendering performance by a ton
+- Thanks to a immense code cleanup the FBP as a whole should be slightly faster and use slightly less RAM
 
 ## Internal
 
