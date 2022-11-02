@@ -8,9 +8,11 @@
 
 ## Internal
 
+- Finished removing useless "@SideOnly"
+
 ### Changes in error handling
 
-Non critical try-catch blocks should now never throw a runtime exception or print a stacktrace except when debug mode is added they should print a stacktrace and count towards the issues counter and their respective counters (Rendering Issues, Physics Issues, Performance Issues, etc.)
+Non critical try-catch blocks should now never throw a runtime exception or print a stack trace except when debug mode is added they should print a stack trace and count towards the issues counter and their respective counters (Rendering Issues, Physics Issues, Performance Issues, etc.)
 
 # Fancier Block Particles Version 0.7 Changelog
 
