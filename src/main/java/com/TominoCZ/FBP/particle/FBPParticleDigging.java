@@ -2,6 +2,7 @@ package com.TominoCZ.FBP.particle;
 
 import com.TominoCZ.FBP.FBP;
 import com.TominoCZ.FBP.keys.FBPKeyBindings;
+import com.TominoCZ.FBP.model.FBPModelHelper;
 import com.TominoCZ.FBP.renderer.FBPRenderer;
 import com.TominoCZ.FBP.util.FBPMathUtil;
 import com.TominoCZ.FBP.vector.FBPVector3d;
@@ -126,7 +127,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		destroyed = facing == null;
 
-		if (texture == null) {
+		if (texture == null && FBPModelHelper.isModelValid(state)) {
 			BlockModelShapes blockModelShapes = mc.getBlockRendererDispatcher().getBlockModelShapes();
 
 			// GET THE TEXTURE OF THE BLOCK FACE
@@ -137,7 +138,7 @@ public class FBPParticleDigging extends ParticleDigging {
 					if (!quads.isEmpty())
 						this.particleTexture = quads.get(0).getSprite();
 				} catch (Exception e) {
-					throw new RuntimeException(e);
+					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 				}
 			}
 
@@ -543,7 +544,6 @@ public class FBPParticleDigging extends ParticleDigging {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public int getBrightnessForRender(float partialTicks) {
 		AxisAlignedBB box = getBoundingBox();
 

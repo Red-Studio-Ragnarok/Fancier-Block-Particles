@@ -1,3 +1,17 @@
+# Fancier Block Particles Version 0.8 Changelog
+
+## Fixed
+
+- Fixed crashes with some moded blocks (#7)
+
+## Optimization
+
+## Internal
+
+### Changes in error handling
+
+Non critical try-catch blocks should now never throw a runtime exception or print a stacktrace except when debug mode is added they should print a stacktrace and count towards the issues counter and their respective counters (Rendering Issues, Physics Issues, Performance Issues, etc.)
+
 # Fancier Block Particles Version 0.7 Changelog
 
 ## Showcase
