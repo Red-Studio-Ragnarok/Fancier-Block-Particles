@@ -199,7 +199,7 @@ public class FBPParticleManager extends ParticleManager {
 						}
 					}
 				} catch (Throwable e) {
-					throw new RuntimeException(e);
+					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 				}
 
 				Particle toSpawn;

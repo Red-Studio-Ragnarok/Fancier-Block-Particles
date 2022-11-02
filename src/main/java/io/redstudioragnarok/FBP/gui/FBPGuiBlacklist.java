@@ -55,7 +55,7 @@ public class FBPGuiBlacklist extends GuiScreen {
 			if (te != null)
 				mc.storeTEInStack(is, te);
 		} catch (Throwable t) {
-			throw new RuntimeException(t);
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		displayItemStack = is.copy();
@@ -110,13 +110,12 @@ public class FBPGuiBlacklist extends GuiScreen {
 			}
 		} catch (Exception e) {
 			try {
-				if (!Mouse.isButtonDown(FBPKeyBindings.FBPFastAdd.getKeyCode() + 100)
-						|| (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
+				if (!Mouse.isButtonDown(FBPKeyBindings.FBPFastAdd.getKeyCode() + 100) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
 					keyUp = true;
 				}
 			} catch (Exception e1) {
 				closing = true;
-				e.printStackTrace();
+				// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 			}
 		}
 

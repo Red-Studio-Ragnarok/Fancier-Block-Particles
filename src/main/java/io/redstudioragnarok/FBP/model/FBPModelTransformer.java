@@ -26,7 +26,7 @@ public final class FBPModelTransformer {
 			}
 
 		} catch (Throwable t) {
-			throw new RuntimeException(t);
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 	}
 

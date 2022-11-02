@@ -78,7 +78,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.state.isNormalCube();
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isNormalCube(state, world, pos);
@@ -92,7 +92,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.state.getBlock().isAir(state, world, pos);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isAir(state, world, pos);
@@ -106,7 +106,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.state.getBlock().isBed(state, world, pos, player);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isBed(state, world, pos, player);
@@ -120,7 +120,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.state.getBlock().isBedFoot(world, pos);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isBedFoot(world, pos);
@@ -134,7 +134,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.state.getBlock().isBurning(world, pos);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isBurning(world, pos);
@@ -148,7 +148,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.state.getBlock().isFlammable(world, pos, face);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isFlammable(world, pos, face);
@@ -162,7 +162,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.state.getBlock().isLadder(state, world, pos, entity);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isLadder(state, world, pos, entity);
@@ -177,7 +177,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.state.getMaterial().isReplaceable();
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return this.material.isReplaceable();
@@ -192,7 +192,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.originalBlock.isPassable(worldIn, pos);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 		return !this.material.blocksMovement();
 	}
@@ -206,7 +206,7 @@ public class FBPAnimationDummyBlock extends Block {
 				n.originalBlock.onEntityCollision(worldIn, pos, state, entityIn);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 	}
 
@@ -220,7 +220,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.state.getCollisionBoundingBox(worldIn, pos);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return Block.FULL_BLOCK_AABB.offset(pos);
@@ -235,7 +235,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.state.getBoundingBox(worldIn, pos);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return Block.FULL_BLOCK_AABB.offset(pos);
@@ -255,7 +255,7 @@ public class FBPAnimationDummyBlock extends Block {
 				return n.state.getBlockHardness(w, pos);
 			}
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return blockState.getBlockHardness(w, pos);
@@ -278,7 +278,7 @@ public class FBPAnimationDummyBlock extends Block {
 			// cleanup just to make sure it gets removed
 			FBP.eventHandler.removePosEntry(pos);
 		} catch (Throwable t) {
-			t.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 	}
 

@@ -107,7 +107,7 @@ public class FBPConfigHandler {
 				try {
 					FBP.config.createNewFile();
 				} catch (IOException e1) {
-					e1.printStackTrace();
+					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 				}
 			}
 
@@ -133,7 +133,7 @@ public class FBPConfigHandler {
 				try {
 					FBP.animBlacklistFile.createNewFile();
 				} catch (IOException e1) {
-					e1.printStackTrace();
+					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 				}
 			}
 		}
@@ -157,7 +157,7 @@ public class FBPConfigHandler {
 				try {
 					FBP.particleBlacklistFile.createNewFile();
 				} catch (IOException e1) {
-					e1.printStackTrace();
+					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 				}
 			}
 		}
@@ -183,7 +183,7 @@ public class FBPConfigHandler {
 
 						writer.println(translated + "=" + flag);
 					} catch (Exception ex) {
-						throw new RuntimeException(ex);
+						// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 					}
 				}
 			}
@@ -282,7 +282,7 @@ public class FBPConfigHandler {
 			while ((line = br.readLine()) != null && !(line = line.replaceAll(" ", "").toLowerCase()).equals(""))
 				FBP.INSTANCE.addToBlacklist(line, false);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		closeStreams();
@@ -301,7 +301,7 @@ public class FBPConfigHandler {
 			while ((line = br.readLine()) != null && !(line = line.replaceAll(" ", "").toLowerCase()).equals(""))
 				FBP.INSTANCE.addToBlacklist(line, true);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		closeStreams();
@@ -351,7 +351,7 @@ public class FBPConfigHandler {
 								found = true;
 								break;
 							} catch (Exception ex) {
-								throw new RuntimeException(ex);
+								// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 							}
 						}
 					}
@@ -375,7 +375,7 @@ public class FBPConfigHandler {
 			isr.close();
 			fis.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 	}
 
