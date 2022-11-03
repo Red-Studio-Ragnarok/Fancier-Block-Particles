@@ -14,6 +14,8 @@
 
 Non critical try-catch blocks should now never throw a runtime exception or print a stack trace except when debug mode is added they should print a stack trace and count towards the issues counter and their respective counters (Rendering Issues, Physics Issues, Performance Issues, etc.)
 
+---
+
 # Fancier Block Particles Version 0.7 Changelog
 
 ## Showcase
@@ -42,6 +44,8 @@ Non critical try-catch blocks should now never throw a runtime exception or prin
 ## Internal
 
 - General code cleanup
+
+---
 
 # Fancier Block Particles Version 0.6 Changelog
 
@@ -72,17 +76,23 @@ Non critical try-catch blocks should now never throw a runtime exception or prin
 
 - Switched every bit of text to .lang which allows anyone to create a translation for their language
 
+---
+
 # Fancier Block Particles Version 0.5 Changelog
 
 ## Fixed
 
 - Critical crash because ATs were not getting applied
 
+---
+
 # Fancier Block Particles Version 0.4 Changelog
 
 ## Changed
 
 - Updated mcmod.info
+
+---
 
 # Fancier Block Particles Version 0.3 Changelog
 
@@ -102,6 +112,8 @@ All these optimizations result in a 9% faster mod loading time, which makes Fanc
 ## Internal
 
 - General code cleanup
+
+---
 
 # Fancier Block Particles Version 0.2 Changelog
 
@@ -129,6 +141,8 @@ All these optimizations result in a 9% faster mod loading time, which makes Fanc
 - Finished changing the syntax
 - Refactored FBPRenderUtil (In Util) to FBPRenderer (in Renderer)
 - Code Cleanup
+
+---
 
 # Fancier Block Particles Version 0.1 Changelog
 
