@@ -30,29 +30,30 @@ import javax.vecmath.Vector2d;
 
 public class FBPParticleBlock extends Particle {
 
-	public BlockPos pos;
+	public BlockPos blockPos;
 
 	Block block;
 	IBlockState blockState;
 
-	BlockModelRenderer BMR;
+	BlockModelRenderer blockModelRenderer;
 
-	IBakedModel modelPrefab;
+	IBakedModel bakedModel;
 
 	Minecraft mc;
 
 	EnumFacing facing;
 
-	FBPVector3d prevRot;
+	FBPVector3d previousRot;
 	FBPVector3d rot;
 
-	long textureSeed;
+	long seed;
 
+	float startingHeight;
 	float startingAngle;
 	float step = 0.00275f;
 
 	float height;
-	float prevHeight;
+	float previousHeight;
 
 	float smoothHeight;
 
@@ -63,19 +64,19 @@ public class FBPParticleBlock extends Particle {
 
 	TileEntity tileEntity;
 
-	@SuppressWarnings("incomplete-switch")
-	public FBPParticleBlock(World worldIn, double posXIn, double posYIn, double posZIn, IBlockState state, long rand) {
+	public FBPParticleBlock(World worldIn, double posXIn, double posYIn, double posZIn, IBlockState state, long inputSeed) {
 		super(worldIn, posXIn, posYIn, posZIn);
 
-		pos = new BlockPos(posXIn, posYIn, posZIn);
+		blockPos = new BlockPos(posXIn, posYIn, posZIn);
 
 		mc = Minecraft.getMinecraft();
 
 		facing = mc.player.getHorizontalFacing();
 
+		previousHeight = height = startingHeight = (float) FBP.random.nextDouble(0.065, 0.115);
 		startingAngle = (float) FBP.random.nextDouble(0.03125, 0.0635);
 
-		prevRot = new FBPVector3d();
+		previousRot = new FBPVector3d();
 		rot = new FBPVector3d();
 
 		switch (facing) {
@@ -97,42 +98,41 @@ public class FBPParticleBlock extends Particle {
 			break;
 		}
 
-		textureSeed = rand;
+		seed = inputSeed;
 
 		block = (blockState = state).getBlock();
 
-		BMR = mc.getBlockRendererDispatcher().getBlockModelRenderer();
+		blockModelRenderer = mc.getBlockRendererDispatcher().getBlockModelRenderer();
 
 		this.canCollide = false;
 
-		modelPrefab = mc.getBlockRendererDispatcher().getBlockModelShapes().getModelForState(state);
+		bakedModel = mc.getBlockRendererDispatcher().getBlockModelShapes().getModelForState(state);
 
-		tileEntity = worldIn.getTileEntity(pos);
+		tileEntity = worldIn.getTileEntity(blockPos);
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void onUpdate() {
 
 		if (!canCollide) {
-			IBlockState s = mc.world.getBlockState(pos);
+			IBlockState state = mc.world.getBlockState(blockPos);
 
-			if (s.getBlock() != FBP.FBPBlock || s.getBlock() == block) {
-				if (blockSet && s.getBlock() == Blocks.AIR) {
+			if (state.getBlock() != FBP.FBPBlock || state.getBlock() == block) {
+				if (blockSet && state.getBlock() == Blocks.AIR) {
 					// the block was destroyed during the animation
 					killParticle();
 
-					FBP.FBPBlock.onBlockHarvested(mc.world, pos, s, null);
-					mc.world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+					FBP.FBPBlock.onBlockHarvested(mc.world, blockPos, state, null);
+					mc.world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
 					return;
 				}
 
-				FBP.FBPBlock.copyState(pos, blockState, this);
-				mc.world.setBlockState(pos, FBP.FBPBlock.getDefaultState(), 2);
+				FBP.FBPBlock.copyState(blockPos, blockState, this);
+				mc.world.setBlockState(blockPos, FBP.FBPBlock.getDefaultState(), 2);
 
-				Chunk c = mc.world.getChunk(pos);
-				c.resetRelightChecks();
-				c.setLightPopulated(true);
+				Chunk chunk = mc.world.getChunk(blockPos);
+				chunk.resetRelightChecks();
+				chunk.setLightPopulated(true);
 
 
 				blockSet = true;
@@ -144,9 +144,9 @@ public class FBPParticleBlock extends Particle {
 		if (this.isExpired || mc.isGamePaused())
 			return;
 
-		prevHeight = height;
+		previousHeight = height;
 
-		prevRot.copyFrom(rot);
+		previousRot.copyFrom(rot);
 
 		switch (facing) {
 		case EAST:
@@ -172,24 +172,23 @@ public class FBPParticleBlock extends Particle {
 		step *= 1.5678982f;
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void renderParticle(BufferBuilder buff, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
 		if (this.isExpired)
 			return;
 
 		if (canCollide) {
-			Block b = mc.world.getBlockState(pos).getBlock();
-			if (block != b && b != Blocks.AIR && mc.world.getBlockState(pos).getBlock() != blockState.getBlock()) {
-				mc.world.setBlockState(pos, blockState, 2);
+			Block block = mc.world.getBlockState(blockPos).getBlock();
+			if (block != block && block != Blocks.AIR && mc.world.getBlockState(blockPos).getBlock() != blockState.getBlock()) {
+				mc.world.setBlockState(blockPos, blockState, 2);
 
 				if (tileEntity != null)
-					mc.world.setTileEntity(pos, tileEntity);
+					mc.world.setTileEntity(blockPos, tileEntity);
 
-				mc.world.sendPacketToServer(new CPacketPlayerDigging(Action.ABORT_DESTROY_BLOCK, pos, facing));
+				mc.world.sendPacketToServer(new CPacketPlayerDigging(Action.ABORT_DESTROY_BLOCK, blockPos, facing));
 
 				// cleanup just to make sure it gets removed
-				FBP.eventHandler.removePosEntry(pos);
+				FBP.eventHandler.removePosEntry(blockPos);
 			}
 			if (tick >= 1) {
 				killParticle();
@@ -201,13 +200,13 @@ public class FBPParticleBlock extends Particle {
 		if (!spawned)
 			return;
 
-		float f5 = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX) - 0.5f;
-		float f6 = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY) - 0.5f;
-		float f7 = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ) - 0.5f;
+		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX) - 0.5f;
+		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY) - 0.5f;
+		float z = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ) - 0.5f;
 
-		smoothHeight = ((float) (prevHeight + (height - prevHeight) * (double) partialTicks));
+		smoothHeight = ((float) (previousHeight + (height - previousHeight) * (double) partialTicks));
 
-		final FBPVector3d smoothRot = rot.partialVec(prevRot, partialTicks);
+		final FBPVector3d smoothRot = rot.partialVec(previousRot, partialTicks);
 
 		if (smoothHeight <= 0)
 			smoothHeight = 0;
@@ -270,7 +269,7 @@ public class FBPParticleBlock extends Particle {
 				spawnParticles();
 			}
 		}
-		buff.setTranslation(-pos.getX(), -pos.getY(), -pos.getZ());
+		buff.setTranslation(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ());
 
 		Tessellator.getInstance().draw();
 		mc.getRenderManager().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
@@ -282,7 +281,7 @@ public class FBPParticleBlock extends Particle {
 		GlStateManager.enableColorMaterial();
 		GL11.glColorMaterial(GL11.GL_FRONT, GL11.GL_AMBIENT_AND_DIFFUSE);
 
-		GlStateManager.translate(f5, f6, f7);
+		GlStateManager.translate(x, y, z);
 
 		GlStateManager.translate(tRot.x, tRot.y, tRot.z);
 
@@ -292,7 +291,7 @@ public class FBPParticleBlock extends Particle {
 		GlStateManager.translate(-tRot.x, -tRot.y, -tRot.z);
 		GlStateManager.translate(t.x, t.y, t.z);
 
-		BMR.renderModelSmooth(mc.world, modelPrefab, blockState, pos, buff, false, textureSeed);
+		blockModelRenderer.renderModelSmooth(mc.world, bakedModel, blockState, blockPos, buff, false, seed);
 
 		buff.setTranslation(0, 0, 0);
 
@@ -304,10 +303,10 @@ public class FBPParticleBlock extends Particle {
 	}
 
 	private void spawnParticles() {
-		if (mc.world.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockAir)
+		if (mc.world.getBlockState(blockPos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockAir)
 			return;
 
-		AxisAlignedBB aabb = block.getSelectedBoundingBox(blockState, mc.world, pos);
+		AxisAlignedBB aabb = block.getSelectedBoundingBox(blockState, mc.world, blockPos);
 
 		// z- = north
 		// x- = west // block pos
@@ -316,7 +315,7 @@ public class FBPParticleBlock extends Particle {
 
 				new Vector2d(aabb.minX, aabb.maxZ), new Vector2d(aabb.maxX, aabb.minZ) };
 
-		Vector2d middle = new Vector2d(pos.getX() + 0.5f, pos.getZ() + 0.5f);
+		Vector2d middle = new Vector2d(blockPos.getX() + 0.5f, blockPos.getZ() + 0.5f);
 
 		for (Vector2d corner : corners) {
 			double mX = middle.x - corner.x;
@@ -325,19 +324,19 @@ public class FBPParticleBlock extends Particle {
 			mX /= -0.5;
 			mZ /= -0.5;
 
-			mc.effectRenderer.addEffect(new FBPParticleDigging(mc.world, corner.x, pos.getY() + 0.1f, corner.y, mX, 0, mZ, 0.6f, 1, 1, 1, block.getActualState(blockState, mc.world, pos), null, this.particleTexture).multipleParticleScaleBy(0.5f).multiplyVelocity(0.5f));
+			mc.effectRenderer.addEffect(new FBPParticleDigging(mc.world, corner.x, blockPos.getY() + 0.1f, corner.y, mX, 0, mZ, 0.6f, 1, 1, 1, block.getActualState(blockState, mc.world, blockPos), null, this.particleTexture).multipleParticleScaleBy(0.5f).multiplyVelocity(0.5f));
 		}
 	}
 
 	public void killParticle() {
 		this.isExpired = true;
 
-		FBP.FBPBlock.blockNodes.remove(pos);
-		FBP.eventHandler.removePosEntry(pos);
+		FBP.FBPBlock.blockNodes.remove(blockPos);
+		FBP.eventHandler.removePosEntry(blockPos);
 	}
 
 	@Override
 	public void setExpired() {
-		FBP.eventHandler.removePosEntry(pos);
+		FBP.eventHandler.removePosEntry(blockPos);
 	}
 }
