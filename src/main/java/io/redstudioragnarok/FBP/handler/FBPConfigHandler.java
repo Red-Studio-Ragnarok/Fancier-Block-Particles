@@ -11,9 +11,9 @@ import java.nio.file.Paths;
 
 public class FBPConfigHandler {
 
-	static FileInputStream fis;
-	static InputStreamReader isr;
-	static BufferedReader br;
+	static FileInputStream fileInputStream;
+	static InputStreamReader inputStreamReader;
+	static BufferedReader bufferedReader;
 
 	public static void init() {
 		try {
@@ -64,6 +64,192 @@ public class FBPConfigHandler {
 
 			write();
 		}
+	}
+
+	public static void initStreams() {
+		try {
+			fileInputStream = new FileInputStream(FBP.config);
+			inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
+			bufferedReader = new BufferedReader(inputStreamReader);
+		} catch (Exception e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+		}
+	}
+
+	static void closeStreams() {
+		try {
+			bufferedReader.close();
+			inputStreamReader.close();
+			fileInputStream.close();
+		} catch (Exception e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+		}
+	}
+
+	static void read() {
+		try {
+			initStreams();
+
+			String line;
+
+			while ((line = bufferedReader.readLine()) != null) {
+
+				if (line.contains("enabled="))
+					FBP.enabled = Boolean.parseBoolean(line.replace("enabled=", ""));
+				else if (line.contains("weatherParticleDensity="))
+					FBP.weatherParticleDensity = Double.parseDouble(line.replace("weatherParticleDensity=", ""));
+				else if (line.contains("particlesPerAxis="))
+					FBP.particlesPerAxis = Integer.parseInt(line.replace("particlesPerAxis=", ""));
+				else if (line.contains("restOnFloor="))
+					FBP.restOnFloor = Boolean.parseBoolean(line.replace("restOnFloor=", ""));
+				else if (line.contains("waterPhysics="))
+					FBP.waterPhysics = Boolean.parseBoolean(line.replace("waterPhysics=", ""));
+				else if (line.contains("fancyFlame="))
+					FBP.fancyFlame = Boolean.parseBoolean(line.replace("fancyFlame=", ""));
+				else if (line.contains("fancySmoke="))
+					FBP.fancySmoke = Boolean.parseBoolean(line.replace("fancySmoke=", ""));
+				else if (line.contains("fancyRain="))
+					FBP.fancyRain = Boolean.parseBoolean(line.replace("fancyRain=", ""));
+				else if (line.contains("fancySnow="))
+					FBP.fancySnow = Boolean.parseBoolean(line.replace("fancySnow=", ""));
+				else if (line.contains("spawnPlaceParticles="))
+					FBP.spawnPlaceParticles = Boolean.parseBoolean(line.replace("spawnPlaceParticles=", ""));
+				else if (line.contains("fancyPlaceAnim="))
+					FBP.fancyPlaceAnim = Boolean.parseBoolean(line.replace("fancyPlaceAnim=", ""));
+				else if (line.contains("smartBreaking="))
+					FBP.smartBreaking = Boolean.parseBoolean(line.replace("smartBreaking=", ""));
+				else if (line.contains("lowTraction="))
+					FBP.lowTraction = Boolean.parseBoolean(line.replace("lowTraction=", ""));
+				else if (line.contains("bounceOffWalls="))
+					FBP.bounceOffWalls = Boolean.parseBoolean(line.replace("bounceOffWalls=", ""));
+				else if (line.contains("showInMillis="))
+					FBP.showInMillis = Boolean.parseBoolean(line.replace("showInMillis=", ""));
+				else if (line.contains("randomRotation="))
+					FBP.randomRotation = Boolean.parseBoolean(line.replace("randomRotation=", ""));
+				else if (line.contains("entityCollision="))
+					FBP.entityCollision = Boolean.parseBoolean(line.replace("entityCollision=", ""));
+				else if (line.contains("randomFadingSpeed="))
+					FBP.randomFadingSpeed = Boolean.parseBoolean(line.replace("randomFadingSpeed=", ""));
+				else if (line.contains("randomizedScale="))
+					FBP.randomizedScale = Boolean.parseBoolean(line.replace("randomizedScale=", ""));
+				else if (line.contains("spawnWhileFrozen="))
+					FBP.spawnWhileFrozen = Boolean.parseBoolean(line.replace("spawnWhileFrozen=", ""));
+				else if (line.contains("spawnRedstoneBlockParticles="))
+					FBP.spawnRedstoneBlockParticles = Boolean.parseBoolean(line.replace("spawnRedstoneBlockParticles=", ""));
+				else if (line.contains("infiniteDuration="))
+					FBP.infiniteDuration = Boolean.parseBoolean(line.replace("infiniteDuration=", ""));
+				else if (line.contains("minAge="))
+					FBP.minAge = Integer.parseInt(line.replace("minAge=", ""));
+				else if (line.contains("maxAge="))
+					FBP.maxAge = Integer.parseInt(line.replace("maxAge=", ""));
+				else if (line.contains("scaleMult="))
+					FBP.scaleMult = Double.parseDouble(line.replace("scaleMult=", ""));
+				else if (line.contains("gravityMult="))
+					FBP.gravityMult = Double.parseDouble(line.replace("gravityMult=", ""));
+				else if (line.contains("rotationMult="))
+					FBP.rotationMult = Double.parseDouble(line.replace("rotationMult=", ""));
+			}
+
+			closeStreams();
+		} catch (Exception e) {
+			closeStreams();
+
+			write();
+		}
+	}
+
+	static void readFloatingMaterials() {
+		try {
+			initStreams();
+
+			String line;
+
+			FBP.floatingMaterials.clear();
+
+			Field[] materials = Material.class.getDeclaredFields();
+
+			while ((line = bufferedReader.readLine()) != null) {
+				line = line.trim().toLowerCase();
+
+				String[] split = line.split("=");
+
+				if (split.length < 2)
+					continue;
+
+				String materialName = split[0].replace("_", "");
+				boolean flag = Boolean.parseBoolean(split[1]);
+
+				if (!flag)
+					continue;
+
+				boolean found = false;
+
+				for (Field f : materials) {
+					String fieldName = f.getName();
+
+					if (f.getType() == Material.class) {
+						String translated = FBPObfUtil.translateObfMaterialName(fieldName).toLowerCase().replace("_", "");
+
+						if (materialName.equals(translated)) {
+							try {
+								Material mat = (Material) f.get(null);
+
+								if (!FBP.floatingMaterials.contains(mat))
+									FBP.floatingMaterials.add(mat);
+
+								found = true;
+								break;
+							} catch (Exception ex) {
+								// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+							}
+						}
+					}
+				}
+
+				if (!found)
+					System.out.println("[FBP]: Material not recognized: " + materialName);
+			}
+
+			closeStreams();
+		} catch (Exception e) {
+			closeStreams();
+
+			write();
+		}
+	}
+
+	static void readAnimExceptions() {
+		try {
+			initStreams();
+
+			String line;
+
+			FBP.INSTANCE.resetBlacklist(false);
+
+			while ((line = bufferedReader.readLine()) != null && !(line = line.replaceAll(" ", "").toLowerCase()).equals(""))
+				FBP.INSTANCE.addToBlacklist(line, false);
+		} catch (Exception e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+		}
+
+		closeStreams();
+	}
+
+	static void readParticleExceptions() {
+		try {
+			initStreams();
+
+			String line;
+
+			FBP.INSTANCE.resetBlacklist(true);
+
+			while ((line = bufferedReader.readLine()) != null && !(line = line.replaceAll(" ", "").toLowerCase()).equals(""))
+				FBP.INSTANCE.addToBlacklist(line, true);
+		} catch (Exception e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+		}
+
+		closeStreams();
 	}
 
 	public static void write() {
@@ -191,191 +377,6 @@ public class FBPConfigHandler {
 			writer.close();
 		} catch (Exception e) {
 			closeStreams();
-		}
-	}
-
-	static void read() {
-		try {
-			fis = new FileInputStream(FBP.config);
-			isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
-			br = new BufferedReader(isr);
-
-			String line;
-
-			while ((line = br.readLine()) != null) {
-				line = line.replaceAll(" ", "");
-
-				if (line.contains("enabled="))
-					FBP.enabled = Boolean.parseBoolean(line.replace("enabled=", ""));
-				else if (line.contains("weatherParticleDensity="))
-					FBP.weatherParticleDensity = Double.parseDouble(line.replace("weatherParticleDensity=", ""));
-				else if (line.contains("particlesPerAxis="))
-					FBP.particlesPerAxis = Integer.parseInt(line.replace("particlesPerAxis=", ""));
-				else if (line.contains("restOnFloor="))
-					FBP.restOnFloor = Boolean.parseBoolean(line.replace("restOnFloor=", ""));
-				else if (line.contains("waterPhysics="))
-					FBP.waterPhysics = Boolean.parseBoolean(line.replace("waterPhysics=", ""));
-				else if (line.contains("fancyFlame="))
-					FBP.fancyFlame = Boolean.parseBoolean(line.replace("fancyFlame=", ""));
-				else if (line.contains("fancySmoke="))
-					FBP.fancySmoke = Boolean.parseBoolean(line.replace("fancySmoke=", ""));
-				else if (line.contains("fancyRain="))
-					FBP.fancyRain = Boolean.parseBoolean(line.replace("fancyRain=", ""));
-				else if (line.contains("fancySnow="))
-					FBP.fancySnow = Boolean.parseBoolean(line.replace("fancySnow=", ""));
-				else if (line.contains("spawnPlaceParticles="))
-					FBP.spawnPlaceParticles = Boolean.parseBoolean(line.replace("spawnPlaceParticles=", ""));
-				else if (line.contains("fancyPlaceAnim="))
-					FBP.fancyPlaceAnim = Boolean.parseBoolean(line.replace("fancyPlaceAnim=", ""));
-				else if (line.contains("smartBreaking="))
-					FBP.smartBreaking = Boolean.parseBoolean(line.replace("smartBreaking=", ""));
-				else if (line.contains("lowTraction="))
-					FBP.lowTraction = Boolean.parseBoolean(line.replace("lowTraction=", ""));
-				else if (line.contains("bounceOffWalls="))
-					FBP.bounceOffWalls = Boolean.parseBoolean(line.replace("bounceOffWalls=", ""));
-				else if (line.contains("showInMillis="))
-					FBP.showInMillis = Boolean.parseBoolean(line.replace("showInMillis=", ""));
-				else if (line.contains("randomRotation="))
-					FBP.randomRotation = Boolean.parseBoolean(line.replace("randomRotation=", ""));
-				else if (line.contains("entityCollision="))
-					FBP.entityCollision = Boolean.parseBoolean(line.replace("entityCollision=", ""));
-				else if (line.contains("randomFadingSpeed="))
-					FBP.randomFadingSpeed = Boolean.parseBoolean(line.replace("randomFadingSpeed=", ""));
-				else if (line.contains("randomizedScale="))
-					FBP.randomizedScale = Boolean.parseBoolean(line.replace("randomizedScale=", ""));
-				else if (line.contains("spawnWhileFrozen="))
-					FBP.spawnWhileFrozen = Boolean.parseBoolean(line.replace("spawnWhileFrozen=", ""));
-				else if (line.contains("spawnRedstoneBlockParticles="))
-					FBP.spawnRedstoneBlockParticles = Boolean.parseBoolean(line.replace("spawnRedstoneBlockParticles=", ""));
-				else if (line.contains("infiniteDuration="))
-					FBP.infiniteDuration = Boolean.parseBoolean(line.replace("infiniteDuration=", ""));
-				else if (line.contains("minAge="))
-					FBP.minAge = Integer.parseInt(line.replace("minAge=", ""));
-				else if (line.contains("maxAge="))
-					FBP.maxAge = Integer.parseInt(line.replace("maxAge=", ""));
-				else if (line.contains("scaleMult="))
-					FBP.scaleMult = Double.parseDouble(line.replace("scaleMult=", ""));
-				else if (line.contains("gravityMult="))
-					FBP.gravityMult = Double.parseDouble(line.replace("gravityMult=", ""));
-				else if (line.contains("rotationMult="))
-					FBP.rotationMult = Double.parseDouble(line.replace("rotationMult=", ""));
-			}
-
-			closeStreams();
-		} catch (Exception e) {
-			closeStreams();
-
-			write();
-		}
-	}
-
-	static void readAnimExceptions() {
-		try {
-			fis = new FileInputStream(FBP.animBlacklistFile);
-			isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
-			br = new BufferedReader(isr);
-
-			String line;
-
-			FBP.INSTANCE.resetBlacklist(false);
-
-			while ((line = br.readLine()) != null && !(line = line.replaceAll(" ", "").toLowerCase()).equals(""))
-				FBP.INSTANCE.addToBlacklist(line, false);
-		} catch (Exception e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-		}
-
-		closeStreams();
-	}
-
-	static void readParticleExceptions() {
-		try {
-			fis = new FileInputStream(FBP.particleBlacklistFile);
-			isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
-			br = new BufferedReader(isr);
-
-			String line;
-
-			FBP.INSTANCE.resetBlacklist(true);
-
-			while ((line = br.readLine()) != null && !(line = line.replaceAll(" ", "").toLowerCase()).equals(""))
-				FBP.INSTANCE.addToBlacklist(line, true);
-		} catch (Exception e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-		}
-
-		closeStreams();
-	}
-
-	static void readFloatingMaterials() {
-		try {
-			fis = new FileInputStream(FBP.floatingMaterialsFile);
-			isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
-			br = new BufferedReader(isr);
-
-			String line;
-
-			FBP.floatingMaterials.clear();
-
-			Field[] materials = Material.class.getDeclaredFields();
-
-			while ((line = br.readLine()) != null) {
-				line = line.trim().toLowerCase();
-
-				String[] split = line.split("=");
-
-				if (split.length < 2)
-					continue;
-
-				String materialName = split[0].replace("_", "");
-				boolean flag = Boolean.parseBoolean(split[1]);
-
-				if (!flag)
-					continue;
-
-				boolean found = false;
-
-				for (Field f : materials) {
-					String fieldName = f.getName();
-
-					if (f.getType() == Material.class) {
-						String translated = FBPObfUtil.translateObfMaterialName(fieldName).toLowerCase().replace("_", "");
-
-						if (materialName.equals(translated)) {
-							try {
-								Material mat = (Material) f.get(null);
-
-								if (!FBP.floatingMaterials.contains(mat))
-									FBP.floatingMaterials.add(mat);
-
-								found = true;
-								break;
-							} catch (Exception ex) {
-								// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-							}
-						}
-					}
-				}
-
-				if (!found)
-					System.out.println("[FBP]: Material not recognized: " + materialName);
-			}
-
-			closeStreams();
-		} catch (Exception e) {
-			closeStreams();
-
-			write();
-		}
-	}
-
-	static void closeStreams() {
-		try {
-			br.close();
-			isr.close();
-			fis.close();
-		} catch (Exception e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 	}
 

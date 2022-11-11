@@ -25,8 +25,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -36,8 +34,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FBPAnimationDummyBlock extends Block {
 
 	public ConcurrentHashMap<BlockPos, BlockNode> blockNodes = new ConcurrentHashMap<>();
-
-	// private IBlockState passableState;
 
 	public FBPAnimationDummyBlock() {
 		super(new FBPMaterial());
@@ -269,7 +265,7 @@ public class FBPAnimationDummyBlock extends Block {
 			if (node == null)
 				return;
 
-			if (worldIn.isRemote && state.getBlock() != node.originalBlock && (worldIn.getBlockState(pos).getBlock() instanceof FBPAnimationDummyBlock || state.getBlock() instanceof FBPAnimationDummyBlock))
+			if (state.getBlock() != node.originalBlock && (worldIn.getBlockState(pos).getBlock() instanceof FBPAnimationDummyBlock || state.getBlock() instanceof FBPAnimationDummyBlock))
 				Minecraft.getMinecraft().effectRenderer.addBlockDestroyEffects(pos, node.state);
 
 			if (node.particle != null)
@@ -458,7 +454,6 @@ public class FBPAnimationDummyBlock extends Block {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public float getAmbientOcclusionLightValue(IBlockState state) {
 		return 1.0F;
 	}

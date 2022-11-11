@@ -1,19 +1,32 @@
 # Fancier Block Particles Version 0.8 Changelog
 
+## Changed
+
+- Changed behavior of Fancy Block Placement with slabs placing slabs one on top of another should be a better experience.
+
 ## Fixed
 
 - Fixed crashes with some moded blocks (#7)
+- Fixed Fancy Block Placement being broken because of an accidental change in 0.7
+- Fixed Memory leak witht FBP#originalEffectRenderer ([#139])
 
 ## Optimization
 
+- As a result of a big code cleanup FBP should now be slighty faster and use slightly less memory
+
 ## Internal
 
+- Cleanup the entire code
+- Refractored the code
+- Renamed most of the variables from unreadable names to readable names
 - Finished removing useless "@SideOnly"
+- Removed useless "isRemote" checks
 
 ### Changes in error handling
 
 Non critical try-catch blocks should now never throw a runtime exception or print a stack trace except when debug mode is added they should print a stack trace and count towards the issues counter and their respective counters (Rendering Issues, Physics Issues, Performance Issues, etc.)
 
+[#139]: https://github.com/TominoCZ/FancyBlockParticles/issues/139
 ---
 
 # Fancier Block Particles Version 0.7 Changelog
@@ -158,7 +171,7 @@ All these optimizations result in a 9% faster mod loading time, which makes Fanc
 
 ## Fixed
 
-- Fancy Block Placing ghost blocks when placing blocks rapidly when lagging
+- Fancy Block Placing ghost blocks when placing blocks rapidly when lagging ([#69])
 
 ## Optimization
 
@@ -175,3 +188,5 @@ All these optimizations result in a 9% faster mod loading time, which makes Fanc
 - Created ModReference.java and moved everything to it
 - Rename some variables
 - General code cleanup
+
+[#69]: https://github.com/TominoCZ/FancyBlockParticles/issues/69

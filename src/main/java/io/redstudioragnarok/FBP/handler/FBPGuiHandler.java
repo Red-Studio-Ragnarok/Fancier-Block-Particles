@@ -9,11 +9,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class FBPGuiHandler {
 
 	@SubscribeEvent
-	public void onRenderGui(RenderGameOverlayEvent.Post evt) {
-		if (evt.getType() != ElementType.EXPERIENCE)
+	public void onRenderGui(RenderGameOverlayEvent.Post overlay) {
+		if (overlay.getType() != ElementType.EXPERIENCE)
 			return;
 
-		if (FBP.frozen && FBP.isEnabled())
-			new FBPGuiNote();
+		if (FBP.isEnabled()) {
+			if (FBP.frozen)
+				new FBPGuiNote();
+
+			// TODO Display Important Issues here when debug is enabled
+		}
+
 	}
 }

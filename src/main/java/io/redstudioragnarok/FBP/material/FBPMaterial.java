@@ -8,14 +8,4 @@ public class FBPMaterial extends Material {
 	public FBPMaterial() {
 		super(MapColor.AIR);
 	}
-
-	@Override
-	public boolean isSolid() {
-		return false;
-	}
-
-	@Override
-	public boolean blocksLight() {
-		return false;
-	}
 }

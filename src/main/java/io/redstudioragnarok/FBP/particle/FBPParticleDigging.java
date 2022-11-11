@@ -471,7 +471,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		}
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
-		if (FBPKeyBindings.FBPSweep.isKeyDown() && !killToggle)
+		if (FBPKeyBindings.FBPKillParticles.isKeyDown() && !killToggle)
 			killToggle = true;
 
 		float f, f1, f2, f3;

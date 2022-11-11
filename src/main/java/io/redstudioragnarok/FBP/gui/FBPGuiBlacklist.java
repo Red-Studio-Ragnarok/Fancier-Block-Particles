@@ -105,12 +105,12 @@ public class FBPGuiBlacklist extends GuiScreen {
 			FBPKeyInputHandler.INSTANCE.onInput();
 		}
 		try {
-			if (!Keyboard.isKeyDown(FBPKeyBindings.FBPFastAdd.getKeyCode()) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
+			if (!Keyboard.isKeyDown(FBPKeyBindings.FBPBlacklistMenu.getKeyCode()) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
 				keyUp = true;
 			}
 		} catch (Exception e) {
 			try {
-				if (!Mouse.isButtonDown(FBPKeyBindings.FBPFastAdd.getKeyCode() + 100) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
+				if (!Mouse.isButtonDown(FBPKeyBindings.FBPBlacklistMenu.getKeyCode() + 100) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
 					keyUp = true;
 				}
 			} catch (Exception e1) {

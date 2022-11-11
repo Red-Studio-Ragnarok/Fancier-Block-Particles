@@ -22,6 +22,7 @@ public class FBPKeyInputHandler {
 
 	boolean wasOpened = false;
 
+
 	public FBPKeyInputHandler() {
 		mc = Minecraft.getMinecraft();
 		INSTANCE = this;
@@ -32,32 +33,24 @@ public class FBPKeyInputHandler {
 		onInput();
 	}
 
-	@SubscribeEvent
-	public void onMouseInput(InputEvent.MouseInputEvent e) {
-		onInput();
-	}
-
 	public void onInput() {
 		if (FBPKeyBindings.FBPMenu.isPressed())
-			Minecraft.getMinecraft().displayGuiScreen(new FBPGuiMenuPage0());
+			mc.displayGuiScreen(new FBPGuiMenuPage0());
+
+		if (FBPKeyBindings.FBPFreeze.isPressed())
+			FBP.frozen = !FBP.frozen;
 
 		if (FBPKeyBindings.FBPToggle.isPressed())
 			FBP.setEnabled(!FBP.enabled);
 
-		if (FBPKeyBindings.FBPFreeze.isPressed())
-			if (FBP.isEnabled())
-				FBP.frozen = !FBP.frozen;
-			else
-				FBP.frozen = false;
-
 		boolean isShiftDown = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
-		boolean isKeyDown = FBPKeyBindings.FBPFastAdd.isKeyDown();
+		boolean isFastAddDown = FBPKeyBindings.FBPBlacklistMenu.isKeyDown();
 
-		if (isKeyDown) {
-			Block b;
+		if (isFastAddDown) {
+			Block block;
 			ItemStack stack = null;
 
-			boolean useHeldBlock = isShiftDown && (b = Block.getBlockFromName((stack = mc.player.getHeldItemMainhand()).getItem().getRegistryName().toString())) != null && b != Blocks.AIR;
+			boolean useHeldBlock = isShiftDown && (block = Block.getBlockFromName((stack = mc.player.getHeldItemMainhand()).getItem().getRegistryName().toString())) != null && block != Blocks.AIR;
 
 			if (!wasOpened && (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || useHeldBlock)) {
 				mc.displayGuiScreen(useHeldBlock ? (new FBPGuiBlacklist(stack)) : (new FBPGuiBlacklist(mc.objectMouseOver.getBlockPos())));
