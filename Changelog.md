@@ -12,7 +12,8 @@
 
 ## Optimization
 
-- As a result of a big code cleanup FBP should now be slighty faster and use slightly less memory
+- As a result of a big code cleanup FBP should now be faster and use slightly less memory
+- Optimized Rendering of Fancy Block Placment, etc... as a result, it should be faster and use slightly less RAM & VRAM
 
 ## Internal
 
