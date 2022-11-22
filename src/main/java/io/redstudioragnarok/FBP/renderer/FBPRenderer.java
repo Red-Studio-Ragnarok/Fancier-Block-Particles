@@ -51,23 +51,6 @@ public class FBPRenderer {
 		RenderHelper.disableStandardItemLighting();
 	}
 
-	public static void 	renderCubeFlame(BufferBuilder buf, Vec2f par, float x, float y, float z, double scale, int j, int k, float r, float g, float b, float a) {
-		// render particle
-		Tessellator.getInstance().draw();
-		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-
-		buf.setTranslation(x, y, z);
-
-		putCubeFlame(buf, par, scale, j, k, r, g, b, a);
-
-		buf.setTranslation(0, 0, 0);
-
-		Tessellator.getInstance().draw();
-		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-	}
-
-
-
 	static void putCube_S(BufferBuilder worldRendererIn, Vec2f[] par, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
 		float radsX = (float) Math.toRadians(rotVec.x);
 		float radsY = (float) Math.toRadians(rotVec.y);
@@ -90,21 +73,6 @@ public class FBPRenderer {
 			addVt_S(worldRendererIn, scale, v2, par[1].x, par[1].y, j, k, r, g, b, a, normal);
 			addVt_S(worldRendererIn, scale, v3, par[2].x, par[2].y, j, k, r, g, b, a, normal);
 			addVt_S(worldRendererIn, scale, v4, par[3].x, par[3].y, j, k, r, g, b, a, normal);
-		}
-	}
-
-	static void putCubeFlame(BufferBuilder worldRendererIn, Vec2f par, double scale, int j, int k, float r, float g, float b, float a) {
-
-		for (int i = 0; i < FBP.CUBE.length; i += 4) {
-			Vec3d v1 = FBP.CUBE[i];
-			Vec3d v2 = FBP.CUBE[i + 1];
-			Vec3d v3 = FBP.CUBE[i + 2];
-			Vec3d v4 = FBP.CUBE[i + 3];
-
-			addVt(worldRendererIn, scale, v1, par.x, par.y, j, k, r, g, b, a);
-			addVt(worldRendererIn, scale, v2, par.x, par.y, j, k, r, g, b, a);
-			addVt(worldRendererIn, scale, v3, par.x, par.y, j, k, r, g, b, a);
-			addVt(worldRendererIn, scale, v4, par.x, par.y, j, k, r, g, b, a);
 		}
 	}
 
@@ -139,10 +107,6 @@ public class FBPRenderer {
 
 	static void addVt_WH(BufferBuilder worldRendererIn, double width, double height, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a, Vec3d n) {
 		worldRendererIn.pos(pos.x * width, pos.y * height, pos.z * width).tex(u, v).color(r, g, b, a).lightmap(j, k).normal((float) n.x, (float) n.y, (float) n.z).endVertex();
-	}
-
-	private static void addVt(BufferBuilder worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a) { // add vertex to buffer
-		worldRendererIn.pos(pos.x * scale, pos.y * scale, pos.z * scale).tex(u, v).color(r, g, b, a).lightmap(j, k).endVertex();
 	}
 
 	public static Vec3d rotatef_d(Vec3d vec, float AngleX, float AngleY, float AngleZ) {
