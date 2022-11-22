@@ -2,10 +2,13 @@ package io.redstudioragnarok.FBP.renderer;
 
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.vector.FBPVector3d;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
@@ -19,6 +22,8 @@ public class FBPRenderer {
 
 	public static boolean render = false;
 	public static List<Particle> queuedParticles = new ArrayList<>();
+
+	static Minecraft mc = Minecraft.getMinecraft();;
 
 	public static void renderCubeShaded_S(BufferBuilder buf, Vec2f[] par, float x, float y, float z, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
 		// render particle
@@ -49,6 +54,22 @@ public class FBPRenderer {
 		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
 		RenderHelper.disableStandardItemLighting();
+	}
+
+	public static void renderCube_F(BufferBuilder buf, Vec2f par, float x, float y, float z, double scale, int j, float r, float g, float b, float a, Vec3d[] cube) {
+		// render particle
+		GlStateManager.enableCull();
+
+		Tessellator.getInstance().draw();
+		mc.getRenderManager().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+
+		buf.setTranslation(x, y, z);
+		putCube_F(buf, par,scale / 80, j >> 16 & 65535, j & 65535, r, g, b, a, cube);
+		buf.setTranslation(0, 0, 0);
+
+		Tessellator.getInstance().draw();
+		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 	}
 
 	static void putCube_S(BufferBuilder worldRendererIn, Vec2f[] par, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
@@ -101,12 +122,43 @@ public class FBPRenderer {
 		}
 	}
 
+	public static void putCube_F(BufferBuilder worldRendererIn, Vec2f par, double scale, int j, int k, float r, float g, float b, float a, Vec3d[] cube) {
+		float brightnessForRender = 1;
+
+		float R;
+		float G;
+		float B;
+
+		for (int i = 0; i < FBP.CUBE.length; i += 4)
+		{
+			Vec3d v1 = cube[i];
+			Vec3d v2 = cube[i + 1];
+			Vec3d v3 = cube[i + 2];
+			Vec3d v4 = cube[i + 3];
+
+			R = r * brightnessForRender;
+			G = g * brightnessForRender;
+			B = b * brightnessForRender;
+
+			brightnessForRender *= 0.95;
+
+			addVt(worldRendererIn, scale, v1, par.x, par.y, j, k, R, G, B, a);
+			addVt(worldRendererIn, scale, v2, par.x, par.y, j, k, R, G, B, a);
+			addVt(worldRendererIn, scale, v3, par.x, par.y, j, k, R, G, B, a);
+			addVt(worldRendererIn, scale, v4, par.x, par.y, j, k, R, G, B, a);
+		}
+	}
+
 	static void addVt_S(BufferBuilder worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a, Vec3d n) {
 		worldRendererIn.pos(pos.x * scale, pos.y * scale, pos.z * scale).tex(u, v).color(r, g, b, a).lightmap(j, k).normal((float) n.x, (float) n.y, (float) n.z).endVertex();
 	}
 
 	static void addVt_WH(BufferBuilder worldRendererIn, double width, double height, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a, Vec3d n) {
 		worldRendererIn.pos(pos.x * width, pos.y * height, pos.z * width).tex(u, v).color(r, g, b, a).lightmap(j, k).normal((float) n.x, (float) n.y, (float) n.z).endVertex();
+	}
+
+	private static void addVt(BufferBuilder worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a) { // add vertex to buffer
+		worldRendererIn.pos(pos.x * scale, pos.y * scale, pos.z * scale).tex(u, v).color(r, g, b, a).lightmap(j, k).endVertex();
 	}
 
 	public static Vec3d rotatef_d(Vec3d vec, float AngleX, float AngleY, float AngleZ) {

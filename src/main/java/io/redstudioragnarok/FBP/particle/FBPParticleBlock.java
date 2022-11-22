@@ -113,14 +113,14 @@ public class FBPParticleBlock extends Particle {
 	public void onUpdate() {
 
 		if (!canCollide) {
-			IBlockState s = mc.world.getBlockState(blockPos);
+			IBlockState state = mc.world.getBlockState(blockPos);
 
-			if (s.getBlock() != FBP.FBPBlock || s.getBlock() == block) {
-				if (blockSet && s.getBlock() == Blocks.AIR) {
+			if (state.getBlock() != FBP.FBPBlock || state.getBlock() == block) {
+				if (blockSet && state.getBlock() == Blocks.AIR) {
 					// the block was destroyed during the animation
 					killParticle();
 
-					FBP.FBPBlock.onBlockHarvested(mc.world, blockPos, s, null);
+					FBP.FBPBlock.onBlockHarvested(mc.world, blockPos, state, null);
 					mc.world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
 					return;
 				}
@@ -165,9 +165,9 @@ public class FBPParticleBlock extends Particle {
 			break;
 		}
 
-		height -= step * 5f;
+		height -= step * 5;
 
-		step *= 1.5f;
+		step *= 1.5;
 	}
 
 	@Override
@@ -305,7 +305,7 @@ public class FBPParticleBlock extends Particle {
 
 		Vector2d[] corners = new Vector2d[] { new Vector2d(aabb.minX, aabb.minZ), new Vector2d(aabb.maxX, aabb.maxZ), new Vector2d(aabb.minX, aabb.maxZ), new Vector2d(aabb.maxX, aabb.minZ) };
 
-		Vector2d middle = new Vector2d(blockPos.getX() + 0.5f, blockPos.getZ() + 0.5f);
+		Vector2d middle = new Vector2d(blockPos.getX() + 0.5, blockPos.getZ() + 0.5);
 
 		for (Vector2d corner : corners) {
 			double mX = middle.x - corner.x;
@@ -314,7 +314,7 @@ public class FBPParticleBlock extends Particle {
 			mX /= -0.5;
 			mZ /= -0.5;
 
-			mc.effectRenderer.addEffect(new FBPParticleDigging(mc.world, corner.x, blockPos.getY() + 0.1f, corner.y, mX, 0, mZ, 0.6f, 1, 1, 1, block.getActualState(blockState, mc.world, blockPos), null, this.particleTexture).multipleParticleScaleBy(0.5f).multiplyVelocity(0.5f));
+			mc.effectRenderer.addEffect(new FBPParticleDigging(mc.world, corner.x, blockPos.getY() + 0.1, corner.y, mX, 0, mZ, 0.6f, 1, 1, 1, block.getActualState(blockState, mc.world, blockPos), null, this.particleTexture).multipleParticleScaleBy(0.5f).multiplyVelocity(0.5f));
 		}
 	}
 

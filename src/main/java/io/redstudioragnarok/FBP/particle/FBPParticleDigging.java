@@ -99,8 +99,8 @@ public class FBPParticleDigging extends ParticleDigging {
 
 					double particleSpeed = Math.sqrt(motionX * motionX + motionZ * motionZ);
 
-					double x = FBPMathUtil.add(cameraViewDir.x, 0.01D);
-					double z = FBPMathUtil.add(cameraViewDir.z, 0.01D);
+					double x = FBPMathUtil.add(cameraViewDir.x, 0.01);
+					double z = FBPMathUtil.add(cameraViewDir.z, 0.01);
 
 					motionX = x * particleSpeed;
 					motionZ = z * particleSpeed;
@@ -183,9 +183,9 @@ public class FBPParticleDigging extends ParticleDigging {
 			return;
 
 		int i = mc.getBlockColors().colorMultiplier(this.blockState, this.world, p_187154_1_, 0);
-		this.particleRed *= (i >> 16 & 255) / 255.0F;
-		this.particleGreen *= (i >> 8 & 255) / 255.0F;
-		this.particleBlue *= (i & 255) / 255.0F;
+		this.particleRed *= (i >> 16 & 255) / 255.0;
+		this.particleGreen *= (i >> 8 & 255) / 255.0;
+		this.particleBlue *= (i & 255) / 255.0;
 	}
 
 	@Override
@@ -207,7 +207,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	@Override
 	public void onUpdate() {
-		boolean allowedToMove = MathHelper.abs((float) motionX) > 0.0001f || MathHelper.abs((float) motionZ) > 0.0001f;
+		boolean allowedToMove = MathHelper.abs((float) motionX) > 0.0001 || MathHelper.abs((float) motionZ) > 0.0001;
 
 		if (!FBP.frozen && FBP.bounceOffWalls && !mc.isGamePaused() && particleAge > 0) {
 			if (!wasFrozen && allowedToMove) {
@@ -215,9 +215,9 @@ public class FBPParticleDigging extends ParticleDigging {
 				boolean zCollided = prevPosZ == posZ;
 
 				if (xCollided)
-					motionX = -prevMotionX * 0.625f;
+					motionX = -prevMotionX * 0.625;
 				if (zCollided)
-					motionZ = -prevMotionZ * 0.625f;
+					motionZ = -prevMotionZ * 0.625;
 
 				if (!FBP.randomRotation && (xCollided || zCollided))
 					calculateYAngle();
@@ -281,10 +281,10 @@ public class FBPParticleDigging extends ParticleDigging {
 				particleAge++;
 
 			if (this.particleAge >= this.particleMaxAge || killToggle) {
-				particleScale *= 0.88f * endMult;
+				particleScale *= 0.88 * endMult;
 
 				if (particleAlpha > 0.01 && particleScale <= scaleAlpha)
-					particleAlpha *= 0.68f * endMult;
+					particleAlpha *= 0.68 * endMult;
 
 				if (particleAlpha <= 0.01)
 					setExpired();
@@ -292,7 +292,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 			if (!killToggle) {
 				if (!onGround)
-					motionY -= 0.04f * particleGravity;
+					motionY -= 0.04 * particleGravity;
 
 				move(motionX, motionY, motionZ);
 
@@ -301,17 +301,17 @@ public class FBPParticleDigging extends ParticleDigging {
 					rot.z = (float) Math.round(rot.z / 90) * 90;
 				}
 
-				if (MathHelper.abs((float) motionX) > 0.00001f)
+				if (MathHelper.abs((float) motionX) > 0.00001)
 					prevMotionX = motionX;
-				if (MathHelper.abs((float) motionZ) > 0.00001f)
+				if (MathHelper.abs((float) motionZ) > 0.00001)
 					prevMotionZ = motionZ;
 
 				if (allowedToMove) {
-					motionX *= 0.98f;
-					motionZ *= 0.98f;
+					motionX *= 0.98;
+					motionZ *= 0.98;
 				}
 
-				motionY *= 0.98f;
+				motionY *= 0.98;
 
 				// PHYSICS
 				if (FBP.entityCollision) {
@@ -323,15 +323,15 @@ public class FBPParticleDigging extends ParticleDigging {
 							float posZ = (float) (this.posZ - entityIn.posZ);
 							float posMax = (float) MathHelper.absMax(posX, posZ);
 
-							if (posMax >= 0.0099f) {
+							if (posMax >= 0.0099) {
 								posMax = (float) Math.sqrt(posMax);
 								posX /= posMax;
 								posZ /= posMax;
 
-								float f3 = 1.0f / posMax;
+								float f3 = 1 / posMax;
 
-								if (f3 > 1.0f)
-									f3 = 1.0f;
+								if (f3 > 1)
+									f3 = 1;
 
 								this.motionX += posX * f3 / 20;
 								this.motionZ += posZ * f3 / 20;
@@ -350,13 +350,13 @@ public class FBPParticleDigging extends ParticleDigging {
 						handleWaterMovement();
 
 						if (FBP.INSTANCE.doesMaterialFloat(this.blockState.getMaterial())) {
-							motionY = 0.11f + (particleScale / 1.25f) * 0.02f;
+							motionY = 0.11 + (particleScale / 1.25) * 0.02;
 						} else {
-							motionX *= 0.93f;
-							motionZ *= 0.93f;
-							particleGravity = 0.35f;
+							motionX *= 0.93;
+							motionZ *= 0.93;
+							particleGravity = 0.35F;
 
-							motionY *= 0.85f;
+							motionY *= 0.85;
 						}
 
 						if (!FBP.randomRotation)
@@ -371,11 +371,11 @@ public class FBPParticleDigging extends ParticleDigging {
 
 				if (onGround) {
 					if (FBP.lowTraction) {
-						motionX *= 0.93f;
-						motionZ *= 0.93f;
+						motionX *= 0.93;
+						motionZ *= 0.93;
 					} else {
-						motionX *= 0.66f;
-						motionZ *= 0.66f;
+						motionX *= 0.66;
+						motionZ *= 0.66;
 					}
 				}
 			}
@@ -419,7 +419,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		dummyEntity.motionY = motionY;
 		dummyEntity.motionZ = motionZ;
 
-		if (this.world.handleMaterialAcceleration(getBoundingBox().expand(0.0D, -0.4000000059604645D, 0.0D).contract(0.001D, 0.001D, 0.001D), Material.WATER, dummyEntity)) {
+		if (this.world.handleMaterialAcceleration(getBoundingBox().expand(0, -0.4, 0).contract(0.001, 0.001, 0.001), Material.WATER, dummyEntity)) {
 
 			motionX = dummyEntity.motionX;
 			motionY = dummyEntity.motionY;
@@ -439,23 +439,23 @@ public class FBPParticleDigging extends ParticleDigging {
 			y = axisalignedbb.calculateYOffset(this.getBoundingBox(), y);
 		}
 
-		this.setBoundingBox(this.getBoundingBox().offset(0.0D, y, 0.0D));
+		this.setBoundingBox(this.getBoundingBox().offset(0, y, 0));
 
 		for (AxisAlignedBB axisalignedbb : list) {
 			x = axisalignedbb.calculateXOffset(this.getBoundingBox(), x);
 		}
 
-		this.setBoundingBox(this.getBoundingBox().offset(x, 0.0D, 0.0D));
+		this.setBoundingBox(this.getBoundingBox().offset(x, 0, 0));
 
 		for (AxisAlignedBB axisalignedbb : list) {
 			z = axisalignedbb.calculateZOffset(this.getBoundingBox(), z);
 		}
 
-		this.setBoundingBox(this.getBoundingBox().offset(0.0D, 0.0D, z));
+		this.setBoundingBox(this.getBoundingBox().offset(0, 0, z));
 
 		// RESET
 		resetPositionToBB();
-		this.onGround = y != Y && Y < 0.0D;
+		this.onGround = y != Y && Y < 0;
 
 		if (!FBP.lowTraction && !FBP.bounceOffWalls) {
 			if (x != X)
