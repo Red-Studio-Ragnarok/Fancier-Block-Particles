@@ -5,7 +5,6 @@ import io.redstudioragnarok.FBP.renderer.FBPRenderer;
 import io.redstudioragnarok.FBP.vector.FBPVector3d;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleDigging;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
@@ -14,12 +13,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-public class FBPParticleSnow extends ParticleDigging {
+import static io.redstudioragnarok.FBP.util.ParticleUtil.texturedParticle;
 
-	private final IBlockState sourceState;
+public class FBPParticleSnow extends ParticleDigging {
 
 	Minecraft mc;
 
@@ -27,8 +25,6 @@ public class FBPParticleSnow extends ParticleDigging {
 	double endMult = 1;
 
 	FBPVector3d rot, prevRot, rotStep;
-
-	Vec2f[] par;
 
 	public FBPParticleSnow(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
@@ -43,26 +39,23 @@ public class FBPParticleSnow extends ParticleDigging {
 		this.motionX = xSpeedIn;
 		this.motionY = -ySpeedIn;
 		this.motionZ = zSpeedIn;
-		this.particleGravity = 1f;
-		sourceState = state;
+		this.particleGravity = 1;
 
 		mc = Minecraft.getMinecraft();
 
-		particleScale *= FBP.random.nextDouble(FBP.scaleMult - 0.25f, FBP.scaleMult + 0.25f);
+		particleScale *= FBP.random.nextDouble(FBP.scaleMult - 0.25, FBP.scaleMult + 0.25);
 		particleMaxAge = (int) FBP.random.nextDouble(250, 300);
 		this.particleRed = this.particleGreen = this.particleBlue = 1;
 
 		scaleAlpha = particleScale * 0.75;
 
-		this.particleAlpha = 0f;
-		this.particleScale = 0f;
+		this.particleAlpha = 0;
+		this.particleScale = 0;
 
 		this.canCollide = true;
 
 		if (FBP.randomFadingSpeed)
 			endMult *= FBP.random.nextDouble(0.7, 1);
-
-		multipleParticleScaleBy(1);
 	}
 
 	private void createRotationMatrix() {
@@ -73,29 +66,6 @@ public class FBPParticleSnow extends ParticleDigging {
 		rotStep = new FBPVector3d(rx > 0.5 ? 1 : -1, ry > 0.5 ? 1 : -1, rz > 0.5 ? 1 : -1);
 
 		rot.copyFrom(rotStep);
-	}
-
-	@Override
-	public void setParticleTextureIndex(int particleTextureIndex) {
-	}
-
-	@Override
-	public Particle multipleParticleScaleBy(float scale) {
-		Particle p = super.multipleParticleScaleBy(scale);
-
-		float f = particleScale / 10;
-
-		this.setBoundingBox(new AxisAlignedBB(posX - f, posY, posZ - f, posX + f, posY + 2 * f, posZ + f));
-
-		return p;
-	}
-
-	@Override
-	protected void multiplyColor(@Nullable BlockPos p_187154_1_) {
-		int i = mc.getBlockColors().colorMultiplier(this.sourceState, this.world, p_187154_1_, 0);
-		this.particleRed *= (i >> 16 & 255) / 255.0F;
-		this.particleGreen *= (i >> 8 & 255) / 255.0F;
-		this.particleBlue *= (i & 255) / 255.0F;
 	}
 
 	@Override
@@ -124,15 +94,15 @@ public class FBPParticleSnow extends ParticleDigging {
 
 			if (this.particleAge >= this.particleMaxAge) {
 				if (FBP.randomFadingSpeed)
-					particleScale *= 0.75F * endMult;
+					particleScale *= 0.75 * endMult;
 				else
-					particleScale *= 0.75F;
+					particleScale *= 0.75;
 
 				if (particleAlpha > 0.01 && particleScale <= scaleAlpha) {
 					if (FBP.randomFadingSpeed)
-						particleAlpha *= 0.65F * endMult;
+						particleAlpha *= 0.65 * endMult;
 					else
-						particleAlpha *= 0.65F;
+						particleAlpha *= 0.65;
 				}
 
 				if (particleAlpha <= 0.01)
@@ -140,9 +110,9 @@ public class FBPParticleSnow extends ParticleDigging {
 			} else {
 				if (particleScale < 1) {
 					if (FBP.randomFadingSpeed)
-						particleScale += 0.075F * endMult;
+						particleScale += 0.075 * endMult;
 					else
-						particleScale += 0.075F;
+						particleScale += 0.075;
 
 					if (particleScale > 1)
 						particleScale = 1;
@@ -150,9 +120,9 @@ public class FBPParticleSnow extends ParticleDigging {
 
 				if (particleAlpha < 1) {
 					if (FBP.randomFadingSpeed)
-						particleAlpha += 0.045F * endMult;
+						particleAlpha += 0.045 * endMult;
 					else
-						particleAlpha += 0.045F;
+						particleAlpha += 0.045;
 
 					if (particleAlpha > 1)
 						particleAlpha = 1;
@@ -162,7 +132,7 @@ public class FBPParticleSnow extends ParticleDigging {
 			if (world.getBlockState(new BlockPos(posX, posY, posZ)).getMaterial().isLiquid())
 				setExpired();
 
-			motionY -= 0.04D * this.particleGravity;
+			motionY -= 0.04 * this.particleGravity;
 
 			move(motionX, motionY, motionZ);
 
@@ -171,16 +141,16 @@ public class FBPParticleSnow extends ParticleDigging {
 				rot.z = (float) Math.round(rot.z / 90) * 90;
 			}
 
-			motionX *= 0.9800000190734863D;
+			motionX *= 0.98;
 
 			if (motionY < -0.2) // minimal motionY
-				motionY *= 0.7500000190734863D;
+				motionY *= 0.75;
 
-			motionZ *= 0.9800000190734863D;
+			motionZ *= 0.98;
 
 			if (onGround) {
-				motionX *= 0.680000190734863D;
-				motionZ *= 0.6800000190734863D;
+				motionX *= 0.68;
+				motionZ *= 0.68;
 
 				rotStep = rotStep.multiply(0.85);
 
@@ -201,34 +171,34 @@ public class FBPParticleSnow extends ParticleDigging {
 			y = axisalignedbb.calculateYOffset(this.getBoundingBox(), y);
 		}
 
-		this.setBoundingBox(this.getBoundingBox().offset(0.0D, y, 0.0D));
+		this.setBoundingBox(this.getBoundingBox().offset(0, y, 0));
 
 		for (AxisAlignedBB axisalignedbb : list) {
 			x = axisalignedbb.calculateXOffset(this.getBoundingBox(), x);
 		}
 
-		this.setBoundingBox(this.getBoundingBox().offset(x, 0.0D, 0.0D));
+		this.setBoundingBox(this.getBoundingBox().offset(x, 0, 0));
 
 		for (AxisAlignedBB axisalignedbb : list) {
 			z = axisalignedbb.calculateZOffset(this.getBoundingBox(), z);
 		}
 
-		this.setBoundingBox(this.getBoundingBox().offset(0.0D, 0.0D, z));
+		this.setBoundingBox(this.getBoundingBox().offset(0, 0, z));
 
 		// RESET
 		resetPositionToBB();
-		this.onGround = y != Y && Y < 0.0D;
+		this.onGround = y != Y && Y < 0;
 
 		if (!FBP.lowTraction && !FBP.bounceOffWalls) {
 			if (x != X)
-				motionX *= 0.699999988079071D;
+				motionX *= 0.69;
 			if (z != Z)
-				motionZ *= 0.699999988079071D;
+				motionZ *= 0.69;
 		}
 	}
 
 	@Override
-	public void renderParticle(BufferBuilder buf, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
 		if (!FBPRenderer.render) {
 			FBPRenderer.queuedParticles.add(this);
 			return;
@@ -236,34 +206,20 @@ public class FBPParticleSnow extends ParticleDigging {
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 
-		float f, f1, f2, f3;
+		Vec2f[] particle = texturedParticle(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY);
 
-		if (particleTexture != null) {
-			f = particleTexture.getInterpolatedU(particleTextureJitterX / 4 * 16);
-			f2 = particleTexture.getInterpolatedV(particleTextureJitterY / 4 * 16);
+		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
+		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
+		float z = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
 
-			f1 = particleTexture.getInterpolatedU((particleTextureJitterX + 1) / 4 * 16);
-			f3 = particleTexture.getInterpolatedV((particleTextureJitterY + 1) / 4 * 16);
-		} else {
-			f = (particleTextureIndexX + particleTextureJitterX / 4) / 16;
-			f1 = f + 0.015609375F;
-			f2 = (particleTextureIndexY + particleTextureJitterY / 4) / 16;
-			f3 = f2 + 0.015609375F;
-		}
-
-		float f5 = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
-		float f6 = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
-		float f7 = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
-
-		int i = getBrightnessForRender(partialTicks);
+		int brightness = getBrightnessForRender(partialTicks);
 
 		float alpha = (float) (prevParticleAlpha + (particleAlpha - prevParticleAlpha) * partialTicks);
 
-		// SMOOTH TRANSITION
-		float f4 = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
+		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 
 		if (FBP.restOnFloor)
-			f6 += f4 / 10;
+			y += scale / 10;
 
 		FBPVector3d smoothRot = new FBPVector3d(0, 0, 0);
 
@@ -287,23 +243,18 @@ public class FBPParticleSnow extends ParticleDigging {
 			}
 		}
 
-		// RENDER
-		// GlStateManager.enableCull();
-
-		par = new Vec2f[] { new Vec2f(f1, f3), new Vec2f(f1, f2), new Vec2f(f, f2), new Vec2f(f, f3) };
-
-		FBPRenderer.renderCubeShaded_S(buf, par, f5, f6, f7, f4 / 10, smoothRot, i >> 16 & 65535, i & 65535, particleRed, particleGreen, particleBlue, alpha);
+		FBPRenderer.renderCubeShaded_S(buffer, particle, x, y, z, scale / 10, smoothRot, brightness >> 16 & 65535, brightness & 65535, particleRed, particleGreen, particleBlue, alpha);
 	}
 
 	@Override
-	public int getBrightnessForRender(float p_189214_1_) {
-		int i = super.getBrightnessForRender(p_189214_1_);
-		int j = 0;
+	public int getBrightnessForRender(float partialTick) {
+		int brightnessForRender = super.getBrightnessForRender(partialTick);
+		int lighting = 0;
 
 		if (this.world.isBlockLoaded(new BlockPos(posX, posY, posZ))) {
-			j = this.world.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
+			lighting = this.world.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
 		}
 
-		return i == 0 ? j : i;
+		return brightnessForRender == 0 ? lighting : brightnessForRender;
 	}
 }

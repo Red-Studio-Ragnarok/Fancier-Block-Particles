@@ -14,36 +14,28 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Map;
 
-@SideOnly(Side.CLIENT)
 public class FBPParticleManager extends ParticleManager {
 
-	public static int ParticleSpawned;
-
-	private static TextureAtlasSprite white;
-
 	Minecraft mc;
+
+	public static int ParticleSpawned;
 
 	public FBPParticleManager(World worldIn, TextureManager rendererIn) {
 		super(worldIn, rendererIn);
 
 		mc = Minecraft.getMinecraft();
-
-		white = mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture((Blocks.SNOW.getDefaultState()));
 	}
 
 	public void carryOver() {
-		if (Minecraft.getMinecraft().effectRenderer == this)
+		if (mc.effectRenderer == this)
 			return;
 
 		this.fxLayers = (mc.effectRenderer).fxLayers;
 		this.particleEmitters = (mc.effectRenderer).particleEmitters;
 		this.queue = (mc.effectRenderer).queue;
-
 	}
 
 	@Override
@@ -63,28 +55,29 @@ public class FBPParticleManager extends ParticleManager {
 						return;
 					}
 				}
-			} else if (FBP.fancyFlame && toAdd instanceof ParticleFlame && !(toAdd instanceof FBPParticleFlame) && Minecraft.getMinecraft().gameSettings.particleSetting < 2) {
-				toAdd = new FBPParticleFlame(world, effect.posX, effect.posY, effect.posZ, FBP.random.nextDouble() * 0.25, true);
-				effect.setExpired();
-			} else if (FBP.fancySmoke && toAdd instanceof ParticleSmokeNormal && !(toAdd instanceof FBPParticleSmokeNormal) && Minecraft.getMinecraft().gameSettings.particleSetting < 2) {
-				ParticleSmokeNormal p = (ParticleSmokeNormal) effect;
-
-				toAdd = new FBPParticleSmokeNormal(world, effect.posX, effect.posY, effect.posZ, effect.motionX, effect.motionY, effect.motionZ, effect.particleScale, white, p);
-
-				toAdd.setRBGColorF(MathHelper.clamp(effect.getRedColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getGreenColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getBlueColorF() + 0.1f, 0.1f, 1));
-
-				toAdd.setMaxAge(effect.particleMaxAge);
 			} else if (toAdd instanceof ParticleDigging) {
 				blockState = ((ParticleDigging)effect).sourceState;
-
 
 				if (blockState != null && !(FBP.frozen && !FBP.spawnWhileFrozen) && (FBP.spawnRedstoneBlockParticles || blockState.getBlock() != Blocks.REDSTONE_BLOCK)) {
 					effect.setExpired();
 
 					if (!(blockState.getBlock() instanceof BlockLiquid) && !FBP.INSTANCE.isBlacklisted(blockState.getBlock(), true)) {
-						toAdd = new FBPParticleDigging(world, effect.posX, effect.posY - 0.1D, effect.posZ, 0, 0, 0, effect.particleScale, toAdd.getRedColorF(), toAdd.getGreenColorF(), toAdd.getBlueColorF(), blockState, null, effect.particleTexture);
+						toAdd = new FBPParticleDigging(world, effect.posX, effect.posY - 0.1, effect.posZ, 0, 0, 0, effect.particleScale, toAdd.getRedColorF(), toAdd.getGreenColorF(), toAdd.getBlueColorF(), blockState, null, effect.particleTexture);
 					} else
 						return;
+				}
+			} else if (mc.gameSettings.particleSetting < 2) {
+				if (FBP.fancyFlame && toAdd instanceof ParticleFlame && !(toAdd instanceof FBPParticleFlame)) {
+					toAdd = new FBPParticleFlame(world, effect.posX, effect.posY, effect.posZ, FBP.random.nextDouble() * 0.25, true);
+					effect.setExpired();
+				} else if (FBP.fancySmoke && toAdd instanceof ParticleSmokeNormal && !(toAdd instanceof FBPParticleSmoke)) {
+					ParticleSmokeNormal particle = (ParticleSmokeNormal) effect;
+
+					toAdd = new FBPParticleSmoke(world, effect.posX, effect.posY, effect.posZ, effect.motionX, effect.motionY, effect.motionZ, effect.particleScale, particle);
+
+					toAdd.setRBGColorF(MathHelper.clamp(effect.getRedColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getGreenColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getBlueColorF() + 0.1f, 0.1f, 1));
+
+					toAdd.setMaxAge(effect.particleMaxAge);
 				}
 			}
 		}
@@ -98,25 +91,25 @@ public class FBPParticleManager extends ParticleManager {
 
 	@Override
 	public void addBlockDestroyEffects(BlockPos pos, IBlockState state) {
-		Block b = state.getBlock();
+		Block block = state.getBlock();
 
-		if (!b.isAir(state, world, pos) && !b.addDestroyEffects(world, pos, this) && b != FBP.FBPBlock) {
+		if (!block.isAir(state, world, pos) && !block.addDestroyEffects(world, pos, this) && block != FBP.FBPBlock) {
 			state = state.getActualState(world, pos);
-			b = state.getBlock();
+			block = state.getBlock();
 
 			TextureAtlasSprite texture = mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(state);
 
-			for (int j = 0; j < FBP.particlesPerAxis; ++j) {
-				for (int k = 0; k < FBP.particlesPerAxis; ++k) {
-					for (int l = 0; l < FBP.particlesPerAxis; ++l) {
-						double d0 = pos.getX() + ((j + 0.5D) / FBP.particlesPerAxis);
-						double d1 = pos.getY() + ((k + 0.5D) / FBP.particlesPerAxis);
-						double d2 = pos.getZ() + ((l + 0.5D) / FBP.particlesPerAxis);
+			for (int i = 0; i < FBP.particlesPerAxis; ++i) {
+				for (int j = 0; j < FBP.particlesPerAxis; ++j) {
+					for (int k = 0; k < FBP.particlesPerAxis; ++k) {
+						double posX = pos.getX() + ((i + 0.5) / FBP.particlesPerAxis);
+						double posY = pos.getY() + ((j + 0.5) / FBP.particlesPerAxis);
+						double posZ = pos.getZ() + ((k + 0.5) / FBP.particlesPerAxis);
 
-						if ((!(b instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen)) && (FBP.spawnRedstoneBlockParticles || b != Blocks.REDSTONE_BLOCK) && !FBP.INSTANCE.isBlacklisted(b, true)) {
-							float scale = (float) FBP.random.nextDouble(0.75, 1);
+						if ((!(block instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen)) && (FBP.spawnRedstoneBlockParticles || block != Blocks.REDSTONE_BLOCK) && !FBP.INSTANCE.isBlacklisted(block, true)) {
+							double scale = FBP.random.nextDouble(0.75, 1);
 
-							FBPParticleDigging toSpawn = new FBPParticleDigging(world, d0, d1, d2, d0 - pos.getX() - 0.5D, -0.001, d2 - pos.getZ() - 0.5D, scale, 1, 1, 1, state, null, texture).setBlockPos(pos);
+							FBPParticleDigging toSpawn = new FBPParticleDigging(world, posX, posY, posZ, posX - pos.getX() - 0.5, -0.001, posZ - pos.getZ() - 0.5, (float) scale, 1, 1, 1, state, null, texture).setBlockPos(pos);
 
 							addEffect(toSpawn);
 						}
@@ -134,46 +127,46 @@ public class FBPParticleManager extends ParticleManager {
 			return;
 
 		if (iblockstate.getRenderType() != EnumBlockRenderType.INVISIBLE) {
-			int i = pos.getX();
-			int j = pos.getY();
-			int k = pos.getZ();
-			AxisAlignedBB axisalignedbb = iblockstate.getBoundingBox(world, pos);
+			int sidePosX = pos.getX();
+			int sidePosY = pos.getY();
+			int sidePosZ = pos.getZ();
+			AxisAlignedBB boundingBox = iblockstate.getBoundingBox(world, pos);
 
-			double d0, d1, d2;
+			double hitPosX, hitPosY, hitPosZ;
 
-			RayTraceResult obj = Minecraft.getMinecraft().objectMouseOver;
+			RayTraceResult target = mc.objectMouseOver;
 
-			if (obj == null || obj.hitVec == null)
-				obj = new RayTraceResult(null, new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
+			if (target == null || target.hitVec == null)
+				target = new RayTraceResult(null, new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
 
 			if (FBP.smartBreaking && (!(iblockstate.getBlock() instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen)) && (FBP.spawnRedstoneBlockParticles || iblockstate.getBlock() != Blocks.REDSTONE_BLOCK)) {
-				d0 = obj.hitVec.x + FBP.random.nextDouble(-0.21, 0.21) * Math.abs(axisalignedbb.maxX - axisalignedbb.minX);
-				d1 = obj.hitVec.y + FBP.random.nextDouble(-0.21, 0.21) * Math.abs(axisalignedbb.maxY - axisalignedbb.minY);
-				d2 = obj.hitVec.z + FBP.random.nextDouble(-0.21, 0.21) * Math.abs(axisalignedbb.maxZ - axisalignedbb.minZ);
+				hitPosX = target.hitVec.x + FBP.random.nextDouble(-0.21, 0.21) * Math.abs(boundingBox.maxX - boundingBox.minX);
+				hitPosY = target.hitVec.y + FBP.random.nextDouble(-0.21, 0.21) * Math.abs(boundingBox.maxY - boundingBox.minY);
+				hitPosZ = target.hitVec.z + FBP.random.nextDouble(-0.21, 0.21) * Math.abs(boundingBox.maxZ - boundingBox.minZ);
 			} else {
-				d0 = i + world.rand.nextDouble() * (axisalignedbb.maxX - axisalignedbb.minX - 0.2D) + 0.1D + axisalignedbb.minX;
-				d1 = j + world.rand.nextDouble() * (axisalignedbb.maxY - axisalignedbb.minY - 0.2D) + 0.1D + axisalignedbb.minY;
-				d2 = k + world.rand.nextDouble() * (axisalignedbb.maxZ - axisalignedbb.minZ - 0.2D) + 0.1D + axisalignedbb.minZ;
+				hitPosX = sidePosX + world.rand.nextDouble() * (boundingBox.maxX - boundingBox.minX - 0.2) + 0.1 + boundingBox.minX;
+				hitPosY = sidePosY + world.rand.nextDouble() * (boundingBox.maxY - boundingBox.minY - 0.2) + 0.1 + boundingBox.minY;
+				hitPosZ = sidePosZ + world.rand.nextDouble() * (boundingBox.maxZ - boundingBox.minZ - 0.2) + 0.1 + boundingBox.minZ;
 			}
 
 			switch (side) {
 			case DOWN:
-				d1 = j + axisalignedbb.minY - 0.1D;
+				hitPosY = sidePosY + boundingBox.minY - 0.1;
 				break;
 			case EAST:
-				d0 = i + axisalignedbb.maxX + 0.1D;
+				hitPosX = sidePosX + boundingBox.maxX + 0.1;
 				break;
 			case NORTH:
-				d2 = k + axisalignedbb.minZ - 0.1D;
+				hitPosZ = sidePosZ + boundingBox.minZ - 0.1;
 				break;
 			case SOUTH:
-				d2 = k + axisalignedbb.maxZ + 0.1D;
+				hitPosZ = sidePosZ + boundingBox.maxZ + 0.1;
 				break;
 			case UP:
-				d1 = j + axisalignedbb.maxY + 0.1D;
+				hitPosY = sidePosY + boundingBox.maxY + 0.1;
 				break;
 			case WEST:
-				d0 = i + axisalignedbb.minX - 0.1D;
+				hitPosX = sidePosX + boundingBox.minX - 0.1;
 				break;
 			default:
 				break;
@@ -183,29 +176,25 @@ public class FBPParticleManager extends ParticleManager {
 
 				int damage = 0;
 
-				try {
-					DestroyBlockProgress progress;
-					Map<Integer, DestroyBlockProgress> mp = (mc.renderGlobal).damagedBlocks;
+				DestroyBlockProgress progress;
+				Map<Integer, DestroyBlockProgress> damagedBlocks = (mc.renderGlobal).damagedBlocks;
 
-					if (!mp.isEmpty()) {
+				if (!damagedBlocks.isEmpty()) {
 
-						for (DestroyBlockProgress o : mp.values()) {
-							progress = o;
+					for (DestroyBlockProgress o : damagedBlocks.values()) {
+						progress = o;
 
-							if (progress.getPosition().equals(pos)) {
-								damage = progress.getPartialBlockDamage();
-								break;
-							}
+						if (progress.getPosition().equals(pos)) {
+							damage = progress.getPartialBlockDamage();
+							break;
 						}
 					}
-				} catch (Throwable e) {
-					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 				}
 
 				Particle toSpawn;
 
 				if (!FBP.INSTANCE.isBlacklisted(iblockstate.getBlock(), true)) {
-					toSpawn = new FBPParticleDigging(world, d0, d1, d2, 0.0D, 0.0D, 0.0D, -2, 1, 1, 1, iblockstate, side, null).setBlockPos(pos);
+					toSpawn = new FBPParticleDigging(world, hitPosX, hitPosY, hitPosZ, 0, 0, 0, -2, 1, 1, 1, iblockstate, side, null).setBlockPos(pos);
 
 					if (FBP.smartBreaking) {
 						toSpawn = ((FBPParticleDigging) toSpawn).MultiplyVelocity(side == EnumFacing.UP ? 0.7F : 0.15F);

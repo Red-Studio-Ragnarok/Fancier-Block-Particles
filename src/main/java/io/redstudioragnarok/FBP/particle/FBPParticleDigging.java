@@ -31,6 +31,8 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static io.redstudioragnarok.FBP.util.ParticleUtil.texturedParticle;
+
 public class FBPParticleDigging extends ParticleDigging {
 
 	private final IBlockState blockState;
@@ -49,8 +51,6 @@ public class FBPParticleDigging extends ParticleDigging {
 	EnumFacing facing;
 
 	FBPVector3d rot, prevRot, rotStep;
-
-	Vec2f[] par;
 
 	static Entity dummyEntity = new Entity(null) {
 		@Override
@@ -466,7 +466,7 @@ public class FBPParticleDigging extends ParticleDigging {
 	}
 
 	@Override
-	public void renderParticle(BufferBuilder buf, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
 		if (!FBPRenderer.render) {
 			FBPRenderer.queuedParticles.add(this);
 			return;
@@ -476,22 +476,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		if (FBPKeyBindings.FBPKillParticles.isKeyDown() && !killToggle)
 			killToggle = true;
 
-		float textureX1, textureX2, textureY1, textureY2;
-
-		float particleScale = (float) (prevParticleScale + (this.particleScale - prevParticleScale) * partialTicks);
-
-		if (particleTexture != null) {
-			textureX1 = particleTexture.getInterpolatedU(particleTextureJitterX / 4 * 16);
-			textureY1 = particleTexture.getInterpolatedV(particleTextureJitterY / 4 * 16);
-
-			textureX2 = particleTexture.getInterpolatedU((particleTextureJitterX + 1) / 4 * 16);
-			textureY2 = particleTexture.getInterpolatedV((particleTextureJitterY + 1) / 4 * 16);
-		} else {
-			textureX1 = (particleTextureIndexX + particleTextureJitterX / 4) / 16;
-			textureX2 = textureX1 + 0.015F;
-			textureY1 = (particleTextureIndexY + particleTextureJitterY / 4) / 16;
-			textureY2 = textureY1 + 0.015F;
-		}
+		Vec2f[] particle = texturedParticle(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY);
 
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
 		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
@@ -499,12 +484,12 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		int brightness = getBrightnessForRender(partialTicks);
 
-		par = new Vec2f[] { new Vec2f(textureX2, textureY2), new Vec2f(textureX2, textureY1), new Vec2f(textureX1, textureY1), new Vec2f(textureX1, textureY2) };
-
 		float alpha = (float) (prevParticleAlpha + (particleAlpha - prevParticleAlpha) * partialTicks);
 
+		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
+
 		if (FBP.restOnFloor)
-			y += particleScale / 10;
+			y += scale / 10;
 
 		FBPVector3d smoothRot = new FBPVector3d(0, 0, 0);
 
@@ -528,8 +513,7 @@ public class FBPParticleDigging extends ParticleDigging {
 			}
 		}
 
-		// RENDER
-		FBPRenderer.renderCubeShaded_S(buf, par, x, y, z, particleScale / 10, smoothRot, brightness >> 16 & 65535, brightness & 65535, particleRed, particleGreen, particleBlue, alpha);
+		FBPRenderer.renderCubeShaded_S(buffer, particle, x, y, z, scale / 10, smoothRot, brightness >> 16 & 65535, brightness & 65535, particleRed, particleGreen, particleBlue, alpha);
 	}
 
 	private void createRotationMatrix() {
@@ -547,9 +531,9 @@ public class FBPParticleDigging extends ParticleDigging {
 		AxisAlignedBB boundingBox = getBoundingBox();
 
 		if (this.world.isBlockLoaded(new BlockPos(posX, 0, posZ))) {
-			double d0 = (boundingBox.maxY - boundingBox.minY) * 0.66;
-			double k = this.posY + d0 + 0.01 - (FBP.restOnFloor ? particleScale / 10 : 0);
-			return this.world.getCombinedLight(new BlockPos(posX, k, posZ), 0);
+			double boundingBoxHeight = (boundingBox.maxY - boundingBox.minY) * 0.66;
+			double posY = this.posY + boundingBoxHeight + 0.01 - (FBP.restOnFloor ? particleScale / 10 : 0);
+			return this.world.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
 		} else {
 			return 0;
 		}

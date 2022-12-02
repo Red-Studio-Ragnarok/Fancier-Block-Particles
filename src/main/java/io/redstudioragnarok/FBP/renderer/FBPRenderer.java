@@ -72,6 +72,12 @@ public class FBPRenderer {
 		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 	}
 
+	public static void renderCube_Smoke(BufferBuilder buf, Vec2f par, float x, float y, float z, double scale, int j, float r, float g, float b, float a, Vec3d[] cube) {
+		buf.setTranslation(x, y, z);
+		putCube_Smoke(buf, par,scale / 20, j >> 16 & 65535, j & 65535, r, g, b, a, cube);
+		buf.setTranslation(0, 0, 0);
+	}
+
 	static void putCube_S(BufferBuilder worldRendererIn, Vec2f[] par, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
 		float radsX = (float) Math.toRadians(rotVec.x);
 		float radsY = (float) Math.toRadians(rotVec.y);
@@ -129,8 +135,7 @@ public class FBPRenderer {
 		float G;
 		float B;
 
-		for (int i = 0; i < FBP.CUBE.length; i += 4)
-		{
+		for (int i = 0; i < FBP.CUBE.length; i += 4) {
 			Vec3d v1 = cube[i];
 			Vec3d v2 = cube[i + 1];
 			Vec3d v3 = cube[i + 2];
@@ -141,6 +146,32 @@ public class FBPRenderer {
 			B = b * brightnessForRender;
 
 			brightnessForRender *= 0.95;
+
+			addVt(worldRendererIn, scale, v1, par.x, par.y, j, k, R, G, B, a);
+			addVt(worldRendererIn, scale, v2, par.x, par.y, j, k, R, G, B, a);
+			addVt(worldRendererIn, scale, v3, par.x, par.y, j, k, R, G, B, a);
+			addVt(worldRendererIn, scale, v4, par.x, par.y, j, k, R, G, B, a);
+		}
+	}
+
+	public static void putCube_Smoke(BufferBuilder worldRendererIn, Vec2f par, double scale, int j, int k, float r, float g, float b, float a, Vec3d[] cube) {
+		float brightnessForRender = 1;
+
+		float R;
+		float G;
+		float B;
+
+		for (int i = 0; i < FBP.CUBE.length; i += 4) {
+			Vec3d v1 = cube[i];
+			Vec3d v2 = cube[i + 1];
+			Vec3d v3 = cube[i + 2];
+			Vec3d v4 = cube[i + 3];
+
+			R = r * brightnessForRender;
+			G = g * brightnessForRender;
+			B = b * brightnessForRender;
+
+			brightnessForRender *= 0.875;
 
 			addVt(worldRendererIn, scale, v1, par.x, par.y, j, k, R, G, B, a);
 			addVt(worldRendererIn, scale, v2, par.x, par.y, j, k, R, G, B, a);

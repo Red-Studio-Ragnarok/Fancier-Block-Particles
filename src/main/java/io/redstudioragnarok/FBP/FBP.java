@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.init.Blocks;
@@ -39,7 +40,6 @@ public class FBP {
 	public static FBP INSTANCE;
 
 	public static final ResourceLocation LOCATION_PARTICLE_TEXTURE = new ResourceLocation("textures/particle/particles.png");
-
 	public static final ResourceLocation FBP_BUG = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/bug.png");
 	public static final ResourceLocation FBP_FBP = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/fbp.png");
 	public static final ResourceLocation FBP_WIDGETS = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/widgets.png");
@@ -103,6 +103,8 @@ public class FBP {
 	public static final FBPEventHandler eventHandler = new FBPEventHandler();
 	public static final FBPGuiHandler guiHandler = new FBPGuiHandler();
 
+	public static TextureAtlasSprite snowTexture;
+
 	public FBP() {
 		INSTANCE = this;
 
@@ -137,6 +139,7 @@ public class FBP {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent evt) {
 		MinecraftForge.EVENT_BUS.register(guiHandler);
+		snowTexture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(Blocks.SNOW.getDefaultState());
 	}
 
 	public static boolean isEnabled() {

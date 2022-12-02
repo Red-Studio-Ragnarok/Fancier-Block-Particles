@@ -14,6 +14,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static io.redstudioragnarok.FBP.util.ParticleUtil.texturedParticle;
+
 public class FBPParticleRain extends ParticleDigging {
 
 	private final IBlockState sourceState;
@@ -23,8 +25,6 @@ public class FBPParticleRain extends ParticleDigging {
 	double AngleY, particleHeight, prevParticleScale, prevParticleHeight, prevParticleAlpha;
 	double scalar = FBP.scaleMult;
 	double endMult = 1;
-
-	Vec2f[] par;
 
 	public FBPParticleRain(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
@@ -37,7 +37,7 @@ public class FBPParticleRain extends ParticleDigging {
 		this.motionY = -ySpeedIn;
 		this.motionZ = zSpeedIn;
 
-		this.particleGravity = 0.025f;
+		this.particleGravity = 0.025F;
 
 		sourceState = state;
 
@@ -45,25 +45,13 @@ public class FBPParticleRain extends ParticleDigging {
 
 		particleMaxAge = (int) FBP.random.nextDouble(50, 70);
 
-		this.particleAlpha = 0f;
-		this.particleScale = 0f;
+		this.particleAlpha = 0;
+		this.particleScale = 0;
 
 		this.canCollide = true;
 
 		if (FBP.randomFadingSpeed)
 			endMult *= FBP.random.nextDouble(0.85, 1);
-	}
-
-	@Override
-	public void setParticleTextureIndex(int particleTextureIndex) {
-	}
-
-	@Override
-	protected void multiplyColor(@Nullable BlockPos p_187154_1_) {
-		int i = mc.getBlockColors().colorMultiplier(this.sourceState, this.world, p_187154_1_, 0);
-		this.particleRed *= (i >> 16 & 255) / 255.0F;
-		this.particleGreen *= (i >> 8 & 255) / 255.0F;
-		this.particleBlue *= (i & 255) / 255.0F;
 	}
 
 	@Override
@@ -93,9 +81,9 @@ public class FBPParticleRain extends ParticleDigging {
 
 					if (particleScale < max) {
 						if (FBP.randomFadingSpeed)
-							particleScale += 0.05F * endMult;
+							particleScale += 0.05 * endMult;
 						else
-							particleScale += 0.05F;
+							particleScale += 0.05;
 
 						if (particleScale > max)
 							particleScale = (float) max;
@@ -103,14 +91,14 @@ public class FBPParticleRain extends ParticleDigging {
 						particleHeight = particleScale;
 					}
 
-					if (particleAlpha < 0.65f) {
+					if (particleAlpha < 0.65) {
 						if (FBP.randomFadingSpeed)
-							particleAlpha += 0.085F * endMult;
+							particleAlpha += 0.085 * endMult;
 						else
-							particleAlpha += 0.085F;
+							particleAlpha += 0.085;
 
-						if (particleAlpha > 0.65f)
-							particleAlpha = 0.65f;
+						if (particleAlpha > 0.65)
+							particleAlpha = 0.65F;
 					}
 				} else
 					setExpired();
@@ -119,21 +107,21 @@ public class FBPParticleRain extends ParticleDigging {
 			if (world.getBlockState(new BlockPos(posX, posY, posZ)).getMaterial().isLiquid())
 				setExpired();
 
-			motionY -= 0.04D * this.particleGravity;
+			motionY -= 0.04 * this.particleGravity;
 
 			move(motionX, motionY, motionZ);
 
-			motionY *= 1.00025000190734863D;
+			motionY *= 1;
 
 			if (onGround) {
 				motionX = 0;
-				motionY = -0.25f;
+				motionY = -0.25;
 				motionZ = 0;
 
-				if (particleHeight > 0.075f)
-					particleHeight *= 0.725f;
+				if (particleHeight > 0.075)
+					particleHeight *= 0.725;
 
-				float max = (float) scalar * 4.25f;
+				float max = (float) scalar * 4.25F;
 
 				if (particleScale < max) {
 					particleScale += max / 10;
@@ -144,11 +132,11 @@ public class FBPParticleRain extends ParticleDigging {
 
 				if (particleScale >= max / 2) {
 					if (FBP.randomFadingSpeed)
-						particleAlpha *= 0.75F * endMult;
+						particleAlpha *= 0.75 * endMult;
 					else
-						particleAlpha *= 0.75F;
+						particleAlpha *= 0.75;
 
-					if (particleAlpha <= 0.001f)
+					if (particleAlpha <= 0.001)
 						setExpired();
 				}
 			}
@@ -178,77 +166,60 @@ public class FBPParticleRain extends ParticleDigging {
 			y = axisalignedbb.calculateYOffset(this.getBoundingBox(), y);
 		}
 
-		this.setBoundingBox(this.getBoundingBox().offset(0.0D, y, 0.0D));
+		this.setBoundingBox(this.getBoundingBox().offset(0, y, 0));
 
 		for (AxisAlignedBB axisalignedbb : list) {
 			x = axisalignedbb.calculateXOffset(this.getBoundingBox(), x);
 		}
 
-		this.setBoundingBox(this.getBoundingBox().offset(x, 0.0D, 0.0D));
+		this.setBoundingBox(this.getBoundingBox().offset(x, 0, 0));
 
 		for (AxisAlignedBB axisalignedbb : list) {
 			z = axisalignedbb.calculateZOffset(this.getBoundingBox(), z);
 		}
 
-		this.setBoundingBox(this.getBoundingBox().offset(0.0D, 0.0D, z));
+		this.setBoundingBox(this.getBoundingBox().offset(0, 0, z));
 
 		this.resetPositionToBB();
 
-		this.onGround = y != Y && Y < 0.0D;
+		this.onGround = y != Y && Y < 0;
 
 		if (x != X)
-			motionX *= 0.699999988079071D;
+			motionX *= 0.69;
 		if (z != Z)
-			motionZ *= 0.699999988079071D;
+			motionZ *= 0.69;
 	}
 
 	@Override
-	public void renderParticle(BufferBuilder buf, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 
-		float f, f1, f2, f3;
+		Vec2f[] particle = texturedParticle(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY);
 
-		if (particleTexture != null) {
-			f = particleTexture.getInterpolatedU(particleTextureJitterX / 4 * 16);
-			f2 = particleTexture.getInterpolatedV(particleTextureJitterY / 4 * 16);
+		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
+		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
+		float z = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
 
-			f1 = particleTexture.getInterpolatedU((particleTextureJitterX + 1) / 4 * 16);
-			f3 = particleTexture.getInterpolatedV((particleTextureJitterY + 1) / 4 * 16);
-		} else {
-			f = (particleTextureIndexX + particleTextureJitterX / 4) / 16;
-			f1 = f + 0.015609375F;
-			f2 = (particleTextureIndexY + particleTextureJitterY / 4) / 16;
-			f3 = f2 + 0.015609375F;
-		}
-
-		float f5 = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
-		float f6 = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
-		float f7 = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
-
-		int i = getBrightnessForRender(partialTicks);
+		int brightness = getBrightnessForRender(partialTicks);
 
 		float alpha = (float) (prevParticleAlpha + (particleAlpha - prevParticleAlpha) * partialTicks);
 
-		// SMOOTH TRANSITION
-		float f4 = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
+		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 		float height = (float) (prevParticleHeight + (particleHeight - prevParticleHeight) * partialTicks);
 
-		// RENDER
-		par = new Vec2f[] { new Vec2f(f1, f3), new Vec2f(f1, f2), new Vec2f(f, f2), new Vec2f(f, f3) };
-
-		FBPRenderer.renderCubeShaded_WH(buf, par, f5, f6 + height / 10, f7, f4 / 10, height / 10, new FBPVector3d(0, AngleY, 0), i >> 16 & 65535, i & 65535, particleRed, particleGreen, particleBlue, alpha);
+		FBPRenderer.renderCubeShaded_WH(buffer, particle, x, y + height / 10, z, scale / 10, height / 10, new FBPVector3d(0, AngleY, 0), brightness >> 16 & 65535, brightness & 65535, particleRed, particleGreen, particleBlue, alpha);
 	}
 
 	@Override
-	public int getBrightnessForRender(float p_189214_1_) {
-		int i = super.getBrightnessForRender(p_189214_1_);
-		int j = 0;
+	public int getBrightnessForRender(float partialTick) {
+		int brightnessForRender = super.getBrightnessForRender(partialTick);
+		int lighting = 0;
 
 		if (this.world.isBlockLoaded(new BlockPos(posX, posY, posZ))) {
-			j = this.world.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
+			lighting = this.world.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
 		}
 
-		return i == 0 ? j : i;
+		return brightnessForRender == 0 ? lighting : brightnessForRender;
 	}
 }
