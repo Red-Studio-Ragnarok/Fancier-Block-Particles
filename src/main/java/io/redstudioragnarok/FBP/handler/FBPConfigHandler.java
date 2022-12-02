@@ -66,9 +66,9 @@ public class FBPConfigHandler {
 		}
 	}
 
-	public static void initStreams() {
+	public static void initStreams(File file) {
 		try {
-			fileInputStream = new FileInputStream(FBP.config);
+			fileInputStream = new FileInputStream(file);
 			inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
 			bufferedReader = new BufferedReader(inputStreamReader);
 		} catch (Exception e) {
@@ -88,7 +88,7 @@ public class FBPConfigHandler {
 
 	static void read() {
 		try {
-			initStreams();
+			initStreams(FBP.config);
 
 			String line;
 
@@ -160,7 +160,7 @@ public class FBPConfigHandler {
 
 	static void readFloatingMaterials() {
 		try {
-			initStreams();
+			initStreams(FBP.floatingMaterialsFile);
 
 			String line;
 
@@ -220,7 +220,7 @@ public class FBPConfigHandler {
 
 	static void readAnimExceptions() {
 		try {
-			initStreams();
+			initStreams(FBP.animBlacklistFile);
 
 			String line;
 
@@ -237,7 +237,7 @@ public class FBPConfigHandler {
 
 	static void readParticleExceptions() {
 		try {
-			initStreams();
+			initStreams(FBP.particleBlacklistFile);
 
 			String line;
 
