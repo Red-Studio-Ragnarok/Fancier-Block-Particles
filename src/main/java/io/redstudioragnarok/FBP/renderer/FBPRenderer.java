@@ -159,7 +159,7 @@ public class FBPRenderer {
 		buffer.pos(position.x * width, position.y * height, position.z * width).tex(u, v).color(r, g, b, alpha).lightmap(skyLight, blockLight).normal((float) normals.x, (float) normals.y, (float) normals.z).endVertex();
 	}
 
-	private static void addVertexGas(BufferBuilder buffer, double scale, Vec3d position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha) { // add vertex to buffer
+	private static void addVertexGas(BufferBuilder buffer, double scale, Vec3d position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha) {
 		buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, alpha).lightmap(skyLight, blockLight).endVertex();
 	}
 
