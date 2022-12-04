@@ -3,6 +3,7 @@
 ## Changed
 
 - Changed behavior of Fancy Block Placement with slabs placing slabs one on top of another should be a better experience.
+- Smoke particles are now slightly more transparent.
 
 ## Fixed
 
@@ -28,6 +29,7 @@
 Non critical try-catch blocks should now never throw a runtime exception or print a stack trace except when debug mode is added they should print a stack trace and count towards the issues counter and their respective counters (Rendering Issues, Physics Issues, Performance Issues, etc.)
 
 [#139]: https://github.com/TominoCZ/FancyBlockParticles/issues/139
+
 ---
 
 # Fancier Block Particles Version 0.7 Changelog

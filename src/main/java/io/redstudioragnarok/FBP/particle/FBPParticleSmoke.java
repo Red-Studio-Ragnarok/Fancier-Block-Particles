@@ -87,7 +87,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 			cube[i] = FBPRenderer.rotatef_d(vec, 0, angleY, 0);
 		}
 
-		particleAlpha = 1f;
+		particleAlpha = 0.9f;
 
 		if (FBP.randomFadingSpeed)
 			endMult = MathHelper.clamp(FBP.random.nextDouble(0.425, 1.15), 0.5432, 1);
