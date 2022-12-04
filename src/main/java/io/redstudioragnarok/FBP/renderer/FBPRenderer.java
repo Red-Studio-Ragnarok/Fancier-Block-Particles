@@ -88,6 +88,11 @@ public class FBPRenderer {
 			Vec3d v3 = FBP.CUBE[i + 2];
 			Vec3d v4 = FBP.CUBE[i + 3];
 
+			v1 = rotateVec(v1, radsX, radsY, radsZ);
+			v2 = rotateVec(v2, radsX, radsY, radsZ);
+			v3 = rotateVec(v3, radsX, radsY, radsZ);
+			v4 = rotateVec(v4, radsX, radsY, radsZ);
+
 			Vec3d normal = rotateVec(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
 			addVt_S(buffer, scale, v1, particle[0].x, particle[0].y, skyLight, blockLight, r, g, b, alpha, normal);
