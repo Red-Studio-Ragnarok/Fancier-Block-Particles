@@ -66,6 +66,8 @@ repositories {
 }
 
 dependencies {
+	implementation 'net.jafama:jafama:2.3.2'
+
 	if (project.use_assetmover.toBoolean()) {
 		deobfCompile 'com.cleanroommc:assetmover:0.2'
 	}

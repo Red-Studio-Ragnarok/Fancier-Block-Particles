@@ -2,6 +2,7 @@ package io.redstudioragnarok.FBP.renderer;
 
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.vector.FBPVector3d;
+import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -10,7 +11,6 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
@@ -95,10 +95,10 @@ public class FBPRenderer {
 
 			Vec3d normal = rotateVec(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
-			addVt_S(buffer, scale, v1, particle[0].x, particle[0].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVt_S(buffer, scale, v2, particle[1].x, particle[1].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVt_S(buffer, scale, v3, particle[2].x, particle[2].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVt_S(buffer, scale, v4, particle[3].x, particle[3].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVertex(buffer, scale, v1, particle[0].x, particle[0].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVertex(buffer, scale, v2, particle[1].x, particle[1].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVertex(buffer, scale, v3, particle[2].x, particle[2].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVertex(buffer, scale, v4, particle[3].x, particle[3].y, skyLight, blockLight, r, g, b, alpha, normal);
 		}
 	}
 
@@ -120,10 +120,10 @@ public class FBPRenderer {
 
 			Vec3d normal = rotateVec(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
-			addVt_WH(buffer, width, height, v1, particle[0].x, particle[0].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVt_WH(buffer, width, height, v2, particle[1].x, particle[1].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVt_WH(buffer, width, height, v3, particle[2].x, particle[2].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVt_WH(buffer, width, height, v4, particle[3].x, particle[3].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVertexWidthHeight(buffer, width, height, v1, particle[0].x, particle[0].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVertexWidthHeight(buffer, width, height, v2, particle[1].x, particle[1].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVertexWidthHeight(buffer, width, height, v3, particle[2].x, particle[2].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVertexWidthHeight(buffer, width, height, v4, particle[3].x, particle[3].y, skyLight, blockLight, r, g, b, alpha, normal);
 		}
 	}
 
@@ -144,31 +144,31 @@ public class FBPRenderer {
 
 			brightnessForRender *= brightnessMultiplier;
 
-			addVt(buffer, scale, v1, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
-			addVt(buffer, scale, v2, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
-			addVt(buffer, scale, v3, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
-			addVt(buffer, scale, v4, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
+			addVertexGas(buffer, scale, v1, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
+			addVertexGas(buffer, scale, v2, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
+			addVertexGas(buffer, scale, v3, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
+			addVertexGas(buffer, scale, v4, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
 		}
 	}
 
-	static void addVt_S(BufferBuilder buffer, double scale, Vec3d position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha, Vec3d normals) {
+	static void addVertex(BufferBuilder buffer, double scale, Vec3d position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha, Vec3d normals) {
 		buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, alpha).lightmap(skyLight, blockLight).normal((float) normals.x, (float) normals.y, (float) normals.z).endVertex();
 	}
 
-	static void addVt_WH(BufferBuilder buffer, double width, double height, Vec3d position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float a, Vec3d normals) {
-		buffer.pos(position.x * width, position.y * height, position.z * width).tex(u, v).color(r, g, b, a).lightmap(skyLight, blockLight).normal((float) normals.x, (float) normals.y, (float) normals.z).endVertex();
+	static void addVertexWidthHeight(BufferBuilder buffer, double width, double height, Vec3d position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha, Vec3d normals) {
+		buffer.pos(position.x * width, position.y * height, position.z * width).tex(u, v).color(r, g, b, alpha).lightmap(skyLight, blockLight).normal((float) normals.x, (float) normals.y, (float) normals.z).endVertex();
 	}
 
-	private static void addVt(BufferBuilder buffer, double scale, Vec3d position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float a) { // add vertex to buffer
-		buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, a).lightmap(skyLight, blockLight).endVertex();
+	private static void addVertexGas(BufferBuilder buffer, double scale, Vec3d position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha) { // add vertex to buffer
+		buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, alpha).lightmap(skyLight, blockLight).endVertex();
 	}
 
 	/**
-	 *Rotate vec and make it a full 3D cube.
+	 * Rotate vec and make it a full 3D cube.
 	 */
 	public static Vec3d rotateVec(Vec3d vec, float AngleX, float AngleY, float AngleZ) {
-		FBPVector3d sin = new FBPVector3d(MathHelper.sin(AngleX), MathHelper.sin(AngleY), MathHelper.sin(AngleZ));
-		FBPVector3d cos = new FBPVector3d(MathHelper.cos(AngleX), MathHelper.cos(AngleY), MathHelper.cos(AngleZ));
+		FBPVector3d sin = new FBPVector3d(FastMath.sinQuick(AngleX), FastMath.sinQuick(AngleY), FastMath.sinQuick(AngleZ));
+		FBPVector3d cos = new FBPVector3d(FastMath.cosQuick(AngleX), FastMath.cosQuick(AngleY), FastMath.cosQuick(AngleZ));
 
 		vec = new Vec3d(vec.x * cos.y + vec.z * sin.y, vec.y, vec.x * sin.y - vec.z * cos.y);
 
