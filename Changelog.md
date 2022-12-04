@@ -9,17 +9,17 @@
 
 - Fixed crashes with some moded blocks (#7)
 - Fixed Fancy Block Placement being broken because of an accidental change in 0.7
-- Fixed Memory leak witht FBP#originalEffectRenderer ([#139])
+- Fixed Memory leak with FBP#originalEffectRenderer ([#139])
 
 ## Optimization
 
 - As a result of a big code cleanup FBP should now be faster and use slightly less memory
-- Optimized Rendering of Fancy Block Placment, etc... as a result, it should be faster and use slightly less RAM & VRAM
+- Optimized Rendering of Fancy Block Placement, etc... as a result, it should be faster and use slightly less RAM & VRAM
 
 ## Internal
 
 - Cleanup the entire code
-- Refractored the code
+- Refactored the code
 - Renamed most of the variables from unreadable names to readable names
 - Finished removing useless "@SideOnly"
 - Removed useless "isRemote" checks
