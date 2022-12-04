@@ -9,7 +9,7 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath('com.anatawa12.forge:ForgeGradle:2.3-1.0.+') {
+		classpath('com.anatawa12.forge:ForgeGradle:2.3-+') {
 			changing = true
 		}
 		if (project.use_mixins.toBoolean()) {
