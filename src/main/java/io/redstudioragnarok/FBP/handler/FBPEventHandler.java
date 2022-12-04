@@ -176,7 +176,6 @@ public class FBPEventHandler {
 		mc.entityRenderer.enableLightmap();
 		RenderHelper.enableStandardItemLighting();
 
-		mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		tessellator.draw();
 
 		RenderHelper.disableStandardItemLighting();

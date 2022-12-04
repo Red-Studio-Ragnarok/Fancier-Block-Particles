@@ -23,65 +23,64 @@ public class FBPRenderer {
 	public static boolean render = false;
 	public static List<Particle> queuedParticles = new ArrayList<>();
 
-	static Minecraft mc = Minecraft.getMinecraft();;
+	static Minecraft mc = Minecraft.getMinecraft();
 
-	public static void renderCubeShaded_S(BufferBuilder buf, Vec2f[] par, float x, float y, float z, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
-		// render particle
-		buf.setTranslation(x, y, z);
+	public static void renderCubeShaded_S(BufferBuilder buffer, Vec2f[] particle, float x, float y, float z, double scale, FBPVector3d rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
+		buffer.setTranslation(x, y, z);
 
-		putCube_S(buf, par, scale, rotVec, j, k, r, g, b, a);
+		putCube_S(buffer, particle, scale, rotation, skyLight, blockLight, r, g, b, alpha);
 
-		buf.setTranslation(0, 0, 0);
+		buffer.setTranslation(0, 0, 0);
 	}
 
-	public static void renderCubeShaded_WH(BufferBuilder buf, Vec2f[] par, float f5, float f6, float f7, double width, double height, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
+	public static void renderCubeShaded_WH(BufferBuilder buffer, Vec2f[] particle, float x, float y, float z, double width, double height, FBPVector3d rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
 		// switch to vertex format that supports normals
 		Tessellator.getInstance().draw();
-		buf.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
+		buffer.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
 
 		// some GL commands
 		RenderHelper.enableStandardItemLighting();
 
 		// render particle
-		buf.setTranslation(f5, f6, f7);
+		buffer.setTranslation(x, y, z);
 
-		putCube_WH(buf, par, width, height, rotVec, j, k, r, g, b, a);
+		putCube_WH(buffer, particle, width, height, rotation, skyLight, blockLight, r, g, b, alpha);
 
-		buf.setTranslation(0, 0, 0);
+		buffer.setTranslation(0, 0, 0);
 
 		// continue with the regular vertex format
 		Tessellator.getInstance().draw();
-		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
 		RenderHelper.disableStandardItemLighting();
 	}
 
-	public static void renderCube_F(BufferBuilder buf, Vec2f par, float x, float y, float z, double scale, int j, float r, float g, float b, float a, Vec3d[] cube) {
+	public static void renderCube_F(BufferBuilder buffer, Vec2f particle, float x, float y, float z, double scale, int brightness, float r, float g, float b, float alpha, Vec3d[] cube) {
 		// render particle
 		GlStateManager.enableCull();
 
 		Tessellator.getInstance().draw();
 		mc.getRenderManager().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
-		buf.setTranslation(x, y, z);
-		putCube_F(buf, par,scale / 80, j >> 16 & 65535, j & 65535, r, g, b, a, cube);
-		buf.setTranslation(0, 0, 0);
+		buffer.setTranslation(x, y, z);
+		putCube_Gas(buffer, particle,scale / 80, brightness >> 16 & 65535, brightness & 65535, r, g, b, alpha, cube, 0.95F);
+		buffer.setTranslation(0, 0, 0);
 
 		Tessellator.getInstance().draw();
-		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 	}
 
-	public static void renderCube_Smoke(BufferBuilder buf, Vec2f par, float x, float y, float z, double scale, int j, float r, float g, float b, float a, Vec3d[] cube) {
-		buf.setTranslation(x, y, z);
-		putCube_Smoke(buf, par,scale / 20, j >> 16 & 65535, j & 65535, r, g, b, a, cube);
-		buf.setTranslation(0, 0, 0);
+	public static void renderCube_Smoke(BufferBuilder buffer, Vec2f particle, float x, float y, float z, double scale, int brightness, float r, float g, float b, float alpha, Vec3d[] cube) {
+		buffer.setTranslation(x, y, z);
+		putCube_Gas(buffer, particle,scale / 20, brightness >> 16 & 65535, brightness & 65535, r, g, b, alpha, cube,0.875F);
+		buffer.setTranslation(0, 0, 0);
 	}
 
-	static void putCube_S(BufferBuilder worldRendererIn, Vec2f[] par, double scale, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
-		float radsX = (float) Math.toRadians(rotVec.x);
-		float radsY = (float) Math.toRadians(rotVec.y);
-		float radsZ = (float) Math.toRadians(rotVec.z);
+	static void putCube_S(BufferBuilder buffer, Vec2f[] particle, double scale, FBPVector3d rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
+		float radsX = (float) Math.toRadians(rotation.x);
+		float radsY = (float) Math.toRadians(rotation.y);
+		float radsZ = (float) Math.toRadians(rotation.z);
 
 		for (int i = 0; i < FBP.CUBE.length; i += 4) {
 			Vec3d v1 = FBP.CUBE[i];
@@ -89,24 +88,19 @@ public class FBPRenderer {
 			Vec3d v3 = FBP.CUBE[i + 2];
 			Vec3d v4 = FBP.CUBE[i + 3];
 
-			v1 = rotatef_d(v1, radsX, radsY, radsZ);
-			v2 = rotatef_d(v2, radsX, radsY, radsZ);
-			v3 = rotatef_d(v3, radsX, radsY, radsZ);
-			v4 = rotatef_d(v4, radsX, radsY, radsZ);
+			Vec3d normal = rotateVec(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
-			Vec3d normal = rotatef_d(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
-
-			addVt_S(worldRendererIn, scale, v1, par[0].x, par[0].y, j, k, r, g, b, a, normal);
-			addVt_S(worldRendererIn, scale, v2, par[1].x, par[1].y, j, k, r, g, b, a, normal);
-			addVt_S(worldRendererIn, scale, v3, par[2].x, par[2].y, j, k, r, g, b, a, normal);
-			addVt_S(worldRendererIn, scale, v4, par[3].x, par[3].y, j, k, r, g, b, a, normal);
+			addVt_S(buffer, scale, v1, particle[0].x, particle[0].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVt_S(buffer, scale, v2, particle[1].x, particle[1].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVt_S(buffer, scale, v3, particle[2].x, particle[2].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVt_S(buffer, scale, v4, particle[3].x, particle[3].y, skyLight, blockLight, r, g, b, alpha, normal);
 		}
 	}
 
-	static void putCube_WH(BufferBuilder worldRendererIn, Vec2f[] par, double width, double height, FBPVector3d rotVec, int j, int k, float r, float g, float b, float a) {
-		float radsX = (float) Math.toRadians(rotVec.x);
-		float radsY = (float) Math.toRadians(rotVec.y);
-		float radsZ = (float) Math.toRadians(rotVec.z);
+	static void putCube_WH(BufferBuilder buffer, Vec2f[] particle, double width, double height, FBPVector3d rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
+		float radsX = (float) Math.toRadians(rotation.x);
+		float radsY = (float) Math.toRadians(rotation.y);
+		float radsZ = (float) Math.toRadians(rotation.z);
 
 		for (int i = 0; i < FBP.CUBE.length; i += 4) {
 			Vec3d v1 = FBP.CUBE[i];
@@ -114,26 +108,24 @@ public class FBPRenderer {
 			Vec3d v3 = FBP.CUBE[i + 2];
 			Vec3d v4 = FBP.CUBE[i + 3];
 
-			v1 = rotatef_d(v1, radsX, radsY, radsZ);
-			v2 = rotatef_d(v2, radsX, radsY, radsZ);
-			v3 = rotatef_d(v3, radsX, radsY, radsZ);
-			v4 = rotatef_d(v4, radsX, radsY, radsZ);
+			v1 = rotateVec(v1, radsX, radsY, radsZ);
+			v2 = rotateVec(v2, radsX, radsY, radsZ);
+			v3 = rotateVec(v3, radsX, radsY, radsZ);
+			v4 = rotateVec(v4, radsX, radsY, radsZ);
 
-			Vec3d normal = rotatef_d(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
+			Vec3d normal = rotateVec(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
-			addVt_WH(worldRendererIn, width, height, v1, par[0].x, par[0].y, j, k, r, g, b, a, normal);
-			addVt_WH(worldRendererIn, width, height, v2, par[1].x, par[1].y, j, k, r, g, b, a, normal);
-			addVt_WH(worldRendererIn, width, height, v3, par[2].x, par[2].y, j, k, r, g, b, a, normal);
-			addVt_WH(worldRendererIn, width, height, v4, par[3].x, par[3].y, j, k, r, g, b, a, normal);
+			addVt_WH(buffer, width, height, v1, particle[0].x, particle[0].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVt_WH(buffer, width, height, v2, particle[1].x, particle[1].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVt_WH(buffer, width, height, v3, particle[2].x, particle[2].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVt_WH(buffer, width, height, v4, particle[3].x, particle[3].y, skyLight, blockLight, r, g, b, alpha, normal);
 		}
 	}
 
-	public static void putCube_F(BufferBuilder worldRendererIn, Vec2f par, double scale, int j, int k, float r, float g, float b, float a, Vec3d[] cube) {
+	public static void putCube_Gas(BufferBuilder buffer, Vec2f particle, double scale, int skyLight, int blockLight, float r, float g, float b, float alpha, Vec3d[] cube, float brightnessMultiplier) {
 		float brightnessForRender = 1;
 
-		float R;
-		float G;
-		float B;
+		float R, B, G;
 
 		for (int i = 0; i < FBP.CUBE.length; i += 4) {
 			Vec3d v1 = cube[i];
@@ -145,54 +137,31 @@ public class FBPRenderer {
 			G = g * brightnessForRender;
 			B = b * brightnessForRender;
 
-			brightnessForRender *= 0.95;
+			brightnessForRender *= brightnessMultiplier;
 
-			addVt(worldRendererIn, scale, v1, par.x, par.y, j, k, R, G, B, a);
-			addVt(worldRendererIn, scale, v2, par.x, par.y, j, k, R, G, B, a);
-			addVt(worldRendererIn, scale, v3, par.x, par.y, j, k, R, G, B, a);
-			addVt(worldRendererIn, scale, v4, par.x, par.y, j, k, R, G, B, a);
+			addVt(buffer, scale, v1, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
+			addVt(buffer, scale, v2, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
+			addVt(buffer, scale, v3, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
+			addVt(buffer, scale, v4, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha);
 		}
 	}
 
-	public static void putCube_Smoke(BufferBuilder worldRendererIn, Vec2f par, double scale, int j, int k, float r, float g, float b, float a, Vec3d[] cube) {
-		float brightnessForRender = 1;
-
-		float R;
-		float G;
-		float B;
-
-		for (int i = 0; i < FBP.CUBE.length; i += 4) {
-			Vec3d v1 = cube[i];
-			Vec3d v2 = cube[i + 1];
-			Vec3d v3 = cube[i + 2];
-			Vec3d v4 = cube[i + 3];
-
-			R = r * brightnessForRender;
-			G = g * brightnessForRender;
-			B = b * brightnessForRender;
-
-			brightnessForRender *= 0.875;
-
-			addVt(worldRendererIn, scale, v1, par.x, par.y, j, k, R, G, B, a);
-			addVt(worldRendererIn, scale, v2, par.x, par.y, j, k, R, G, B, a);
-			addVt(worldRendererIn, scale, v3, par.x, par.y, j, k, R, G, B, a);
-			addVt(worldRendererIn, scale, v4, par.x, par.y, j, k, R, G, B, a);
-		}
+	static void addVt_S(BufferBuilder buffer, double scale, Vec3d position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha, Vec3d normals) {
+		buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, alpha).lightmap(skyLight, blockLight).normal((float) normals.x, (float) normals.y, (float) normals.z).endVertex();
 	}
 
-	static void addVt_S(BufferBuilder worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a, Vec3d n) {
-		worldRendererIn.pos(pos.x * scale, pos.y * scale, pos.z * scale).tex(u, v).color(r, g, b, a).lightmap(j, k).normal((float) n.x, (float) n.y, (float) n.z).endVertex();
+	static void addVt_WH(BufferBuilder buffer, double width, double height, Vec3d position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float a, Vec3d normals) {
+		buffer.pos(position.x * width, position.y * height, position.z * width).tex(u, v).color(r, g, b, a).lightmap(skyLight, blockLight).normal((float) normals.x, (float) normals.y, (float) normals.z).endVertex();
 	}
 
-	static void addVt_WH(BufferBuilder worldRendererIn, double width, double height, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a, Vec3d n) {
-		worldRendererIn.pos(pos.x * width, pos.y * height, pos.z * width).tex(u, v).color(r, g, b, a).lightmap(j, k).normal((float) n.x, (float) n.y, (float) n.z).endVertex();
+	private static void addVt(BufferBuilder buffer, double scale, Vec3d position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float a) { // add vertex to buffer
+		buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, a).lightmap(skyLight, blockLight).endVertex();
 	}
 
-	private static void addVt(BufferBuilder worldRendererIn, double scale, Vec3d pos, double u, double v, int j, int k, float r, float g, float b, float a) { // add vertex to buffer
-		worldRendererIn.pos(pos.x * scale, pos.y * scale, pos.z * scale).tex(u, v).color(r, g, b, a).lightmap(j, k).endVertex();
-	}
-
-	public static Vec3d rotatef_d(Vec3d vec, float AngleX, float AngleY, float AngleZ) {
+	/**
+	 *Rotate vec and make it a full 3D cube.
+	 */
+	public static Vec3d rotateVec(Vec3d vec, float AngleX, float AngleY, float AngleZ) {
 		FBPVector3d sin = new FBPVector3d(MathHelper.sin(AngleX), MathHelper.sin(AngleY), MathHelper.sin(AngleZ));
 		FBPVector3d cos = new FBPVector3d(MathHelper.cos(AngleX), MathHelper.cos(AngleY), MathHelper.cos(AngleZ));
 

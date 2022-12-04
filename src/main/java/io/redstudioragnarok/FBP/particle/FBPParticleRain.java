@@ -11,7 +11,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static io.redstudioragnarok.FBP.util.ParticleUtil.texturedParticle;

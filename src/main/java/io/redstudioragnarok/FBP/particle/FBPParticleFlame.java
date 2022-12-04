@@ -64,7 +64,7 @@ public class FBPParticleFlame extends ParticleFlame {
 
 		for (int i = 0; i < FBP.CUBE.length; i++) {
 			Vec3d vec = FBP.CUBE[i];
-			cube[i] = FBPRenderer.rotatef_d(vec, 0, angleY, 0);
+			cube[i] = FBPRenderer.rotateVec(vec, 0, angleY, 0);
 		}
 
 		particleAlpha = 1;
