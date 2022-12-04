@@ -7,7 +7,7 @@ public class ModReference {
 
     public static final String MOD_ID = "fbp";
     public static final String MOD_NAME = "Fancier Block Particles";
-    public static final String VERSION = "0.8";
+    public static final String VERSION = "@VERSION@";
     public static URI ISSUE;
 
     static {
