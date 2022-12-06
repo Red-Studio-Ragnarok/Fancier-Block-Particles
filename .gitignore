@@ -19,18 +19,4 @@ build
 
 # other
 eclipse
-
-# run
-usercache.json
-usernamecache.json
-options.txt
-splash.properties
-crash-reports
-logs
-.mixin.out
-FBP
-screenshots
-stats
-playerdata
-advancements
-
+run
