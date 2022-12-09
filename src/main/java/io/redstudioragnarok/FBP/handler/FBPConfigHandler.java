@@ -100,8 +100,6 @@ public class FBPConfigHandler {
 					FBP.weatherParticleDensity = Double.parseDouble(line.replace("weatherParticleDensity=", ""));
 				else if (line.contains("particlesPerAxis="))
 					FBP.particlesPerAxis = Integer.parseInt(line.replace("particlesPerAxis=", ""));
-				else if (line.contains("restOnFloor="))
-					FBP.restOnFloor = Boolean.parseBoolean(line.replace("restOnFloor=", ""));
 				else if (line.contains("waterPhysics="))
 					FBP.waterPhysics = Boolean.parseBoolean(line.replace("waterPhysics=", ""));
 				else if (line.contains("fancyFlame="))
@@ -226,7 +224,7 @@ public class FBPConfigHandler {
 
 			FBP.INSTANCE.resetBlacklist(false);
 
-			while ((line = bufferedReader.readLine()) != null && !(line = line.replaceAll(" ", "").toLowerCase()).equals(""))
+			while ((line = bufferedReader.readLine()) != null && !(line = line.replaceAll(" ", "")).equals(""))
 				FBP.INSTANCE.addToBlacklist(line, false);
 		} catch (Exception e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
@@ -243,7 +241,7 @@ public class FBPConfigHandler {
 
 			FBP.INSTANCE.resetBlacklist(true);
 
-			while ((line = bufferedReader.readLine()) != null && !(line = line.replaceAll(" ", "").toLowerCase()).equals(""))
+			while ((line = bufferedReader.readLine()) != null && !(line = line.replaceAll(" ", "")).equals(""))
 				FBP.INSTANCE.addToBlacklist(line, true);
 		} catch (Exception e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
@@ -258,7 +256,6 @@ public class FBPConfigHandler {
 			writer.println("enabled=" + FBP.enabled);
 			writer.println("weatherParticleDensity=" + FBP.weatherParticleDensity);
 			writer.println("particlesPerAxis=" + FBP.particlesPerAxis);
-			writer.println("restOnFloor=" + FBP.restOnFloor);
 			writer.println("waterPhysics=" + FBP.waterPhysics);
 			writer.println("fancyFlame=" + FBP.fancyFlame);
 			writer.println("fancySmoke=" + FBP.fancySmoke);
@@ -405,7 +402,6 @@ public class FBPConfigHandler {
 		FBP.fancySmoke = false;
 		FBP.fancyFlame = false;
 		FBP.waterPhysics = true;
-		FBP.restOnFloor = true;
 
 		if (write)
 			write();

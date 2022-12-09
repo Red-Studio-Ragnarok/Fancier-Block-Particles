@@ -136,10 +136,8 @@ public class FBPParticleSnow extends ParticleDigging {
 
 			move(motionX, motionY, motionZ);
 
-			if (onGround && FBP.restOnFloor) {
-				rot.x = (float) Math.round(rot.x / 90) * 90;
-				rot.z = (float) Math.round(rot.z / 90) * 90;
-			}
+			rot.x = (float) Math.round(rot.x / 90) * 90;
+			rot.z = (float) Math.round(rot.z / 90) * 90;
 
 			motionX *= 0.98;
 
@@ -218,8 +216,7 @@ public class FBPParticleSnow extends ParticleDigging {
 
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 
-		if (FBP.restOnFloor)
-			y += scale / 10;
+		y += scale / 10;
 
 		FBPVector3d smoothRot = new FBPVector3d(0, 0, 0);
 
