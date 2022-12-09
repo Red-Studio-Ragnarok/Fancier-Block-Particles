@@ -26,7 +26,7 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.fancyrain.info"), FBP.fancyRain, true, true);
 		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.fancysnow.info"), FBP.fancySnow, true, true);
 		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.waterphysics.info"), FBP.waterPhysics, true, true);
-		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, I18n.format("menu.restonfloor.info"), FBP.restOnFloor, true, true);
+		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, I18n.format("menu.restonfloor.info"), false,false, false);
 
 		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
 		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, I18n.format("menu.done"), false, false, true);
@@ -88,7 +88,6 @@ public class FBPGuiMenuPage3 extends GuiScreen {
 			FBP.waterPhysics = !FBP.waterPhysics;
 			break;
 		case 6:
-			FBP.restOnFloor = !FBP.restOnFloor;
 			break;
 		}
 

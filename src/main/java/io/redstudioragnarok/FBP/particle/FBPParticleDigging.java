@@ -162,8 +162,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		float newScale = particleScale / 10;
 
-		if (FBP.restOnFloor && destroyed)
-			posY = prevPosY = startY - newScale;
+		posY = prevPosY = startY - newScale;
 
 		this.setBoundingBox(new AxisAlignedBB(posX - newScale, posY, posZ - newScale, posX + newScale, posY + 2 * newScale, posZ + newScale));
 
@@ -296,10 +295,8 @@ public class FBPParticleDigging extends ParticleDigging {
 
 				move(motionX, motionY, motionZ);
 
-				if (onGround && FBP.restOnFloor) {
-					rot.x = (float) Math.round(rot.x / 90) * 90;
-					rot.z = (float) Math.round(rot.z / 90) * 90;
-				}
+				rot.x = (float) Math.round(rot.x / 90) * 90;
+				rot.z = (float) Math.round(rot.z / 90) * 90;
 
 				if (MathHelper.abs((float) motionX) > 0.00001)
 					prevMotionX = motionX;
@@ -488,8 +485,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 
-		if (FBP.restOnFloor)
-			y += scale / 10;
+		y += scale / 10;
 
 		FBPVector3d smoothRot = new FBPVector3d(0, 0, 0);
 
@@ -532,7 +528,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		if (this.world.isBlockLoaded(new BlockPos(posX, 0, posZ))) {
 			double boundingBoxHeight = (boundingBox.maxY - boundingBox.minY) * 0.66;
-			double posY = this.posY + boundingBoxHeight + 0.01 - (FBP.restOnFloor ? particleScale / 10 : 0);
+			double posY = this.posY + boundingBoxHeight + 0.01 - particleScale / 10;
 			return this.world.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
 		} else {
 			return 0;

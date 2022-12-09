@@ -96,7 +96,7 @@ menu.fancysmoke.description=Makes smoke particles fancy.
 menu.fancyrain.description=Makes rain particles fancy.
 menu.fancysnow.description=Makes snow particles fancy.
 menu.waterphysics.description=Makes wood particles float and others to sink slower.
-menu.restonfloor.description=Makes particles rest aligned on the ground.
+menu.restonfloor.description=§4DEPRECATED§f/§4REMOVED §fMakes particles rest aligned on the ground.
 
 # Menu Page 4
 menu.weatherdensity.info=Weather Particle Density
