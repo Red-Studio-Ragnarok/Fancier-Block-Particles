@@ -7,10 +7,10 @@ public class FBPVector3d extends Vector3d {
 	public FBPVector3d() {
 	}
 
-	public FBPVector3d(double x, double y, double z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public FBPVector3d(double inputX, double inputY, double inputZ) {
+		this.x = inputX;
+		this.y = inputY;
+		this.z = inputZ;
 	}
 
 	public FBPVector3d(FBPVector3d vec) {
@@ -23,6 +23,12 @@ public class FBPVector3d extends Vector3d {
 		this.x = vec.x;
 		this.y = vec.y;
 		this.z = vec.z;
+	}
+
+	public void set(double x, double y, double z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 
 	public void add(Vector3d vec) {

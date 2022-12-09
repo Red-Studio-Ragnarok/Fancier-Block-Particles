@@ -195,7 +195,7 @@ public class FBPParticleFlame extends ParticleFlame {
 		if (this.particleAge >= this.particleMaxAge)
 			this.particleGreen = (float) (scale / startScale);
 
-		FBPRenderer.renderCube_F(buffer, particle, x, y, z, scale, brightness, particleRed, particleGreen, particleBlue, alpha, cube);
+		FBPRenderer.renderCubeFlame(buffer, particle, x, y, z, scale, brightness, particleRed, particleGreen, particleBlue, alpha, cube);
 	}
 
 	@Override

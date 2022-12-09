@@ -202,9 +202,9 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 		Vec2f particle = gasParticle(particleTexture);
 
-		float x = (float) (prevPosX + (this.posX - prevPosX) * partialTicks - interpPosX);
-		float y = (float) (prevPosY + (this.posY - prevPosY) * partialTicks - interpPosY);
-		float z = (float) (prevPosZ + (this.posZ - prevPosZ) * partialTicks - interpPosZ);
+		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
+		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
+		float z = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
 
 		int brightness = getBrightnessForRender(partialTicks);
 
@@ -212,7 +212,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 
-		FBPRenderer.renderCube_Smoke(buffer, particle, x, y, z, scale, brightness, particleRed, particleGreen, particleBlue, alpha, cube);
+		FBPRenderer.renderCubeSmoke(buffer, particle, x, y, z, scale, brightness, particleRed, particleGreen, particleBlue, alpha, cube);
 	}
 
 	@Override
