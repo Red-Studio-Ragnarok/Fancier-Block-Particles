@@ -7,6 +7,7 @@ import io.redstudioragnarok.FBP.handler.FBPKeyInputHandler;
 import io.redstudioragnarok.FBP.keys.FBPKeyBindings;
 import io.redstudioragnarok.FBP.particle.FBPParticleManager;
 import io.redstudioragnarok.FBP.util.ModReference;
+import io.redstudioragnarok.FBP.vector.FBPVector3D;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -16,7 +17,6 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -51,7 +51,7 @@ public class FBP {
 
 	public static int minAge, maxAge, particlesPerAxis;
 
-	public static double scaleMult, gravityMult, rotationMult, weatherParticleDensity;
+	public static float scaleMult, gravityMult, rotationMult, weatherParticleDensity;
 
 	public static boolean enabled = true;
 	public static boolean showInMillis = false;
@@ -64,32 +64,32 @@ public class FBP {
 
 	public static final SplittableRandom random = new SplittableRandom();
 
-	public static final Vec3d[] CUBE = {
+	public static final FBPVector3D[] CUBE = {
 			// TOP
-			new Vec3d(1, 1, -1), new Vec3d(1, 1, 1), new Vec3d(-1, 1, 1), new Vec3d(-1, 1, -1),
+			new FBPVector3D(1, 1, -1), new FBPVector3D(1, 1, 1), new FBPVector3D(-1, 1, 1), new FBPVector3D(-1, 1, -1),
 
 			// BOTTOM
-			new Vec3d(-1, -1, -1), new Vec3d(-1, -1, 1), new Vec3d(1, -1, 1), new Vec3d(1, -1, -1),
+			new FBPVector3D(-1, -1, -1), new FBPVector3D(-1, -1, 1), new FBPVector3D(1, -1, 1), new FBPVector3D(1, -1, -1),
 
 			// FRONT
-			new Vec3d(-1, -1, 1), new Vec3d(-1, 1, 1), new Vec3d(1, 1, 1), new Vec3d(1, -1, 1),
+			new FBPVector3D(-1, -1, 1), new FBPVector3D(-1, 1, 1), new FBPVector3D(1, 1, 1), new FBPVector3D(1, -1, 1),
 
 			// BACK
-			new Vec3d(1, -1, -1), new Vec3d(1, 1, -1), new Vec3d(-1, 1, -1), new Vec3d(-1, -1, -1),
+			new FBPVector3D(1, -1, -1), new FBPVector3D(1, 1, -1), new FBPVector3D(-1, 1, -1), new FBPVector3D(-1, -1, -1),
 
 			// LEFT
-			new Vec3d(-1, -1, -1), new Vec3d(-1, 1, -1), new Vec3d(-1, 1, 1), new Vec3d(-1, -1, 1),
+			new FBPVector3D(-1, -1, -1), new FBPVector3D(-1, 1, -1), new FBPVector3D(-1, 1, 1), new FBPVector3D(-1, -1, 1),
 
 			// RIGHT
-			new Vec3d(1, -1, 1), new Vec3d(1, 1, 1), new Vec3d(1, 1, -1), new Vec3d(1, -1, -1)
+			new FBPVector3D(1, -1, 1), new FBPVector3D(1, 1, 1), new FBPVector3D(1, 1, -1), new FBPVector3D(1, -1, -1)
 	};
 
-	public static final Vec3d[] CUBE_NORMALS = {
-			new Vec3d(0, 1, 0), new Vec3d(0, -1, 0),
+	public static final FBPVector3D[] CUBE_NORMALS = {
+			new FBPVector3D(0, 1, 0), new FBPVector3D(0, -1, 0),
 
-			new Vec3d(0, 0, 1), new Vec3d(0, 0, -1),
+			new FBPVector3D(0, 0, 1), new FBPVector3D(0, 0, -1),
 
-			new Vec3d(-1, 0, 0), new Vec3d(1, 0, 0)
+			new FBPVector3D(-1, 0, 0), new FBPVector3D(1, 0, 0)
 	};
 
 	public static final VertexFormat POSITION_TEX_COLOR_LMAP_NORMAL = new VertexFormat();

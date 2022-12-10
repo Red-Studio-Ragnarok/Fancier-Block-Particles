@@ -97,7 +97,7 @@ public class FBPConfigHandler {
 				if (line.contains("enabled="))
 					FBP.enabled = Boolean.parseBoolean(line.replace("enabled=", ""));
 				else if (line.contains("weatherParticleDensity="))
-					FBP.weatherParticleDensity = Double.parseDouble(line.replace("weatherParticleDensity=", ""));
+					FBP.weatherParticleDensity = Float.parseFloat(line.replace("weatherParticleDensity=", ""));
 				else if (line.contains("particlesPerAxis="))
 					FBP.particlesPerAxis = Integer.parseInt(line.replace("particlesPerAxis=", ""));
 				else if (line.contains("waterPhysics="))
@@ -141,11 +141,11 @@ public class FBPConfigHandler {
 				else if (line.contains("maxAge="))
 					FBP.maxAge = Integer.parseInt(line.replace("maxAge=", ""));
 				else if (line.contains("scaleMult="))
-					FBP.scaleMult = Double.parseDouble(line.replace("scaleMult=", ""));
+					FBP.scaleMult = Float.parseFloat(line.replace("scaleMult=", ""));
 				else if (line.contains("gravityMult="))
-					FBP.gravityMult = Double.parseDouble(line.replace("gravityMult=", ""));
+					FBP.gravityMult = Float.parseFloat(line.replace("gravityMult=", ""));
 				else if (line.contains("rotationMult="))
-					FBP.rotationMult = Double.parseDouble(line.replace("rotationMult=", ""));
+					FBP.rotationMult = Float.parseFloat(line.replace("rotationMult=", ""));
 			}
 
 			closeStreams();
@@ -380,11 +380,11 @@ public class FBPConfigHandler {
 	public static void defaults(boolean write) {
 		FBP.minAge = 10;
 		FBP.maxAge = 55;
-		FBP.scaleMult = 0.75;
-		FBP.gravityMult = 1.0;
-		FBP.rotationMult = 1.0;
+		FBP.scaleMult = 0.75F;
+		FBP.gravityMult = 1.0F;
+		FBP.rotationMult = 1.0F;
 		FBP.particlesPerAxis = 4;
-		FBP.weatherParticleDensity = 1.0;
+		FBP.weatherParticleDensity = 1.0F;
 		FBP.lowTraction = false;
 		FBP.bounceOffWalls = true;
 		FBP.randomRotation = true;

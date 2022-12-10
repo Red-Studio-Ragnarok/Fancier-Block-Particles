@@ -33,7 +33,7 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 	public void initGui() {
 		int X = this.width / 2 - 100;
 
-		WeatherParticleDensity = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (FBP.weatherParticleDensity - 0.75) / 4.25);
+		WeatherParticleDensity = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (float) ((FBP.weatherParticleDensity - 0.75) / 4.25));
 		int Y = WeatherParticleDensity.y + WeatherParticleDensity.height + 2 + 4 * (WeatherParticleDensity.height + 1) + 5;
 
 		Defaults = new FBPGuiButton(0, this.width / 2 + 2, Y + 48 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
@@ -88,7 +88,7 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		FBPGuiHelper.background(WeatherParticleDensity.y - 6 - GUIOffsetY, Done.y - 4, width, height);
 
-		FBP.weatherParticleDensity = FBPMathUtil.round(0.75 + 4.25 * WeatherParticleDensity.value, 2);
+		FBP.weatherParticleDensity = FBPMathUtil.round(5 * WeatherParticleDensity.value, 2);
 
 		drawMouseOverSelection(mouseX, mouseY);
 

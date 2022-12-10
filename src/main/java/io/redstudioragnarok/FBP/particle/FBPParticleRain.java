@@ -2,7 +2,8 @@ package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
-import io.redstudioragnarok.FBP.vector.FBPVector3d;
+import io.redstudioragnarok.FBP.util.FBPMathUtil;
+import io.redstudioragnarok.FBP.vector.FBPVector3D;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleDigging;
@@ -17,11 +18,11 @@ import static io.redstudioragnarok.FBP.util.ParticleUtil.texturedParticle;
 
 public class FBPParticleRain extends ParticleDigging {
 
-	private final IBlockState sourceState;
-
 	Minecraft mc;
 
-	double AngleY, particleHeight, prevParticleScale, prevParticleHeight, prevParticleAlpha;
+	float AngleY;
+
+	double particleHeight, prevParticleScale, prevParticleHeight, prevParticleAlpha;
 	double scalar = FBP.scaleMult;
 	double endMult = 1;
 
@@ -30,15 +31,13 @@ public class FBPParticleRain extends ParticleDigging {
 
 		this.sourcePos = new BlockPos(xCoordIn, yCoordIn, zCoordIn);
 
-		AngleY = FBP.random.nextDouble() * 45;
+		AngleY = (float) (FBP.random.nextDouble() * 45);
 
 		this.motionX = xSpeedIn;
 		this.motionY = -ySpeedIn;
 		this.motionZ = zSpeedIn;
 
 		this.particleGravity = 0.025F;
-
-		sourceState = state;
 
 		mc = Minecraft.getMinecraft();
 
@@ -141,11 +140,11 @@ public class FBPParticleRain extends ParticleDigging {
 			}
 		}
 
-		Vec3d rgb = mc.world.getSkyColor(mc.player, 0);
+		FBPVector3D rgb = new FBPVector3D(mc.world.getSkyColor(mc.player, 0));
 
-		this.particleRed = (float) rgb.x;
-		this.particleGreen = (float) MathHelper.clamp(rgb.y + 0.25, 0.25, 1);
-		this.particleBlue = (float) MathHelper.clamp(rgb.z + 0.5, 0.5, 1);
+		this.particleRed = rgb.x;
+		this.particleGreen = FBPMathUtil.clampMaxFirst(rgb.y + 0.25F, 0.25F, 1);
+		this.particleBlue = FBPMathUtil.clampMaxFirst(rgb.z + 0.5F, 0.5F, 1);
 
 		if (this.particleGreen > 1)
 			particleGreen = 1;
@@ -207,7 +206,7 @@ public class FBPParticleRain extends ParticleDigging {
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 		float height = (float) (prevParticleHeight + (particleHeight - prevParticleHeight) * partialTicks);
 
-		FBPRenderer.renderCubeShadedWidthHeight(buffer, particle, x, y + height / 10, z, scale / 10, height / 10, new FBPVector3d(0, AngleY, 0), brightness >> 16 & 65535, brightness & 65535, particleRed, particleGreen, particleBlue, alpha);
+		FBPRenderer.renderCubeShadedWidthHeight(buffer, particle, x, y + height / 10, z, scale / 10, height / 10, new FBPVector3D(0, AngleY, 0), brightness >> 16 & 65535, brightness & 65535, particleRed, particleGreen, particleBlue, alpha);
 	}
 
 	@Override

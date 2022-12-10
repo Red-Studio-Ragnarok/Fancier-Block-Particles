@@ -33,13 +33,13 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 	public void initGui() {
 		int X = this.width / 2 - 100;
 
-		MinDurationSlider = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (FBP.minAge - 10) / 90.0);
-		MaxDurationSlider = new FBPGuiSlider(X, MinDurationSlider.y + MinDurationSlider.height + 1, (FBP.maxAge - 10) / 90.0);
+		MinDurationSlider = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (float) ((FBP.minAge - 10) / 90));
+		MaxDurationSlider = new FBPGuiSlider(X, MinDurationSlider.y + MinDurationSlider.height + 1, (float) ((FBP.maxAge - 10) / 90));
 
-		ParticleCountBase = new FBPGuiSlider(X, MaxDurationSlider.y + 6 + MaxDurationSlider.height, (FBP.particlesPerAxis - 2) / 3.0);
-		ScaleMultSlider = new FBPGuiSlider(X, ParticleCountBase.y + ParticleCountBase.height + 1, (FBP.scaleMult - 0.75) / 0.5);
-		GravitiyForceSlider = new FBPGuiSlider(X, ScaleMultSlider.y + ScaleMultSlider.height + 6, (FBP.gravityMult - 0.05) / 2.95);
-		RotSpeedSlider = new FBPGuiSlider(X, GravitiyForceSlider.y + GravitiyForceSlider.height + 1, FBP.rotationMult / 1.5);
+		ParticleCountBase = new FBPGuiSlider(X, MaxDurationSlider.y + 6 + MaxDurationSlider.height, (float) ((FBP.particlesPerAxis - 2) / 3));
+		ScaleMultSlider = new FBPGuiSlider(X, ParticleCountBase.y + ParticleCountBase.height + 1, (float) ((FBP.scaleMult - 0.75) / 0.5));
+		GravitiyForceSlider = new FBPGuiSlider(X, ScaleMultSlider.y + ScaleMultSlider.height + 6, (float) ((FBP.gravityMult - 0.05) / 2.95));
+		RotSpeedSlider = new FBPGuiSlider(X, GravitiyForceSlider.y + GravitiyForceSlider.height + 1, (float) (FBP.rotationMult / 1.5));
 		InfiniteDuration = new FBPGuiButton(11, X + 205, MinDurationSlider.y + 10, (FBP.infiniteDuration ? "\u00A7a" : "\u00A7c") + "\u221e", false, false, true);
 
 		TimeUnit = new FBPGuiButton(12, X - 25, MinDurationSlider.y + 10, "\u00A7a\u00A7L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
@@ -114,20 +114,20 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 		int sMinAge = (int) (10 + 90 * MinDurationSlider.value);
 		int sMaxAge = (int) (10 + 90 * MaxDurationSlider.value);
 
-		double sScaleMult = FBPMathUtil.round(0.75 + 0.5 * ScaleMultSlider.value, 2);
-		double sGravityForce = FBPMathUtil.round(0.05 + 2.95 * GravitiyForceSlider.value, 2);
-		double sRotSpeed = FBPMathUtil.round(1.5 * RotSpeedSlider.value, 2);
+		float sScaleMult = FBPMathUtil.round(1.25F * ScaleMultSlider.value, 2);
+		float sGravityForce = FBPMathUtil.round(3 * GravitiyForceSlider.value, 2);
+		float sRotSpeed = FBPMathUtil.round(1.5F * RotSpeedSlider.value, 2);
 
 		if (FBP.maxAge < sMinAge) {
 			FBP.maxAge = sMinAge;
 
-			MaxDurationSlider.value = (FBP.maxAge - 10) / 90.0;
+			MaxDurationSlider.value = (float) ((FBP.maxAge - 10) / 90.0);
 		}
 
 		if (FBP.minAge > sMaxAge) {
 			FBP.minAge = sMaxAge;
 
-			MinDurationSlider.value = (FBP.minAge - 10) / 90.0;
+			MinDurationSlider.value = (float) ((FBP.minAge - 10) / 90.0);
 		}
 
 		FBP.minAge = sMinAge;
@@ -138,7 +138,7 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 		FBP.rotationMult = sRotSpeed;
 		FBP.particlesPerAxis = sParticleCountBase;
 
-		ParticleCountBase.value = (FBP.particlesPerAxis - 2) / 3.0;
+		ParticleCountBase.value = (float) ((FBP.particlesPerAxis - 2) / 3.0);
 
 		drawMouseOverSelection(mouseX, mouseY);
 

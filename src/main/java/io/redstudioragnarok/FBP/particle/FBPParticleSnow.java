@@ -2,7 +2,7 @@ package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
-import io.redstudioragnarok.FBP.vector.FBPVector3d;
+import io.redstudioragnarok.FBP.vector.FBPVector3D;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleDigging;
@@ -24,15 +24,15 @@ public class FBPParticleSnow extends ParticleDigging {
 	double scaleAlpha, prevParticleScale, prevParticleAlpha;
 	double endMult = 1;
 
-	FBPVector3d rot, prevRot, rotStep;
+	FBPVector3D rot, prevRot, rotStep;
 
 	public FBPParticleSnow(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
 
 		this.sourcePos = new BlockPos(xCoordIn, yCoordIn, zCoordIn);
 
-		rot = new FBPVector3d();
-		prevRot = new FBPVector3d();
+		rot = new FBPVector3D();
+		prevRot = new FBPVector3D();
 
 		createRotationMatrix();
 
@@ -63,9 +63,9 @@ public class FBPParticleSnow extends ParticleDigging {
 		double ry = FBP.random.nextDouble();
 		double rz = FBP.random.nextDouble();
 
-		rotStep = new FBPVector3d(rx > 0.5 ? 1 : -1, ry > 0.5 ? 1 : -1, rz > 0.5 ? 1 : -1);
+		rotStep = new FBPVector3D(rx > 0.5 ? 1 : -1, ry > 0.5 ? 1 : -1, rz > 0.5 ? 1 : -1);
 
-		rot.copyFrom(rotStep);
+		rot.copy(rotStep);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class FBPParticleSnow extends ParticleDigging {
 
 	@Override
 	public void onUpdate() {
-		prevRot.copyFrom(rot);
+		prevRot.copy(rot);
 
 		prevPosX = posX;
 		prevPosY = posY;
@@ -90,7 +90,8 @@ public class FBPParticleSnow extends ParticleDigging {
 			if (posY < mc.player.posY - (mc.gameSettings.renderDistanceChunks * 16))
 				setExpired();
 
-			rot.add(rotStep.multiply(FBP.rotationMult * 5));
+			rotStep.scale((FBP.rotationMult * 5));
+			rot.add(rotStep);
 
 			if (this.particleAge >= this.particleMaxAge) {
 				if (FBP.randomFadingSpeed)
@@ -150,7 +151,7 @@ public class FBPParticleSnow extends ParticleDigging {
 				motionX *= 0.68;
 				motionZ *= 0.68;
 
-				rotStep = rotStep.multiply(0.85);
+				rotStep.scale(0.85F);
 
 				this.particleAge += 2;
 			}
@@ -218,7 +219,7 @@ public class FBPParticleSnow extends ParticleDigging {
 
 		y += scale / 10;
 
-		FBPVector3d smoothRot = new FBPVector3d(0, 0, 0);
+		FBPVector3D smoothRot = new FBPVector3D(0, 0, 0);
 
 		if (FBP.rotationMult > 0) {
 			smoothRot.y = rot.y;
@@ -229,13 +230,14 @@ public class FBPParticleSnow extends ParticleDigging {
 
 			// SMOOTH ROTATION
 			if (!FBP.frozen) {
-				FBPVector3d vec = rot.partialVec(prevRot, partialTicks);
+				FBPVector3D vector = new FBPVector3D();
+				rot.partialVector(prevRot, partialTicks, vector);
 
 				if (FBP.randomRotation) {
-					smoothRot.y = vec.y;
-					smoothRot.z = vec.z;
+					smoothRot.y = vector.y;
+					smoothRot.z = vector.z;
 				} else {
-					smoothRot.x = vec.x;
+					smoothRot.x = vector.x;
 				}
 			}
 		}

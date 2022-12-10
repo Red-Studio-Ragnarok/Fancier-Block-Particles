@@ -9,14 +9,14 @@ import org.lwjgl.input.Mouse;
 
 public class FBPGuiSlider extends GuiButton {
 
-	public double value;
+	public float value;
 	double sliderPosX;
 	double mouseGap;
 
 	boolean dragging = false;
 	boolean mouseDown = false;
 
-	public FBPGuiSlider(int x, int y, double value) {
+	public FBPGuiSlider(int x, int y, float value) {
 		super(Integer.MIN_VALUE, x, y, "");
 		this.value = value;
 		this.width = 200;

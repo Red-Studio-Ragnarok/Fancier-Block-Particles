@@ -5,7 +5,8 @@ import io.redstudioragnarok.FBP.keys.FBPKeyBindings;
 import io.redstudioragnarok.FBP.model.FBPModelHelper;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
 import io.redstudioragnarok.FBP.util.FBPMathUtil;
-import io.redstudioragnarok.FBP.vector.FBPVector3d;
+import io.redstudioragnarok.FBP.vector.FBPVector3D;
+import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
@@ -50,7 +51,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	EnumFacing facing;
 
-	FBPVector3d rot, prevRot, rotStep;
+	FBPVector3D rot, prevRot, rotStep;
 
 	static Entity dummyEntity = new Entity(null) {
 		@Override
@@ -78,8 +79,8 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		mc = Minecraft.getMinecraft();
 
-		rot = new FBPVector3d();
-		prevRot = new FBPVector3d();
+		rot = new FBPVector3D();
+		prevRot = new FBPVector3D();
 
 		this.facing = facing;
 
@@ -99,8 +100,8 @@ public class FBPParticleDigging extends ParticleDigging {
 
 					double particleSpeed = Math.sqrt(motionX * motionX + motionZ * motionZ);
 
-					double x = FBPMathUtil.add(cameraViewDir.x, 0.01);
-					double z = FBPMathUtil.add(cameraViewDir.z, 0.01);
+					float x = FBPMathUtil.addOrSubtractBasedOnSign(cameraViewDir.x, 0.01);
+					float z = FBPMathUtil.addOrSubtractBasedOnSign(cameraViewDir.z, 0.01);
 
 					motionX = x * particleSpeed;
 					motionZ = z * particleSpeed;
@@ -109,7 +110,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		}
 
 		if (modeDebounce == !FBP.randomRotation) {
-			this.rot.zero();
+			rot.zero();
 			calculateYAngle();
 		}
 
@@ -230,7 +231,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		prevPosY = posY;
 		prevPosZ = posZ;
 
-		prevRot.copyFrom(rot);
+		prevRot.copy(rot);
 
 		prevParticleAlpha = particleAlpha;
 		prevParticleScale = particleScale;
@@ -268,11 +269,13 @@ public class FBPParticleDigging extends ParticleDigging {
 					{
 						modeDebounce = false;
 
-						rot.z = FBP.random.nextDouble(30, 400);
+						rot.z = (float) FBP.random.nextDouble(30, 400);
 					}
 
-					if (allowedToMove)
-						rot.add(rotStep.multiply(getMult()));
+					if (allowedToMove) {
+						rotStep.scale(getMult());
+						rot.add(rotStep);
+					}
 				}
 			}
 
@@ -487,7 +490,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		y += scale / 10;
 
-		FBPVector3d smoothRot = new FBPVector3d(0, 0, 0);
+		FBPVector3D smoothRot = new FBPVector3D(0, 0, 0);
 
 		if (FBP.rotationMult > 0) {
 			smoothRot.y = rot.y;
@@ -498,13 +501,14 @@ public class FBPParticleDigging extends ParticleDigging {
 
 			// SMOOTH ROTATION
 			if (!FBP.frozen) {
-				FBPVector3d vec = rot.partialVec(prevRot, partialTicks);
+				FBPVector3D vector = new FBPVector3D();
+				rot.partialVector(prevRot, partialTicks, vector);
 
 				if (FBP.randomRotation) {
-					smoothRot.y = vec.y;
-					smoothRot.z = vec.z;
+					smoothRot.y = vector.y;
+					smoothRot.z = vector.z;
 				} else {
-					smoothRot.x = vec.x;
+					smoothRot.x = vector.x;
 				}
 			}
 		}
@@ -517,9 +521,9 @@ public class FBPParticleDigging extends ParticleDigging {
 		double ry0 = FBP.random.nextDouble();
 		double rz0 = FBP.random.nextDouble();
 
-		rotStep = new FBPVector3d(rx0 > 0.5 ? 1 : -1, ry0 > 0.5 ? 1 : -1, rz0 > 0.5 ? 1 : -1);
+		rotStep = new FBPVector3D(rx0 > 0.5 ? 1 : -1, ry0 > 0.5 ? 1 : -1, rz0 > 0.5 ? 1 : -1);
 
-		rot.copyFrom(rotStep);
+		rot.copy(rotStep);
 	}
 
 	@Override
@@ -537,7 +541,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	private void calculateYAngle()
 	{
-		double angleSin = Math.toDegrees(Math.asin(motionX / Math.sqrt(motionX * motionX + motionZ * motionZ)));
+		float angleSin = (float) FastMath.toDegrees(FastMath.asin(motionX / FastMath.sqrtQuick(motionX * motionX + motionZ * motionZ)));
 
 		if (motionZ > 0)
 			rot.y = -angleSin;
@@ -545,7 +549,7 @@ public class FBPParticleDigging extends ParticleDigging {
 			rot.y = angleSin;
 	}
 
-	double getMult() {
-		return Math.sqrt(motionX * motionX + motionZ * motionZ) * (FBP.randomRotation ? 200 : 500) * FBP.rotationMult;
+	float getMult() {
+		return (float) (FastMath.sqrtQuick(motionX * motionX + motionZ * motionZ) * (FBP.randomRotation ? 200 : 500) * FBP.rotationMult);
 	}
 }
