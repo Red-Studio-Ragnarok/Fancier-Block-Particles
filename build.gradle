@@ -76,6 +76,21 @@ dependencies {
 	}
 }
 
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
+
+dependencies {
+    embed 'net.jafama:jafama:2.3.2'
+}
+
+jar {
+    from(configurations.embed.collect {
+        it.isDirectory() ? it : zipTree(it)
+    })
+}
+
 sourceSets {
 	main {
 		ext.refMap = 'mixins.' + archives_base_name + '.refmap.json'
