@@ -88,7 +88,7 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		FBPGuiHelper.background(WeatherParticleDensity.y - 6 - GUIOffsetY, Done.y - 4, width, height);
 
-		FBP.weatherParticleDensity = FBPMathUtil.round(5 * WeatherParticleDensity.value, 2);
+		FBP.weatherParticleDensity = FBPMathUtil.round((float) (0.75 + 4.25 * WeatherParticleDensity.value), 2);
 
 		drawMouseOverSelection(mouseX, mouseY);
 

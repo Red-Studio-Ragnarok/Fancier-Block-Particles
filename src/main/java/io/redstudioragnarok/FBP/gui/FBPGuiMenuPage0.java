@@ -33,10 +33,10 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 	public void initGui() {
 		int X = this.width / 2 - 100;
 
-		MinDurationSlider = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (float) ((FBP.minAge - 10) / 90));
-		MaxDurationSlider = new FBPGuiSlider(X, MinDurationSlider.y + MinDurationSlider.height + 1, (float) ((FBP.maxAge - 10) / 90));
+		MinDurationSlider = new FBPGuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (float) ((FBP.minAge - 10) / 90.0));
+		MaxDurationSlider = new FBPGuiSlider(X, MinDurationSlider.y + MinDurationSlider.height + 1, (float) ((FBP.maxAge - 10) / 90.0));
 
-		ParticleCountBase = new FBPGuiSlider(X, MaxDurationSlider.y + 6 + MaxDurationSlider.height, (float) ((FBP.particlesPerAxis - 2) / 3));
+		ParticleCountBase = new FBPGuiSlider(X, MaxDurationSlider.y + 6 + MaxDurationSlider.height, (float) ((FBP.particlesPerAxis - 2) / 3.0));
 		ScaleMultSlider = new FBPGuiSlider(X, ParticleCountBase.y + ParticleCountBase.height + 1, (float) ((FBP.scaleMult - 0.75) / 0.5));
 		GravitiyForceSlider = new FBPGuiSlider(X, ScaleMultSlider.y + ScaleMultSlider.height + 6, (float) ((FBP.gravityMult - 0.05) / 2.95));
 		RotSpeedSlider = new FBPGuiSlider(X, GravitiyForceSlider.y + GravitiyForceSlider.height + 1, (float) (FBP.rotationMult / 1.5));
@@ -114,9 +114,9 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 		int sMinAge = (int) (10 + 90 * MinDurationSlider.value);
 		int sMaxAge = (int) (10 + 90 * MaxDurationSlider.value);
 
-		float sScaleMult = FBPMathUtil.round(1.25F * ScaleMultSlider.value, 2);
-		float sGravityForce = FBPMathUtil.round(3 * GravitiyForceSlider.value, 2);
-		float sRotSpeed = FBPMathUtil.round(1.5F * RotSpeedSlider.value, 2);
+		double sScaleMult = FBPMathUtil.round((float) (0.75 + 0.5 * ScaleMultSlider.value), 2);
+		double sGravityForce = FBPMathUtil.round((float) (0.05 + 2.95 * GravitiyForceSlider.value), 2);
+		double sRotSpeed = FBPMathUtil.round((float) (1.5 * RotSpeedSlider.value), 2);
 
 		if (FBP.maxAge < sMinAge) {
 			FBP.maxAge = sMinAge;
@@ -133,9 +133,9 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 		FBP.minAge = sMinAge;
 		FBP.maxAge = sMaxAge;
 
-		FBP.scaleMult = sScaleMult;
-		FBP.gravityMult = sGravityForce;
-		FBP.rotationMult = sRotSpeed;
+		FBP.scaleMult = (float) sScaleMult;
+		FBP.gravityMult = (float) sGravityForce;
+		FBP.rotationMult = (float) sRotSpeed;
 		FBP.particlesPerAxis = sParticleCountBase;
 
 		ParticleCountBase.value = (float) ((FBP.particlesPerAxis - 2) / 3.0);
