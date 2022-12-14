@@ -100,8 +100,8 @@ public class FBPParticleDigging extends ParticleDigging {
 
 					double particleSpeed = Math.sqrt(motionX * motionX + motionZ * motionZ);
 
-					float x = FBPMathUtil.addOrSubtractBasedOnSign(cameraViewDir.x, 0.01);
-					float z = FBPMathUtil.addOrSubtractBasedOnSign(cameraViewDir.z, 0.01);
+					float x = FBPMathUtil.addOrSubtractBasedOnSign((float) cameraViewDir.x, 0.01F);
+					float z = FBPMathUtil.addOrSubtractBasedOnSign((float) cameraViewDir.z, 0.01F);
 
 					motionX = x * particleSpeed;
 					motionZ = z * particleSpeed;
@@ -163,7 +163,8 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		float newScale = particleScale / 10;
 
-		posY = prevPosY = startY - newScale;
+		if (destroyed)
+			posY = prevPosY = startY - newScale;
 
 		this.setBoundingBox(new AxisAlignedBB(posX - newScale, posY, posZ - newScale, posX + newScale, posY + 2 * newScale, posZ + newScale));
 
@@ -248,7 +249,7 @@ public class FBPParticleDigging extends ParticleDigging {
 					}
 
 					if (allowedToMove) {
-						float x = MathHelper.abs((float) (rotStep.x * getMult()));
+						float x = MathHelper.abs(rotStep.x * getMult());
 
 						if (motionX > 0) {
 							if (motionZ > 0)
@@ -273,8 +274,9 @@ public class FBPParticleDigging extends ParticleDigging {
 					}
 
 					if (allowedToMove) {
-						rotStep.scale(getMult());
-						rot.add(rotStep);
+						FBPVector3D newVector = new FBPVector3D(rotStep);
+						newVector.scale(getMult());
+						rot.add(newVector);
 					}
 				}
 			}

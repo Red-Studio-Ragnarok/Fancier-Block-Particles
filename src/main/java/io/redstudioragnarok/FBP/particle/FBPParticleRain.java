@@ -140,7 +140,8 @@ public class FBPParticleRain extends ParticleDigging {
 			}
 		}
 
-		FBPVector3D rgb = new FBPVector3D(mc.world.getSkyColor(mc.player, 0));
+		FBPVector3D rgb = new FBPVector3D();
+		rgb.copy(mc.world.getSkyColor(mc.player, 0));
 
 		this.particleRed = rgb.x;
 		this.particleGreen = FBPMathUtil.clampMaxFirst(rgb.y + 0.25F, 0.25F, 1);

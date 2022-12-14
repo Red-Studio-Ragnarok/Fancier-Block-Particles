@@ -31,25 +31,31 @@ public class FBPVector3D {
 	}
 
 	/**
-	 * Constructs a new vector with the given Vec3d vector.
+	 * Constructs a new vector with the same coordinates as the given `inputVector` vector.
 	 *
-	 * @param inputVec3d The Vec3d
+	 * @param inputVector The vector to copy the coordinates from
 	 */
-	public FBPVector3D(Vec3d inputVec3d) {
-		x = (float) inputVec3d.x;
-		y = (float) inputVec3d.y;
-		z = (float) inputVec3d.z;
+	public FBPVector3D(FBPVector3D inputVector) {
+		x = inputVector.x;
+		y = inputVector.y;
+		z = inputVector.z;
 	}
 
 	/**
 	 * Copies the coordinates of the given vector to this vector.
 	 *
-	 * @param vector The vector to copy from
+	 * @param inputVector The vector to copy from
 	 */
-	public void copy(FBPVector3D vector) {
-		x = vector.x;
-		y = vector.y;
-		z = vector.z;
+	public void copy(FBPVector3D inputVector) {
+		x = inputVector.x;
+		y = inputVector.y;
+		z = inputVector.z;
+	}
+
+	public void copy(Vec3d inputVector) {
+		x = (float) inputVector.x;
+		y = (float) inputVector.y;
+		z = (float) inputVector.z;
 	}
 
 	/**
@@ -68,12 +74,12 @@ public class FBPVector3D {
 	/**
 	 * Adds the given vector to this vector.
 	 *
-	 * @param vector The vector to add
+	 * @param inputVector The vector to add
 	 */
-	public void add(FBPVector3D vector) {
-		x += vector.x;
-		y += vector.y;
-		z += vector.z;
+	public void add(FBPVector3D inputVector) {
+		x += inputVector.x;
+		y += inputVector.y;
+		z += inputVector.z;
 	}
 
 	/**

@@ -63,8 +63,8 @@ public class FBPMathUtil {
 	 * @param add The value to add or subtract.
 	 * @return The result of adding or subtracting the add value from the input value.
 	 */
-	public static float addOrSubtractBasedOnSign(double input, double add) {
-		return (float) (input < 0 ? input - add : input + add);
+	public static float addOrSubtractBasedOnSign(float input, float add) {
+		return input < 0 ? input - add : input + add;
 	}
 
 	/**
