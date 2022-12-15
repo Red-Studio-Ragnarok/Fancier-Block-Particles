@@ -5,7 +5,6 @@ import io.redstudioragnarok.FBP.gui.FBPGuiBlacklist;
 import io.redstudioragnarok.FBP.gui.FBPGuiMenuPage0;
 import io.redstudioragnarok.FBP.keys.FBPKeyBindings;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
@@ -14,9 +13,9 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-public class FBPKeyInputHandler {
+import static io.redstudioragnarok.FBP.FBP.mc;
 
-	Minecraft mc;
+public class FBPKeyInputHandler {
 
 	public static FBPKeyInputHandler INSTANCE;
 
@@ -24,7 +23,6 @@ public class FBPKeyInputHandler {
 
 
 	public FBPKeyInputHandler() {
-		mc = Minecraft.getMinecraft();
 		INSTANCE = this;
 	}
 

@@ -19,6 +19,8 @@ import net.minecraftforge.client.IRenderHandler;
 
 import java.util.Random;
 
+import static io.redstudioragnarok.FBP.FBP.mc;
+
 public class FBPWeatherRenderer extends IRenderHandler {
 
 	private static final ResourceLocation RAIN_TEXTURES = new ResourceLocation("textures/environment/rain.png");
@@ -33,11 +35,7 @@ public class FBPWeatherRenderer extends IRenderHandler {
 
 	int tickCounter;
 
-	Minecraft mc;
-
 	public FBPWeatherRenderer() {
-		mc = Minecraft.getMinecraft();
-
 		for (int i = 0; i < 32; ++i) {
 			for (int j = 0; j < 32; ++j) {
 				float f = (float) (j - 16);
@@ -54,11 +52,11 @@ public class FBPWeatherRenderer extends IRenderHandler {
 		if (FBP.fancySnow && FBP.fancyRain)
 			return;
 
-		float f = this.mc.world.getRainStrength(partialTicks);
+		float f = mc.world.getRainStrength(partialTicks);
 
 		if (f > 0.0F) {
 			mc.entityRenderer.enableLightmap();
-			Entity entity = this.mc.getRenderViewEntity();
+			Entity entity = mc.getRenderViewEntity();
 			int i = MathHelper.floor(entity.posX);
 			int j = MathHelper.floor(entity.posY);
 			int k = MathHelper.floor(entity.posZ);
@@ -75,7 +73,7 @@ public class FBPWeatherRenderer extends IRenderHandler {
 			int l = MathHelper.floor(d1);
 			int i1 = 5;
 
-			if (this.mc.gameSettings.fancyGraphics) {
+			if (mc.gameSettings.fancyGraphics) {
 				i1 = 10;
 			}
 
@@ -121,7 +119,7 @@ public class FBPWeatherRenderer extends IRenderHandler {
 										}
 
 										j1 = 0;
-										this.mc.getTextureManager().bindTexture(RAIN_TEXTURES);
+										mc.getTextureManager().bindTexture(RAIN_TEXTURES);
 										bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 									}
 
@@ -146,7 +144,7 @@ public class FBPWeatherRenderer extends IRenderHandler {
 									}
 
 									j1 = 1;
-									this.mc.getTextureManager().bindTexture(SNOW_TEXTURES);
+									mc.getTextureManager().bindTexture(SNOW_TEXTURES);
 									bufferbuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 								}
 
@@ -185,7 +183,7 @@ public class FBPWeatherRenderer extends IRenderHandler {
 
 	public void onUpdate() {
 		if (FBP.fancySnow || FBP.fancyRain) {
-			float f = this.mc.world.getRainStrength(mc.getRenderPartialTicks());
+			float f = mc.world.getRainStrength(mc.getRenderPartialTicks());
 
 			if (f > 0.0F) {
 				if (tickCounter++ >= 2) {

@@ -4,7 +4,6 @@ import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.vector.Vector2D;
 import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.jafama.FastMath;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
@@ -16,6 +15,8 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.redstudioragnarok.FBP.FBP.mc;
+
 /**
  * This class provides methods for rendering 3D objects using a BufferBuilder.
  */
@@ -23,8 +24,6 @@ public class FBPRenderer {
 
 	public static boolean render = false;
 	public static List<Particle> queuedParticles = new ArrayList<>();
-
-	static Minecraft mc = Minecraft.getMinecraft();
 
 	static Vector3D sin = new Vector3D();
 	static Vector3D cos = new Vector3D();
@@ -120,7 +119,7 @@ public class FBPRenderer {
 		buffer.setTranslation(0, 0, 0);
 
 		Tessellator.getInstance().draw();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(FBP.LOCATION_PARTICLE_TEXTURE);
+		mc.getTextureManager().bindTexture(FBP.LOCATION_PARTICLE_TEXTURE);
 		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 	}
 

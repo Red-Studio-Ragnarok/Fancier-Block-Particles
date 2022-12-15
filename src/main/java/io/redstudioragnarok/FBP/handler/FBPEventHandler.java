@@ -1,5 +1,6 @@
 package io.redstudioragnarok.FBP.handler;
 
+import io.netty.util.internal.ConcurrentSet;
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.model.FBPModelHelper;
 import io.redstudioragnarok.FBP.node.BlockNode;
@@ -8,18 +9,18 @@ import io.redstudioragnarok.FBP.particle.FBPParticleBlock;
 import io.redstudioragnarok.FBP.particle.FBPParticleManager;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
 import io.redstudioragnarok.FBP.renderer.FBPWeatherRenderer;
-import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockFalling;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockSlab.EnumBlockHalf;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -46,17 +47,15 @@ import org.lwjgl.opengl.GL11;
 import java.util.List;
 import java.util.Objects;
 
-public class FBPEventHandler {
+import static io.redstudioragnarok.FBP.FBP.mc;
 
-	Minecraft mc;
+public class FBPEventHandler {
 
 	static IWorldEventListener worldEventListener;
 
 	ConcurrentSet<BlockPosNode> list;
 
 	public FBPEventHandler() {
-		mc = Minecraft.getMinecraft();
-
 		list = new ConcurrentSet<>();
 
 		worldEventListener = new IWorldEventListener() {

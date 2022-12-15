@@ -39,6 +39,8 @@ public class FBP {
 	@Instance(ModReference.MOD_ID)
 	public static FBP INSTANCE;
 
+	public static final Minecraft mc = Minecraft.getMinecraft();
+
 	public static final ResourceLocation LOCATION_PARTICLE_TEXTURE = new ResourceLocation("textures/particle/particles.png");
 	public static final ResourceLocation FBP_BUG = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/bug.png");
 	public static final ResourceLocation FBP_FBP = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/fbp.png");
