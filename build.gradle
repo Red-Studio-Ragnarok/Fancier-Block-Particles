@@ -13,17 +13,7 @@ buildscript {
 	}
 }
 
-apply {
-	plugin 'net.minecraftforge.gradle.forge'
-	plugin 'idea'
-}
-
-idea {
-	module {
-		downloadJavadoc = true
-		downloadSources = true
-	}
-}
+apply plugin: 'net.minecraftforge.gradle.forge'
 
 if (mod_version.contains("-Dev-")) {
 		def version_parts = project.mod_version.split("-Dev-")
