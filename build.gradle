@@ -15,16 +15,6 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-if (mod_version.contains("-Dev-")) {
-		def version_parts = project.mod_version.split("-Dev-")
-
-		// Increment the version number
-		version_parts[1] = (version_parts[1].toInteger() + 1).toString()
-
-		// Reassemble the version string
-		project.mod_version = version_parts.join("-Dev-")
-}
-
 version = project.mod_version
 
 minecraft {
