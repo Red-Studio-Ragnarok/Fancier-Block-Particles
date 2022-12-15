@@ -86,7 +86,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 		for (int i = 0; i < FBP.CUBE.length; i++) {
 			Vector3D vec = FBP.CUBE[i];
-			cube[i] = FBPRenderer.rotateVec(vec, 0, angleY, 0);
+			cube[i] = FBPRenderer.rotateVector(vec, 0, angleY, 0);
 		}
 
 		particleAlpha = 0.9f;
@@ -214,7 +214,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 
-		FBPRenderer.renderCubeSmoke(buffer, particle, x, y, z, scale, brightness, particleRed, particleGreen, particleBlue, alpha, cube);
+		FBPRenderer.renderParticleSmoke(buffer, particle, x, y, z, scale, brightness, particleRed, particleGreen, particleBlue, alpha, cube);
 	}
 
 	@Override

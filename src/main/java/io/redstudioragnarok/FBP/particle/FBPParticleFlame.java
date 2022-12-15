@@ -64,7 +64,7 @@ public class FBPParticleFlame extends ParticleFlame {
 
 		for (int i = 0; i < FBP.CUBE.length; i++) {
 			Vector3D vec = FBP.CUBE[i];
-			cube[i] = FBPRenderer.rotateVec(vec, 0, angleY, 0);
+			cube[i] = FBPRenderer.rotateVector(vec, 0, angleY, 0);
 		}
 
 		particleAlpha = 1;
@@ -195,7 +195,7 @@ public class FBPParticleFlame extends ParticleFlame {
 		if (this.particleAge >= this.particleMaxAge)
 			this.particleGreen = (float) (scale / startScale);
 
-		FBPRenderer.renderCubeFlame(buffer, particle, x, y, z, scale, brightness, particleRed, particleGreen, particleBlue, alpha, cube);
+		FBPRenderer.renderParticleFlame(buffer, particle, x, y, z, scale, brightness, particleRed, particleGreen, particleBlue, alpha, cube);
 	}
 
 	@Override
