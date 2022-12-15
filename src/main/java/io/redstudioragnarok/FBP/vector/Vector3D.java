@@ -13,7 +13,7 @@ public class Vector3D {
 	public float z;
 
 	/**
-	 * Constructs a new vector with default coordinates (0, 0, 0).
+	 * Constructs a new empty vector.
 	 */
 	public Vector3D() {
 	}

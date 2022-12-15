@@ -6,15 +6,14 @@ package io.redstudioragnarok.FBP.vector;
 public class Vector2D {
 
     /** The x component of this vector. */
-    public final float x;
+    public float x;
     /** The y component of this vector. */
-    public final float y;
+    public  float y;
 
     /**
-     * Constructs a new vector with default coordinates (0, 0).
+     * Constructs a new empty vector.
      */
     public Vector2D() {
-        x = y = 0;
     }
 
     /**
