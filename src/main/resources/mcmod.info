@@ -2,14 +2,13 @@
   {
     "modid": "fbp",
     "name": "Fancier Block Particles",
-    "description": "Fancier particles and fancier block placing!",
+    "description": "Fancier Block Particles is a fork of the popular Fancy Block Particles by MorphoxL which is more optimized and less buggy than the original mod.",
     "version": "${version}",
     "mcversion": "1.12.2",
-    "url": "https://www.curseforge.com/minecraft/mc-mods/fancier-block-particles",
+    "url": "https://www.curseforge.com/minecraft/mc-mods/fbp",
     "authorList": ["Red Studio"],
-    "credits": "Authored by TominoCZ, based on an original idea by craftland.org creators, forked by Desoroxxx. Gradle template by CleanroomMC.",
+    "credits": "Desoroxxx, Rongmario, WildMihai, TominoCZ",
     "logoFile": "assets/fbp/textures/gui/fbp_logo.png",
-    "screenshots": [],
-    "dependencies": []
+    "screenshots": []
   }
 ]
