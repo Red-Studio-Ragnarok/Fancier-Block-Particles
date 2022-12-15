@@ -1,7 +1,5 @@
 package io.redstudioragnarok.FBP.vector;
 
-import net.minecraft.util.math.Vec3d;
-
 /**
  * Represents a three-dimensional vector with `x`, `y`, and `z` coordinates.
  */
@@ -50,12 +48,6 @@ public class FBPVector3D {
 		x = inputVector.x;
 		y = inputVector.y;
 		z = inputVector.z;
-	}
-
-	public void copy(Vec3d inputVector) {
-		x = (float) inputVector.x;
-		y = (float) inputVector.y;
-		z = (float) inputVector.z;
 	}
 
 	/**
