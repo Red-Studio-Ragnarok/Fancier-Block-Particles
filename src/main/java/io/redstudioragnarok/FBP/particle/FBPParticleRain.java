@@ -206,7 +206,7 @@ public class FBPParticleRain extends ParticleDigging {
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 		float height = (float) (prevParticleHeight + (particleHeight - prevParticleHeight) * partialTicks);
 
-		FBPRenderer.renderCubeShadedWidthHeight(buffer, particle, x, y + height / 10, z, scale / 10, height / 10, new Vector3D(0, AngleY, 0), brightness >> 16 & 65535, brightness & 65535, particleRed, particleGreen, particleBlue, alpha);
+		FBPRenderer.renderCubeShadedWidthHeight(buffer, particle, x, y + height / 10, z, scale / 10, height / 10, new Vector3D(0, AngleY, 0), brightness, particleRed, particleGreen, particleBlue, alpha);
 	}
 
 	@Override

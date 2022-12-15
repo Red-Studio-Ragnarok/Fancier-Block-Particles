@@ -515,7 +515,7 @@ public class FBPParticleDigging extends ParticleDigging {
 			}
 		}
 
-		FBPRenderer.renderCubeShaded(buffer, particle, x, y, z, scale / 10, smoothRot, brightness >> 16 & 65535, brightness & 65535, particleRed, particleGreen, particleBlue, alpha);
+		FBPRenderer.renderCubeShaded(buffer, particle, x, y, z, scale / 10, smoothRot, brightness, particleRed, particleGreen, particleBlue, alpha);
 	}
 
 	private void createRotationMatrix() {

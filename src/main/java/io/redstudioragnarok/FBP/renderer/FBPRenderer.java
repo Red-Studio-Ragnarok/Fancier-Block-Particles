@@ -39,17 +39,16 @@ public class FBPRenderer {
 	 * @param z The z coordinate of the cube's position
 	 * @param scale The scaling factor for the cube
 	 * @param rotation The rotation of the cube as a 3D vector
-	 * @param skyLight The sky light level for the cube
-	 * @param blockLight the block light level for the cube
+	 * @param brightness The brightness for the cube
 	 * @param r The red component of the cube's color
 	 * @param g The green component of the cube's color
 	 * @param b The blue component of the cube's color
 	 * @param alpha The alpha value of the cube's color
 	 */
-	public static void renderCubeShaded(BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double scale, Vector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
+	public static void renderCubeShaded(BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double scale, Vector3D rotation, int brightness, float r, float g, float b, float alpha) {
 		buffer.setTranslation(x, y, z);
 
-		putCube(buffer, particle, scale, rotation, skyLight, blockLight, r, g, b, alpha);
+		putCube(buffer, particle, scale, rotation, brightness, r, g, b, alpha);
 
 		buffer.setTranslation(0, 0, 0);
 	}
@@ -65,14 +64,13 @@ public class FBPRenderer {
 	 * @param width The width of the cube
 	 * @param height The height of the cube
 	 * @param rotation The rotation of the cube as a 3D vector
-	 * @param skyLight The sky light level for the cube
-	 * @param blockLight The block light level for the cube
+	 * @param brightness The brightness for the cube
 	 * @param r The red component of the cube's color
 	 * @param g The green component of the cube's color
 	 * @param b The blue component of the cube's color
 	 * @param alpha The alpha value of the cube's color
 	 */
-	public static void renderCubeShadedWidthHeight(BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double width, double height, Vector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
+	public static void renderCubeShadedWidthHeight(BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double width, double height, Vector3D rotation, int brightness, float r, float g, float b, float alpha) {
 		// switch to vertex format that supports normals
 		Tessellator.getInstance().draw();
 		buffer.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
@@ -83,7 +81,7 @@ public class FBPRenderer {
 		// render particle
 		buffer.setTranslation(x, y, z);
 
-		putCubeWidthHeight(buffer, particle, width, height, rotation, skyLight, blockLight, r, g, b, alpha);
+		putCubeWidthHeight(buffer, particle, width, height, rotation, brightness, r, g, b, alpha);
 
 		buffer.setTranslation(0, 0, 0);
 
@@ -117,7 +115,7 @@ public class FBPRenderer {
 
 		buffer.setTranslation(x, y, z);
 
-		putCubeGas(buffer, particle,scale / 80, brightness >> 16 & 65535, brightness & 65535, r, g, b, alpha, cube, 0.95F);
+		putCubeGas(buffer, particle,scale / 80, brightness, r, g, b, alpha, cube, 0.95F);
 
 		buffer.setTranslation(0, 0, 0);
 
@@ -145,7 +143,7 @@ public class FBPRenderer {
 	public static void renderCubeSmoke(BufferBuilder buffer, Vector2D particle, float x, float y, float z, double scale, int brightness, float r, float g, float b, float alpha, Vector3D[] cube) {
 		buffer.setTranslation(x, y, z);
 
-		putCubeGas(buffer, particle,scale / 20, brightness >> 16 & 65535, brightness & 65535, r, g, b, alpha, cube,0.875F);
+		putCubeGas(buffer, particle,scale / 20, brightness, r, g, b, alpha, cube,0.875F);
 
 		buffer.setTranslation(0, 0, 0);
 	}
@@ -157,14 +155,13 @@ public class FBPRenderer {
 	 * @param particle An array of texture coordinates for the cube
 	 * @param scale The scale to apply to the vertices
 	 * @param rotation The rotation to apply to the vertices
-	 * @param skyLight The sky light level for the vertices
-	 * @param blockLight The block light level for the vertices
+	 * @param brightness The brightness for the vertices
 	 * @param r The red component of the color for the vertices
 	 * @param g The green component of the color for the vertices
 	 * @param b The blue component of the color for the vertices
 	 * @param alpha The alpha value for the vertices
 	 */
-	static void putCube(BufferBuilder buffer, Vector2D[] particle, double scale, Vector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
+	static void putCube(BufferBuilder buffer, Vector2D[] particle, double scale, Vector3D rotation, int brightness, float r, float g, float b, float alpha) {
 		float radsX = (float) Math.toRadians(rotation.x);
 		float radsY = (float) Math.toRadians(rotation.y);
 		float radsZ = (float) Math.toRadians(rotation.z);
@@ -182,10 +179,10 @@ public class FBPRenderer {
 
 			Vector3D normal = rotateVec(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
-			addVertex(buffer, scale, v1, particle[0].x, particle[0].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVertex(buffer, scale, v2, particle[1].x, particle[1].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVertex(buffer, scale, v3, particle[2].x, particle[2].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVertex(buffer, scale, v4, particle[3].x, particle[3].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVertex(buffer, scale, v1, particle[0].x, particle[0].y, brightness, r, g, b, alpha, normal);
+			addVertex(buffer, scale, v2, particle[1].x, particle[1].y, brightness, r, g, b, alpha, normal);
+			addVertex(buffer, scale, v3, particle[2].x, particle[2].y, brightness, r, g, b, alpha, normal);
+			addVertex(buffer, scale, v4, particle[3].x, particle[3].y, brightness, r, g, b, alpha, normal);
 		}
 	}
 
@@ -197,14 +194,13 @@ public class FBPRenderer {
 	 * @param width The width of the cube
 	 * @param height The height of the cube
 	 * @param rotation The rotation to apply to the vertices
-	 * @param skyLight The sky light level for the vertices
-	 * @param blockLight The block light level for the vertices
+	 * @param brightness The brightness for the vertices
 	 * @param r The red component of the color for the vertices
 	 * @param g The green component of the color for the vertices
 	 * @param b The blue component of the color for the vertices
 	 * @param alpha The alpha value for the vertices
 	 */
-	static void putCubeWidthHeight(BufferBuilder buffer, Vector2D[] particle, double width, double height, Vector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
+	static void putCubeWidthHeight(BufferBuilder buffer, Vector2D[] particle, double width, double height, Vector3D rotation, int brightness, float r, float g, float b, float alpha) {
 		float radsX = (float) Math.toRadians(rotation.x);
 		float radsY = (float) Math.toRadians(rotation.y);
 		float radsZ = (float) Math.toRadians(rotation.z);
@@ -222,10 +218,10 @@ public class FBPRenderer {
 
 			Vector3D normal = rotateVec(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
-			addVertexWidthHeight(buffer, width, height, v1, particle[0].x, particle[0].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVertexWidthHeight(buffer, width, height, v2, particle[1].x, particle[1].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVertexWidthHeight(buffer, width, height, v3, particle[2].x, particle[2].y, skyLight, blockLight, r, g, b, alpha, normal);
-			addVertexWidthHeight(buffer, width, height, v4, particle[3].x, particle[3].y, skyLight, blockLight, r, g, b, alpha, normal);
+			addVertexWidthHeight(buffer, width, height, v1, particle[0].x, particle[0].y, brightness, r, g, b, alpha, normal);
+			addVertexWidthHeight(buffer, width, height, v2, particle[1].x, particle[1].y, brightness, r, g, b, alpha, normal);
+			addVertexWidthHeight(buffer, width, height, v3, particle[2].x, particle[2].y, brightness, r, g, b, alpha, normal);
+			addVertexWidthHeight(buffer, width, height, v4, particle[3].x, particle[3].y, brightness, r, g, b, alpha, normal);
 		}
 	}
 
@@ -235,8 +231,7 @@ public class FBPRenderer {
 	 * @param buffer The buffer to add the vertices to
 	 * @param particle The texture coordinates for the cube
 	 * @param scale The scale to apply to the vertices
-	 * @param skyLight The sky light level for the vertices
-	 * @param blockLight The block light level for the vertices
+	 * @param brightness The brightness for the vertices
 	 * @param r The red component of the color for the vertices
 	 * @param g The green component of the color for the vertices
 	 * @param b The blue component of the color for the vertices
@@ -244,7 +239,7 @@ public class FBPRenderer {
 	 * @param cube The vertices of the cube on which the gas is being rendered
 	 * @param brightnessMultiplier The brightness multiplier to apply to the color of each set of four vertices
 	 */
-	public static void putCubeGas(BufferBuilder buffer, Vector2D particle, double scale, int skyLight, int blockLight, float r, float g, float b, float alpha, Vector3D[] cube, float brightnessMultiplier) {
+	public static void putCubeGas(BufferBuilder buffer, Vector2D particle, double scale, int brightness, float r, float g, float b, float alpha, Vector3D[] cube, float brightnessMultiplier) {
 		float brightnessForRender = 1;
 
 		float R, B, G;
@@ -261,10 +256,10 @@ public class FBPRenderer {
 
 			brightnessForRender *= brightnessMultiplier;
 
-			addVertex(buffer, scale, v1, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha, null);
-			addVertex(buffer, scale, v2, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha, null);
-			addVertex(buffer, scale, v3, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha, null);
-			addVertex(buffer, scale, v4, particle.x, particle.y, skyLight, blockLight, R, G, B, alpha, null);
+			addVertex(buffer, scale, v1, particle.x, particle.y, brightness, R, G, B, alpha, null);
+			addVertex(buffer, scale, v2, particle.x, particle.y, brightness, R, G, B, alpha, null);
+			addVertex(buffer, scale, v3, particle.x, particle.y, brightness, R, G, B, alpha, null);
+			addVertex(buffer, scale, v4, particle.x, particle.y, brightness, R, G, B, alpha, null);
 		}
 	}
 
@@ -276,19 +271,18 @@ public class FBPRenderer {
 	 * @param position The position of the vertex.
 	 * @param u The U coordinate of the texture.
 	 * @param v The V coordinate of the texture.
-	 * @param skyLight The sky light level.
-	 * @param blockLight The block light level.
+	 * @param brightness The brightness.
 	 * @param r The red color component.
 	 * @param g The green color component.
 	 * @param b The blue color component.
 	 * @param alpha The alpha value.
 	 * @param normals the normal vector for the vertex, or null if not specified
 	 */
-	static void addVertex(BufferBuilder buffer, double scale, Vector3D position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha, Vector3D normals) {
+	static void addVertex(BufferBuilder buffer, double scale, Vector3D position, double u, double v, int brightness, float r, float g, float b, float alpha, Vector3D normals) {
 		if (normals == null) {
-			buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, alpha).lightmap(skyLight, blockLight).endVertex();
+			buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, alpha).lightmap(brightness >> 16 & 65535, brightness & 65535).endVertex();
 		} else {
-			buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, alpha).lightmap(skyLight, blockLight).normal(normals.x, normals.y, normals.z).endVertex();
+			buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, alpha).lightmap(brightness >> 16 & 65535, brightness & 65535).normal(normals.x, normals.y, normals.z).endVertex();
 		}
 	}
 
@@ -303,34 +297,33 @@ public class FBPRenderer {
 	 * @param position The position of the vertex.
 	 * @param u The U coordinate of the texture.
 	 * @param v The V coordinate of the texture.
-	 * @param skyLight The sky light level.
-	 * @param blockLight The block light level.
+	 * @param brightness The brightness.
 	 * @param r The red color component.
 	 * @param g The green color component.
 	 * @param b The blue color component.
 	 * @param alpha The alpha value.
 	 * @param normals The normal vector.
 	 */
-	static void addVertexWidthHeight(BufferBuilder buffer, double width, double height, Vector3D position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha, Vector3D normals) {
-		buffer.pos(position.x * width, position.y * height, position.z * width).tex(u, v).color(r, g, b, alpha).lightmap(skyLight, blockLight).normal(normals.x, normals.y, normals.z).endVertex();
+	static void addVertexWidthHeight(BufferBuilder buffer, double width, double height, Vector3D position, double u, double v, int brightness, float r, float g, float b, float alpha, Vector3D normals) {
+		buffer.pos(position.x * width, position.y * height, position.z * width).tex(u, v).color(r, g, b, alpha).lightmap(brightness >> 16 & 65535, brightness & 65535).normal(normals.x, normals.y, normals.z).endVertex();
 	}
 
 	/**
 	 * Rotates the given vector around the X, Y, and Z axes by the specified angles.
 	 *
-	 * @param vec The vector to rotate.
-	 * @param AngleX The angle to rotate around the X axis (in radians).
-	 * @param AngleY The angle to rotate around the Y axis (in radians).
-	 * @param AngleZ The angle to rotate around the Z axis (in radians).
+	 * @param vector The vector to rotate.
+	 * @param angleX The angle to rotate around the X axis (in radians).
+	 * @param angleY The angle to rotate around the Y axis (in radians).
+	 * @param angleZ The angle to rotate around the Z axis (in radians).
 	 * @return The rotated vector.
 	 */
-	public static Vector3D rotateVec(Vector3D vec, float AngleX, float AngleY, float AngleZ) {
-		sin.set((float) FastMath.sinQuick(AngleX), (float) FastMath.sinQuick(AngleY), (float) FastMath.sinQuick(AngleZ));
-		cos.set((float) FastMath.cosQuick(AngleX), (float) FastMath.cosQuick(AngleY), (float) FastMath.cosQuick(AngleZ));
+	public static Vector3D rotateVec(Vector3D vector, float angleX, float angleY, float angleZ) {
+		sin.set((float) FastMath.sinQuick(angleX), (float) FastMath.sinQuick(angleY), (float) FastMath.sinQuick(angleZ));
+		cos.set((float) FastMath.cosQuick(angleX), (float) FastMath.cosQuick(angleY), (float) FastMath.cosQuick(angleZ));
 
 		// I do not understand why a new vector is required instead of using FBPVector3d.set, but I've verified it is required for this method to work correctly
-		vec = new Vector3D(vec.x * cos.y + vec.z * sin.y, vec.y, vec.x * sin.y - vec.z * cos.y);
+		vector = new Vector3D(vector.x * cos.y + vector.z * sin.y, vector.y, vector.x * sin.y - vector.z * cos.y);
 
-		return vec;
+		return vector;
 	}
 }
