@@ -8,7 +8,7 @@ Turn boring particles into fancier particles!
 
 Now with a [Trello] to see what is being worked on and a roadmap
 
-Fancier Block Particles is a fork of the popular [Fancy Block Particles] by [MorphoxL] which is more optimized and less buggy than the original mod.
+Fancier Block Particles is a fork of the popular [Fancy Block Particles] by [TominoCZ] which is more optimized and less buggy than the original mod.
 
 - Fancier Block Particles now run 276% faster than Fancy Block Particles
 - Fancier Block Particles now load 25% faster than Fancy Block Particles
@@ -33,6 +33,6 @@ This mod replace the Minecraft 2D particles with fancier 3D particles, it also a
 ![Example](https://user-images.githubusercontent.com/82710983/188453582-29bca653-6942-4f33-a670-ce89fbe42942.gif)
 
 [Trello]: https://trello.com/b/nlEU4rO2
-[MorphoxL]: https://www.curseforge.com/members/morphoxl/projects
+[TominoCZ]: [https://www.curseforge.com/members/morphoxl/projects](https://github.com/TominoCZ)
 [Fancy Block Particles]: https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles
 [#69]: https://github.com/TominoCZ/FancyBlockParticles/issues/69
