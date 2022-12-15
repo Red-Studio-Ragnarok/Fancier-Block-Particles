@@ -4,11 +4,11 @@ import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.handler.FBPConfigHandler;
 import io.redstudioragnarok.FBP.util.FBPMathUtil;
 import io.redstudioragnarok.FBP.util.ModReference;
+import io.redstudioragnarok.FBP.vector.Vector2D;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 
-import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.util.Arrays;
 
@@ -17,11 +17,11 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 	GuiButton Reload, Done, Defaults, Back, ReportBug, Enable;
 	FBPGuiSlider WeatherParticleDensity;
 
-	Vector2d lastHandle = new Vector2d(0, 0);
-	Vector2d lastSize = new Vector2d(0, 0);
+	Vector2D lastHandle = new Vector2D();
+	Vector2D lastSize = new Vector2D();
 
-	Vector2d handle = new Vector2d(0, 0);
-	Vector2d size = new Vector2d(0, 0);
+	Vector2D handle = new Vector2D();
+	Vector2D size = new Vector2D();
 
 	long time, lastTime;
 
@@ -104,7 +104,7 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 
 		if (WeatherParticleDensity.isMouseOver(mouseX, mouseY)) {
 			handle.y = WeatherParticleDensity.y;
-			size = new Vector2d(WeatherParticleDensity.width, 18);
+			size = new Vector2D(WeatherParticleDensity.width, 18);
 			selected = 1;
 		}
 
@@ -116,7 +116,7 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 
 		lastTime = time;
 
-		if (lastHandle != new Vector2d(0, 0)) {
+		if (lastHandle != new Vector2D()) {
 			if (lastHandle.y > handle.y) {
 				if (lastHandle.y - handle.y <= step)
 					lastHandle.y = handle.y;
@@ -134,7 +134,7 @@ public class FBPGuiMenuPage4 extends GuiScreen {
 			lastHandle.x = WeatherParticleDensity.x;
 		}
 
-		if (lastSize != new Vector2d(0, 0)) {
+		if (lastSize != new Vector2D()) {
 			if (lastSize.y > size.y)
 				if (lastSize.y - size.y <= step)
 					lastSize.y = size.y;

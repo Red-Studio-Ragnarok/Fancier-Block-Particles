@@ -1,6 +1,7 @@
 package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
+import io.redstudioragnarok.FBP.vector.Vector2D;
 import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
@@ -25,8 +26,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import org.lwjgl.opengl.GL11;
-
-import javax.vecmath.Vector2d;
 
 public class FBPParticleBlock extends Particle {
 
@@ -304,11 +303,11 @@ public class FBPParticleBlock extends Particle {
 
 		AxisAlignedBB aabb = block.getSelectedBoundingBox(blockState, mc.world, blockPos);
 
-		Vector2d[] corners = new Vector2d[] { new Vector2d(aabb.minX, aabb.minZ), new Vector2d(aabb.maxX, aabb.maxZ), new Vector2d(aabb.minX, aabb.maxZ), new Vector2d(aabb.maxX, aabb.minZ) };
+		Vector2D[] corners = new Vector2D[] { new Vector2D((float) aabb.minX, (float) aabb.minZ), new Vector2D((float) aabb.maxX, (float) aabb.maxZ), new Vector2D((float) aabb.minX, (float) aabb.maxZ), new Vector2D((float) aabb.maxX, (float) aabb.minZ) };
 
-		Vector2d middle = new Vector2d(blockPos.getX() + 0.5, blockPos.getZ() + 0.5);
+		Vector2D middle = new Vector2D((float) (blockPos.getX() + 0.5), (float) (blockPos.getZ() + 0.5));
 
-		for (Vector2d corner : corners) {
+		for (Vector2D corner : corners) {
 			double mX = middle.x - corner.x;
 			double mZ = middle.y - corner.y;
 

@@ -4,11 +4,11 @@ import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.handler.FBPConfigHandler;
 import io.redstudioragnarok.FBP.util.FBPMathUtil;
 import io.redstudioragnarok.FBP.util.ModReference;
+import io.redstudioragnarok.FBP.vector.Vector2D;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 
-import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.util.Arrays;
 
@@ -17,11 +17,11 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 	GuiButton InfiniteDuration, TimeUnit, Defaults, Done, Reload, Next, Enable, ReportBug;
 	FBPGuiSlider MinDurationSlider, MaxDurationSlider, ParticleCountBase, ScaleMultSlider, GravitiyForceSlider, RotSpeedSlider;
 
-	Vector2d lastHandle = new Vector2d(0, 0);
-	Vector2d lastSize = new Vector2d(0, 0);
+	Vector2D lastHandle = new Vector2D();
+	Vector2D lastSize = new Vector2D();
 
-	Vector2d handle = new Vector2d(0, 0);
-	Vector2d size = new Vector2d(0, 0);
+	Vector2D handle = new Vector2D();
+	Vector2D size = new Vector2D();
 
 	long time, lastTime;
 
@@ -154,23 +154,23 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 		if (MinDurationSlider.isMouseOver(mouseX, mouseY) || MaxDurationSlider.isMouseOver(mouseX, mouseY)) {
 			handle.y = MinDurationSlider.y;
-			size = new Vector2d(MinDurationSlider.width, 39);
+			size = new Vector2D(MinDurationSlider.width, 39);
 			selected = 1;
 		} else if (ParticleCountBase.isMouseOver(mouseX, mouseY)) {
 			handle.y = ParticleCountBase.y;
-			size = new Vector2d(ParticleCountBase.width, 18);
+			size = new Vector2D(ParticleCountBase.width, 18);
 			selected = 2;
 		} else if (ScaleMultSlider.isMouseOver(mouseX, mouseY)) {
 			handle.y = ScaleMultSlider.y;
-			size = new Vector2d(ScaleMultSlider.width, 18);
+			size = new Vector2D(ScaleMultSlider.width, 18);
 			selected = 3;
 		} else if (GravitiyForceSlider.isMouseOver(mouseX, mouseY)) {
 			handle.y = GravitiyForceSlider.y;
-			size = new Vector2d(GravitiyForceSlider.width, 18);
+			size = new Vector2D(GravitiyForceSlider.width, 18);
 			selected = 4;
 		} else if (RotSpeedSlider.isMouseOver(mouseX, mouseY)) {
 			handle.y = RotSpeedSlider.y;
-			size = new Vector2d(RotSpeedSlider.x - (RotSpeedSlider.x + RotSpeedSlider.width), 18);
+			size = new Vector2D(RotSpeedSlider.x - (RotSpeedSlider.x + RotSpeedSlider.width), 18);
 			selected = 5;
 		} else if (InfiniteDuration.isMouseOver())
 			selected = 6;
@@ -185,7 +185,7 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 
 		lastTime = time;
 
-		if (lastHandle != new Vector2d(0, 0)) {
+		if (lastHandle != new Vector2D()) {
 			if (lastHandle.y > handle.y) {
 				if (lastHandle.y - handle.y <= step)
 					lastHandle.y = handle.y;
@@ -203,7 +203,7 @@ public class FBPGuiMenuPage0 extends GuiScreen {
 			lastHandle.x = MinDurationSlider.x;
 		}
 
-		if (lastSize != new Vector2d(0, 0)) {
+		if (lastSize != new Vector2D()) {
 			if (lastSize.y > size.y)
 				if (lastSize.y - size.y <= step)
 					lastSize.y = size.y;
