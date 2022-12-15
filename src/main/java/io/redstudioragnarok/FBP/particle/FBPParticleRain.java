@@ -3,13 +3,15 @@ package io.redstudioragnarok.FBP.particle;
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
 import io.redstudioragnarok.FBP.util.FBPMathUtil;
-import io.redstudioragnarok.FBP.vector.FBPVector3D;
+import io.redstudioragnarok.FBP.vector.Vector2D;
+import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleDigging;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -191,7 +193,7 @@ public class FBPParticleRain extends ParticleDigging {
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 
-		Vec2f[] particle = texturedParticle(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY);
+		Vector2D[] particle = texturedParticle(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY);
 
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
 		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
@@ -204,7 +206,7 @@ public class FBPParticleRain extends ParticleDigging {
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 		float height = (float) (prevParticleHeight + (particleHeight - prevParticleHeight) * partialTicks);
 
-		FBPRenderer.renderCubeShadedWidthHeight(buffer, particle, x, y + height / 10, z, scale / 10, height / 10, new FBPVector3D(0, AngleY, 0), brightness >> 16 & 65535, brightness & 65535, particleRed, particleGreen, particleBlue, alpha);
+		FBPRenderer.renderCubeShadedWidthHeight(buffer, particle, x, y + height / 10, z, scale / 10, height / 10, new Vector3D(0, AngleY, 0), brightness >> 16 & 65535, brightness & 65535, particleRed, particleGreen, particleBlue, alpha);
 	}
 
 	@Override

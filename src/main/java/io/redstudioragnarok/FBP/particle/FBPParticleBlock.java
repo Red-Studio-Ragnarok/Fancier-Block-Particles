@@ -1,7 +1,7 @@
 package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.vector.FBPVector3D;
+import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
@@ -43,9 +43,9 @@ public class FBPParticleBlock extends Particle {
 
 	EnumFacing facing;
 
-	FBPVector3D prevRotation;
-	FBPVector3D smoothRot = new FBPVector3D();
-	FBPVector3D rot;
+	Vector3D prevRotation;
+	Vector3D smoothRot = new Vector3D();
+	Vector3D rot;
 
 	long textureSeed;
 
@@ -75,8 +75,8 @@ public class FBPParticleBlock extends Particle {
 
 		startingAngle = (float) FBP.random.nextDouble(0.03125, 0.0635);
 
-		prevRotation = new FBPVector3D();
-		rot = new FBPVector3D();
+		prevRotation = new Vector3D();
+		rot = new Vector3D();
 
 		switch (facing) {
 		case EAST:
@@ -210,8 +210,8 @@ public class FBPParticleBlock extends Particle {
 		if (smoothStep <= 0)
 			smoothStep = 0;
 
-		FBPVector3D t = new FBPVector3D(0, smoothStep, 0);
-		FBPVector3D tRot = new FBPVector3D(0, smoothStep, 0);
+		Vector3D t = new Vector3D(0, smoothStep, 0);
+		Vector3D tRot = new Vector3D(0, smoothStep, 0);
 
 		switch (facing) {
 		case EAST:

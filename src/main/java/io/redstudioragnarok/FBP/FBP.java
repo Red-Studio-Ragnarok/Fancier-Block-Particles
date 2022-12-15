@@ -7,7 +7,7 @@ import io.redstudioragnarok.FBP.handler.FBPKeyInputHandler;
 import io.redstudioragnarok.FBP.keys.FBPKeyBindings;
 import io.redstudioragnarok.FBP.particle.FBPParticleManager;
 import io.redstudioragnarok.FBP.util.ModReference;
-import io.redstudioragnarok.FBP.vector.FBPVector3D;
+import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -64,32 +64,32 @@ public class FBP {
 
 	public static final SplittableRandom random = new SplittableRandom();
 
-	public static final FBPVector3D[] CUBE = {
+	public static final Vector3D[] CUBE = {
 			// TOP
-			new FBPVector3D(1, 1, -1), new FBPVector3D(1, 1, 1), new FBPVector3D(-1, 1, 1), new FBPVector3D(-1, 1, -1),
+			new Vector3D(1, 1, -1), new Vector3D(1, 1, 1), new Vector3D(-1, 1, 1), new Vector3D(-1, 1, -1),
 
 			// BOTTOM
-			new FBPVector3D(-1, -1, -1), new FBPVector3D(-1, -1, 1), new FBPVector3D(1, -1, 1), new FBPVector3D(1, -1, -1),
+			new Vector3D(-1, -1, -1), new Vector3D(-1, -1, 1), new Vector3D(1, -1, 1), new Vector3D(1, -1, -1),
 
 			// FRONT
-			new FBPVector3D(-1, -1, 1), new FBPVector3D(-1, 1, 1), new FBPVector3D(1, 1, 1), new FBPVector3D(1, -1, 1),
+			new Vector3D(-1, -1, 1), new Vector3D(-1, 1, 1), new Vector3D(1, 1, 1), new Vector3D(1, -1, 1),
 
 			// BACK
-			new FBPVector3D(1, -1, -1), new FBPVector3D(1, 1, -1), new FBPVector3D(-1, 1, -1), new FBPVector3D(-1, -1, -1),
+			new Vector3D(1, -1, -1), new Vector3D(1, 1, -1), new Vector3D(-1, 1, -1), new Vector3D(-1, -1, -1),
 
 			// LEFT
-			new FBPVector3D(-1, -1, -1), new FBPVector3D(-1, 1, -1), new FBPVector3D(-1, 1, 1), new FBPVector3D(-1, -1, 1),
+			new Vector3D(-1, -1, -1), new Vector3D(-1, 1, -1), new Vector3D(-1, 1, 1), new Vector3D(-1, -1, 1),
 
 			// RIGHT
-			new FBPVector3D(1, -1, 1), new FBPVector3D(1, 1, 1), new FBPVector3D(1, 1, -1), new FBPVector3D(1, -1, -1)
+			new Vector3D(1, -1, 1), new Vector3D(1, 1, 1), new Vector3D(1, 1, -1), new Vector3D(1, -1, -1)
 	};
 
-	public static final FBPVector3D[] CUBE_NORMALS = {
-			new FBPVector3D(0, 1, 0), new FBPVector3D(0, -1, 0),
+	public static final Vector3D[] CUBE_NORMALS = {
+			new Vector3D(0, 1, 0), new Vector3D(0, -1, 0),
 
-			new FBPVector3D(0, 0, 1), new FBPVector3D(0, 0, -1),
+			new Vector3D(0, 0, 1), new Vector3D(0, 0, -1),
 
-			new FBPVector3D(-1, 0, 0), new FBPVector3D(1, 0, 0)
+			new Vector3D(-1, 0, 0), new Vector3D(1, 0, 0)
 	};
 
 	public static final VertexFormat POSITION_TEX_COLOR_LMAP_NORMAL = new VertexFormat();

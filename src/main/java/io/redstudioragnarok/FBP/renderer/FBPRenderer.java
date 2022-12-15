@@ -1,7 +1,8 @@
 package io.redstudioragnarok.FBP.renderer;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.vector.FBPVector3D;
+import io.redstudioragnarok.FBP.vector.Vector2D;
+import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -10,7 +11,6 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.math.Vec2f;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ public class FBPRenderer {
 
 	static Minecraft mc = Minecraft.getMinecraft();
 
-	static FBPVector3D sin = new FBPVector3D();
-	static FBPVector3D cos = new FBPVector3D();
+	static Vector3D sin = new Vector3D();
+	static Vector3D cos = new Vector3D();
 
 	/**
 	 * Renders a 3D cube on a screen using a BufferBuilder object.
@@ -46,7 +46,7 @@ public class FBPRenderer {
 	 * @param b The blue component of the cube's color
 	 * @param alpha The alpha value of the cube's color
 	 */
-	public static void renderCubeShaded(BufferBuilder buffer, Vec2f[] particle, float x, float y, float z, double scale, FBPVector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
+	public static void renderCubeShaded(BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double scale, Vector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
 		buffer.setTranslation(x, y, z);
 
 		putCube(buffer, particle, scale, rotation, skyLight, blockLight, r, g, b, alpha);
@@ -72,7 +72,7 @@ public class FBPRenderer {
 	 * @param b The blue component of the cube's color
 	 * @param alpha The alpha value of the cube's color
 	 */
-	public static void renderCubeShadedWidthHeight(BufferBuilder buffer, Vec2f[] particle, float x, float y, float z, double width, double height, FBPVector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
+	public static void renderCubeShadedWidthHeight(BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double width, double height, Vector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
 		// switch to vertex format that supports normals
 		Tessellator.getInstance().draw();
 		buffer.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
@@ -110,7 +110,7 @@ public class FBPRenderer {
 	 * @param alpha The alpha value of the flame's color
 	 * @param cube The vertices of the cube on which the flame is being rendered
 	 */
-	public static void renderCubeFlame(BufferBuilder buffer, Vec2f particle, float x, float y, float z, double scale, int brightness, float r, float g, float b, float alpha, FBPVector3D[] cube) {
+	public static void renderCubeFlame(BufferBuilder buffer, Vector2D particle, float x, float y, float z, double scale, int brightness, float r, float g, float b, float alpha, Vector3D[] cube) {
 		Tessellator.getInstance().draw();
 		mc.getRenderManager().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
@@ -142,7 +142,7 @@ public class FBPRenderer {
 	 * @param alpha The alpha value of the flame's color
 	 * @param cube The vertices of the cube on which the flame is being rendered
 	 */
-	public static void renderCubeSmoke(BufferBuilder buffer, Vec2f particle, float x, float y, float z, double scale, int brightness, float r, float g, float b, float alpha, FBPVector3D[] cube) {
+	public static void renderCubeSmoke(BufferBuilder buffer, Vector2D particle, float x, float y, float z, double scale, int brightness, float r, float g, float b, float alpha, Vector3D[] cube) {
 		buffer.setTranslation(x, y, z);
 
 		putCubeGas(buffer, particle,scale / 20, brightness >> 16 & 65535, brightness & 65535, r, g, b, alpha, cube,0.875F);
@@ -164,23 +164,23 @@ public class FBPRenderer {
 	 * @param b The blue component of the color for the vertices
 	 * @param alpha The alpha value for the vertices
 	 */
-	static void putCube(BufferBuilder buffer, Vec2f[] particle, double scale, FBPVector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
+	static void putCube(BufferBuilder buffer, Vector2D[] particle, double scale, Vector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
 		float radsX = (float) Math.toRadians(rotation.x);
 		float radsY = (float) Math.toRadians(rotation.y);
 		float radsZ = (float) Math.toRadians(rotation.z);
 
 		for (int i = 0; i < FBP.CUBE.length; i += 4) {
-			FBPVector3D v1 = FBP.CUBE[i];
-			FBPVector3D v2 = FBP.CUBE[i + 1];
-			FBPVector3D v3 = FBP.CUBE[i + 2];
-			FBPVector3D v4 = FBP.CUBE[i + 3];
+			Vector3D v1 = FBP.CUBE[i];
+			Vector3D v2 = FBP.CUBE[i + 1];
+			Vector3D v3 = FBP.CUBE[i + 2];
+			Vector3D v4 = FBP.CUBE[i + 3];
 
 			v1 = rotateVec(v1, radsX, radsY, radsZ);
 			v2 = rotateVec(v2, radsX, radsY, radsZ);
 			v3 = rotateVec(v3, radsX, radsY, radsZ);
 			v4 = rotateVec(v4, radsX, radsY, radsZ);
 
-			FBPVector3D normal = rotateVec(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
+			Vector3D normal = rotateVec(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
 			addVertex(buffer, scale, v1, particle[0].x, particle[0].y, skyLight, blockLight, r, g, b, alpha, normal);
 			addVertex(buffer, scale, v2, particle[1].x, particle[1].y, skyLight, blockLight, r, g, b, alpha, normal);
@@ -204,23 +204,23 @@ public class FBPRenderer {
 	 * @param b The blue component of the color for the vertices
 	 * @param alpha The alpha value for the vertices
 	 */
-	static void putCubeWidthHeight(BufferBuilder buffer, Vec2f[] particle, double width, double height, FBPVector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
+	static void putCubeWidthHeight(BufferBuilder buffer, Vector2D[] particle, double width, double height, Vector3D rotation, int skyLight, int blockLight, float r, float g, float b, float alpha) {
 		float radsX = (float) Math.toRadians(rotation.x);
 		float radsY = (float) Math.toRadians(rotation.y);
 		float radsZ = (float) Math.toRadians(rotation.z);
 
 		for (int i = 0; i < FBP.CUBE.length; i += 4) {
-			FBPVector3D v1 = FBP.CUBE[i];
-			FBPVector3D v2 = FBP.CUBE[i + 1];
-			FBPVector3D v3 = FBP.CUBE[i + 2];
-			FBPVector3D v4 = FBP.CUBE[i + 3];
+			Vector3D v1 = FBP.CUBE[i];
+			Vector3D v2 = FBP.CUBE[i + 1];
+			Vector3D v3 = FBP.CUBE[i + 2];
+			Vector3D v4 = FBP.CUBE[i + 3];
 
 			v1 = rotateVec(v1, radsX, radsY, radsZ);
 			v2 = rotateVec(v2, radsX, radsY, radsZ);
 			v3 = rotateVec(v3, radsX, radsY, radsZ);
 			v4 = rotateVec(v4, radsX, radsY, radsZ);
 
-			FBPVector3D normal = rotateVec(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
+			Vector3D normal = rotateVec(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
 			addVertexWidthHeight(buffer, width, height, v1, particle[0].x, particle[0].y, skyLight, blockLight, r, g, b, alpha, normal);
 			addVertexWidthHeight(buffer, width, height, v2, particle[1].x, particle[1].y, skyLight, blockLight, r, g, b, alpha, normal);
@@ -244,16 +244,16 @@ public class FBPRenderer {
 	 * @param cube The vertices of the cube on which the gas is being rendered
 	 * @param brightnessMultiplier The brightness multiplier to apply to the color of each set of four vertices
 	 */
-	public static void putCubeGas(BufferBuilder buffer, Vec2f particle, double scale, int skyLight, int blockLight, float r, float g, float b, float alpha, FBPVector3D[] cube, float brightnessMultiplier) {
+	public static void putCubeGas(BufferBuilder buffer, Vector2D particle, double scale, int skyLight, int blockLight, float r, float g, float b, float alpha, Vector3D[] cube, float brightnessMultiplier) {
 		float brightnessForRender = 1;
 
 		float R, B, G;
 
 		for (int i = 0; i < FBP.CUBE.length; i += 4) {
-			FBPVector3D v1 = cube[i];
-			FBPVector3D v2 = cube[i + 1];
-			FBPVector3D v3 = cube[i + 2];
-			FBPVector3D v4 = cube[i + 3];
+			Vector3D v1 = cube[i];
+			Vector3D v2 = cube[i + 1];
+			Vector3D v3 = cube[i + 2];
+			Vector3D v4 = cube[i + 3];
 
 			R = r * brightnessForRender;
 			G = g * brightnessForRender;
@@ -284,7 +284,7 @@ public class FBPRenderer {
 	 * @param alpha The alpha value.
 	 * @param normals the normal vector for the vertex, or null if not specified
 	 */
-	static void addVertex(BufferBuilder buffer, double scale, FBPVector3D position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha, FBPVector3D normals) {
+	static void addVertex(BufferBuilder buffer, double scale, Vector3D position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha, Vector3D normals) {
 		if (normals == null) {
 			buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, alpha).lightmap(skyLight, blockLight).endVertex();
 		} else {
@@ -311,7 +311,7 @@ public class FBPRenderer {
 	 * @param alpha The alpha value.
 	 * @param normals The normal vector.
 	 */
-	static void addVertexWidthHeight(BufferBuilder buffer, double width, double height, FBPVector3D position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha, FBPVector3D normals) {
+	static void addVertexWidthHeight(BufferBuilder buffer, double width, double height, Vector3D position, double u, double v, int skyLight, int blockLight, float r, float g, float b, float alpha, Vector3D normals) {
 		buffer.pos(position.x * width, position.y * height, position.z * width).tex(u, v).color(r, g, b, alpha).lightmap(skyLight, blockLight).normal(normals.x, normals.y, normals.z).endVertex();
 	}
 
@@ -324,12 +324,12 @@ public class FBPRenderer {
 	 * @param AngleZ The angle to rotate around the Z axis (in radians).
 	 * @return The rotated vector.
 	 */
-	public static FBPVector3D rotateVec(FBPVector3D vec, float AngleX, float AngleY, float AngleZ) {
+	public static Vector3D rotateVec(Vector3D vec, float AngleX, float AngleY, float AngleZ) {
 		sin.set((float) FastMath.sinQuick(AngleX), (float) FastMath.sinQuick(AngleY), (float) FastMath.sinQuick(AngleZ));
 		cos.set((float) FastMath.cosQuick(AngleX), (float) FastMath.cosQuick(AngleY), (float) FastMath.cosQuick(AngleZ));
 
 		// I do not understand why a new vector is required instead of using FBPVector3d.set, but I've verified it is required for this method to work correctly
-		vec = new FBPVector3D(vec.x * cos.y + vec.z * sin.y, vec.y, vec.x * sin.y - vec.z * cos.y);
+		vec = new Vector3D(vec.x * cos.y + vec.z * sin.y, vec.y, vec.x * sin.y - vec.z * cos.y);
 
 		return vec;
 	}

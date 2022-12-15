@@ -2,7 +2,8 @@ package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
-import io.redstudioragnarok.FBP.vector.FBPVector3D;
+import io.redstudioragnarok.FBP.vector.Vector2D;
+import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleDigging;
@@ -10,7 +11,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -24,15 +24,15 @@ public class FBPParticleSnow extends ParticleDigging {
 	double scaleAlpha, prevParticleScale, prevParticleAlpha;
 	double endMult = 1;
 
-	FBPVector3D rot, prevRot, rotStep;
+	Vector3D rot, prevRot, rotStep;
 
 	public FBPParticleSnow(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
 
 		this.sourcePos = new BlockPos(xCoordIn, yCoordIn, zCoordIn);
 
-		rot = new FBPVector3D();
-		prevRot = new FBPVector3D();
+		rot = new Vector3D();
+		prevRot = new Vector3D();
 
 		createRotationMatrix();
 
@@ -63,7 +63,7 @@ public class FBPParticleSnow extends ParticleDigging {
 		double ry = FBP.random.nextDouble();
 		double rz = FBP.random.nextDouble();
 
-		rotStep = new FBPVector3D(rx > 0.5 ? 1 : -1, ry > 0.5 ? 1 : -1, rz > 0.5 ? 1 : -1);
+		rotStep = new Vector3D(rx > 0.5 ? 1 : -1, ry > 0.5 ? 1 : -1, rz > 0.5 ? 1 : -1);
 
 		rot.copy(rotStep);
 	}
@@ -205,7 +205,7 @@ public class FBPParticleSnow extends ParticleDigging {
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 
-		Vec2f[] particle = texturedParticle(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY);
+		Vector2D[] particle = texturedParticle(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY);
 
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
 		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
@@ -219,7 +219,7 @@ public class FBPParticleSnow extends ParticleDigging {
 
 		y += scale / 10;
 
-		FBPVector3D smoothRot = new FBPVector3D(0, 0, 0);
+		Vector3D smoothRot = new Vector3D(0, 0, 0);
 
 		if (FBP.rotationMult > 0) {
 			smoothRot.y = rot.y;
@@ -230,7 +230,7 @@ public class FBPParticleSnow extends ParticleDigging {
 
 			// SMOOTH ROTATION
 			if (!FBP.frozen) {
-				FBPVector3D vector = new FBPVector3D();
+				Vector3D vector = new Vector3D();
 				rot.partialVector(prevRot, partialTicks, vector);
 
 				if (FBP.randomRotation) {

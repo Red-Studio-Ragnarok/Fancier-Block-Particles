@@ -3,7 +3,7 @@ package io.redstudioragnarok.FBP.vector;
 /**
  * Represents a three-dimensional vector with `x`, `y`, and `z` coordinates.
  */
-public class FBPVector3D {
+public class Vector3D {
 
 	/** The X coordinate */
 	public float x;
@@ -12,7 +12,10 @@ public class FBPVector3D {
 	/** The Z coordinate */
 	public float z;
 
-	public FBPVector3D() {
+	/**
+	 * Constructs a new vector with default coordinates (0, 0, 0).
+	 */
+	public Vector3D() {
 	}
 
 	/**
@@ -22,7 +25,7 @@ public class FBPVector3D {
 	 * @param inputY The Y coordinate
 	 * @param inputZ The Z coordinate
 	 */
-	public FBPVector3D(float inputX, float inputY, float inputZ) {
+	public Vector3D(float inputX, float inputY, float inputZ) {
 		x = inputX;
 		y = inputY;
 		z = inputZ;
@@ -33,7 +36,7 @@ public class FBPVector3D {
 	 *
 	 * @param inputVector The vector to copy the coordinates from
 	 */
-	public FBPVector3D(FBPVector3D inputVector) {
+	public Vector3D(Vector3D inputVector) {
 		x = inputVector.x;
 		y = inputVector.y;
 		z = inputVector.z;
@@ -44,7 +47,7 @@ public class FBPVector3D {
 	 *
 	 * @param inputVector The vector to copy from
 	 */
-	public void copy(FBPVector3D inputVector) {
+	public void copy(Vector3D inputVector) {
 		x = inputVector.x;
 		y = inputVector.y;
 		z = inputVector.z;
@@ -68,7 +71,7 @@ public class FBPVector3D {
 	 *
 	 * @param inputVector The vector to add
 	 */
-	public void add(FBPVector3D inputVector) {
+	public void add(Vector3D inputVector) {
 		x += inputVector.x;
 		y += inputVector.y;
 		z += inputVector.z;
@@ -103,7 +106,7 @@ public class FBPVector3D {
 	 * @param partialTicks The fraction of elapsed time between two frames in a frame-based animation
 	 * @param newVector The new vector to store the interpolated coordinates in
 	 */
-	public void partialVector(FBPVector3D previousVector, float partialTicks, FBPVector3D newVector) {
+	public void partialVector(Vector3D previousVector, float partialTicks, Vector3D newVector) {
 		newVector.x = previousVector.x + (x - previousVector.x) * partialTicks;
 		newVector.y = previousVector.y + (y - previousVector.y) * partialTicks;
 		newVector.z = previousVector.z + (z - previousVector.z) * partialTicks;

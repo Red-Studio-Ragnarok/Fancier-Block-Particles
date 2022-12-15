@@ -2,7 +2,8 @@ package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
-import io.redstudioragnarok.FBP.vector.FBPVector3D;
+import io.redstudioragnarok.FBP.vector.Vector2D;
+import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.minecraft.block.Block;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleSmokeNormal;
@@ -22,7 +23,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 	double scaleAlpha, prevParticleScale, prevParticleAlpha;
 	double endMult = 0.75;
 
-	FBPVector3D[] cube;
+	Vector3D[] cube;
 
 	ParticleSmokeNormal original;
 
@@ -81,10 +82,10 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 		float angleY = rand.nextFloat() * 80;
 
-		cube = new FBPVector3D[FBP.CUBE.length];
+		cube = new Vector3D[FBP.CUBE.length];
 
 		for (int i = 0; i < FBP.CUBE.length; i++) {
-			FBPVector3D vec = FBP.CUBE[i];
+			Vector3D vec = FBP.CUBE[i];
 			cube[i] = FBPRenderer.rotateVec(vec, 0, angleY, 0);
 		}
 
@@ -201,7 +202,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 
-		Vec2f particle = gasParticle(particleTexture);
+		Vector2D particle = gasParticle(particleTexture);
 
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
 		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);

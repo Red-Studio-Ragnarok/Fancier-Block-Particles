@@ -2,7 +2,8 @@ package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
-import io.redstudioragnarok.FBP.vector.FBPVector3D;
+import io.redstudioragnarok.FBP.vector.Vector2D;
+import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -12,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -29,9 +29,9 @@ public class FBPParticleFlame extends ParticleFlame {
 
 	boolean spawnAnother;
 
-	FBPVector3D startPos;
+	Vector3D startPos;
 
-	FBPVector3D[] cube;
+	Vector3D[] cube;
 
 	protected FBPParticleFlame(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double mY, boolean spawnAnother) {
 		super(worldIn, xCoordIn, yCoordIn - 0.06, zCoordIn, 0, mY, 0);
@@ -42,7 +42,7 @@ public class FBPParticleFlame extends ParticleFlame {
 		if (blockState == Blocks.TORCH.getDefaultState())
 			prevPosY = posY = posY + 0.04;
 
-		startPos = new FBPVector3D((float) posX, (float) posY, (float) posZ);
+		startPos = new Vector3D((float) posX, (float) posY, (float) posZ);
 
 		mc = Minecraft.getMinecraft();
 
@@ -60,10 +60,10 @@ public class FBPParticleFlame extends ParticleFlame {
 
 		float angleY = rand.nextFloat() * 80;
 
-		cube = new FBPVector3D[FBP.CUBE.length];
+		cube = new Vector3D[FBP.CUBE.length];
 
 		for (int i = 0; i < FBP.CUBE.length; i++) {
-			FBPVector3D vec = FBP.CUBE[i];
+			Vector3D vec = FBP.CUBE[i];
 			cube[i] = FBPRenderer.rotateVec(vec, 0, angleY, 0);
 		}
 
@@ -180,7 +180,7 @@ public class FBPParticleFlame extends ParticleFlame {
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 
-		Vec2f particle = gasParticle(particleTexture);
+		Vector2D particle = gasParticle(particleTexture);
 
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
 		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);

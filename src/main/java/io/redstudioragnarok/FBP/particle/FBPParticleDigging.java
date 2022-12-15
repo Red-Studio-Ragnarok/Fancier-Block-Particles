@@ -5,7 +5,8 @@ import io.redstudioragnarok.FBP.keys.FBPKeyBindings;
 import io.redstudioragnarok.FBP.model.FBPModelHelper;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
 import io.redstudioragnarok.FBP.util.FBPMathUtil;
-import io.redstudioragnarok.FBP.vector.FBPVector3D;
+import io.redstudioragnarok.FBP.vector.Vector2D;
+import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -25,7 +26,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
@@ -51,7 +51,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	EnumFacing facing;
 
-	FBPVector3D rot, prevRot, rotStep;
+	Vector3D rot, prevRot, rotStep;
 
 	static Entity dummyEntity = new Entity(null) {
 		@Override
@@ -79,8 +79,8 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		mc = Minecraft.getMinecraft();
 
-		rot = new FBPVector3D();
-		prevRot = new FBPVector3D();
+		rot = new Vector3D();
+		prevRot = new Vector3D();
 
 		this.facing = facing;
 
@@ -274,7 +274,7 @@ public class FBPParticleDigging extends ParticleDigging {
 					}
 
 					if (allowedToMove) {
-						FBPVector3D newVector = new FBPVector3D(rotStep);
+						Vector3D newVector = new Vector3D(rotStep);
 						newVector.scale(getMult());
 						rot.add(newVector);
 					}
@@ -478,7 +478,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		if (FBPKeyBindings.FBPKillParticles.isKeyDown() && !killToggle)
 			killToggle = true;
 
-		Vec2f[] particle = texturedParticle(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY);
+		Vector2D[] particle = texturedParticle(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY);
 
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
 		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
@@ -492,7 +492,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		y += scale / 10;
 
-		FBPVector3D smoothRot = new FBPVector3D(0, 0, 0);
+		Vector3D smoothRot = new Vector3D(0, 0, 0);
 
 		if (FBP.rotationMult > 0) {
 			smoothRot.y = rot.y;
@@ -503,7 +503,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 			// SMOOTH ROTATION
 			if (!FBP.frozen) {
-				FBPVector3D vector = new FBPVector3D();
+				Vector3D vector = new Vector3D();
 				rot.partialVector(prevRot, partialTicks, vector);
 
 				if (FBP.randomRotation) {
@@ -523,7 +523,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		double ry0 = FBP.random.nextDouble();
 		double rz0 = FBP.random.nextDouble();
 
-		rotStep = new FBPVector3D(rx0 > 0.5 ? 1 : -1, ry0 > 0.5 ? 1 : -1, rz0 > 0.5 ? 1 : -1);
+		rotStep = new Vector3D(rx0 > 0.5 ? 1 : -1, ry0 > 0.5 ? 1 : -1, rz0 > 0.5 ? 1 : -1);
 
 		rot.copy(rotStep);
 	}
