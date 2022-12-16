@@ -14,6 +14,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.awt.*;
 import java.util.List;
 
 import static io.redstudioragnarok.FBP.util.ParticleUtil.texturedParticle;
@@ -27,6 +28,8 @@ public class FBPParticleRain extends ParticleDigging {
 	double particleHeight, prevParticleScale, prevParticleHeight, prevParticleAlpha;
 	double scalar = FBP.scaleMult;
 	double endMult = 1;
+
+	Color color;
 
 	public FBPParticleRain(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
@@ -206,7 +209,9 @@ public class FBPParticleRain extends ParticleDigging {
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 		float height = (float) (prevParticleHeight + (particleHeight - prevParticleHeight) * partialTicks);
 
-		FBPRenderer.renderParticleShadedWidthHeight(buffer, particle, x, y + height / 10, z, scale / 10, height / 10, new Vector3D(0, AngleY, 0), brightness, particleRed, particleGreen, particleBlue, alpha);
+		color = new Color(particleRed, particleGreen, particleBlue, alpha);
+
+		FBPRenderer.renderParticleShadedWidthHeight(buffer, particle, x, y + height / 10, z, scale / 10, height / 10, new Vector3D(0, AngleY, 0), brightness, color);
 	}
 
 	@Override

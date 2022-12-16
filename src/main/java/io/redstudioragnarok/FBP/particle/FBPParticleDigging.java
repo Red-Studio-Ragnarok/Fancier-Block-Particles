@@ -30,6 +30,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.List;
 
 import static io.redstudioragnarok.FBP.util.ParticleUtil.texturedParticle;
@@ -52,6 +53,8 @@ public class FBPParticleDigging extends ParticleDigging {
 	EnumFacing facing;
 
 	Vector3D rot, prevRot, rotStep;
+
+	Color color;
 
 	static Entity dummyEntity = new Entity(null) {
 		@Override
@@ -515,7 +518,9 @@ public class FBPParticleDigging extends ParticleDigging {
 			}
 		}
 
-		FBPRenderer.renderParticle(buffer, particle, x, y, z, scale / 10, smoothRot, brightness, particleRed, particleGreen, particleBlue, alpha);
+		color = new Color(particleRed, particleGreen, particleBlue, alpha);
+
+		FBPRenderer.renderParticle(buffer, particle, x, y, z, scale / 10, smoothRot, brightness, color);
 	}
 
 	private void createRotationMatrix() {

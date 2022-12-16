@@ -15,6 +15,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.awt.*;
 import java.util.List;
 
 import static io.redstudioragnarok.FBP.FBP.snowTexture;
@@ -32,6 +33,8 @@ public class FBPParticleFlame extends ParticleFlame {
 	Vector3D startPos;
 
 	Vector3D[] cube;
+
+	Color color;
 
 	protected FBPParticleFlame(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double mY, boolean spawnAnother) {
 		super(worldIn, xCoordIn, yCoordIn - 0.06, zCoordIn, 0, mY, 0);
@@ -195,7 +198,9 @@ public class FBPParticleFlame extends ParticleFlame {
 		if (this.particleAge >= this.particleMaxAge)
 			this.particleGreen = (float) (scale / startScale);
 
-		FBPRenderer.renderParticleFlame(buffer, particle, x, y, z, scale, brightness, particleRed, particleGreen, particleBlue, alpha, cube);
+		color = new Color(particleRed, particleGreen, particleBlue, alpha);
+
+		FBPRenderer.renderParticleFlame(buffer, particle, x, y, z, scale, brightness, color, cube);
 	}
 
 	@Override

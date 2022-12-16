@@ -13,6 +13,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
+import java.awt.*;
 import java.util.List;
 
 import static io.redstudioragnarok.FBP.FBP.snowTexture;
@@ -26,6 +27,8 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 	Vector3D[] cube;
 
 	ParticleSmokeNormal original;
+
+	Color color;
 
 	protected FBPParticleSmoke(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, final double mX, final double mY, final double mZ, float scale, ParticleSmokeNormal original) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, mX, mY, mZ, scale);
@@ -214,7 +217,9 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
 
-		FBPRenderer.renderParticleSmoke(buffer, particle, x, y, z, scale, brightness, particleRed, particleGreen, particleBlue, alpha, cube);
+		color = new Color(particleRed, particleGreen, particleBlue, alpha);
+
+		FBPRenderer.renderParticleSmoke(buffer, particle, x, y, z, scale, brightness, color, cube);
 	}
 
 	@Override
