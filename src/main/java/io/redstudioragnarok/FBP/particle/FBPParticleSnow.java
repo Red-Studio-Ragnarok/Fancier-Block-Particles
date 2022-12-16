@@ -13,6 +13,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.awt.*;
 import java.util.List;
 
 import static io.redstudioragnarok.FBP.util.ParticleUtil.texturedParticle;
@@ -25,6 +26,8 @@ public class FBPParticleSnow extends ParticleDigging {
 	double endMult = 1;
 
 	Vector3D rot, prevRot, rotStep;
+
+	Color color;
 
 	public FBPParticleSnow(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
@@ -242,7 +245,9 @@ public class FBPParticleSnow extends ParticleDigging {
 			}
 		}
 
-		FBPRenderer.renderParticle(buffer, particle, x, y, z, scale / 10, smoothRot, brightness, particleRed, particleGreen, particleBlue, alpha);
+		color = new Color(particleRed, particleGreen, particleBlue, alpha);
+
+		FBPRenderer.renderParticle(buffer, particle, x, y, z, scale / 10, smoothRot, brightness, color);
 	}
 
 	@Override
