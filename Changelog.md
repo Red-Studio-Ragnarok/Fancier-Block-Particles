@@ -19,7 +19,7 @@
 ## Optimization
 
 - Vectors got a redesign as a result FBP should now be faster and use less VRAM
-- Hex colors are now used instead of 4 separate R,G,B and A variables which makes rendering faster
+- Hex colors are now used instead of 4 separate R,G,B and A variables which makes rendering faster ([#10])
 - As the result of a big code cleanup FBP as a whole should now be faster, load faster and use slightly less resources
 - Optimized Rendering of Fancy Block Placement and all particles as a result, they should be faster and use slightly less GPU, RAM & VRAM
 - FBP now uses its own math utilities and Jafama fast math library which should result in better performance
@@ -56,15 +56,16 @@ Non-critical try-catch blocks should now never throw a runtime exception or prin
 
 #### Credits
 
-- [WildMihai] for optimizations in `FBPRenderer`, `FBPConfigHandler` and deprecating Rest On Floor ([#9])
+- [WildMihai] for optimizations in `FBPRenderer`, `FBPConfigHandler` and deprecating Rest On Floor ([#9], [#10]) 
 
-[#139]: https://github.com/TominoCZ/FancyBlockParticles/issues/139
 [#7]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/7
+[#139]: https://github.com/TominoCZ/FancyBlockParticles/issues/139
+[#9]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/9
+[#10]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/10
 [Anatawa]: https://github.com/anatawa12
 [FG2.3 fork]: https://github.com/anatawa12/ForgeGradle-2.3
 [Universal Tweaks]: https://www.curseforge.com/minecraft/mc-mods/universal-tweaks
 [WildMihai]: https://github.com/WildMihai
-[#9]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/9
 
 ---
 
