@@ -19,7 +19,9 @@ import java.util.List;
 import static io.redstudioragnarok.FBP.FBP.mc;
 
 /**
- * This class provides methods for rendering 3D objects using a BufferBuilder.
+ * This class provides methods for rendering particles in a 3D environment using a BufferBuilder.
+ * The class defines several static methods that can be called to render different types of particles, such as fire, smoke and general particles.
+ * These methods use a BufferBuilder object and the Tessellator class to construct and draw 3D shapes made up of individual quads (four-sided polygons).
  */
 public class FBPRenderer {
 
@@ -32,17 +34,17 @@ public class FBPRenderer {
 	static Vector3D cos = new Vector3D();
 
 	/**
-	 * Renders a 3D particle on a screen using a BufferBuilder object.
+	 * Renders a particle using the given BufferBuilder.
 	 *
-	 * @param buffer The BufferBuilder object to use for rendering
-	 * @param particle An array of 2D vectors representing the cube's vertices
-	 * @param x The x coordinate of the cube's position
-	 * @param y The y coordinate of the cube's position
-	 * @param z The z coordinate of the cube's position
-	 * @param scale The scaling factor for the cube
-	 * @param rotation The rotation of the cube as a 3D vector
-	 * @param brightness The brightness for the cube
-	 * @param color The red component of the cube's color
+	 * @param buffer The buffer to render the particle to
+	 * @param particle The vertices of the particle
+	 * @param x The x position of the particle
+	 * @param y The y position of the particle
+	 * @param z the z position of the particle
+	 * @param scale The scale of the particle
+	 * @param rotation The rotation of the particle
+	 * @param brightness The brightness of the particle
+	 * @param color The color of the particle
 	 */
 	public static void renderParticle(BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double scale, Vector3D rotation, int brightness, Color color) {
 		buffer.setTranslation(x, y, z);
@@ -53,34 +55,31 @@ public class FBPRenderer {
 	}
 
 	/**
-	 * Renders a 3D particle on a screen using a BufferBuilder object and with the specified width and height.
+	 * Renders a particle using the given BufferBuilder with a custom width and height.
 	 *
-	 * @param buffer The BufferBuilder object to use for rendering
-	 * @param particle An array of 2D vectors representing the cube's vertices
-	 * @param x The x coordinate of the cube's position
-	 * @param y The y coordinate of the cube's position
-	 * @param z The z coordinate of the cube's position
-	 * @param width The width of the cube
-	 * @param height The height of the cube
-	 * @param rotation The rotation of the cube as a 3D vector
-	 * @param brightness The brightness for the cube
+	 * @param buffer The buffer to render the particle to
+	 * @param particle The vertices of the particle
+	 * @param x The x position of the particle
+	 * @param y The y position of the particle
+	 * @param z the z position of the particle
+	 * @param width The width of the particle
+	 * @param height The height of the particle
+	 * @param rotation The rotation of the particle
+	 * @param brightness The brightness of the particle
+	 * @param color The color of the particle
 	 */
-	public static void renderParticleShadedWidthHeight(BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double width, double height, Vector3D rotation, int brightness, Color color) {
-		// switch to vertex format that supports normals
+	public static void renderParticleWidthHeight(BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double width, double height, Vector3D rotation, int brightness, Color color) {
 		Tessellator.getInstance().draw();
 		buffer.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
 
-		// some GL commands
 		RenderHelper.enableStandardItemLighting();
 
-		// render particle
 		buffer.setTranslation(x, y, z);
 
 		putParticleWidthHeight(buffer, particle, width, height, rotation, brightness, color);
 
 		buffer.setTranslation(0, 0, 0);
 
-		// continue with the regular vertex format
 		Tessellator.getInstance().draw();
 		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
@@ -88,16 +87,17 @@ public class FBPRenderer {
 	}
 
 	/**
-	 * Renders a 3D particle for flame on a screen using a BufferBuilder object.
+	 * Renders a flame particle using the given BufferBuilder.
 	 *
-	 * @param buffer The BufferBuilder object to use for rendering
-	 * @param particle A 2D vector representing the flame's vertices
-	 * @param x The x coordinate of the cube's position
-	 * @param y The y coordinate of the cube's position
-	 * @param z The z coordinate of the cube's position
-	 * @param scale The scaling factor for the flame
-	 * @param brightness The brightness of the flame
-	 * @param cube The vertices of the cube on which the flame is being rendered
+	 * @param buffer The buffer to render the particle to
+	 * @param particle The shape of the particle
+	 * @param x The x position of the particle
+	 * @param y The y position of the particle
+	 * @param z The z position of the particle
+	 * @param scale The scale of the particle
+	 * @param brightness The brightness of the particle
+	 * @param color The color of the particle
+	 * @param cube The shape of the particle as an array of Vector3D objects
 	 */
 	public static void renderParticleFlame(BufferBuilder buffer, Vector2D particle, float x, float y, float z, double scale, int brightness, Color color, Vector3D[] cube) {
 		Tessellator.getInstance().draw();
@@ -116,16 +116,17 @@ public class FBPRenderer {
 	}
 
 	/**
-	 * Renders a 3D particle for smoke on a screen using a BufferBuilder object.
+	 * Renders a smoke particle using the given BufferBuilder.
 	 *
-	 * @param buffer The BufferBuilder object to use for rendering
-	 * @param particle A 2D vector representing the flame's vertices
-	 * @param x The x coordinate of the cube's position
-	 * @param y The y coordinate of the cube's position
-	 * @param z The z coordinate of the cube's position
-	 * @param scale The scaling factor for the flame
-	 * @param brightness The brightness of the flame
-	 * @param cube The vertices of the cube on which the flame is being rendered
+	 * @param buffer The buffer to render the particle to
+	 * @param particle The shape of the particle
+	 * @param x The x position of the particle
+	 * @param y The y position of the particle
+	 * @param z The z position of the particle
+	 * @param scale The scale of the particle
+	 * @param brightness The brightness of the particle
+	 * @param color The color of the particle
+	 * @param cube The shape of the particle as an array of Vector3D objects
 	 */
 	public static void renderParticleSmoke(BufferBuilder buffer, Vector2D particle, float x, float y, float z, double scale, int brightness, Color color, Vector3D[] cube) {
 		buffer.setTranslation(x, y, z);
@@ -136,13 +137,17 @@ public class FBPRenderer {
 	}
 
 	/**
-	 * Adds the vertices for a particle to the given buffer, with the specified scale, rotation, light levels, color, and texture coordinates.
+	 * Adds the vertices of a particle to the given buffer.
+	 * <p>
+	 * The particle is a cube with the given scale factor, and is rotated by the given angles.
+	 * The brightness and color of the particle are also set.
 	 *
-	 * @param buffer The buffer to add the vertices to
-	 * @param particle An array of texture coordinates for the cube
-	 * @param scale The scale to apply to the vertices
-	 * @param rotation The rotation to apply to the vertices
-	 * @param brightness The brightness for the vertices
+	 * @param buffer The buffer to which the vertices of the particle will be added
+	 * @param particle An array of Vector2D objects representing the texture coordinates for each face of the particle
+	 * @param scale The scale factor for the particle
+	 * @param rotation A Vector3D object containing the rotation angles for the particle (in degrees)
+	 * @param brightness The brightness of the particle
+	 * @param color The color of the particle
 	 */
 	static void putParticle(BufferBuilder buffer, Vector2D[] particle, double scale, Vector3D rotation, int brightness, Color color) {
 		float radsX = (float) Math.toRadians(rotation.x);
@@ -170,14 +175,18 @@ public class FBPRenderer {
 	}
 
 	/**
-	 * Adds the vertices for a particle to the given buffer, with the specified width, height, rotation, light levels, color, and texture coordinates.
+	 * Adds the vertices of a particle to the given buffer.
+	 * <p>
+	 * The particle is a cube with the given width and height, and is rotated by the given angles.
+	 * The brightness and color of the particle are also set.
 	 *
-	 * @param buffer The buffer to add the vertices to
-	 * @param particle An array of texture coordinates for the cube
-	 * @param width The width of the cube
-	 * @param height The height of the cube
-	 * @param rotation The rotation to apply to the vertices
-	 * @param brightness The brightness for the vertices
+	 * @param buffer The buffer to which the vertices of the particle will be added
+	 * @param particle An array of Vector2D objects representing the texture coordinates for each face of the particle
+	 * @param width The width of the particle
+	 * @param height The height of the particle
+	 * @param rotation A Vector3D object containing the rotation angles for the particle (in degrees)
+	 * @param brightness The brightness of the particle
+	 * @param color The color of the particle
 	 */
 	static void putParticleWidthHeight(BufferBuilder buffer, Vector2D[] particle, double width, double height, Vector3D rotation, int brightness, Color color) {
 		float radsX = (float) Math.toRadians(rotation.x);
@@ -205,22 +214,23 @@ public class FBPRenderer {
 	}
 
 	/**
-	 * Adds the vertices for a gas particle to the given buffer, with the specified scale, light levels, color, texture coordinates, and brightness multiplier.
+	 * Adds the vertices of a gas particle to the given buffer.
+	 * <p>
+	 * The particle is a cube with the given scale factor, and is rotated by the given angles.
+	 * The brightness and color of the particle are also set, also the brightness is multiplied.
 	 *
-	 * @param buffer The buffer to add the vertices to
-	 * @param particle The texture coordinates for the cube
-	 * @param scale The scale to apply to the vertices
-	 * @param brightness The brightness for the vertices
-	 * @param cube The vertices of the cube on which the gas is being rendered
-	 * @param brightnessMultiplier The brightness multiplier to apply to the color of each set of four vertices
+	 * @param buffer The buffer to which the vertices of the particle will be added
+	 * @param particle A Vector2D object representing the texture coordinate for the particle
+	 * @param scale The scale factor for the particle
+	 * @param brightness The brightness of the particle
+	 * @param color The color of the particle
+	 * @param cube The shape of the particle as an array of Vector3D objects
+	 * @param brightnessMultiplier The brightness multiplier for the particle
 	 */
 	public static void putParticleGas(BufferBuilder buffer, Vector2D particle, double scale, int brightness, Color color, Vector3D[] cube, float brightnessMultiplier) {
 		float brightnessForRender = 1;
 
-		r = (float)color.getRed() / 255;
-		g = (float)color.getGreen() / 255;
-		b = (float)color.getBlue() / 255;
-		a = (float)color.getAlpha() / 255;
+		HexToFloats(color);
 
 		float R, B, G;
 
@@ -246,21 +256,20 @@ public class FBPRenderer {
 	}
 
 	/**
-	 * Adds a vertex to the given buffer builder with the given position, texture coordinates, light levels, color, and optional normal.
+	 * Adds a vertex to the given buffer, with the given position, texture coordinates, brightness, and color.
+	 * The position of the vertex is scaled by the given scale factor.
 	 *
-	 * @param buffer The buffer builder to add the vertex to.
-	 * @param scale The scale to apply to the position.
-	 * @param position The position of the vertex.
-	 * @param u The U coordinate of the texture.
-	 * @param v The V coordinate of the texture.
-	 * @param brightness The brightness.
-	 * @param normals the normal vector for the vertex, or null if not specified
+	 * @param buffer The buffer to which the vertex will be added
+	 * @param scale The scale factor for the vertex position
+	 * @param position The position of the vertex
+	 * @param u The U coordinate of the vertex's texture
+	 * @param v The V coordinate of the vertex's texture
+	 * @param brightness The brightness of the vertex
+	 * @param color The color of the vertex
+	 * @param normals The normal vector for the vertex
 	 */
 	static void addVertex(BufferBuilder buffer, double scale, Vector3D position, double u, double v, int brightness, Color color, Vector3D normals) {
-		r = (float)color.getRed() / 255;
-		g = (float)color.getGreen() / 255;
-		b = (float)color.getBlue() / 255;
-		a = (float)color.getAlpha() / 255;
+		HexToFloats(color);
 
 		if (normals == null) {
 			buffer.pos(position.x * scale, position.y * scale, position.z * scale).tex(u, v).color(r, g, b, a).lightmap(brightness >> 16 & 65535, brightness & 65535).endVertex();
@@ -270,36 +279,33 @@ public class FBPRenderer {
 	}
 
 	/**
-	 * Adds a vertex to the given buffer builder with the given position, texture coordinates, light levels, color, and normal.
-	 * <p>
-	 * The position is scaled by the given width and height values.
+	 * Adds a vertex to the given buffer, with the given position, texture coordinates, brightness, and color.
+	 * The position of the vertex is scaled by the given width and height.
 	 *
-	 * @param buffer The buffer builder to add the vertex to.
-	 * @param width The scale to apply to the X and Z coordinates of the position.
-	 * @param height The scale to apply to the Y coordinate of the position.
-	 * @param position The position of the vertex.
-	 * @param u The U coordinate of the texture.
-	 * @param v The V coordinate of the texture.
-	 * @param brightness The brightness.
-	 * @param normals The normal vector.
+	 * @param buffer The buffer to which the vertex will be added
+	 * @param width The width scale factor for the vertex position
+	 * @param height The height scale factor for the vertex position
+	 * @param position The position of the vertex
+	 * @param u The U coordinate of the vertex's texture
+	 * @param v The V coordinate of the vertex's texture
+	 * @param brightness The brightness of the vertex
+	 * @param color The color of the vertex
+	 * @param normals The normal vector for the vertex
 	 */
 	static void addVertexWidthHeight(BufferBuilder buffer, double width, double height, Vector3D position, double u, double v, int brightness, Color color, Vector3D normals) {
-		r = (float)color.getRed() / 255;
-		g = (float)color.getGreen() / 255;
-		b = (float)color.getBlue() / 255;
-		a = (float)color.getAlpha() / 255;
+		HexToFloats(color);
 
 		buffer.pos(position.x * width, position.y * height, position.z * width).tex(u, v).color(r, g, b, a).lightmap(brightness >> 16 & 65535, brightness & 65535).normal(normals.x, normals.y, normals.z).endVertex();
 	}
 
 	/**
-	 * Rotates the given vector around the X, Y, and Z axes by the specified angles.
+	 * Rotates the given vector by the given angles around the X, Y, and Z axes.
 	 *
-	 * @param vector The vector to rotate.
-	 * @param angleX The angle to rotate around the X axis (in radians).
-	 * @param angleY The angle to rotate around the Y axis (in radians).
-	 * @param angleZ The angle to rotate around the Z axis (in radians).
-	 * @return The rotated vector.
+	 * @param vector The vector to rotate
+	 * @param angleX The angle to rotate around the X axis (in degrees)
+	 * @param angleY The angle to rotate around the Y axis (in degrees)
+	 * @param angleZ The angle to rotate around the Z axis (in degrees)
+	 * @return The rotated vector
 	 */
 	public static Vector3D rotateVector(Vector3D vector, float angleX, float angleY, float angleZ) {
 		sin.set((float) FastMath.sinQuick(angleX), (float) FastMath.sinQuick(angleY), (float) FastMath.sinQuick(angleZ));
@@ -309,5 +315,17 @@ public class FBPRenderer {
 		vector = new Vector3D(vector.x * cos.y + vector.z * sin.y, vector.y, vector.x * sin.y - vector.z * cos.y);
 
 		return vector;
+	}
+
+	/**
+	 * Converts the color values from the given Color object to float values between 0 and 1, and stores them in the r, g, b, and a fields.
+	 *
+	 * @param inputColor The Color object to convert.
+	 */
+	private static void HexToFloats (Color inputColor) {
+		r = (float)inputColor.getRed() / 255;
+		g = (float)inputColor.getGreen() / 255;
+		b = (float)inputColor.getBlue() / 255;
+		a = (float)inputColor.getAlpha() / 255;
 	}
 }

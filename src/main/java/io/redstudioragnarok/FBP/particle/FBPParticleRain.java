@@ -211,7 +211,7 @@ public class FBPParticleRain extends ParticleDigging {
 
 		color = new Color(particleRed, particleGreen, particleBlue, alpha);
 
-		FBPRenderer.renderParticleShadedWidthHeight(buffer, particle, x, y + height / 10, z, scale / 10, height / 10, new Vector3D(0, AngleY, 0), brightness, color);
+		FBPRenderer.renderParticleWidthHeight(buffer, particle, x, y + height / 10, z, scale / 10, height / 10, new Vector3D(0, AngleY, 0), brightness, color);
 	}
 
 	@Override
