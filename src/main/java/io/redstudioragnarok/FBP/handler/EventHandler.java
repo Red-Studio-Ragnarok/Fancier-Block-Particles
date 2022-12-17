@@ -303,7 +303,7 @@ public class EventHandler {
 			if (FBP.enabled) {
 				mc.effectRenderer = FBP.fancyEffectRenderer;
 
-				if (FBP.fancyRain || FBP.fancySnow)
+				if (FBP.fancyWeather)
 					mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
 			}
 		}

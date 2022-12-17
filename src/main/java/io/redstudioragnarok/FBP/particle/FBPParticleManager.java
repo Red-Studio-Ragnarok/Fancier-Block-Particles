@@ -44,7 +44,7 @@ public class FBPParticleManager extends ParticleManager {
 
 		if (!(toAdd instanceof FBPParticleSnow) && !(toAdd instanceof FBPParticleRain)) {
 			IBlockState blockState;
-			if (FBP.fancyRain && toAdd instanceof ParticleRain) {
+			if (FBP.fancyWeather && toAdd instanceof ParticleRain) {
 				effect.setAlphaF(0);
 			} else if (toAdd instanceof FBPParticleDigging) {
 				blockState = ((ParticleDigging)effect).sourceState;

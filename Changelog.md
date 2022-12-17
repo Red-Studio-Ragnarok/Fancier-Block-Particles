@@ -2,6 +2,7 @@
 
 ## Changed
 
+- Fancy Rain and Fancy Snow config options have been replaced by Fancy Weather option
 - Changed behavior of Fancy Block Placement with slabs placing slabs one on top of another should be a better experience
 - Smoke particles are now slightly more transparent
 - Updated `mcmod.info` to feature new description and better credits
@@ -36,7 +37,7 @@
 - Now use a forked version of [Universal Tweaks] for faster development environment loading times
 - Cleanup the entire code
 - Vectors redesign
-- Refactored the code
+- Major Refactors
 - Renamed most of the variables from unreadable names to readable names
 - Finished removing useless `@SideOnly`
 - Removed useless `isRemote` checks
