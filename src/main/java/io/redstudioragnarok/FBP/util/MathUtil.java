@@ -7,7 +7,7 @@ import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
 /**
  * This class provides fast focused mathematical methods.
  */
-public class FBPMathUtil {
+public class MathUtil {
 
 	/**
 	 * Clamps a value within a specified range, checking for the minimum value first.

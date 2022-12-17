@@ -1,10 +1,10 @@
 package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.keys.FBPKeyBindings;
-import io.redstudioragnarok.FBP.model.FBPModelHelper;
+import io.redstudioragnarok.FBP.keys.KeyBindings;
+import io.redstudioragnarok.FBP.model.ModelHelper;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
-import io.redstudioragnarok.FBP.util.FBPMathUtil;
+import io.redstudioragnarok.FBP.util.MathUtil;
 import io.redstudioragnarok.FBP.vector.Vector2D;
 import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.jafama.FastMath;
@@ -103,8 +103,8 @@ public class FBPParticleDigging extends ParticleDigging {
 
 					double particleSpeed = Math.sqrt(motionX * motionX + motionZ * motionZ);
 
-					float x = FBPMathUtil.addOrSubtractBasedOnSign((float) cameraViewDir.x, 0.01F);
-					float z = FBPMathUtil.addOrSubtractBasedOnSign((float) cameraViewDir.z, 0.01F);
+					float x = MathUtil.addOrSubtractBasedOnSign((float) cameraViewDir.x, 0.01F);
+					float z = MathUtil.addOrSubtractBasedOnSign((float) cameraViewDir.z, 0.01F);
 
 					motionX = x * particleSpeed;
 					motionZ = z * particleSpeed;
@@ -130,7 +130,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		destroyed = facing == null;
 
-		if (texture == null && FBPModelHelper.isModelValid(state)) {
+		if (texture == null && ModelHelper.isModelValid(state)) {
 			BlockModelShapes blockModelShapes = mc.getBlockRendererDispatcher().getBlockModelShapes();
 
 			// GET THE TEXTURE OF THE BLOCK FACE
@@ -478,7 +478,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		}
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
-		if (FBPKeyBindings.FBPKillParticles.isKeyDown() && !killToggle)
+		if (KeyBindings.FBPKillParticles.isKeyDown() && !killToggle)
 			killToggle = true;
 
 		Vector2D[] particle = texturedParticle(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY);

@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import org.lwjgl.opengl.GL11;
 
-public class FBPGuiHelper extends GuiScreen {
+public class GuiHelper extends GuiScreen {
 
 	public static void background(int top, int bottom, int width, int height) {
 		Tessellator tessellator = Tessellator.getInstance();

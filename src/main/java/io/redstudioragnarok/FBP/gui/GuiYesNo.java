@@ -1,19 +1,19 @@
 package io.redstudioragnarok.FBP.gui;
 
-import io.redstudioragnarok.FBP.handler.FBPConfigHandler;
+import io.redstudioragnarok.FBP.handler.ConfigHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 
 import java.io.IOException;
 
-public class FBPGuiYesNo extends GuiScreen {
+public class GuiYesNo extends GuiScreen {
 
 	GuiButton Yes, No;
 
 	GuiScreen parent;
 
-	public FBPGuiYesNo(GuiScreen s) {
+	public GuiYesNo(GuiScreen s) {
 		parent = s;
 	}
 
@@ -29,11 +29,11 @@ public class FBPGuiYesNo extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		if (button.id == 1) {
-			FBPConfigHandler.defaults(true);
+			ConfigHandler.defaults(true);
 		}
 		this.mc.displayGuiScreen(parent);
 
-		FBPConfigHandler.write();
+		ConfigHandler.write();
 	}
 
 	@Override

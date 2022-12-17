@@ -4,12 +4,12 @@ import io.redstudioragnarok.FBP.FBP;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
-public class FBPGuiButtonBlacklist extends FBPGuiButton {
+public class GuiButtonBlacklist extends FBPGuiButton {
 
 	public boolean particle;
 	public boolean isInExceptions;
 
-	public FBPGuiButtonBlacklist(int buttonId, int x, int y, String buttonText, boolean particle, boolean isInExceptions) {
+	public GuiButtonBlacklist(int buttonId, int x, int y, String buttonText, boolean particle, boolean isInExceptions) {
 		super(buttonId, x, y, buttonText, false, false, true);
 
 		this.particle = particle;

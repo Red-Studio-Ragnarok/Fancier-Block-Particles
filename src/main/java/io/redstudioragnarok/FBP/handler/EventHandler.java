@@ -2,7 +2,7 @@ package io.redstudioragnarok.FBP.handler;
 
 import io.netty.util.internal.ConcurrentSet;
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.model.FBPModelHelper;
+import io.redstudioragnarok.FBP.model.ModelHelper;
 import io.redstudioragnarok.FBP.node.BlockNode;
 import io.redstudioragnarok.FBP.node.BlockPosNode;
 import io.redstudioragnarok.FBP.particle.FBPParticleBlock;
@@ -49,13 +49,13 @@ import java.util.Objects;
 
 import static io.redstudioragnarok.FBP.FBP.mc;
 
-public class FBPEventHandler {
+public class EventHandler {
 
 	static IWorldEventListener worldEventListener;
 
 	ConcurrentSet<BlockPosNode> list;
 
-	public FBPEventHandler() {
+	public EventHandler() {
 		list = new ConcurrentSet<>();
 
 		worldEventListener = new IWorldEventListener() {
@@ -116,7 +116,7 @@ public class FBPEventHandler {
 
 						IBlockState state = newState.getActualState(worldIn, pos);
 
-						if (state.getBlock() instanceof BlockDoublePlant || !FBPModelHelper.isModelValid(state)) {
+						if (state.getBlock() instanceof BlockDoublePlant || !ModelHelper.isModelValid(state)) {
 							removePosEntry(pos);
 							return;
 						}
@@ -280,7 +280,7 @@ public class FBPEventHandler {
 
 	@SubscribeEvent
 	public void onWorldLoadEvent(WorldEvent.Load world) {
-		FBPConfigHandler.init();
+		ConfigHandler.init();
 
 		world.getWorld().addEventListener(worldEventListener);
 		list.clear();

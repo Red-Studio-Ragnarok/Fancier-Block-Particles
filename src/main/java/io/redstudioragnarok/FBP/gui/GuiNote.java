@@ -5,11 +5,11 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.resources.I18n;
 
-public class FBPGuiNote extends Gui {
+public class GuiNote extends Gui {
 
 	Minecraft mc;
 
-	public FBPGuiNote() {
+	public GuiNote() {
 		this.mc = Minecraft.getMinecraft();
 
 		ScaledResolution scaledResolutionIn = new ScaledResolution(mc);

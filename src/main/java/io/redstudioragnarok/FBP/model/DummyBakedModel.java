@@ -14,13 +14,13 @@ import javax.vecmath.Matrix4f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FBPSimpleBakedModel implements IBakedModel {
+public class DummyBakedModel implements IBakedModel {
 
 	private final List<BakedQuad>[] quads = new List[7];
 	private final IBakedModel parent;
 	private TextureAtlasSprite particle;
 
-	public FBPSimpleBakedModel(IBakedModel parent) {
+	public DummyBakedModel(IBakedModel parent) {
 		this.parent = parent;
 		for (int i = 0; i < quads.length; i++) {
 			quads[i] = new ArrayList<>();

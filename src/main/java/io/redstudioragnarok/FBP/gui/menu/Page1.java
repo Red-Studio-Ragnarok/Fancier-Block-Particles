@@ -1,7 +1,8 @@
-package io.redstudioragnarok.FBP.gui;
+package io.redstudioragnarok.FBP.gui.menu;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.handler.FBPConfigHandler;
+import io.redstudioragnarok.FBP.gui.*;
+import io.redstudioragnarok.FBP.handler.ConfigHandler;
 import io.redstudioragnarok.FBP.util.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -9,7 +10,7 @@ import net.minecraft.client.resources.I18n;
 
 import java.awt.*;
 
-public class FBPGuiMenuPage1 extends GuiScreen {
+public class Page1 extends GuiScreen {
 
 	GuiButton b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug;
 
@@ -38,8 +39,8 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 		Next = new FBPGuiButton(-5, b6.x + b6.width + 25, b6.y + 2 - GUIOffsetY, ">>", false, false, true);
 		Back.width = Next.width = 20;
 
-		Enable = new FBPGuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
-		ReportBug = new FBPGuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
+		Enable = new GuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
+		ReportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 
 		this.buttonList.addAll(java.util.Arrays.asList(b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug));
 	}
@@ -51,7 +52,7 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 			FBP.setEnabled(!FBP.enabled);
 			break;
 		case -5:
-			this.mc.displayGuiScreen(new FBPGuiMenuPage2());
+			this.mc.displayGuiScreen(new Page2());
 			break;
 		case -4:
 			try {
@@ -61,16 +62,16 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 			}
 			break;
 		case -3:
-			this.mc.displayGuiScreen(new FBPGuiMenuPage0());
+			this.mc.displayGuiScreen(new Page0());
 			break;
 		case -2:
-			FBPConfigHandler.init();
+			ConfigHandler.init();
 			break;
 		case -1:
 			this.mc.displayGuiScreen(null);
 			break;
 		case 0:
-			this.mc.displayGuiScreen(new FBPGuiYesNo(this));
+			this.mc.displayGuiScreen(new GuiYesNo(this));
 			break;
 		case 1:
 			FBP.randomRotation = !FBP.randomRotation;
@@ -99,7 +100,7 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		FBPGuiHelper.background(b1.y - 6 - GUIOffsetY, Done.y - 4, width, height);
+		GuiHelper.background(b1.y - 6 - GUIOffsetY, Done.y - 4, width, height);
 
 		int posY = Done.y - 18;
 
@@ -109,7 +110,7 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 			this.drawCenteredString(fontRenderer, description, this.width / 2, posY, fontRenderer.getColorCode('f'));
 		}
 
-		FBPGuiHelper.drawTitle(b1.y - GUIOffsetY, width, fontRenderer);
+		GuiHelper.drawTitle(b1.y - GUIOffsetY, width, fontRenderer);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
@@ -159,6 +160,6 @@ public class FBPGuiMenuPage1 extends GuiScreen {
 
 	@Override
 	public void onGuiClosed() {
-		FBPConfigHandler.write();
+		ConfigHandler.write();
 	}
 }

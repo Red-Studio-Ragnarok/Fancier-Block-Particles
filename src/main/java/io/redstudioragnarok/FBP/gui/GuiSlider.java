@@ -7,7 +7,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.input.Mouse;
 
-public class FBPGuiSlider extends GuiButton {
+public class GuiSlider extends GuiButton {
 
 	public float value;
 	double sliderPosX;
@@ -16,7 +16,7 @@ public class FBPGuiSlider extends GuiButton {
 	boolean dragging = false;
 	boolean mouseDown = false;
 
-	public FBPGuiSlider(int x, int y, float value) {
+	public GuiSlider(int x, int y, float value) {
 		super(Integer.MIN_VALUE, x, y, "");
 		this.value = value;
 		this.width = 200;
@@ -96,8 +96,8 @@ public class FBPGuiSlider extends GuiButton {
 
 		boolean inRectangle = mouseX > X1 && mouseX < X2 && mouseY > Y1 && mouseY <= Y2;
 
-		boolean inCircle1 = FBPGuiHelper.isMouseInsideCircle(mouseX, mouseY, X1, Y1 + 5, 5);
-		boolean inCircle2 = FBPGuiHelper.isMouseInsideCircle(mouseX, mouseY, X2, Y1 + 5, 5);
+		boolean inCircle1 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X1, Y1 + 5, 5);
+		boolean inCircle2 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X2, Y1 + 5, 5);
 
 		return inRectangle || inCircle1 || inCircle2;
 	}
@@ -111,8 +111,8 @@ public class FBPGuiSlider extends GuiButton {
 
 		boolean inRectangle = mouseX > X1 && mouseX < X2 && mouseY > Y1 && mouseY <= Y2;
 
-		boolean inCircle1 = FBPGuiHelper.isMouseInsideCircle(mouseX, mouseY, X1, Y1 + 5, 5);
-		boolean inCircle2 = FBPGuiHelper.isMouseInsideCircle(mouseX, mouseY, X2, Y1 + 5, 5);
+		boolean inCircle1 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X1, Y1 + 5, 5);
+		boolean inCircle2 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X2, Y1 + 5, 5);
 
 		return inRectangle || inCircle1 || inCircle2;
 	}

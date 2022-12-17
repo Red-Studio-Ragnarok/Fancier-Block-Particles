@@ -1,10 +1,10 @@
 package io.redstudioragnarok.FBP;
 
-import io.redstudioragnarok.FBP.block.FBPAnimationDummyBlock;
-import io.redstudioragnarok.FBP.handler.FBPEventHandler;
-import io.redstudioragnarok.FBP.handler.FBPGuiHandler;
-import io.redstudioragnarok.FBP.handler.FBPKeyInputHandler;
-import io.redstudioragnarok.FBP.keys.FBPKeyBindings;
+import io.redstudioragnarok.FBP.block.AnimationDummyBlock;
+import io.redstudioragnarok.FBP.handler.EventHandler;
+import io.redstudioragnarok.FBP.handler.GuiHandler;
+import io.redstudioragnarok.FBP.handler.KeyInputHandler;
+import io.redstudioragnarok.FBP.keys.KeyBindings;
 import io.redstudioragnarok.FBP.particle.FBPParticleManager;
 import io.redstudioragnarok.FBP.util.ModReference;
 import io.redstudioragnarok.FBP.vector.Vector3D;
@@ -20,7 +20,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -96,14 +95,14 @@ public class FBP {
 
 	public static final VertexFormat POSITION_TEX_COLOR_LMAP_NORMAL = new VertexFormat();
 
-	public static final FBPAnimationDummyBlock FBPBlock = new FBPAnimationDummyBlock();
+	public static final AnimationDummyBlock FBPBlock = new AnimationDummyBlock();
 
 	public static IRenderHandler fancyWeatherRenderer, originalWeatherRenderer;
 	public static FBPParticleManager fancyEffectRenderer;
 	public static ParticleManager originalEffectRenderer;
 
-	public static final FBPEventHandler eventHandler = new FBPEventHandler();
-	public static final FBPGuiHandler guiHandler = new FBPGuiHandler();
+	public static final EventHandler eventHandler = new EventHandler();
+	public static final GuiHandler guiHandler = new GuiHandler();
 
 	public static TextureAtlasSprite snowTexture;
 
@@ -121,24 +120,24 @@ public class FBP {
 		floatingMaterials = new ArrayList<>();
 	}
 
-	@EventHandler
+	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent evt) {
 		config = new File(evt.getModConfigurationDirectory() + "/FBP/Particle.properties");
 		animBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/AnimBlockBlacklist.txt");
 		particleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/ParticleBlockBlacklist.txt");
 		floatingMaterialsFile = new File(evt.getModConfigurationDirectory() + "/FBP/FloatingMaterials.txt");
 
-		FBPKeyBindings.init();
+		KeyBindings.init();
 
-		MinecraftForge.EVENT_BUS.register(new FBPKeyInputHandler());
+		MinecraftForge.EVENT_BUS.register(new KeyInputHandler());
 	}
 
-	@EventHandler
+	@Mod.EventHandler
 	public void init(FMLInitializationEvent evt) {
 		MinecraftForge.EVENT_BUS.register(eventHandler);
 	}
 
-	@EventHandler
+	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent evt) {
 		MinecraftForge.EVENT_BUS.register(guiHandler);
 		snowTexture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(Blocks.SNOW.getDefaultState());

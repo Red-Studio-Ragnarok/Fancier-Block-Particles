@@ -1,7 +1,7 @@
 package io.redstudioragnarok.FBP.block;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.material.FBPMaterial;
+import io.redstudioragnarok.FBP.material.DummyMaterial;
 import io.redstudioragnarok.FBP.node.BlockNode;
 import io.redstudioragnarok.FBP.particle.FBPParticleBlock;
 import io.redstudioragnarok.FBP.util.ModReference;
@@ -31,12 +31,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class FBPAnimationDummyBlock extends Block {
+public class AnimationDummyBlock extends Block {
 
 	public ConcurrentHashMap<BlockPos, BlockNode> blockNodes = new ConcurrentHashMap<>();
 
-	public FBPAnimationDummyBlock() {
-		super(new FBPMaterial());
+	public AnimationDummyBlock() {
+		super(new DummyMaterial());
 
 		this.setRegistryName(new ResourceLocation(ModReference.MOD_ID, "FBPPlaceholderBlock"));
 
@@ -265,7 +265,7 @@ public class FBPAnimationDummyBlock extends Block {
 			if (node == null)
 				return;
 
-			if (state.getBlock() != node.originalBlock && (worldIn.getBlockState(pos).getBlock() instanceof FBPAnimationDummyBlock || state.getBlock() instanceof FBPAnimationDummyBlock))
+			if (state.getBlock() != node.originalBlock && (worldIn.getBlockState(pos).getBlock() instanceof AnimationDummyBlock || state.getBlock() instanceof AnimationDummyBlock))
 				Minecraft.getMinecraft().effectRenderer.addBlockDestroyEffects(pos, node.state);
 
 			if (node.particle != null)

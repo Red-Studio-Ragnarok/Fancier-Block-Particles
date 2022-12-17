@@ -2,7 +2,7 @@ package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
-import io.redstudioragnarok.FBP.util.FBPMathUtil;
+import io.redstudioragnarok.FBP.util.MathUtil;
 import io.redstudioragnarok.FBP.vector.Vector2D;
 import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.minecraft.block.state.IBlockState;
@@ -146,8 +146,8 @@ public class FBPParticleRain extends ParticleDigging {
 		}
 
 		this.particleRed = (float) mc.world.getSkyColor(mc.player, 0).x;
-		this.particleGreen = FBPMathUtil.clampMaxFirst((float) (mc.world.getSkyColor(mc.player, 0).y + 0.25F), 0.25F, 1);
-		this.particleBlue = FBPMathUtil.clampMaxFirst((float) (mc.world.getSkyColor(mc.player, 0).z + 0.5F), 0.5F, 1);
+		this.particleGreen = MathUtil.clampMaxFirst((float) (mc.world.getSkyColor(mc.player, 0).y + 0.25F), 0.25F, 1);
+		this.particleBlue = MathUtil.clampMaxFirst((float) (mc.world.getSkyColor(mc.player, 0).z + 0.5F), 0.5F, 1);
 
 		if (this.particleGreen > 1)
 			particleGreen = 1;

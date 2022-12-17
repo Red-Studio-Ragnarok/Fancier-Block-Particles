@@ -8,11 +8,11 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 
-public class FBPGuiButtonEnable extends GuiButton {
+public class GuiButtonEnable extends GuiButton {
 
 	FontRenderer _fr;
 
-	public FBPGuiButtonEnable(int buttonID, int xPos, int yPos, FontRenderer fr) {
+	public GuiButtonEnable(int buttonID, int xPos, int yPos, FontRenderer fr) {
 		super(buttonID, xPos, yPos, 25, 25, "");
 
 		_fr = fr;

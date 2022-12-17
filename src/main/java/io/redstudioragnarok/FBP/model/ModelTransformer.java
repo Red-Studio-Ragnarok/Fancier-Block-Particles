@@ -11,11 +11,11 @@ import net.minecraftforge.client.model.pipeline.IVertexConsumer;
 import net.minecraftforge.client.model.pipeline.LightUtil;
 import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 
-public final class FBPModelTransformer {
+public final class ModelTransformer {
 
 	public static void transform(IBakedModel model, IBlockState state, long rand, IVertexTransformer transformer) {
 		try {
-			FBPSimpleBakedModel out = new FBPSimpleBakedModel(model);
+			DummyBakedModel out = new DummyBakedModel(model);
 
 			for (int i = 0; i <= 6; i++) {
 				EnumFacing side = (i == 6 ? null : EnumFacing.VALUES[i]);

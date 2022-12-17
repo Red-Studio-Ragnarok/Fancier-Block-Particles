@@ -2,7 +2,7 @@ package io.redstudioragnarok.FBP.util;
 
 import java.util.HashMap;
 
-public class FBPObfUtil {
+public class ObfuscationUtil {
 
 	private static final HashMap<String, String> map;
 

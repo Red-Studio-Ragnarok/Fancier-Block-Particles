@@ -10,7 +10,7 @@ import net.minecraft.client.resources.I18n;
 
 import java.awt.*;
 
-public class FBPGuiButtonBugReport extends GuiButton {
+public class GuiButtonBugReport extends GuiButton {
 
 	static final String _textOnHover = I18n.format("menu.bugreport");
 
@@ -20,7 +20,7 @@ public class FBPGuiButtonBugReport extends GuiButton {
 	long lastTime, time;
 	int fadeAmmount = 0;
 
-	public FBPGuiButtonBugReport(int buttonID, int xPos, int yPos, Dimension screen, FontRenderer fr) {
+	public GuiButtonBugReport(int buttonID, int xPos, int yPos, Dimension screen, FontRenderer fr) {
 		super(buttonID, xPos, yPos, 25, 25, "");
 		_screen = screen;
 		_fr = fr;
@@ -65,7 +65,7 @@ public class FBPGuiButtonBugReport extends GuiButton {
 				fadeAmmount = 0;
 
 		if (fadeAmmount > 0)
-			FBPGuiHelper.drawRect(0, 0, _screen.width, _screen.height, 0, 0, 0, fadeAmmount);
+			GuiHelper.drawRect(0, 0, _screen.width, _screen.height, 0, 0, 0, fadeAmmount);
 		else
 			fadeAmmount = 0;
 

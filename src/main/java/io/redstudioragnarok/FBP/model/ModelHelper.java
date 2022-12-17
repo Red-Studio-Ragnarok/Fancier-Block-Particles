@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 
-public class FBPModelHelper {
+public class ModelHelper {
 
 	static int vertexes = 0;
 
@@ -20,7 +20,7 @@ public class FBPModelHelper {
 		vertexes = 0;
 
 		try {
-			FBPModelTransformer.transform(model, state, 0, (quad, element, data) -> {
+			ModelTransformer.transform(model, state, 0, (quad, element, data) -> {
 				if (element.getUsage() == VertexFormatElement.EnumUsage.POSITION)
 					vertexes++;
 

@@ -1,10 +1,10 @@
 package io.redstudioragnarok.FBP.gui;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.handler.FBPConfigHandler;
-import io.redstudioragnarok.FBP.handler.FBPKeyInputHandler;
-import io.redstudioragnarok.FBP.keys.FBPKeyBindings;
-import io.redstudioragnarok.FBP.model.FBPModelHelper;
+import io.redstudioragnarok.FBP.handler.ConfigHandler;
+import io.redstudioragnarok.FBP.handler.KeyInputHandler;
+import io.redstudioragnarok.FBP.keys.KeyBindings;
+import io.redstudioragnarok.FBP.model.ModelHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
@@ -28,9 +28,9 @@ import org.lwjgl.input.Mouse;
 
 import java.util.Arrays;
 
-public class FBPGuiBlacklist extends GuiScreen {
+public class GuiBlacklist extends GuiScreen {
 
-	FBPGuiButtonBlacklist animation, particle;
+	GuiButtonBlacklist animation, particle;
 
 	final BlockPos selectedPos;
 	final IBlockState selectedBlock;
@@ -39,7 +39,7 @@ public class FBPGuiBlacklist extends GuiScreen {
 
 	boolean closing = false;
 
-	public FBPGuiBlacklist(BlockPos selected) {
+	public GuiBlacklist(BlockPos selected) {
 		this.mc = Minecraft.getMinecraft();
 
 		selectedPos = selected;
@@ -61,7 +61,7 @@ public class FBPGuiBlacklist extends GuiScreen {
 		displayItemStack = is.copy();
 	}
 
-	public FBPGuiBlacklist(ItemStack is) {
+	public GuiBlacklist(ItemStack is) {
 		this.mc = Minecraft.getMinecraft();
 
 		selectedPos = null;
@@ -79,13 +79,13 @@ public class FBPGuiBlacklist extends GuiScreen {
 	public void initGui() {
 		this.buttonList.clear();
 
-		animation = new FBPGuiButtonBlacklist(0, this.width / 2 - 100 - 30, this.height / 2 - 30 + 35, "", false, FBP.INSTANCE.isBlacklisted(selectedBlock.getBlock(), false));
-		particle = new FBPGuiButtonBlacklist(1, this.width / 2 + 100 - 30, this.height / 2 - 30 + 35, "", true, FBP.INSTANCE.isBlacklisted(selectedBlock.getBlock(), true));
+		animation = new GuiButtonBlacklist(0, this.width / 2 - 100 - 30, this.height / 2 - 30 + 35, "", false, FBP.INSTANCE.isBlacklisted(selectedBlock.getBlock(), false));
+		particle = new GuiButtonBlacklist(1, this.width / 2 + 100 - 30, this.height / 2 - 30 + 35, "", true, FBP.INSTANCE.isBlacklisted(selectedBlock.getBlock(), true));
 
 		Item ib = Item.getItemFromBlock(selectedBlock.getBlock());
 		Block b = ib instanceof ItemBlock ? ((ItemBlock) ib).getBlock() : null;
 
-		animation.enabled = b != null && !(b instanceof BlockDoublePlant) && FBPModelHelper.isModelValid(b.getDefaultState());
+		animation.enabled = b != null && !(b instanceof BlockDoublePlant) && ModelHelper.isModelValid(b.getDefaultState());
 		particle.enabled = selectedBlock.getBlock() != Blocks.REDSTONE_BLOCK;
 
 		FBPGuiButton guide = new FBPGuiButton(-1, animation.x + 30, animation.y + 30 - 10, (animation.enabled ? "\u00A7a<" : "\u00A7c<") + "             " + (particle.enabled ? "\u00A7a>" : "\u00A7c>"), false, false, true);
@@ -102,15 +102,15 @@ public class FBPGuiBlacklist extends GuiScreen {
 
 		if (selectedPos != null && (mc.objectMouseOver == null || !mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != selectedBlock.getBlock() && mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != FBP.FBPBlock)) {
 			keyUp = true;
-			FBPKeyInputHandler.INSTANCE.onInput();
+			KeyInputHandler.INSTANCE.onInput();
 		}
 		try {
-			if (!Keyboard.isKeyDown(FBPKeyBindings.FBPBlacklistMenu.getKeyCode()) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
+			if (!Keyboard.isKeyDown(KeyBindings.FBPBlacklistMenu.getKeyCode()) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
 				keyUp = true;
 			}
 		} catch (Exception e) {
 			try {
-				if (!Mouse.isButtonDown(FBPKeyBindings.FBPBlacklistMenu.getKeyCode() + 100) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
+				if (!Mouse.isButtonDown(KeyBindings.FBPBlacklistMenu.getKeyCode() + 100) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
 					keyUp = true;
 				}
 			} catch (Exception e1) {
@@ -134,16 +134,16 @@ public class FBPGuiBlacklist extends GuiScreen {
 						FBP.INSTANCE.removeFromBlacklist(b, isParticle);
 
 					if (isParticle)
-						FBPConfigHandler.writeParticleExceptions();
+						ConfigHandler.writeParticleExceptions();
 					else
-						FBPConfigHandler.writeAnimExceptions();
+						ConfigHandler.writeAnimExceptions();
 
 					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 				}
 			}
 
 			if (keyUp)
-				FBPKeyInputHandler.INSTANCE.onInput();
+				KeyInputHandler.INSTANCE.onInput();
 
 			mc.displayGuiScreen(null);
 		}
@@ -187,19 +187,19 @@ public class FBPGuiBlacklist extends GuiScreen {
 		String itemName = (selectedPos == null ? displayItemStack.getItem() : selectedBlock.getBlock()).getRegistryName().toString();
 		itemName = ((itemName.contains(":") ? "\u00A76\u00A7l" : "\u00A7a\u00A7l") + itemName).replaceAll(":", "\u00A7c\u00A7l:\u00A7a\u00A7l");
 
-		FBPGuiHelper._drawCenteredString(fontRenderer, itemName, width / 2, height / 2 - 19, 0);
+		GuiHelper._drawCenteredString(fontRenderer, itemName, width / 2, height / 2 - 19, 0);
 
 		// EXCEPTIONS INFO
 		String animationText1 = animation.enabled ? (animation.isMouseOver() ? (animation.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : "") : I18n.format("menu.blacklist.cantanimate");
 		String particleText1 = particle.enabled ? (particle.isMouseOver() ? (particle.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : "") : I18n.format("menu.blacklist.cantadd");
 
-		FBPGuiHelper._drawCenteredString(fontRenderer, animationText1, animation.x + 30, animation.y + 65, 0);
-		FBPGuiHelper._drawCenteredString(fontRenderer, particleText1, particle.x + 30, particle.y + 65, 0);
+		GuiHelper._drawCenteredString(fontRenderer, animationText1, animation.x + 30, animation.y + 65, 0);
+		GuiHelper._drawCenteredString(fontRenderer, particleText1, particle.x + 30, particle.y + 65, 0);
 
 		if (animation.isMouseOver())
-			FBPGuiHelper._drawCenteredString(fontRenderer, I18n.format("menu.blacklist.placeanimation"), animation.x + 30, animation.y - 12, 0);
+			GuiHelper._drawCenteredString(fontRenderer, I18n.format("menu.blacklist.placeanimation"), animation.x + 30, animation.y - 12, 0);
 		if (particle.isMouseOver())
-			FBPGuiHelper._drawCenteredString(fontRenderer, I18n.format("menu.blacklist.particles"), particle.x + 30, particle.y - 12, 0);
+			GuiHelper._drawCenteredString(fontRenderer, I18n.format("menu.blacklist.particles"), particle.x + 30, particle.y - 12, 0);
 
 		this.drawCenteredString(fontRenderer, I18n.format("menu.blacklist.title"), width / 2, 20, fontRenderer.getColorCode('a'));
 

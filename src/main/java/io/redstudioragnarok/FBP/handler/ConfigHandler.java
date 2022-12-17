@@ -1,7 +1,7 @@
 package io.redstudioragnarok.FBP.handler;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.util.FBPObfUtil;
+import io.redstudioragnarok.FBP.util.ObfuscationUtil;
 import net.minecraft.block.material.Material;
 
 import java.io.*;
@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 
-public class FBPConfigHandler {
+public class ConfigHandler {
 
 	static FileInputStream fileInputStream;
 	static InputStreamReader inputStreamReader;
@@ -186,7 +186,7 @@ public class FBPConfigHandler {
 					String fieldName = f.getName();
 
 					if (f.getType() == Material.class) {
-						String translated = FBPObfUtil.translateObfMaterialName(fieldName).toLowerCase().replace("_", "");
+						String translated = ObfuscationUtil.translateObfMaterialName(fieldName).toLowerCase().replace("_", "");
 
 						if (materialName.equals(translated)) {
 							try {
@@ -356,7 +356,7 @@ public class FBPConfigHandler {
 				String fieldName = f.getName();
 
 				if (f.getType() == Material.class) {
-					String translated = FBPObfUtil.translateObfMaterialName(fieldName).toLowerCase();
+					String translated = ObfuscationUtil.translateObfMaterialName(fieldName).toLowerCase();
 					try {
 						Material mat = (Material) f.get(null);
 						if (mat == Material.AIR)
