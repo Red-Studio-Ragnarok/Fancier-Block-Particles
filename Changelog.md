@@ -56,7 +56,7 @@ Non-critical try-catch blocks should now never throw a runtime exception or prin
 
 #### Credits
 
-- [WildMihai] for optimization in `FBPRenderer`, `FBPConfigHandler` and deprecating Rest On Floor ([#9])
+- [WildMihai] for optimizations in `FBPRenderer`, `FBPConfigHandler` and deprecating Rest On Floor ([#9])
 
 [#139]: https://github.com/TominoCZ/FancyBlockParticles/issues/139
 [#7]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/7
