@@ -19,6 +19,7 @@
 ## Optimization
 
 - Vectors got a redesign as a result FBP should now be faster and use less VRAM
+- Hex colors are now used instead of 4 separate R,G,B and A variables which makes rendering faster
 - As the result of a big code cleanup FBP as a whole should now be faster, load faster and use slightly less resources
 - Optimized Rendering of Fancy Block Placement and all particles as a result, they should be faster and use slightly less GPU, RAM & VRAM
 - FBP now uses its own math utilities and Jafama fast math library which should result in better performance
@@ -55,7 +56,7 @@ Non-critical try-catch blocks should now never throw a runtime exception or prin
 
 #### Credits
 
-- [WildMihai] for optimizatiosn in `FBPConfigHandler` and deprecating Rest On Floor ([#9])
+- [WildMihai] for optimization in `FBPRenderer`, `FBPConfigHandler` and deprecating Rest On Floor ([#9])
 
 [#139]: https://github.com/TominoCZ/FancyBlockParticles/issues/139
 [#7]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/7
