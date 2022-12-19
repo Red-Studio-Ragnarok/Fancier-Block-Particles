@@ -24,8 +24,8 @@ public class Page3 extends GuiScreen {
 
 		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, I18n.format("menu.fancyflame.info"), FBP.fancyFlame, true, true);
 		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, I18n.format("menu.fancysmoke.info"), FBP.fancySmoke, true, true);
-		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.fancyweather.info"), FBP.fancyWeather, true, true);
-		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.fancysnow.info"), false, false, false);
+		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.fancyrain.info"), FBP.fancyRain, true, true);
+		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.fancysnow.info"), FBP.fancySnow, true, true);
 		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.waterphysics.info"), FBP.waterPhysics, true, true);
 		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, I18n.format("menu.restonfloor.info"), false,false, false);
 
@@ -80,7 +80,10 @@ public class Page3 extends GuiScreen {
 			FBP.fancySmoke = !FBP.fancySmoke;
 			break;
 		case 3:
-			FBP.fancyWeather = !FBP.fancyWeather;
+			FBP.fancyRain = !FBP.fancyRain;
+			break;
+		case 4:
+			FBP.fancySnow = !FBP.fancySnow;
 			break;
 		case 5:
 			FBP.waterPhysics = !FBP.waterPhysics;
@@ -89,7 +92,7 @@ public class Page3 extends GuiScreen {
 			break;
 		}
 
-		if (FBP.fancyWeather)
+		if (FBP.fancyRain || FBP.fancySnow)
 			mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
 		else
 			mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
@@ -128,7 +131,7 @@ public class Page3 extends GuiScreen {
 					description = I18n.format("menu.fancysmoke.description");
 					break;
 				case 3:
-					description = I18n.format("menu.fancyweather.description");
+					description = I18n.format("menu.fancyrain.description");
 					break;
 				case 4:
 					description = I18n.format("menu.fancysnow.description");

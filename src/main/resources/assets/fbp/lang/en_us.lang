@@ -86,15 +86,15 @@ menu.spawnplaceparticles.description=Enables block place particles.
 # Menu Page 3
 menu.fancyflame.info=Fancy Flame
 menu.fancysmoke.info=Fancy Smoke
-menu.fancyweather.info=Fancy Weather
+menu.fancyrain.info=Fancy Rain
 menu.fancysnow.info=Fancy Snow
 menu.waterphysics.info=Water Physics
 menu.restonfloor.info=Rest On Floor
 
 menu.fancyflame.description=Makes flame particles fancy.
 menu.fancysmoke.description=Makes smoke particles fancy.
-menu.fancyweather.description=Makes rain and snow particles fancy.
-menu.fancysnow.description=§4DEPRECATED§f/§4REMOVED §fMakes snow particles fancy.
+menu.fancyrain.description=Makes rain particles fancy.
+menu.fancysnow.description=Makes snow particles fancy.
 menu.waterphysics.description=Makes wood particles float and others to sink slower.
 menu.restonfloor.description=§4DEPRECATED§f/§4REMOVED §fMakes particles rest aligned on the ground.
 

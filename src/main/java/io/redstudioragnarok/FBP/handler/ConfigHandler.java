@@ -106,8 +106,10 @@ public class ConfigHandler {
 					FBP.fancyFlame = Boolean.parseBoolean(line.replace("fancyFlame=", ""));
 				else if (line.contains("fancySmoke="))
 					FBP.fancySmoke = Boolean.parseBoolean(line.replace("fancySmoke=", ""));
-				else if (line.contains("fancyWeather="))
-					FBP.fancyWeather = Boolean.parseBoolean(line.replace("fancyWeather=", ""));
+				else if (line.contains("fancyRain="))
+					FBP.fancyRain = Boolean.parseBoolean(line.replace("fancyRain=", ""));
+				else if (line.contains("fancySnow="))
+					FBP.fancySnow = Boolean.parseBoolean(line.replace("fancySnow=", ""));
 				else if (line.contains("spawnPlaceParticles="))
 					FBP.spawnPlaceParticles = Boolean.parseBoolean(line.replace("spawnPlaceParticles=", ""));
 				else if (line.contains("fancyPlaceAnim="))
@@ -257,7 +259,8 @@ public class ConfigHandler {
 			writer.println("waterPhysics=" + FBP.waterPhysics);
 			writer.println("fancyFlame=" + FBP.fancyFlame);
 			writer.println("fancySmoke=" + FBP.fancySmoke);
-			writer.println("fancyWeather=" + FBP.fancyWeather);
+			writer.println("fancyRain=" + FBP.fancyRain);
+			writer.println("fancySnow=" + FBP.fancySnow);
 			writer.println("spawnPlaceParticles=" + FBP.spawnPlaceParticles);
 			writer.println("fancyPlaceAnim=" + FBP.fancyPlaceAnim);
 			writer.println("smartBreaking=" + FBP.smartBreaking);
@@ -394,7 +397,8 @@ public class ConfigHandler {
 		FBP.smartBreaking = true;
 		FBP.fancyPlaceAnim = true;
 		FBP.spawnPlaceParticles = true;
-		FBP.fancyWeather = false;
+		FBP.fancyRain = false;
+		FBP.fancySnow = false;
 		FBP.fancySmoke = false;
 		FBP.fancyFlame = false;
 		FBP.waterPhysics = true;
