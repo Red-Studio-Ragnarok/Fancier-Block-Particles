@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +25,17 @@ import static io.redstudioragnarok.FBP.FBP.mc;
  */
 public class FBPRenderer {
 
-	public static boolean render = false;
 	public static List<Particle> queuedParticles = new ArrayList<>();
 
-	static float r, g, b, a;
+	public static boolean render;
 
-	static Vector3D sin = new Vector3D();
-	static Vector3D cos = new Vector3D();
+	private static float r, g, b, a;
+	private static float radsX, radsY, radsZ;
+
+	private static final Vector3D sin = new Vector3D();
+	private static final Vector3D cos = new Vector3D();
+
+	private static Vector3D v1, v2, v3, v4, normal;
 
 	/**
 	 * Renders a particle using the given BufferBuilder.
@@ -46,7 +50,7 @@ public class FBPRenderer {
 	 * @param brightness The brightness of the particle
 	 * @param color The color of the particle
 	 */
-	public static void renderParticle(BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double scale, Vector3D rotation, int brightness, Color color) {
+	public static void renderParticle(final BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double scale, Vector3D rotation, int brightness, Color color) {
 		buffer.setTranslation(x, y, z);
 
 		putParticle(buffer, particle, scale, rotation, brightness, color);
@@ -68,7 +72,7 @@ public class FBPRenderer {
 	 * @param brightness The brightness of the particle
 	 * @param color The color of the particle
 	 */
-	public static void renderParticleWidthHeight(BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double width, double height, Vector3D rotation, int brightness, Color color) {
+	public static void renderParticleWidthHeight(final BufferBuilder buffer, Vector2D[] particle, float x, float y, float z, double width, double height, Vector3D rotation, int brightness, Color color) {
 		Tessellator.getInstance().draw();
 		buffer.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
 
@@ -99,7 +103,7 @@ public class FBPRenderer {
 	 * @param color The color of the particle
 	 * @param cube The shape of the particle as an array of Vector3D objects
 	 */
-	public static void renderParticleFlame(BufferBuilder buffer, Vector2D particle, float x, float y, float z, double scale, int brightness, Color color, Vector3D[] cube) {
+	public static void renderParticleFlame(final BufferBuilder buffer, Vector2D particle, float x, float y, float z, double scale, int brightness, Color color, Vector3D[] cube) {
 		Tessellator.getInstance().draw();
 		mc.getRenderManager().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
@@ -128,7 +132,7 @@ public class FBPRenderer {
 	 * @param color The color of the particle
 	 * @param cube The shape of the particle as an array of Vector3D objects
 	 */
-	public static void renderParticleSmoke(BufferBuilder buffer, Vector2D particle, float x, float y, float z, double scale, int brightness, Color color, Vector3D[] cube) {
+	public static void renderParticleSmoke(final BufferBuilder buffer, Vector2D particle, float x, float y, float z, double scale, int brightness, Color color, Vector3D[] cube) {
 		buffer.setTranslation(x, y, z);
 
 		putParticleGas(buffer, particle,scale / 20, brightness, color, cube,0.875F);
@@ -149,23 +153,21 @@ public class FBPRenderer {
 	 * @param brightness The brightness of the particle
 	 * @param color The color of the particle
 	 */
-	static void putParticle(BufferBuilder buffer, Vector2D[] particle, double scale, Vector3D rotation, int brightness, Color color) {
-		float radsX = (float) Math.toRadians(rotation.x);
-		float radsY = (float) Math.toRadians(rotation.y);
-		float radsZ = (float) Math.toRadians(rotation.z);
+	static void putParticle(final BufferBuilder buffer, Vector2D[] particle, double scale, Vector3D rotation, int brightness, Color color) {
+		degreesToRadians(rotation);
 
 		for (int i = 0; i < FBP.CUBE.length; i += 4) {
-			Vector3D v1 = FBP.CUBE[i];
-			Vector3D v2 = FBP.CUBE[i + 1];
-			Vector3D v3 = FBP.CUBE[i + 2];
-			Vector3D v4 = FBP.CUBE[i + 3];
+			v1 = FBP.CUBE[i];
+			v2 = FBP.CUBE[i + 1];
+			v3 = FBP.CUBE[i + 2];
+			v4 = FBP.CUBE[i + 3];
 
 			v1 = rotateVector(v1, radsX, radsY, radsZ);
 			v2 = rotateVector(v2, radsX, radsY, radsZ);
 			v3 = rotateVector(v3, radsX, radsY, radsZ);
 			v4 = rotateVector(v4, radsX, radsY, radsZ);
 
-			Vector3D normal = rotateVector(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
+			normal = rotateVector(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
 			addVertex(buffer, scale, v1, particle[0].x, particle[0].y, brightness, color, normal);
 			addVertex(buffer, scale, v2, particle[1].x, particle[1].y, brightness, color, normal);
@@ -188,23 +190,21 @@ public class FBPRenderer {
 	 * @param brightness The brightness of the particle
 	 * @param color The color of the particle
 	 */
-	static void putParticleWidthHeight(BufferBuilder buffer, Vector2D[] particle, double width, double height, Vector3D rotation, int brightness, Color color) {
-		float radsX = (float) Math.toRadians(rotation.x);
-		float radsY = (float) Math.toRadians(rotation.y);
-		float radsZ = (float) Math.toRadians(rotation.z);
+	static void putParticleWidthHeight(final BufferBuilder buffer, Vector2D[] particle, double width, double height, Vector3D rotation, int brightness, Color color) {
+		degreesToRadians(rotation);
 
 		for (int i = 0; i < FBP.CUBE.length; i += 4) {
-			Vector3D v1 = FBP.CUBE[i];
-			Vector3D v2 = FBP.CUBE[i + 1];
-			Vector3D v3 = FBP.CUBE[i + 2];
-			Vector3D v4 = FBP.CUBE[i + 3];
+			v1 = FBP.CUBE[i];
+			v2 = FBP.CUBE[i + 1];
+			v3 = FBP.CUBE[i + 2];
+			v4 = FBP.CUBE[i + 3];
 
 			v1 = rotateVector(v1, radsX, radsY, radsZ);
 			v2 = rotateVector(v2, radsX, radsY, radsZ);
 			v3 = rotateVector(v3, radsX, radsY, radsZ);
 			v4 = rotateVector(v4, radsX, radsY, radsZ);
 
-			Vector3D normal = rotateVector(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
+			normal = rotateVector(FBP.CUBE_NORMALS[i / 4], radsX, radsY, radsZ);
 
 			addVertexWidthHeight(buffer, width, height, v1, particle[0].x, particle[0].y, brightness, color, normal);
 			addVertexWidthHeight(buffer, width, height, v2, particle[1].x, particle[1].y, brightness, color, normal);
@@ -227,7 +227,7 @@ public class FBPRenderer {
 	 * @param cube The shape of the particle as an array of Vector3D objects
 	 * @param brightnessMultiplier The brightness multiplier for the particle
 	 */
-	public static void putParticleGas(BufferBuilder buffer, Vector2D particle, double scale, int brightness, Color color, Vector3D[] cube, float brightnessMultiplier) {
+	public static void putParticleGas(final BufferBuilder buffer, Vector2D particle, double scale, int brightness, Color color, Vector3D[] cube, float brightnessMultiplier) {
 		float brightnessForRender = 1;
 
 		HexToFloats(color);
@@ -235,10 +235,10 @@ public class FBPRenderer {
 		float R, B, G;
 
 		for (int i = 0; i < FBP.CUBE.length; i += 4) {
-			Vector3D v1 = cube[i];
-			Vector3D v2 = cube[i + 1];
-			Vector3D v3 = cube[i + 2];
-			Vector3D v4 = cube[i + 3];
+			v1 = cube[i];
+			v2 = cube[i + 1];
+			v3 = cube[i + 2];
+			v4 = cube[i + 3];
 
 			R = r * brightnessForRender;
 			G = g * brightnessForRender;
@@ -327,5 +327,16 @@ public class FBPRenderer {
 		g = (float)inputColor.getGreen() / 255;
 		b = (float)inputColor.getBlue() / 255;
 		a = (float)inputColor.getAlpha() / 255;
+	}
+
+	/**
+	 * Converts the x, y, and z fields of a Vector3D object from degrees to radians.
+	 *
+	 * @param inputRotation The Vector3D object whose fields will be converted
+	 */
+	private static void degreesToRadians (Vector3D inputRotation) {
+		radsX = (float) FastMath.toRadians(inputRotation.x);
+		radsY = (float) FastMath.toRadians(inputRotation.y);
+		radsZ = (float) FastMath.toRadians(inputRotation.z);
 	}
 }
