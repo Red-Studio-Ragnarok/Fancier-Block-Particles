@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.SplittableRandom;
 
+import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
+
 @Mod(clientSideOnly = true, modid = ModReference.MOD_ID, name = ModReference.MOD_NAME, version = ModReference.VERSION)
 public class FBP {
 
@@ -157,11 +159,13 @@ public class FBP {
 			if (enabled) {
 				FBP.fancyEffectRenderer.carryOver();
 
-				Minecraft.getMinecraft().effectRenderer = FBP.fancyEffectRenderer;
-				Minecraft.getMinecraft().world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
+				mc.effectRenderer = FBP.fancyEffectRenderer;
+				if (fancyWeather) {
+					mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
+				}
 			} else {
-				Minecraft.getMinecraft().effectRenderer = FBP.originalEffectRenderer;
-				Minecraft.getMinecraft().world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
+				mc.effectRenderer = FBP.originalEffectRenderer;
+				mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
 			}
 		}
 		FBP.enabled = enabled;

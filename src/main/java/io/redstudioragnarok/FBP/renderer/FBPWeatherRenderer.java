@@ -18,7 +18,6 @@ public class FBPWeatherRenderer extends IRenderHandler {
 	int tickCounter;
 
 	public FBPWeatherRenderer() {
-
 	}
 
 	@Override

@@ -55,6 +55,9 @@ public class EventHandler {
 
 	ConcurrentSet<BlockPosNode> list;
 
+	static IRenderHandler currentWeatherRenderer;
+	static ParticleManager currentEffectRenderer;
+
 	public EventHandler() {
 		list = new ConcurrentSet<>();
 
@@ -292,8 +295,8 @@ public class EventHandler {
 			FBP.fancyEffectRenderer = new FBPParticleManager(e.getWorld(), mc.renderEngine);
 			FBP.fancyWeatherRenderer = new FBPWeatherRenderer();
 
-			IRenderHandler currentWeatherRenderer = mc.world.provider.getCloudRenderer();
-			ParticleManager currentEffectRenderer = mc.effectRenderer;
+			currentWeatherRenderer = mc.world.provider.getCloudRenderer();
+			currentEffectRenderer = mc.effectRenderer;
 
 			if (FBP.originalWeatherRenderer == null || (FBP.originalWeatherRenderer != currentWeatherRenderer && currentWeatherRenderer != FBP.fancyWeatherRenderer))
 				FBP.originalWeatherRenderer = currentWeatherRenderer;
