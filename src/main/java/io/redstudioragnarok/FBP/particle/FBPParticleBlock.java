@@ -3,6 +3,7 @@ package io.redstudioragnarok.FBP.particle;
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.vector.Vector2D;
 import io.redstudioragnarok.FBP.vector.Vector3D;
+import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
@@ -280,8 +281,8 @@ public class FBPParticleBlock extends Particle {
 
 		GlStateManager.translate(tRot.x, tRot.y, tRot.z);
 
-		GlStateManager.rotate((float) Math.toDegrees(smoothRot.x), 1, 0, 0);
-		GlStateManager.rotate((float) Math.toDegrees(smoothRot.z), 0, 0, 1);
+		GlStateManager.rotate((float) FastMath.toDegrees(smoothRot.x), 1, 0, 0);
+		GlStateManager.rotate((float) FastMath.toDegrees(smoothRot.z), 0, 0, 1);
 
 		GlStateManager.translate(-tRot.x, -tRot.y, -tRot.z);
 		GlStateManager.translate(t.x, t.y, t.z);
