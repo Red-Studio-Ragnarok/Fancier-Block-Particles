@@ -1,6 +1,7 @@
 package io.redstudioragnarok.FBP.gui;
 
 import io.redstudioragnarok.FBP.FBP;
+import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -26,8 +27,8 @@ public class GuiButtonEnable extends GuiButton {
 		int centerX = x + 25 / 2;
 		int centerY = y + 25 / 2;
 
-		double distance = Math.sqrt((mouseX - centerX) * (mouseX - centerX) + (mouseY - centerY) * (mouseY - centerY));
-		double radius = Math.sqrt(2 * Math.pow(16, 2));
+		double distance = FastMath.sqrtQuick((mouseX - centerX) * (mouseX - centerX) + (mouseY - centerY) * (mouseY - centerY));
+		double radius = FastMath.sqrtQuick(2 * Math.pow(16, 2));
 
 		boolean flag = distance <= (radius / 2);
 		int i = FBP.isEnabled() ? 0 : 50;

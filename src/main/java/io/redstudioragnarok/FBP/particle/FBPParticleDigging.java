@@ -329,7 +329,7 @@ public class FBPParticleDigging extends ParticleDigging {
 							float posMax = (float) MathHelper.absMax(posX, posZ);
 
 							if (posMax >= 0.0099) {
-								posMax = (float) Math.sqrt(posMax);
+								posMax = (float) FastMath.sqrtQuick(posMax);
 								posX /= posMax;
 								posZ /= posMax;
 

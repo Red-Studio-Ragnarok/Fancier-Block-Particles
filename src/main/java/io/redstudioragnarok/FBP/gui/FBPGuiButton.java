@@ -1,6 +1,7 @@
 package io.redstudioragnarok.FBP.gui;
 
 import io.redstudioragnarok.FBP.FBP;
+import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -42,10 +43,10 @@ public class FBPGuiButton extends GuiButton {
 		int centerX2 = x + this.width - this.height / 2;
 		int centerY2 = y + this.height / 2;
 
-		double distance1 = Math.sqrt((mouseX - centerX1) * (mouseX - centerX1) + (mouseY - centerY1) * (mouseY - centerY1));
+		double distance1 = FastMath.sqrtQuick((mouseX - centerX1) * (mouseX - centerX1) + (mouseY - centerY1) * (mouseY - centerY1));
 		int radius = (this.height - 1) / 2;
 
-		double distance2 = Math.sqrt((mouseX - centerX2) * (mouseX - centerX2) + (mouseY - centerY2) * (mouseY - centerY2));
+		double distance2 = FastMath.sqrtQuick((mouseX - centerX2) * (mouseX - centerX2) + (mouseY - centerY2) * (mouseY - centerY2));
 
 		boolean isOverRectangle = mouseX >= this.x + this.height / 2 - 2 && mouseY >= this.y + 1 && mouseX < this.x + this.width - this.height / 2 + 3 && mouseY < this.y + this.height;
 

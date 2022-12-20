@@ -2,6 +2,7 @@ package io.redstudioragnarok.FBP.gui;
 
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.util.ModReference;
+import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -83,6 +84,6 @@ public class GuiHelper extends GuiScreen {
 		double X = d - mouseX;
 		double Y = e - mouseY;
 
-		return Math.sqrt(X * X + Y * Y) <= radius;
+		return FastMath.sqrtQuick(X * X + Y * Y) <= radius;
 	}
 }

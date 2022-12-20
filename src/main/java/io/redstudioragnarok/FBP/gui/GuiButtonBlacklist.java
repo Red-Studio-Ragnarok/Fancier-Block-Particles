@@ -1,6 +1,7 @@
 package io.redstudioragnarok.FBP.gui;
 
 import io.redstudioragnarok.FBP.FBP;
+import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
@@ -24,7 +25,7 @@ public class GuiButtonBlacklist extends FBPGuiButton {
 		int centerX1 = x + this.height / 2;
 		int centerY1 = y + this.height / 2 - 1;
 
-		double distance = Math.sqrt((mouseX - centerX1) * (mouseX - centerX1) + (mouseY - centerY1) * (mouseY - centerY1));
+		double distance = FastMath.sqrtQuick((mouseX - centerX1) * (mouseX - centerX1) + (mouseY - centerY1) * (mouseY - centerY1));
 		int radius = (this.height - 1) / 2;
 
 		hovered = distance <= radius;
