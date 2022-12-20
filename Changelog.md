@@ -1,5 +1,10 @@
 # Fancier Block Particles Version 0.8 Changelog
 
+## Added
+
+- Dynamic Weather system weather particles (rain & snow) are denser when a thunderstorm is happening
+- Weather Particles Render Distance option
+
 ## Changed
 
 - Fancy Rain and Fancy Snow config options have been replaced by Fancy Weather option

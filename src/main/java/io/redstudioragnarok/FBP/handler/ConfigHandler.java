@@ -98,6 +98,8 @@ public class ConfigHandler {
 					FBP.enabled = Boolean.parseBoolean(line.replace("enabled=", ""));
 				else if (line.contains("weatherParticleDensity="))
 					FBP.weatherParticleDensity = Float.parseFloat(line.replace("weatherParticleDensity=", ""));
+				else if (line.contains("weatherRenderDistance="))
+					FBP.weatherRenderDistance = Float.parseFloat(line.replace("weatherRenderDistance=", " "));
 				else if (line.contains("particlesPerAxis="))
 					FBP.particlesPerAxis = Integer.parseInt(line.replace("particlesPerAxis=", ""));
 				else if (line.contains("waterPhysics="))
@@ -253,6 +255,7 @@ public class ConfigHandler {
 			PrintWriter writer = new PrintWriter(FBP.config.getPath(), "UTF-8");
 			writer.println("enabled=" + FBP.enabled);
 			writer.println("weatherParticleDensity=" + FBP.weatherParticleDensity);
+			writer.println("weatherRenderDistance=" + FBP.weatherRenderDistance);
 			writer.println("particlesPerAxis=" + FBP.particlesPerAxis);
 			writer.println("waterPhysics=" + FBP.waterPhysics);
 			writer.println("fancyFlame=" + FBP.fancyFlame);
@@ -382,6 +385,7 @@ public class ConfigHandler {
 		FBP.rotationMult = 1.0F;
 		FBP.particlesPerAxis = 4;
 		FBP.weatherParticleDensity = 1.0F;
+		FBP.weatherRenderDistance = 1.0F;
 		FBP.lowTraction = false;
 		FBP.bounceOffWalls = true;
 		FBP.randomRotation = true;

@@ -54,12 +54,12 @@ public class FBP {
 
 	public static int minAge, maxAge, particlesPerAxis;
 
-	public static float scaleMult, gravityMult, rotationMult, weatherParticleDensity;
+	public static float scaleMult, gravityMult, rotationMult, weatherParticleDensity, weatherRenderDistance;
 
 	public static boolean enabled = true;
 	public static boolean showInMillis = false;
 	public static boolean infiniteDuration = false;
-	public static boolean randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles, fancyWeather, fancyFlame, fancySmoke, waterPhysics, frozen;
+	public static boolean randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles, fancyWeather, dynamicWeather, fancyFlame, fancySmoke, waterPhysics, frozen;
 
 	public static List<String> blockParticleBlacklist;
 	public static List<String> blockAnimBlacklist;
