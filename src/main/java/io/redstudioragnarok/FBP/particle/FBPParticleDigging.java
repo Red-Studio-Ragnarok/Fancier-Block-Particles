@@ -151,7 +151,7 @@ public class FBPParticleDigging extends ParticleDigging {
 			this.particleTexture = texture;
 
 		if (FBP.randomFadingSpeed)
-			endMult = MathHelper.clamp(FBP.random.nextDouble(0.5, 0.9), 0.55, 0.8);
+			endMult = MathUtil.clampMaxFirst((float) FBP.random.nextDouble(0.5, 0.9), 0.55F, 0.8F);
 
 		prevGravity = particleGravity;
 

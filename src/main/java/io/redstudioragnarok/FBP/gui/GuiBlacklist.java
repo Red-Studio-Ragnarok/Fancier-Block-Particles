@@ -5,6 +5,7 @@ import io.redstudioragnarok.FBP.handler.ConfigHandler;
 import io.redstudioragnarok.FBP.handler.KeyInputHandler;
 import io.redstudioragnarok.FBP.keys.KeyBindings;
 import io.redstudioragnarok.FBP.model.ModelHelper;
+import io.redstudioragnarok.FBP.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
@@ -163,7 +164,7 @@ public class GuiBlacklist extends GuiScreen {
 
 		// LIMIT MOUSE POS
 		int optionRadius = 30;
-		mouseX = MathHelper.clamp(mouseX, animation.x + optionRadius, particle.x + optionRadius);
+		mouseX = (int) MathUtil.clampMinFirst(mouseX, animation.x + optionRadius, particle.x + optionRadius);
 		mouseY = height / 2 + 35;
 
 		// RENDER BLOCK

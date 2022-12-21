@@ -1,6 +1,7 @@
 package io.redstudioragnarok.FBP.gui;
 
 import io.redstudioragnarok.FBP.FBP;
+import io.redstudioragnarok.FBP.util.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -47,17 +48,17 @@ public class GuiSlider extends GuiButton {
 
 		mouseDown = tmpMouseDown;
 
-		sliderPosX = this.x + (15 + (MathHelper.clamp(value, 0, 1) * (width - 30)));
+		sliderPosX = this.x + (15 + value * (width - 30));
 
 		if (dragging) {
 			double max = this.x + width - 15;
 			double min = this.x + 15;
 
-			sliderPosX = MathHelper.clamp(mouseX - mouseGap, min, max);
+			sliderPosX = MathUtil.clampMinFirst((float) (mouseX - mouseGap), (float) min, (float) max);
 
 			double val = sliderPosX - min;
 
-			value = MathHelper.clamp(MathHelper.abs((float) (val / (width - 30))), 0, 1);
+			value = MathUtil.clampMinFirst(MathHelper.abs((float) (val / (width - 30))), 0, 1);
 		}
 
 		// Draws the bar inside the slider
@@ -74,9 +75,9 @@ public class GuiSlider extends GuiButton {
 			mouseGap = mouseX - sliderPosX;
 		else {
 			if (isMouseOverBar(mouseX, mouseY)) {
-				float posX = MathHelper.clamp(mouseX - (this.x + 4), 0, width - 5);
+				float posX = mouseX - (this.x + 4);
 
-				value = MathHelper.clamp(posX / (width - 10), 0, 1);
+				value = MathUtil.clampMinFirst(posX / (width - 10), 0, 1);
 
 				dragging = true;
 

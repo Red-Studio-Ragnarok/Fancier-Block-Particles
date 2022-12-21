@@ -2,6 +2,7 @@ package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
+import io.redstudioragnarok.FBP.util.MathUtil;
 import io.redstudioragnarok.FBP.vector.Vector2D;
 import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.minecraft.block.Block;
@@ -95,7 +96,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 		particleAlpha = 0.9f;
 
 		if (FBP.randomFadingSpeed)
-			endMult = MathHelper.clamp(FBP.random.nextDouble(0.425, 1.15), 0.5432, 1);
+			endMult = MathUtil.clampMaxFirst((float) FBP.random.nextDouble(0.425, 1.15), 0.5432F, 1);
 
 		multipleParticleScaleBy(1);
 	}

@@ -55,6 +55,18 @@ public class MathUtil {
 	}
 
 	/**
+	 * Returns the absolute value of a float number.
+	 * <p>
+	 * The absolute value of a number is the number without its sign, so it is always a positive number.
+	 *
+	 * @param input The float number to get the absolute value of
+	 * @return The absolute value of the input
+	 */
+	public static float absolute(float input) {
+		return input >= 0 ? input : -input;
+	}
+
+	/**
 	 * Adds or subtracts a value based on the sign of the input value.
 	 * If the input value is less than 0.0, the add value will be subtracted from the input value.
 	 * Otherwise, the add value will be added to the input value.

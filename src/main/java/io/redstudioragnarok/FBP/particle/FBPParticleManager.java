@@ -1,6 +1,7 @@
 package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
+import io.redstudioragnarok.FBP.util.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
@@ -75,7 +76,7 @@ public class FBPParticleManager extends ParticleManager {
 
 					toAdd = new FBPParticleSmoke(world, effect.posX, effect.posY, effect.posZ, effect.motionX, effect.motionY, effect.motionZ, effect.particleScale, particle);
 
-					toAdd.setRBGColorF(MathHelper.clamp(effect.getRedColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getGreenColorF() + 0.1f, 0.1f, 1), MathHelper.clamp(effect.getBlueColorF() + 0.1f, 0.1f, 1));
+					toAdd.setRBGColorF(effect.getRedColorF() + 0.1f, effect.getGreenColorF() + 0.1f, effect.getBlueColorF() + 0.1f);
 
 					toAdd.setMaxAge(effect.particleMaxAge);
 				}
