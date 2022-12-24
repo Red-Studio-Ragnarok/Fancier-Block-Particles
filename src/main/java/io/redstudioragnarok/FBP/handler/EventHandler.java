@@ -7,7 +7,7 @@ import io.redstudioragnarok.FBP.node.BlockNode;
 import io.redstudioragnarok.FBP.node.BlockPosNode;
 import io.redstudioragnarok.FBP.particle.FBPParticleBlock;
 import io.redstudioragnarok.FBP.particle.FBPParticleManager;
-import io.redstudioragnarok.FBP.renderer.FBPRenderer;
+import io.redstudioragnarok.FBP.renderer.CubeBatchRenderer;
 import io.redstudioragnarok.FBP.renderer.FBPWeatherRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
@@ -15,12 +15,7 @@ import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockSlab.EnumBlockHalf;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -42,9 +37,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.lwjgl.opengl.GL11;
 
-import java.util.List;
 import java.util.Objects;
 
 import static io.redstudioragnarok.FBP.FBP.mc;
@@ -150,40 +143,7 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onRenderWorldLastEvent(RenderWorldLastEvent event) {
-		List<Particle> particles = FBPRenderer.queuedParticles;
-
-		if (particles.isEmpty()) {
-			return;
-		}
-
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferbuilder = tessellator.getBuffer();
-
-		bufferbuilder.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_LMAP_NORMAL);
-
-		Entity renderViewEntity = mc.getRenderViewEntity();
-		float partialTicks = mc.getRenderPartialTicks();
-		float rotX = ActiveRenderInfo.getRotationX();
-		float rotZ = ActiveRenderInfo.getRotationZ();
-		float rotYZ = ActiveRenderInfo.getRotationYZ();
-		float rotXY = ActiveRenderInfo.getRotationXY();
-		float rotXZ = ActiveRenderInfo.getRotationXZ();
-
-		FBPRenderer.render = true;
-		for (int i = 0; i < particles.size(); i++) {
-			particles.get(i).renderParticle(bufferbuilder, renderViewEntity, partialTicks, rotX, rotZ, rotYZ, rotXY, rotXZ);
-		}
-		FBPRenderer.render = false;
-
-		mc.entityRenderer.enableLightmap();
-		RenderHelper.enableStandardItemLighting();
-
-		tessellator.draw();
-
-		RenderHelper.disableStandardItemLighting();
-		mc.entityRenderer.disableLightmap();
-
-		particles.clear();
+		CubeBatchRenderer.endAllBatches();
 	}
 
 	@SubscribeEvent

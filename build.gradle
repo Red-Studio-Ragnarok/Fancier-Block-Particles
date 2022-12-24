@@ -31,9 +31,23 @@ configurations {
 	compile.extendsFrom(embed)
 }
 
+repositories {
+	ivy {
+		url 'https://github.com/'
+
+		patternLayout {
+			artifact '[organisation]/[module]/releases/download/v[revision]/[module]-[revision].[ext]'
+		}
+
+		metadataSources { artifact() } 
+	}
+}
+
 dependencies {
 	implementation 'net.jafama:jafama:2.+'
 	embed 'net.jafama:jafama:2.+'
+	implementation 'meldexun:MatrixUtil:1.2.0@jar'
+	embed 'meldexun:MatrixUtil:1.2.0@jar'
 }
 
 processResources {
