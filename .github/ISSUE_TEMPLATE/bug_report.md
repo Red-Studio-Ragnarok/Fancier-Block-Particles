@@ -1,9 +1,9 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a bug report to help us improve
 title: ''
 labels: ''
-assignees: 'JustDesoroxxx'
+assignees: JustDesoroxxx
 
 ---
 
@@ -30,6 +30,8 @@ assignees: 'JustDesoroxxx'
 
 ***If applicable, add screenshots and/or videos to help explain your problem.***
 
+## Logs or/and crash reports
+
 ## Specification:
 
 - OS: [e.g. Windows 10]
@@ -44,7 +46,7 @@ assignees: 'JustDesoroxxx'
 - CPU Threads: [e.g. 16 (Named Logical processors in task manager)]
 - RAM Size: [e.g. 32GB]
 - RAM Speed: [e.g. 2666MHz]
-- Storage: [Hard Drive or SSD]
+- Storage Type: [HDD or SSD]
 - GPU VRAM: [e.g. 2GB]
 
 > Most of these information can be found in the task manager
