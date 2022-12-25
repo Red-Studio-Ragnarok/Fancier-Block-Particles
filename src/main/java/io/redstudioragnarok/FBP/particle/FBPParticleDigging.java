@@ -211,7 +211,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	@Override
 	public void onUpdate() {
-		boolean allowedToMove = MathHelper.abs((float) motionX) > 0.0001 || MathHelper.abs((float) motionZ) > 0.0001;
+		boolean allowedToMove = MathUtil.absolute((float) motionX) > 0.0001 || MathUtil.absolute((float) motionZ) > 0.0001;
 
 		if (!FBP.frozen && FBP.bounceOffWalls && !mc.isGamePaused() && particleAge > 0) {
 			if (!wasFrozen && allowedToMove) {
@@ -546,8 +546,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		}
 	}
 
-	private void calculateYAngle()
-	{
+	private void calculateYAngle() {
 		float angleSin = (float) FastMath.toDegrees(FastMath.asin(motionX / FastMath.sqrtQuick(motionX * motionX + motionZ * motionZ)));
 
 		if (motionZ > 0)

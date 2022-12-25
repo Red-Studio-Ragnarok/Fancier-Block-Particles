@@ -15,6 +15,7 @@
 ## Fixed
 
 - Fixed crashes with some moded blocks ([#7])
+- Fixed crashes with some moded blocks when HWYLA is installed ([#13])
 - Fixed Memory leak with `FBP#originalEffectRenderer` ([#139])
 - Fixed Fancy Block Placement speed being broken because of an accidental change in 0.7
 
@@ -65,6 +66,7 @@ Non-critical try-catch blocks should now never throw a runtime exception or prin
 - [WildMihai] for optimizations in `FBPRenderer`, `FBPConfigHandler` and deprecating Rest On Floor ([#9], [#10]) 
 
 [#7]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/7
+[#13]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/13
 [#139]: https://github.com/TominoCZ/FancyBlockParticles/issues/139
 [#9]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/9
 [#10]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/10

@@ -346,7 +346,7 @@ public class AnimationDummyBlock extends Block {
 					return blockNodes.get(pos).originalBlock.getPickBlock(node.state, target, world, pos, player);
 			}
 		} catch (Throwable t) {
-			throw new RuntimeException(t);
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return new ItemStack(Blocks.AIR);
