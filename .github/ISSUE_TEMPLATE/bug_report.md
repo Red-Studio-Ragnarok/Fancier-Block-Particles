@@ -32,6 +32,13 @@ assignees: JustDesoroxxx
 
 ## Logs or/and crash reports
 
+## Versions
+
+- FBP: [e.g. FBP-0.7] 
+- Forge: [e.g. 1.12.2 - 14.23.5.2860]
+- Java: [e.g. JDK 8 - 352-b08]
+- Java JVM: [e.g. Hotspot]
+
 ## Specification:
 
 - OS: [e.g. Windows 10]
