@@ -83,6 +83,11 @@ public class Page3 extends GuiScreen {
 			break;
 		case 3:
 			FBP.fancyWeather = !FBP.fancyWeather;
+
+			if (FBP.fancyWeather && FBP.enabled)
+				mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
+			else
+				mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
 			break;
 		case 4:
 			dynamicWeather = !dynamicWeather;
@@ -93,11 +98,6 @@ public class Page3 extends GuiScreen {
 		case 6:
 			break;
 		}
-
-		if (FBP.fancyWeather && FBP.enabled)
-			mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
-		else
-			mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
 	}
 
 	@Override

@@ -10,6 +10,7 @@
 - Fancy Rain and Fancy Snow config options have been replaced by Fancy Weather option
 - Changed behavior of Fancy Block Placement with slabs placing slabs one on top of another should be a better experience
 - Smoke particles are now slightly more transparent
+- The config button in Forge's mod options now works
 - Updated `mcmod.info` to feature new description and better credits
 
 ## Fixed
