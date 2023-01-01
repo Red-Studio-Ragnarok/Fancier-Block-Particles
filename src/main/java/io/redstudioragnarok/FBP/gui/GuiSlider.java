@@ -5,8 +5,9 @@ import io.redstudioragnarok.FBP.util.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.math.MathHelper;
 import org.lwjgl.input.Mouse;
+
+import static io.redstudioragnarok.FBP.util.MathUtil.boolToInt;
 
 public class GuiSlider extends GuiButton {
 
@@ -17,53 +18,52 @@ public class GuiSlider extends GuiButton {
 	boolean dragging = false;
 	boolean mouseDown = false;
 
-	public GuiSlider(int x, int y, float value) {
+	private static int handleState;
+
+	public GuiSlider(int x, int y, float inputValue) {
 		super(Integer.MIN_VALUE, x, y, "");
-		this.value = value;
-		this.width = 200;
+		value = inputValue;
+		width = 200;
 	}
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		FontRenderer fontrenderer = mc.fontRenderer;
 
-		int i = enabled ? 1 : 0;
-		int j = enabled ? (isMouseOverSlider(mouseX, mouseY) || dragging ? 2 : 1) : 0;
+		handleState = enabled ? (isMouseOverSlider(mouseX, mouseY) || dragging ? 2 : 1) : 0;
 
 		// Draws the text
-		this.drawCenteredString(fontrenderer, displayString, this.x + width / 2, this.y + 6 - 9, fontrenderer.getColorCode('f'));
+		drawCenteredString(fontrenderer, displayString, x + width / 2, y + 6 - 9, fontrenderer.getColorCode('f'));
 
 		mc.getTextureManager().bindTexture(FBP.FBP_WIDGETS);
 
 		// Draws the slider
-		this.drawTexturedModalRect(this.x, this.y, 0, 60 + i * 20, this.width / 2, this.height);
-		this.drawTexturedModalRect(this.x + this.width / 2, this.y, 200 - this.width / 2, 60 + i * 20, this.width / 2, this.height);
+		drawTexturedModalRect(x, y, 0, 60 + boolToInt(enabled) * 20, width / 2, height);
+		drawTexturedModalRect(x + width / 2, y, 200 - width / 2, 60 + boolToInt(enabled) * 20, width / 2, height);
 
 		// slider
-		boolean tmpMouseDown = Mouse.isButtonDown(0);
+		mouseDown = Mouse.isButtonDown(0);
 
-		if (!tmpMouseDown && mouseDown && dragging) {
+		if (!mouseDown && dragging) {
 			dragging = false;
 		}
 
-		mouseDown = tmpMouseDown;
-
-		sliderPosX = this.x + (15 + value * (width - 30));
+		sliderPosX = x + (15 + value * (width - 30));
 
 		if (dragging) {
-			double max = this.x + width - 15;
-			double min = this.x + 15;
+			double max = x + width - 15;
+			double min = x + 15;
 
 			sliderPosX = MathUtil.clampMinFirst((float) (mouseX - mouseGap), (float) min, (float) max);
 
 			double val = sliderPosX - min;
 
-			value = MathUtil.clampMinFirst(MathHelper.abs((float) (val / (width - 30))), 0, 1);
+			value = MathUtil.clampMinFirst(MathUtil.absolute((float) (val / (width - 30))), 0, 1);
 		}
 
-		// Draws the bar inside the slider
-		this.drawTexturedModalRect((float) sliderPosX - 15, this.y, 0, 100 + j * 20, 15, this.height);
-		this.drawTexturedModalRect((float) sliderPosX, this.y, 185, 100 + j * 20, 15, this.height);
+		// Draws the slider handle
+		drawTexturedModalRect((float) sliderPosX - 15, y, 0, 100 + handleState * 20, 15, height);
+		drawTexturedModalRect((float) sliderPosX, y, 185, 100 + handleState * 20, 15, height);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class GuiSlider extends GuiButton {
 			mouseGap = mouseX - sliderPosX;
 		else {
 			if (isMouseOverBar(mouseX, mouseY)) {
-				float posX = mouseX - (this.x + 4);
+				float posX = mouseX - (x + 4);
 
 				value = MathUtil.clampMinFirst(posX / (width - 10), 0, 1);
 
@@ -89,11 +89,11 @@ public class GuiSlider extends GuiButton {
 	}
 
 	boolean isMouseOverBar(int mouseX, int mouseY) {
-		int X1 = this.x + 4;
-		int X2 = this.x + width - 6;
+		int X1 = x + 4;
+		int X2 = x + width - 6;
 
-		int Y1 = this.y + 4;
-		int Y2 = this.y + 15;
+		int Y1 = y + 4;
+		int Y2 = y + 15;
 
 		boolean inRectangle = mouseX > X1 && mouseX < X2 && mouseY > Y1 && mouseY <= Y2;
 
@@ -107,8 +107,8 @@ public class GuiSlider extends GuiButton {
 		int X1 = (int) (sliderPosX - 15 + 5);
 		int X2 = (int) (sliderPosX + 15 - 5);
 
-		int Y1 = this.y + 4;
-		int Y2 = this.y + 15;
+		int Y1 = y + 4;
+		int Y2 = y + 15;
 
 		boolean inRectangle = mouseX > X1 && mouseX < X2 && mouseY > Y1 && mouseY <= Y2;
 

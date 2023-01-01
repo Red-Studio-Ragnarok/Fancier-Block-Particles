@@ -92,4 +92,15 @@ public class MathUtil {
         // Divide the rounded number by 10^decimals to get the rounded result
 		return (float) ((rounded) / FastMath.pow(10, decimals));
 	}
+
+	/**
+	 * Converts a boolean value to an integer.
+	 *
+	 * @param input The boolean value to convert
+	 * @return 1 if the input is true, 0 if the input is false
+	 */
+
+	public static int boolToInt(boolean input) {
+		return input ? 1 : 0;
+	}
 }
