@@ -18,7 +18,7 @@ public class FBPWeatherRenderer extends IRenderHandler {
 	int tickCounter, secondaryTickCounter, desiredMultiplier;
 	int multiplier = 0;
 
-	private static float density;
+	static float density;
 
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
