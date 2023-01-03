@@ -123,10 +123,22 @@ public class MathUtil {
 		return input ? 1 : 0;
 	}
 
+	/**
+	 * Returns the largest integer that is less than or equal to the input value.
+	 *
+	 * @param input The input value.
+	 * @return The largest integer that is less than or equal to the input value.
+	 */
 	public static int floor(double input) {
 		return (int) FastMath.floor(input);
 	}
 
+	/**
+	 * Returns the smallest integer that is greater than or equal to the input value.
+	 *
+	 * @param input The input value.
+	 * @return The smallest integer that is greater than or equal to the input value.
+	 */
 	public static int ceiling(double input) {
 		return (int) FastMath.ceil(input);
 	}
