@@ -100,7 +100,7 @@ public class FBPParticleDigging extends ParticleDigging {
 					motionY *= 0.1;
 					motionZ *= 1.5;
 
-					double particleSpeed = Math.sqrt(motionX * motionX + motionZ * motionZ);
+					double particleSpeed = FastMath.sqrtQuick(motionX * motionX + motionZ * motionZ);
 
 					float x = MathUtil.addOrSubtractBasedOnSign((float) cameraViewDir.x, 0.01F);
 					float z = MathUtil.addOrSubtractBasedOnSign((float) cameraViewDir.z, 0.01F);
@@ -120,9 +120,9 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		Block block = state.getBlock();
 
-		particleGravity = (float) (block.blockParticleGravity * FBP.gravityMult);
+		particleGravity = block.blockParticleGravity * FBP.gravityMult;
 
-		particleScale = (float) (FBP.scaleMult * (FBP.randomizedScale ? particleScale : 1));
+		particleScale = FBP.scaleMult * (FBP.randomizedScale ? particleScale : 1);
 		particleMaxAge = (int) FBP.random.nextDouble(FBP.minAge, FBP.maxAge + 0.5);
 
 		scaleAlpha = particleScale * 0.82;
@@ -302,8 +302,8 @@ public class FBPParticleDigging extends ParticleDigging {
 
 				move(motionX, motionY, motionZ);
 
-				rot.x = (float) Math.round(rot.x / 90) * 90;
-				rot.z = (float) Math.round(rot.z / 90) * 90;
+				rot.x = (float) FastMath.round(rot.x / 90) * 90;
+				rot.z = (float) FastMath.round(rot.z / 90) * 90;
 
 				if (MathUtil.absolute((float) motionX) > 0.00001)
 					prevMotionX = motionX;
@@ -405,9 +405,9 @@ public class FBPParticleDigging extends ParticleDigging {
 						IBlockState block = world.getBlockState(new BlockPos(x, y, z));
 
 						if (block.getMaterial() == Material.WATER) {
-							double d0 = (float) (y + 1) - BlockLiquid.getLiquidHeightPercent(block.getValue(BlockLiquid.LEVEL));
+							double floatLine = (float) (y + 1) - BlockLiquid.getLiquidHeightPercent(block.getValue(BlockLiquid.LEVEL));
 
-							if (posY <= d0)
+							if (posY <= floatLine)
 								return true;
 						}
 					}
