@@ -15,10 +15,10 @@ import static io.redstudioragnarok.FBP.FBP.*;
 
 public class FBPWeatherRenderer extends IRenderHandler {
 
-	int tickCounter, secondaryTickCounter;
-
-	int desiredMultiplier;
+	int tickCounter, secondaryTickCounter, desiredMultiplier;
 	int multiplier = 0;
+
+	private static float density;
 
 	@Override
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
@@ -26,13 +26,15 @@ public class FBPWeatherRenderer extends IRenderHandler {
 
 	public void onUpdate() {
 			if (mc.world.isRaining()) {
+
+				// Smooth transition
 				if (secondaryTickCounter++ >= 20 && dynamicWeather) {
 					desiredMultiplier = mc.world.isThundering() ? 10 : 0;
 					multiplier = multiplier < desiredMultiplier ? multiplier += 1 : multiplier > desiredMultiplier ? multiplier -= 1 : multiplier;
 					secondaryTickCounter = 0;
 				}
 
-				float density = weatherParticleDensity + weatherRenderDistance * 4;
+				density = weatherParticleDensity + weatherRenderDistance * 4;
 
 				if (tickCounter++ >= 12 - multiplier) {
 					double mX = mc.player.motionX * 26;
@@ -42,14 +44,13 @@ public class FBPWeatherRenderer extends IRenderHandler {
 					BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
 					for (int i = 0; i < 32 * density; i++) {
-						// get random position within radius of a little over the player's render
-						// distance
+						// Get random position within radius of a little over the player's render distance
 						double angle = FBP.random.nextDouble() * FastMath.PI * 2;
 						double radius = FastMath.sqrtQuick(FBP.random.nextDouble()) * 35 * weatherRenderDistance;
 						double X = mc.player.posX + mX + radius * FastMath.cosQuick(angle);
 						double Z = mc.player.posZ + mZ + radius * FastMath.sinQuick(angle);
 
-						// check if position is within a snow biomes
+						// Check if position is within a snow biomes
 						blockpos$mutableblockpos.setPos(X, mc.player.posY, Z);
 						Biome biome = mc.world.getBiome(blockpos$mutableblockpos);
 
