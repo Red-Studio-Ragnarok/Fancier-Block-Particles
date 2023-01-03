@@ -18,8 +18,6 @@ public class GuiSlider extends GuiButton {
 	boolean dragging = false;
 	boolean mouseDown = false;
 
-	private static int handleState;
-
 	public GuiSlider(int x, int y, float inputValue) {
 		super(Integer.MIN_VALUE, x, y, "");
 		value = inputValue;
@@ -30,7 +28,7 @@ public class GuiSlider extends GuiButton {
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		FontRenderer fontrenderer = mc.fontRenderer;
 
-		handleState = enabled ? (isMouseOverSlider(mouseX, mouseY) || dragging ? 2 : 1) : 0;
+		int handleState = enabled ? (isMouseOverSlider(mouseX, mouseY) || dragging ? 2 : 1) : 0;
 
 		// Draws the text
 		drawCenteredString(fontrenderer, displayString, x + width / 2, y + 6 - 9, fontrenderer.getColorCode('f'));
