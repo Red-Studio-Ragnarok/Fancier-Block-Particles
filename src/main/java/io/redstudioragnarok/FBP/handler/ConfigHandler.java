@@ -9,6 +9,8 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 
+import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
+
 public class ConfigHandler {
 
 	static FileInputStream fileInputStream;
@@ -43,6 +45,7 @@ public class ConfigHandler {
 				FBP.floatingMaterials.add(Material.PLANTS);
 				FBP.floatingMaterials.add(Material.ICE);
 				FBP.floatingMaterials.add(Material.PACKED_ICE);
+				FBP.floatingMaterials.add(Material.CLOTH);
 				FBP.floatingMaterials.add(Material.CARPET);
 				FBP.floatingMaterials.add(Material.WOOD);
 				FBP.floatingMaterials.add(Material.WEB);
@@ -168,31 +171,25 @@ public class ConfigHandler {
 
 			Field[] materials = Material.class.getDeclaredFields();
 
+			// Read and discard the first four lines
+			for (int i = 0; i < 4; i++) {
+				bufferedReader.readLine();
+			}
+
 			while ((line = bufferedReader.readLine()) != null) {
-				line = line.trim().toLowerCase();
-
-				String[] split = line.split("=");
-
-				if (split.length < 2)
-					continue;
-
-				String materialName = split[0].replace("_", "");
-				boolean flag = Boolean.parseBoolean(split[1]);
-
-				if (!flag)
-					continue;
+				line = line.trim();
 
 				boolean found = false;
 
-				for (Field f : materials) {
-					String fieldName = f.getName();
+				for (Field field : materials) {
+					String fieldName = field.getName();
 
-					if (f.getType() == Material.class) {
-						String translated = ObfuscationUtil.translateObfMaterialName(fieldName).toLowerCase().replace("_", "");
+					if (field.getType() == Material.class) {
+						String translated = ObfuscationUtil.ObfMaterial.getHumanReadableName(fieldName);
 
-						if (materialName.equals(translated)) {
+						if (line.equals(translated)) {
 							try {
-								Material mat = (Material) f.get(null);
+								Material mat = (Material) field.get(null);
 
 								if (!FBP.floatingMaterials.contains(mat))
 									FBP.floatingMaterials.add(mat);
@@ -207,7 +204,7 @@ public class ConfigHandler {
 				}
 
 				if (!found)
-					System.out.println("[FBP]: Material not recognized: " + materialName);
+					FBP_LOG.error("[FBP]: Material not recognized: " + line);
 			}
 
 			closeStreams();
@@ -355,19 +352,23 @@ public class ConfigHandler {
 
 			Field[] materials = Material.class.getDeclaredFields();
 
-			for (Field f : materials) {
-				String fieldName = f.getName();
+			writer.println("Configuration file for floatings materials.");
+			writer.println("Anything added here will float, anything else will sink.");
+			writer.println("List of all possible materials: https://i-like.cat/Materials");
+			writer.println("");
 
-				if (f.getType() == Material.class) {
-					String translated = ObfuscationUtil.translateObfMaterialName(fieldName).toLowerCase();
+			for (Field field : materials) {
+				String fieldName = field.getName();
+
+				if (field.getType() == Material.class) {
+					String translated = ObfuscationUtil.ObfMaterial.getHumanReadableName(fieldName);
 					try {
-						Material mat = (Material) f.get(null);
-						if (mat == Material.AIR)
+						Material material = (Material) field.get(null);
+						if (material == Material.AIR || !FBP.floatingMaterials.contains(material))
 							continue;
 
-						boolean flag = FBP.INSTANCE.doesMaterialFloat(mat);
+						writer.println(translated);
 
-						writer.println(translated + "=" + flag);
 					} catch (Exception ex) {
 						// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 					}
