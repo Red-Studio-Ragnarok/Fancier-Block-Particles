@@ -4,6 +4,7 @@ import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.renderer.FBPRenderer;
 import io.redstudioragnarok.FBP.vector.Vector2D;
 import io.redstudioragnarok.FBP.vector.Vector3D;
+import net.jafama.FastMath;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleDigging;
@@ -140,8 +141,8 @@ public class FBPParticleSnow extends ParticleDigging {
 
 			move(motionX, motionY, motionZ);
 
-			rot.x = (float) Math.round(rot.x / 90) * 90;
-			rot.z = (float) Math.round(rot.z / 90) * 90;
+			rot.x = (float) FastMath.round(rot.x / 90) * 90;
+			rot.z = (float) FastMath.round(rot.z / 90) * 90;
 
 			motionX *= 0.98;
 

@@ -6,6 +6,7 @@ import io.redstudioragnarok.FBP.handler.ConfigHandler;
 import io.redstudioragnarok.FBP.util.MathUtil;
 import io.redstudioragnarok.FBP.util.ModReference;
 import io.redstudioragnarok.FBP.vector.Vector2D;
+import net.jafama.FastMath;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -110,7 +111,7 @@ public class Page0 extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		GuiHelper.background(MinDurationSlider.y - 6 - GUIOffsetY, Done.y - 4, width, height);
 
-		int sParticleCountBase = (int) Math.round(2 + 3 * ParticleCountBase.value);
+		int sParticleCountBase = FastMath.round(2 + 3 * ParticleCountBase.value);
 
 		int sMinAge = (int) (10 + 90 * MinDurationSlider.value);
 		int sMaxAge = (int) (10 + 90 * MaxDurationSlider.value);
