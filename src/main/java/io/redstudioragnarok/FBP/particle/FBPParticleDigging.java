@@ -25,7 +25,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
@@ -252,7 +251,7 @@ public class FBPParticleDigging extends ParticleDigging {
 					}
 
 					if (allowedToMove) {
-						float x = MathHelper.abs(rotStep.x * getMult());
+						float x = MathUtil.absolute(rotStep.x * getMult());
 
 						if (motionX > 0) {
 							if (motionZ > 0)
@@ -306,9 +305,9 @@ public class FBPParticleDigging extends ParticleDigging {
 				rot.x = (float) Math.round(rot.x / 90) * 90;
 				rot.z = (float) Math.round(rot.z / 90) * 90;
 
-				if (MathHelper.abs((float) motionX) > 0.00001)
+				if (MathUtil.absolute((float) motionX) > 0.00001)
 					prevMotionX = motionX;
-				if (MathHelper.abs((float) motionZ) > 0.00001)
+				if (MathUtil.absolute((float) motionZ) > 0.00001)
 					prevMotionZ = motionZ;
 
 				if (allowedToMove) {
@@ -326,7 +325,7 @@ public class FBPParticleDigging extends ParticleDigging {
 						if (!entityIn.noClip) {
 							float posX = (float) (this.posX - entityIn.posX);
 							float posZ = (float) (this.posZ - entityIn.posZ);
-							float posMax = (float) MathHelper.absMax(posX, posZ);
+							float posMax = MathUtil.absoluteMax(posX, posZ);
 
 							if (posMax >= 0.0099) {
 								posMax = (float) FastMath.sqrtQuick(posMax);
@@ -390,14 +389,14 @@ public class FBPParticleDigging extends ParticleDigging {
 	public boolean isInWater() {
 		double scale = particleScale / 20;
 
-		int minX = MathHelper.floor(posX - scale);
-		int maxX = MathHelper.ceil(posX + scale);
+		int minX = MathUtil.floor(posX - scale);
+		int maxX = MathUtil.ceiling(posX + scale);
 
-		int minY = MathHelper.floor(posY - scale);
-		int maxY = MathHelper.ceil(posY + scale);
+		int minY = MathUtil.floor(posY - scale);
+		int maxY = MathUtil.ceiling(posY + scale);
 
-		int minZ = MathHelper.floor(posZ - scale);
-		int maxZ = MathHelper.ceil(posZ + scale);
+		int minZ = MathUtil.floor(posZ - scale);
+		int maxZ = MathUtil.ceiling(posZ + scale);
 
 		if (world.isAreaLoaded(new StructureBoundingBox(minX, minY, minZ, maxX, maxY, maxZ), true)) {
 			for (int x = minX; x < maxX; ++x) {

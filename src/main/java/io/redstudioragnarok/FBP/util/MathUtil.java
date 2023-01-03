@@ -9,6 +9,11 @@ import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
  */
 public class MathUtil {
 
+	private static float absolute1;
+	private static float absolute2;
+
+	private static int integer;
+
 	/**
 	 * Clamps a value within a specified range, checking for the minimum value first.
 	 *
@@ -67,6 +72,21 @@ public class MathUtil {
 	}
 
 	/**
+	 * Returns the absolute maximum of two float numbers.
+	 * <p>
+	 * The absolute value of a number is the number without its sign, so it is always a positive number.
+	 *
+	 * @param input1 The first input
+	 * @param input2 The second input
+	 * @return The absolute maximum of the two inputs
+	 */
+	public static float absoluteMax(float input1, float input2) {
+		absolute1 = input1 >= 0 ? input1 : -input1;
+		absolute2 = input2 >= 0 ? input2 : -input2;
+		return absolute1 > absolute2 ? absolute1 : absolute2;
+	}
+
+	/**
 	 * Adds or subtracts a value based on the sign of the input value.
 	 * If the input value is less than 0.0, the add value will be subtracted from the input value.
 	 * Otherwise, the add value will be added to the input value.
@@ -92,7 +112,7 @@ public class MathUtil {
         // Divide the rounded number by 10^decimals to get the rounded result
 		return (float) ((rounded) / FastMath.pow(10, decimals));
 	}
-	
+
 	/**
 	 * Converts a boolean value to an integer.
 	 *
@@ -101,5 +121,13 @@ public class MathUtil {
 	 */
 	public static int boolToInt(boolean input) {
 		return input ? 1 : 0;
+	}
+
+	public static int floor(double input) {
+		return (int) FastMath.floor(input);
+	}
+
+	public static int ceiling(double input) {
+		return (int) FastMath.ceil(input);
 	}
 }
