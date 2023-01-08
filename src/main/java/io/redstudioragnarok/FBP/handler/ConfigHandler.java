@@ -19,15 +19,19 @@ public class ConfigHandler {
 
 	public static void init() {
 		try {
-			defaults(false);
-
 			if (!Paths.get(FBP.config.getParent()).toFile().exists())
 				Paths.get(FBP.config.getParent()).toFile().mkdirs();
 
 			if (!FBP.config.exists()) {
 				FBP.config.createNewFile();
 
-				write();
+				defaults(true);
+			}
+
+			if (!FBP.floatingMaterialsFile.exists()) {
+				FBP.floatingMaterialsFile.createNewFile();
+
+				defaultsFloatingMaterials(true);
 			}
 
 			if (!FBP.animBlacklistFile.exists())
@@ -36,30 +40,17 @@ public class ConfigHandler {
 			if (!FBP.particleBlacklistFile.exists())
 				FBP.particleBlacklistFile.createNewFile();
 
-			if (!FBP.floatingMaterialsFile.exists()) {
-				FBP.floatingMaterialsFile.createNewFile();
-
-				FBP.floatingMaterials.clear();
-
-				FBP.floatingMaterials.add(Material.LEAVES);
-				FBP.floatingMaterials.add(Material.PLANTS);
-				FBP.floatingMaterials.add(Material.ICE);
-				FBP.floatingMaterials.add(Material.PACKED_ICE);
-				FBP.floatingMaterials.add(Material.CLOTH);
-				FBP.floatingMaterials.add(Material.CARPET);
-				FBP.floatingMaterials.add(Material.WOOD);
-				FBP.floatingMaterials.add(Material.WEB);
-			} else
-				readFloatingMaterials();
-
 			read();
+			readFloatingMaterials();
+
 			readAnimExceptions();
 			readParticleExceptions();
 
 			write();
+			writeFloatingMaterials();
+
 			writeAnimExceptions();
 			writeParticleExceptions();
-			writeFloatingMaterials();
 
 			closeStreams();
 		} catch (IOException e) {
@@ -185,7 +176,7 @@ public class ConfigHandler {
 					String fieldName = field.getName();
 
 					if (field.getType() == Material.class) {
-						String translated = ObfuscationUtil.ObfMaterial.getHumanReadableName(fieldName);
+						String translated = ObfuscationUtil.translateObfMaterialName(fieldName);
 
 						if (line.equals(translated)) {
 							try {
@@ -361,7 +352,7 @@ public class ConfigHandler {
 				String fieldName = field.getName();
 
 				if (field.getType() == Material.class) {
-					String translated = ObfuscationUtil.ObfMaterial.getHumanReadableName(fieldName);
+					String translated = ObfuscationUtil.translateObfMaterialName(fieldName);
 					try {
 						Material material = (Material) field.get(null);
 						if (material == Material.AIR || !FBP.floatingMaterials.contains(material))
@@ -382,6 +373,7 @@ public class ConfigHandler {
 	}
 
 	public static void defaults(boolean write) {
+		FBP.enabled = true;
 		FBP.minAge = 10;
 		FBP.maxAge = 55;
 		FBP.scaleMult = 0.75F;
@@ -410,5 +402,27 @@ public class ConfigHandler {
 
 		if (write)
 			write();
+	}
+
+	public static void defaultsFloatingMaterials(boolean write) {
+		FBP.floatingMaterials.clear();
+
+		FBP.floatingMaterials.add(Material.LEAVES);
+		FBP.floatingMaterials.add(Material.PLANTS);
+		FBP.floatingMaterials.add(Material.ICE);
+		FBP.floatingMaterials.add(Material.PACKED_ICE);
+		FBP.floatingMaterials.add(Material.CLOTH);
+		FBP.floatingMaterials.add(Material.CARPET);
+		FBP.floatingMaterials.add(Material.WOOD);
+		FBP.floatingMaterials.add(Material.WEB);
+
+		if (write)
+			writeFloatingMaterials();
+	}
+
+	public static void skipLines(int numberOfLines) throws IOException {
+		for (int i = 0; i < numberOfLines; i++) {
+			bufferedReader.readLine();
+		}
 	}
 }
