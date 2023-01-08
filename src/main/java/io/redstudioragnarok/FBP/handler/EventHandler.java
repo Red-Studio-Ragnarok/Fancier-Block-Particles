@@ -283,8 +283,6 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onWorldLoadEvent(WorldEvent.Load world) {
-		ConfigHandler.init();
-
 		world.getWorld().addEventListener(worldEventListener);
 		list.clear();
 	}

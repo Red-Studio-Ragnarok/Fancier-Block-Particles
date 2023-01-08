@@ -1,6 +1,7 @@
 package io.redstudioragnarok.FBP;
 
 import io.redstudioragnarok.FBP.block.AnimationDummyBlock;
+import io.redstudioragnarok.FBP.handler.ConfigHandler;
 import io.redstudioragnarok.FBP.handler.EventHandler;
 import io.redstudioragnarok.FBP.handler.GuiHandler;
 import io.redstudioragnarok.FBP.handler.KeyInputHandler;
@@ -56,10 +57,7 @@ public class FBP {
 
 	public static float scaleMult, gravityMult, rotationMult, weatherParticleDensity, weatherRenderDistance;
 
-	public static boolean enabled = true;
-	public static boolean showInMillis = false;
-	public static boolean infiniteDuration = false;
-	public static boolean randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles, fancyWeather, dynamicWeather, fancyFlame, fancySmoke, waterPhysics, frozen;
+	public static boolean enabled, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles, fancyWeather, dynamicWeather, fancyFlame, fancySmoke, waterPhysics, frozen;
 
 	public static List<String> blockParticleBlacklist;
 	public static List<String> blockAnimBlacklist;
@@ -129,6 +127,7 @@ public class FBP {
 		particleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/ParticleBlockBlacklist.txt");
 		floatingMaterialsFile = new File(evt.getModConfigurationDirectory() + "/FBP/FloatingMaterials.txt");
 
+		ConfigHandler.init();
 		KeyBindings.init();
 
 		MinecraftForge.EVENT_BUS.register(new KeyInputHandler());
