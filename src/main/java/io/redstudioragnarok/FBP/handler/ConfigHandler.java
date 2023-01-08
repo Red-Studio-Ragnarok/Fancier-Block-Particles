@@ -408,14 +408,14 @@ public class ConfigHandler {
 	public static void defaultsFloatingMaterials(boolean write) {
 		FBP.floatingMaterials.clear();
 
-		FBP.floatingMaterials.add(Material.LEAVES);
-		FBP.floatingMaterials.add(Material.PLANTS);
-		FBP.floatingMaterials.add(Material.ICE);
-		FBP.floatingMaterials.add(Material.PACKED_ICE);
-		FBP.floatingMaterials.add(Material.CLOTH);
 		FBP.floatingMaterials.add(Material.CARPET);
-		FBP.floatingMaterials.add(Material.WOOD);
+		FBP.floatingMaterials.add(Material.CLOTH);
+		FBP.floatingMaterials.add(Material.ICE);
+		FBP.floatingMaterials.add(Material.LEAVES);
+		FBP.floatingMaterials.add(Material.PACKED_ICE);
+		FBP.floatingMaterials.add(Material.PLANTS);
 		FBP.floatingMaterials.add(Material.WEB);
+		FBP.floatingMaterials.add(Material.WOOD);
 
 		if (write)
 			writeFloatingMaterials();
