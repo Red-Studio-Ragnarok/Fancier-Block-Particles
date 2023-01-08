@@ -9,7 +9,7 @@ public class ObfuscationUtil {
 	static {
 		map = new HashMap<>();
 
-		String obfNames = "field_151579_a," + "field_151577_b," + "field_151578_c," + "field_151575_d,"
+		String obfNames = "field_151577_b," + "field_151578_c," + "field_151575_d,"
 				+ "field_151576_e," + "field_151573_f," + "field_151574_g," + "field_151586_h," + "field_151587_i,"
 				+ "field_151584_j," + "field_151585_k," + "field_151582_l," + "field_151583_m," + "field_151580_n,"
 				+ "field_151581_o," + "field_151595_p," + "field_151594_q," + "field_151593_r," + "field_151592_s,"
@@ -18,7 +18,7 @@ public class ObfuscationUtil {
 				+ "field_151566_D," + "field_151567_E," + "field_151568_F," + "field_151569_G," + "field_76233_E,"
 				+ "field_175972_I," + "field_189963_J";
 
-		String deobfNames = "AIR," + "GRASS," + "GROUND," + "WOOD," + "ROCK," + "IRON," + "ANVIL," + "WATER," + "LAVA,"
+		String deobfNames = "GRASS," + "GROUND," + "WOOD," + "ROCK," + "IRON," + "ANVIL," + "WATER," + "LAVA,"
 				+ "LEAVES," + "PLANTS," + "VINE," + "SPONGE," + "CLOTH," + "FIRE," + "SAND," + "CIRCUITS," + "CARPET,"
 				+ "GLASS," + "REDSTONE_LIGHT," + "TNT," + "CORAL," + "ICE," + "PACKED_ICE," + "SNOW," + "CRAFTED_SNOW,"
 				+ "CACTUS," + "CLAY," + "GOURD," + "DRAGON_EGG," + "PORTAL," + "CAKE," + "WEB," + "PISTON," + "BARRIER,"
