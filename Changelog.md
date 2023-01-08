@@ -1,18 +1,84 @@
 # Fancier Block Particles Version 0.8 Changelog
 
+## Added
+
+- Dynamic Weather system weather particles (rain & snow) are denser when a thunderstorm is happening
+- Weather Particles Render Distance option
+
+## Changed
+
+- Fancy Rain and Fancy Snow config options have been replaced by Fancy Weather option
+- Changed behavior of Fancy Block Placement with slabs placing slabs one on top of another should be a better experience
+- Changed floating materials config format to be more user-friendly and faster (Old config will be detected and replaced by the new defaults)
+- Smoke particles are now slightly more transparent
+- The config button in Forge's mod options now works
+- Updated `mcmod.info` to feature new description and better credits
+
 ## Fixed
 
-- Fixed crashes with some moded blocks (#7)
+- Fixed crashes with some moded blocks ([#7])
+- Fixed crashes with some moded blocks when HWYLA is installed ([#13])
+- Fixed Memory leak with `FBP#originalEffectRenderer` ([#139])
+- Fixed Fancy Block Placement speed being broken because of an accidental change in 0.7
+- Fixed new config having no default value
+
+## Removed
+
+- Removed Rest On Floor option ([#9])
 
 ## Optimization
 
+- Vectors got a redesign as a result FBP should now be faster and use less VRAM
+- Hex colors are now used instead of 4 separate R,G,B and A variables which makes rendering faster ([#10])
+- As the result of a big code cleanup FBP as a whole should now be faster, load faster and use slightly less resources
+- Optimized Rendering of Fancy Block Placement and all particles as a result, they should be faster and use slightly less GPU, RAM & VRAM
+- FBP now uses its own math utilities and Jafama fast math library which should result in better performance
+- Lossless textures compression resulting in 3.535 KB smaller mod size
+
 ## Internal
 
-- Finished removing useless "@SideOnly"
+- Added documentation for Vector2D, Vector3D, and FBPRenderer
+- Switched to [Anatawa] amazing [FG2.3 fork]
+- Updated to Gradle 7.6
+- Cleanup build.gradle & gradle.properties
+- Gradle now automatically updates the version in `ModReference.java`
+- Gradle now automatically increment the dev version by one each build
+- Now use a forked version of [Universal Tweaks] for faster development environment loading times
+- Cleanup the entire code
+- Vectors redesign
+- Major Refactors
+- Renamed most of the variables from unreadable names to readable names
+- Finished removing useless `@SideOnly`
+- Removed useless `isRemote` checks
+- Moved creation of particles to `ParticleUtil.java`
+
+### Vectors Redesign
+
+In 0.7 and before FBP was using Minecraft `Vec2f` and `Vec3d` but they have a few problems, by example `Vec3d` lack features like `set`, `copy` or even `scale` plus some of its features are written in a complex and slow manner.
+Also, they have a `ZERO` variable which is useless and takes resource's for nothing this is even worst for `Vec2f` since it has tons of useless variables.
+And having control over them is really nice, so we need to make our own.
+
+Introducing `Vector2D` and `Vector3D` the brand-new vectors for FBP, which are faster easier to work with and come with great documentation!
 
 ### Changes in error handling
 
-Non critical try-catch blocks should now never throw a runtime exception or print a stack trace except when debug mode is added they should print a stack trace and count towards the issues counter and their respective counters (Rendering Issues, Physics Issues, Performance Issues, etc.)
+Non-critical try-catch blocks should now never throw a runtime exception or print a stack trace except when debug mode is added they should print a stack trace and count towards the issues counter and their respective counters (Rendering Issues, Physics Issues, Performance Issues, etc.)
+
+#### Credits
+
+- [WildMihai] for optimizations in `FBPRenderer`, `FBPConfigHandler` and deprecating Rest On Floor ([#9], [#10]) 
+
+[#7]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/7
+[#13]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/13
+[#139]: https://github.com/TominoCZ/FancyBlockParticles/issues/139
+[#9]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/9
+[#10]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/10
+[Anatawa]: https://github.com/anatawa12
+[FG2.3 fork]: https://github.com/anatawa12/ForgeGradle-2.3
+[Universal Tweaks]: https://www.curseforge.com/minecraft/mc-mods/universal-tweaks
+[WildMihai]: https://github.com/WildMihai
+
+---
 
 # Fancier Block Particles Version 0.7 Changelog
 
@@ -36,12 +102,21 @@ Non critical try-catch blocks should now never throw a runtime exception or prin
 ## Optimization
 
 - Optimized main class as a result, it should be slightly faster and use slightly less RAM
-- Draw calls are now batched thanks to Rongmario which improve rendering performance by a ton
-- Thanks to a immense code cleanup the FBP as a whole should be slightly faster and use slightly less RAM
+- Draw calls are now batched which improve rendering performance by 2.5 times ([#5])
+- Thanks to an immense code cleanup the FBP as a whole should be slightly faster and use slightly less RAM
 
 ## Internal
 
 - General code cleanup
+
+#### Credits
+
+- [Rongmario] for batching draw calls ([#5])
+
+[Rongmario]: https://github.com/Rongmario
+[#5]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/5
+
+---
 
 # Fancier Block Particles Version 0.6 Changelog
 
@@ -72,17 +147,23 @@ Non critical try-catch blocks should now never throw a runtime exception or prin
 
 - Switched every bit of text to .lang which allows anyone to create a translation for their language
 
+---
+
 # Fancier Block Particles Version 0.5 Changelog
 
 ## Fixed
 
 - Critical crash because ATs were not getting applied
 
+---
+
 # Fancier Block Particles Version 0.4 Changelog
 
 ## Changed
 
-- Updated mcmod.info
+- Updated `mcmod.info`
+
+---
 
 # Fancier Block Particles Version 0.3 Changelog
 
@@ -102,6 +183,8 @@ All these optimizations result in a 9% faster mod loading time, which makes Fanc
 ## Internal
 
 - General code cleanup
+
+---
 
 # Fancier Block Particles Version 0.2 Changelog
 
@@ -130,21 +213,23 @@ All these optimizations result in a 9% faster mod loading time, which makes Fanc
 - Refactored FBPRenderUtil (In Util) to FBPRenderer (in Renderer)
 - Code Cleanup
 
+---
+
 # Fancier Block Particles Version 0.1 Changelog
 
 ## Added
 
-- Logo to mcmod.info
+- Logo to `mcmod.info`
 
 ## Changed
 
-- Updated mcmod.info description & credits
+- Updated `mcmod.info` description & credits
 - Updated default config
 - Updated default bindings
 
 ## Fixed
 
-- Fancy Block Placing ghost blocks when placing blocks rapidly when lagging
+- Fancy Block Placing ghost blocks when placing blocks rapidly when lagging ([#69])
 
 ## Optimization
 
@@ -161,3 +246,5 @@ All these optimizations result in a 9% faster mod loading time, which makes Fanc
 - Created ModReference.java and moved everything to it
 - Rename some variables
 - General code cleanup
+
+[#69]: https://github.com/TominoCZ/FancyBlockParticles/issues/69
