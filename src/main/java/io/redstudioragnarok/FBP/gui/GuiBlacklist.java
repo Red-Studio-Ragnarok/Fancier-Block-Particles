@@ -134,9 +134,9 @@ public class GuiBlacklist extends GuiScreen {
 						FBP.INSTANCE.removeFromBlacklist(b, isParticle);
 
 					if (isParticle)
-						ConfigHandler.writeParticleExceptions();
+						ConfigHandler.writeParticleBlacklist();
 					else
-						ConfigHandler.writeAnimExceptions();
+						ConfigHandler.writeAnimBlacklist();
 
 					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 				}

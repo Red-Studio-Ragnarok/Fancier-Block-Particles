@@ -43,14 +43,15 @@ public class ConfigHandler {
 			read();
 			readFloatingMaterials();
 
-			readAnimExceptions();
-			readParticleExceptions();
+			readAnimBlacklist();
+			readParticleBlacklist();
 
+			// TODO: Write configs only if they changed
 			write();
 			writeFloatingMaterials();
 
-			writeAnimExceptions();
-			writeParticleExceptions();
+			writeAnimBlacklist();
+			writeParticleBlacklist();
 
 			closeStreams();
 		} catch (IOException e) {
@@ -206,7 +207,7 @@ public class ConfigHandler {
 		}
 	}
 
-	static void readAnimExceptions() {
+	static void readAnimBlacklist() {
 		try {
 			initStreams(FBP.animBlacklistFile);
 
@@ -223,7 +224,7 @@ public class ConfigHandler {
 		closeStreams();
 	}
 
-	static void readParticleExceptions() {
+	static void readParticleBlacklist() {
 		try {
 			initStreams(FBP.particleBlacklistFile);
 
@@ -289,54 +290,6 @@ public class ConfigHandler {
 		}
 	}
 
-	public static void writeAnimExceptions() {
-		try {
-			PrintWriter writer = new PrintWriter(FBP.animBlacklistFile.getPath(), "UTF-8");
-
-			for (String ex : FBP.blockAnimBlacklist)
-				writer.println(ex);
-
-			writer.close();
-		} catch (Exception e) {
-			closeStreams();
-
-			if (!FBP.animBlacklistFile.exists()) {
-				if (!Paths.get(FBP.animBlacklistFile.getParent()).toFile().exists())
-					Paths.get(FBP.animBlacklistFile.getParent()).toFile().mkdirs();
-
-				try {
-					FBP.animBlacklistFile.createNewFile();
-				} catch (IOException e1) {
-					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-				}
-			}
-		}
-	}
-
-	public static void writeParticleExceptions() {
-		try {
-			PrintWriter writer = new PrintWriter(FBP.particleBlacklistFile.getPath(), "UTF-8");
-
-			for (String ex : FBP.blockParticleBlacklist)
-				writer.println(ex);
-
-			writer.close();
-		} catch (Exception e) {
-			closeStreams();
-
-			if (!FBP.particleBlacklistFile.exists()) {
-				if (!Paths.get(FBP.particleBlacklistFile.getParent()).toFile().exists())
-					Paths.get(FBP.particleBlacklistFile.getParent()).toFile().mkdirs();
-
-				try {
-					FBP.particleBlacklistFile.createNewFile();
-				} catch (IOException e1) {
-					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-				}
-			}
-		}
-	}
-
 	static void writeFloatingMaterials() {
 		try {
 			PrintWriter writer = new PrintWriter(FBP.floatingMaterialsFile.getPath(), "UTF-8");
@@ -369,6 +322,54 @@ public class ConfigHandler {
 			writer.close();
 		} catch (Exception e) {
 			closeStreams();
+		}
+	}
+
+	public static void writeAnimBlacklist() {
+		try {
+			PrintWriter writer = new PrintWriter(FBP.animBlacklistFile.getPath(), "UTF-8");
+
+			for (String ex : FBP.blockAnimBlacklist)
+				writer.println(ex);
+
+			writer.close();
+		} catch (Exception e) {
+			closeStreams();
+
+			if (!FBP.animBlacklistFile.exists()) {
+				if (!Paths.get(FBP.animBlacklistFile.getParent()).toFile().exists())
+					Paths.get(FBP.animBlacklistFile.getParent()).toFile().mkdirs();
+
+				try {
+					FBP.animBlacklistFile.createNewFile();
+				} catch (IOException e1) {
+					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+				}
+			}
+		}
+	}
+
+	public static void writeParticleBlacklist() {
+		try {
+			PrintWriter writer = new PrintWriter(FBP.particleBlacklistFile.getPath(), "UTF-8");
+
+			for (String ex : FBP.blockParticleBlacklist)
+				writer.println(ex);
+
+			writer.close();
+		} catch (Exception e) {
+			closeStreams();
+
+			if (!FBP.particleBlacklistFile.exists()) {
+				if (!Paths.get(FBP.particleBlacklistFile.getParent()).toFile().exists())
+					Paths.get(FBP.particleBlacklistFile.getParent()).toFile().mkdirs();
+
+				try {
+					FBP.particleBlacklistFile.createNewFile();
+				} catch (IOException e1) {
+					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+				}
+			}
 		}
 	}
 
