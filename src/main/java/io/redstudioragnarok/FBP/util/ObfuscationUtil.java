@@ -18,11 +18,11 @@ public class ObfuscationUtil {
 				+ "field_151566_D," + "field_151567_E," + "field_151568_F," + "field_151569_G," + "field_76233_E,"
 				+ "field_175972_I," + "field_189963_J";
 
-		String deobfNames = "GRASS," + "GROUND," + "WOOD," + "ROCK," + "IRON," + "ANVIL," + "WATER," + "LAVA,"
-				+ "LEAVES," + "PLANTS," + "VINE," + "SPONGE," + "CLOTH," + "FIRE," + "SAND," + "CIRCUITS," + "CARPET,"
-				+ "GLASS," + "REDSTONE_LIGHT," + "TNT," + "CORAL," + "ICE," + "PACKED_ICE," + "SNOW," + "CRAFTED_SNOW,"
-				+ "CACTUS," + "CLAY," + "GOURD," + "DRAGON_EGG," + "PORTAL," + "CAKE," + "WEB," + "PISTON," + "BARRIER,"
-				+ "STRUCTURE_VOID";
+		String deobfNames = "Grass," + "Ground," + "Wood," + "Rock," + "Iron," + "Anvil," + "Water," + "Lava,"
+				+ "Leaves," + "Plants," + "Vine," + "Sponge," + "Cloth," + "Fire," + "Sand," + "Circuits," + "Carpet,"
+				+ "Glass," + "Redstone Light," + "Tnt," + "Coral," + "Ice," + "Packed Ice," + "Snow," + "Crafted Snow,"
+				+ "Cactus," + "Clay," + "Gourd," + "Dragon Egg," + "Portal," + "Cake," + "Web," + "Piston," + "Barrier,"
+				+ "Structure Void";
 
 		String[] obf = obfNames.split(",");
 		String[] deobf = deobfNames.split(",");
