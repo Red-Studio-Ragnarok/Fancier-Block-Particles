@@ -33,8 +33,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.SplittableRandom;
 
-import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
-
 @Mod(clientSideOnly = true, modid = ModReference.MOD_ID, name = ModReference.MOD_NAME, version = ModReference.VERSION, guiFactory = "io.redstudioragnarok.FBP.config.FBPConfigGuiFactory")
 public class FBP {
 
