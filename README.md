@@ -32,7 +32,18 @@ This mod replace the Minecraft 2D particles with fancier 3D particles, it also a
 ### Configuration Menu
 ![Example](https://user-images.githubusercontent.com/82710983/188453582-29bca653-6942-4f33-a670-ce89fbe42942.gif)
 
+# Contributing
+
+This section need some work but the basics are:
+
+You can just open in IntelliJ and work on it, normally everything should work, if not create an issue.
+
+This projects follow [Conventional Commits], [Keep a Changelog] and [Ragnarök Versioning Convention]
+
 [Trello]: https://trello.com/b/nlEU4rO2
 [TominoCZ]: [https://www.curseforge.com/members/morphoxl/projects](https://github.com/TominoCZ)
 [Fancy Block Particles]: https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles
 [#69]: https://github.com/TominoCZ/FancyBlockParticles/issues/69
+[Conventional Commits]: https://www.conventionalcommits.org/en/v1.0.0/
+[Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
+[Ragnarök Versioning Convention]: https://gist.github.com/JustDesoroxxx/5d4a45785ce19a6653ba99f72325c703
