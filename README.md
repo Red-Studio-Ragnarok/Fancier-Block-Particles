@@ -32,7 +32,7 @@ This mod replace the Minecraft 2D particles with fancier 3D particles, it also a
 ### Configuration Menu
 ![Example](https://user-images.githubusercontent.com/82710983/188453582-29bca653-6942-4f33-a670-ce89fbe42942.gif)
 
-# Contributing
+## Contributing
 
 This section need some work but the basics are:
 
