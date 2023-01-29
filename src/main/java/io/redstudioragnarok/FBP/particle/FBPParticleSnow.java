@@ -14,7 +14,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 import static io.redstudioragnarok.FBP.util.ParticleUtil.texturedParticle;
@@ -26,7 +26,7 @@ public class FBPParticleSnow extends ParticleDigging {
 	double scaleAlpha, prevParticleScale, prevParticleAlpha;
 	double endMult = 1;
 
-	Vector3D rot, prevRot, rotStep;
+	Vector3D rot, prevRot, rotStep, tempRot;
 
 	Color color;
 
@@ -37,6 +37,7 @@ public class FBPParticleSnow extends ParticleDigging {
 
 		rot = new Vector3D();
 		prevRot = new Vector3D();
+		tempRot = new Vector3D();
 
 		createRotationMatrix();
 
@@ -94,8 +95,9 @@ public class FBPParticleSnow extends ParticleDigging {
 			if (posY < mc.player.posY - (mc.gameSettings.renderDistanceChunks * 16))
 				setExpired();
 
-			rotStep.scale((FBP.rotationMult * 5));
-			rot.add(rotStep);
+			tempRot.copy(rotStep);
+			tempRot.scale((FBP.rotationMult * 5));
+			rot.add(tempRot);
 
 			if (this.particleAge >= this.particleMaxAge) {
 				if (FBP.randomFadingSpeed)
