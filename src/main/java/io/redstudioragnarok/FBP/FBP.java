@@ -123,7 +123,7 @@ public class FBP {
 		config = new File(evt.getModConfigurationDirectory() + "/FBP/Particle.properties");
 		animBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/AnimBlockBlacklist.txt");
 		particleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/ParticleBlockBlacklist.txt");
-		floatingMaterialsFile = new File(evt.getModConfigurationDirectory() + "/FBP/FloatingMaterials.txt");
+		floatingMaterialsFile = new File(evt.getModConfigurationDirectory() + "/FBP/Floating Materials.txt");
 
 		ConfigHandler.init();
 		KeyBindings.init();
