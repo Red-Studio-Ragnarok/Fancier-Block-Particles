@@ -94,6 +94,7 @@ public class Page3 extends GuiScreen {
 			break;
 		case 5:
 			FBP.waterPhysics = !FBP.waterPhysics;
+			ConfigHandler.reloadMaterials();
 			break;
 		case 6:
 			break;

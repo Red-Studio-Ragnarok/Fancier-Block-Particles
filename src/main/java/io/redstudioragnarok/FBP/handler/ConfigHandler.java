@@ -55,7 +55,8 @@ public class ConfigHandler {
 				FBP.oldParticleBlacklistFile.delete();
 
 			read();
-			readFloatingMaterials();
+			if (FBP.waterPhysics)
+				readFloatingMaterials();
 
 			readAnimBlacklist();
 			readParticleBlacklist();
@@ -436,31 +437,27 @@ public class ConfigHandler {
 
 	public static void defaults(boolean write) {
 		FBP.enabled = true;
-		FBP.minAge = 10;
-		FBP.maxAge = 55;
-		FBP.scaleMult = 0.75F;
-		FBP.gravityMult = 1.0F;
-		FBP.rotationMult = 1.0F;
-		FBP.particlesPerAxis = 4;
-		FBP.weatherParticleDensity = 1.0F;
-		FBP.weatherRenderDistance = 1.0F;
-		FBP.lowTraction = false;
 		FBP.bounceOffWalls = true;
 		FBP.randomRotation = true;
 		FBP.entityCollision = true;
 		FBP.randomizedScale = true;
 		FBP.randomFadingSpeed = true;
 		FBP.spawnRedstoneBlockParticles = true;
-		FBP.infiniteDuration = false;
 		FBP.spawnWhileFrozen = true;
 		FBP.smartBreaking = true;
 		FBP.fancyPlaceAnim = true;
 		FBP.spawnPlaceParticles = true;
-		FBP.fancyWeather = false;
-		FBP.dynamicWeather = false;
-		FBP.fancySmoke = false;
-		FBP.fancyFlame = false;
 		FBP.waterPhysics = true;
+
+		FBP.minAge = 10;
+		FBP.maxAge = 55;
+		FBP.particlesPerAxis = 4;
+
+		FBP.scaleMult = 0.75F;
+		FBP.gravityMult = 1.0F;
+		FBP.rotationMult = 1.0F;
+		FBP.weatherParticleDensity = 1.0F;
+		FBP.weatherRenderDistance = 1.0F;
 
 		if (write)
 			write();
@@ -486,5 +483,15 @@ public class ConfigHandler {
 		} else {
 			FBP_LOG.warn("Found duplicated material " + material + " in Floating Materials.txt");
 		}
+	}
+
+	public static void reloadMaterials() {
+		if (FBP.floatingMaterials.isEmpty()) {
+			readFloatingMaterials();
+		} else {
+			FBP.floatingMaterials.clear();
+		}
+
+
 	}
 }
