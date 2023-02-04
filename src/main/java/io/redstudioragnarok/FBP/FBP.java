@@ -46,10 +46,15 @@ public class FBP {
 	public static final ResourceLocation FBP_FBP = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/fbp.png");
 	public static final ResourceLocation FBP_WIDGETS = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/widgets.png");
 
+	public static File oldConfig;
+	public static File oldFloatingMaterialsFile;
+	public static File oldAnimBlacklistFile;
+	public static File oldParticleBlacklistFile;
+
+	public static File config = null;
+	public static File floatingMaterialsFile = null;
 	public static File animBlacklistFile = null;
 	public static File particleBlacklistFile = null;
-	public static File floatingMaterialsFile = null;
-	public static File config = null;
 
 	public static int minAge, maxAge, particlesPerAxis;
 
@@ -120,10 +125,15 @@ public class FBP {
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent evt) {
-		config = new File(evt.getModConfigurationDirectory() + "/FBP/Particle.properties");
-		animBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/AnimBlockBlacklist.txt");
-		particleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/ParticleBlockBlacklist.txt");
+		oldConfig = new File(evt.getModConfigurationDirectory() + "/FBP/Particle.properties");
+		oldFloatingMaterialsFile = new File(evt.getModConfigurationDirectory() + "/FBP/FloatingMaterials.txt");
+		oldAnimBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/AnimBlockBlacklist.txt");
+		oldParticleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/ParticleBlockBlacklist.txt");
+
+		config = new File(evt.getModConfigurationDirectory() + "/FBP/Config.txt");
 		floatingMaterialsFile = new File(evt.getModConfigurationDirectory() + "/FBP/Floating Materials.txt");
+		animBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/Animation Block Blacklist.txt");
+		particleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/Particle Block Blacklist.txt");
 
 		ConfigHandler.init();
 		KeyBindings.init();

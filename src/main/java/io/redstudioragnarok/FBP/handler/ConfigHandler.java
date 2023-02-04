@@ -40,6 +40,20 @@ public class ConfigHandler {
 			if (!FBP.particleBlacklistFile.exists())
 				FBP.particleBlacklistFile.createNewFile();
 
+			// Check for pre 0.8 configs and hopefully delete them
+
+			if (FBP.oldConfig.exists())
+				FBP.oldConfig.delete();
+
+			if (FBP.oldFloatingMaterialsFile.exists())
+				FBP.oldFloatingMaterialsFile.delete();
+
+			if (FBP.oldAnimBlacklistFile.exists())
+				FBP.oldAnimBlacklistFile.delete();
+
+			if (FBP.oldParticleBlacklistFile.exists())
+				FBP.oldParticleBlacklistFile.delete();
+
 			read();
 			readFloatingMaterials();
 
