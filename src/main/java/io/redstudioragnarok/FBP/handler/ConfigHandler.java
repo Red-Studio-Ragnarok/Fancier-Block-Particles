@@ -11,11 +11,11 @@ import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
 
 public class ConfigHandler {
 
-	// Todo: Replace all the locally created `String line` by a `private static String line`
-
 	private static FileInputStream fileInputStream;
 	private static InputStreamReader inputStreamReader;
 	private static BufferedReader bufferedReader;
+
+	private static String line;
 
 	public static void init() {
 		try {
@@ -77,8 +77,6 @@ public class ConfigHandler {
 	static void read() {
 		try {
 			initStreams(FBP.config);
-
-			String line;
 
 			while ((line = bufferedReader.readLine()) != null) {
 
@@ -149,8 +147,6 @@ public class ConfigHandler {
 	static void readFloatingMaterials() {
 		try {
 			initStreams(FBP.floatingMaterialsFile);
-
-			String line;
 
 			FBP.floatingMaterials.clear();
 
@@ -278,8 +274,6 @@ public class ConfigHandler {
 		try {
 			initStreams(FBP.animBlacklistFile);
 
-			String line;
-
 			FBP.INSTANCE.resetBlacklist(false);
 
 			while ((line = bufferedReader.readLine()) != null && !(line = line.replaceAll(" ", "")).equals(""))
@@ -294,8 +288,6 @@ public class ConfigHandler {
 	static void readParticleBlacklist() {
 		try {
 			initStreams(FBP.particleBlacklistFile);
-
-			String line;
 
 			FBP.INSTANCE.resetBlacklist(true);
 
