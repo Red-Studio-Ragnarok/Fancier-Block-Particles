@@ -27,6 +27,7 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 ### Changed
 
 - Revamped Main config file
+- Changed default maximum duration from 55 to 64
 - Revamped Floating Materials config file
 - Fancy Rain and Fancy Snow config options have been replaced by Fancy Weather option
 - Changed behavior of Fancy Block Placement with slabs placing slabs one on top of another should be a better experience

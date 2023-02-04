@@ -450,7 +450,7 @@ public class ConfigHandler {
 		FBP.waterPhysics = true;
 
 		FBP.minAge = 10;
-		FBP.maxAge = 55;
+		FBP.maxAge = 64;
 		FBP.particlesPerAxis = 4;
 
 		FBP.scaleMult = 0.75F;
