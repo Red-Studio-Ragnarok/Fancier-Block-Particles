@@ -1,11 +1,9 @@
 package io.redstudioragnarok.FBP.handler;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.util.ObfuscationUtil;
 import net.minecraft.block.material.Material;
 
 import java.io.*;
-import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 
@@ -13,9 +11,11 @@ import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
 
 public class ConfigHandler {
 
-	static FileInputStream fileInputStream;
-	static InputStreamReader inputStreamReader;
-	static BufferedReader bufferedReader;
+	// Todo: Replace all the locally created `String line` by a `private static String line`
+
+	private static FileInputStream fileInputStream;
+	private static InputStreamReader inputStreamReader;
+	private static BufferedReader bufferedReader;
 
 	public static void init() {
 		try {
@@ -31,7 +31,7 @@ public class ConfigHandler {
 			if (!FBP.floatingMaterialsFile.exists()) {
 				FBP.floatingMaterialsFile.createNewFile();
 
-				defaultsFloatingMaterials(true);
+				defaultsFloatingMaterials();
 			}
 
 			if (!FBP.animBlacklistFile.exists())
@@ -45,13 +45,6 @@ public class ConfigHandler {
 
 			readAnimBlacklist();
 			readParticleBlacklist();
-
-			// TODO: Write configs only if they changed
-			write();
-			writeFloatingMaterials();
-
-			writeAnimBlacklist();
-			writeParticleBlacklist();
 
 			closeStreams();
 		} catch (IOException e) {
@@ -161,42 +154,116 @@ public class ConfigHandler {
 
 			FBP.floatingMaterials.clear();
 
-			Field[] materials = Material.class.getDeclaredFields();
-
-			// Read and discard the first four lines
-			for (int i = 0; i < 4; i++) {
-				bufferedReader.readLine();
-			}
+			skipLines(4);
 
 			while ((line = bufferedReader.readLine()) != null) {
 				line = line.trim();
 
-				boolean found = false;
-
-				for (Field field : materials) {
-					String fieldName = field.getName();
-
-					if (field.getType() == Material.class) {
-						String translated = ObfuscationUtil.translateObfMaterialName(fieldName);
-
-						if (line.equals(translated)) {
-							try {
-								Material mat = (Material) field.get(null);
-
-								if (!FBP.floatingMaterials.contains(mat))
-									FBP.floatingMaterials.add(mat);
-
-								found = true;
-								break;
-							} catch (Exception ex) {
-								// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-							}
-						}
-					}
+				switch (line) {
+					case "Anvil":
+						addMaterial(Material.ANVIL);
+						break;
+					case "Barrier":
+						addMaterial(Material.BARRIER);
+						break;
+					case "Cactus":
+						addMaterial(Material.CACTUS);
+						break;
+					case "Cake":
+						addMaterial(Material.CAKE);
+						break;
+					case "Carpet":
+						addMaterial(Material.CARPET);
+						break;
+					case "Circuits":
+						addMaterial(Material.CIRCUITS);
+						break;
+					case "Clay":
+						addMaterial(Material.CLAY);
+						break;
+					case "Cloth":
+						addMaterial(Material.CLOTH);
+						break;
+					case "Coral":
+						addMaterial(Material.CORAL);
+						break;
+					case "Crafted Snow":
+						addMaterial(Material.CRAFTED_SNOW);
+						break;
+					case "Dragon Egg":
+						addMaterial(Material.DRAGON_EGG);
+						break;
+					case "Fire":
+						addMaterial(Material.FIRE);
+						break;
+					case "Glass":
+						addMaterial(Material.GLASS);
+						break;
+					case "Gourd":
+						addMaterial(Material.GOURD);
+						break;
+					case "Grass":
+						addMaterial(Material.GRASS);
+						break;
+					case "Ground":
+						addMaterial(Material.GROUND);
+						break;
+					case "Ice":
+						addMaterial(Material.ICE);
+						break;
+					case "Iron":
+						addMaterial(Material.IRON);
+						break;
+					case "Leaves":
+						addMaterial(Material.LEAVES);
+						break;
+					case "Packed Ice":
+						addMaterial(Material.PACKED_ICE);
+						break;
+					case "Piston":
+						addMaterial(Material.PISTON);
+						break;
+					case "Plants":
+						addMaterial(Material.PLANTS);
+						break;
+					case "Portal":
+						addMaterial(Material.PORTAL);
+						break;
+					case "Redstone Light":
+						addMaterial(Material.REDSTONE_LIGHT);
+						break;
+					case "Rock":
+						addMaterial(Material.ROCK);
+						break;
+					case "Sand":
+						addMaterial(Material.SAND);
+						break;
+					case "Snow":
+						addMaterial(Material.SNOW);
+						break;
+					case "Sponge":
+						addMaterial(Material.SPONGE);
+						break;
+					case "Structure Void":
+						addMaterial(Material.STRUCTURE_VOID);
+						break;
+					case "Tnt":
+						addMaterial(Material.TNT);
+						break;
+					case "Vine":
+						addMaterial(Material.VINE);
+						break;
+					case "Web":
+						addMaterial(Material.WEB);
+						break;
+					case "Wood":
+						addMaterial(Material.WOOD);
+						break;
+					default:
+						// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+						FBP_LOG.error("Material not recognized: " + line);
+						break;
 				}
-
-				if (!found)
-					FBP_LOG.error("[FBP]: Material not recognized: " + line);
 			}
 
 			closeStreams();
@@ -294,30 +361,18 @@ public class ConfigHandler {
 		try {
 			PrintWriter writer = new PrintWriter(FBP.floatingMaterialsFile.getPath(), "UTF-8");
 
-			Field[] materials = Material.class.getDeclaredFields();
-
 			writer.println("Configuration file for floatings materials.");
 			writer.println("Anything added here will float, anything else will sink.");
-			writer.println("List of all possible materials: https://i-like.cat/Materials");
+			writer.println("List of all possible materials: https://shor.cz/Materials");
 			writer.println("");
 
-			for (Field field : materials) {
-				String fieldName = field.getName();
-
-				if (field.getType() == Material.class) {
-					String translated = ObfuscationUtil.translateObfMaterialName(fieldName);
-					try {
-						Material material = (Material) field.get(null);
-						if (material == Material.AIR || !FBP.floatingMaterials.contains(material))
-							continue;
-
-						writer.println(translated);
-
-					} catch (Exception ex) {
-						// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-					}
-				}
-			}
+			writer.println("Carpet");
+			writer.println("Cloth");
+			writer.println("Ice");
+			writer.println("Packed Ice");
+			writer.println("Plants");
+			writer.println("Web");
+			writer.println("Wood");
 
 			writer.close();
 		} catch (Exception e) {
@@ -405,25 +460,25 @@ public class ConfigHandler {
 			write();
 	}
 
-	public static void defaultsFloatingMaterials(boolean write) {
+	public static void defaultsFloatingMaterials() {
 		FBP.floatingMaterials.clear();
 
-		FBP.floatingMaterials.add(Material.CARPET);
-		FBP.floatingMaterials.add(Material.CLOTH);
-		FBP.floatingMaterials.add(Material.ICE);
-		FBP.floatingMaterials.add(Material.LEAVES);
-		FBP.floatingMaterials.add(Material.PACKED_ICE);
-		FBP.floatingMaterials.add(Material.PLANTS);
-		FBP.floatingMaterials.add(Material.WEB);
-		FBP.floatingMaterials.add(Material.WOOD);
+		writeFloatingMaterials();
 
-		if (write)
-			writeFloatingMaterials();
+		readFloatingMaterials();
 	}
 
 	public static void skipLines(int numberOfLines) throws IOException {
 		for (int i = 0; i < numberOfLines; i++) {
 			bufferedReader.readLine();
+		}
+	}
+
+	public static void addMaterial(Material material) {
+		if (!FBP.floatingMaterials.contains(material)) {
+			FBP.floatingMaterials.add(material);
+		} else {
+			FBP_LOG.warn("Found duplicated material " + material + " in Floating Materials.txt");
 		}
 	}
 }
