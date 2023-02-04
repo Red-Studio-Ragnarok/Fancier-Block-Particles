@@ -7,13 +7,27 @@ and this project follows to [Ragnarök Versioning Convention](https://gist.githu
 
 ## [Unreleased] Fancier Block Particles Version 0.8 Changelog
 
+### Highlight
+
+#### Revamped configs! 
+
+The new configs are easier to read understand and use, they are also faster which makes FBP have nearly no impact on loading times.
+
+***Old Configs will be deleted so please back them up before launching if you have made major changes to them***
+
+#### Dynamic Weather System
+
+Now weather will follow the current weather, it will rain heavier when a thunderstorm is happening.
+
 ### Added
 
-- Dynamic Weather system weather particles (rain & snow) are denser when a thunderstorm is happening
+- Dynamic Weather System (rain & snow)
 - Weather Particles Render Distance option
 
 ### Changed
 
+- Revamped Main config file
+- Revamped Floating Materials config file
 - Fancy Rain and Fancy Snow config options have been replaced by Fancy Weather option
 - Changed behavior of Fancy Block Placement with slabs placing slabs one on top of another should be a better experience
 - Changed floating materials config format to be more user-friendly and faster (Old config will be detected and replaced by the new defaults)
@@ -89,9 +103,9 @@ Non-critical try-catch blocks should now never throw a runtime exception or prin
 
 ## Fancier Block Particles Version 0.7 Changelog - 2022-10-18
 
-### Showcase
+### Highlight
 
-- Particles now renders 2.5 times faster (Immense thanks to Rongmario!)
+Particles now renders 2.5 times faster (Immense thanks to Rongmario!)
 
 ### Changed
 
