@@ -93,82 +93,94 @@ public class ConfigHandler {
 		try {
 			initStreams(FBP.config);
 
-			skipLines(3);
+			byte currentLine = 0;
 
-			line = bufferedReader.readLine();
-			FBP.enabled = Boolean.parseBoolean(line.replace("enabled=", ""));
+			while ((line = bufferedReader.readLine()) != null) {
+				currentLine ++;
 
-			skipLines(3);
-
-			for (int i = 0; i < 20; i++) {
-				line = bufferedReader.readLine();
-
-				if (line.contains("minAge="))
-					FBP.minAge = Integer.parseInt(line.replace("minAge=", ""));
-				else if (line.contains("maxAge="))
-					FBP.maxAge = Integer.parseInt(line.replace("maxAge=", ""));
-				else if (line.contains("showInMillis="))
-					FBP.showInMillis = Boolean.parseBoolean(line.replace("showInMillis=", ""));
-				else if (line.contains("infiniteDuration="))
-					FBP.infiniteDuration = Boolean.parseBoolean(line.replace("infiniteDuration=", ""));
-				else if (line.contains("particlesPerAxis="))
-					FBP.particlesPerAxis = Integer.parseInt(line.replace("particlesPerAxis=", ""));
-				else if (line.contains("scaleMult="))
-					FBP.scaleMult = Float.parseFloat(line.replace("scaleMult=", ""));
-				else if (line.contains("gravityMult="))
-					FBP.gravityMult = Float.parseFloat(line.replace("gravityMult=", ""));
-				else if (line.contains("rotationMult="))
-					FBP.rotationMult = Float.parseFloat(line.replace("rotationMult=", ""));
-				else if (line.contains("randomRotation="))
-					FBP.randomRotation = Boolean.parseBoolean(line.replace("randomRotation=", ""));
-				else if (line.contains("randomizedScale="))
-					FBP.randomizedScale = Boolean.parseBoolean(line.replace("randomizedScale=", ""));
-				else if (line.contains("randomFadingSpeed="))
-					FBP.randomFadingSpeed = Boolean.parseBoolean(line.replace("randomFadingSpeed=", ""));
-				else if (line.contains("spawnRedstoneBlockParticles="))
-					FBP.spawnRedstoneBlockParticles = Boolean.parseBoolean(line.replace("spawnRedstoneBlockParticles=", ""));
-				else if (line.contains("spawnWhileFrozen="))
-					FBP.spawnWhileFrozen = Boolean.parseBoolean(line.replace("spawnWhileFrozen=", ""));
-				else if (line.contains("entityCollision="))
-					FBP.entityCollision = Boolean.parseBoolean(line.replace("entityCollision=", ""));
-				else if (line.contains("bounceOffWalls="))
-					FBP.bounceOffWalls = Boolean.parseBoolean(line.replace("bounceOffWalls=", ""));
-				else if (line.contains("lowTraction="))
-					FBP.lowTraction = Boolean.parseBoolean(line.replace("lowTraction=", ""));
-				else if (line.contains("smartBreaking="))
-					FBP.smartBreaking = Boolean.parseBoolean(line.replace("smartBreaking=", ""));
-				else if (line.contains("fancyFlame="))
-					FBP.fancyFlame = Boolean.parseBoolean(line.replace("fancyFlame=", ""));
-				else if (line.contains("fancySmoke="))
-					FBP.fancySmoke = Boolean.parseBoolean(line.replace("fancySmoke=", ""));
-				else if (line.contains("waterPhysics="))
-					FBP.waterPhysics = Boolean.parseBoolean(line.replace("waterPhysics=", ""));
-			}
-
-			skipLines(3);
-
-			for (int i = 0; i < 2; i++) {
-				line = bufferedReader.readLine();
-
-				if (line.contains("fancyPlaceAnim="))
-					FBP.fancyPlaceAnim = Boolean.parseBoolean(line.replace("fancyPlaceAnim=", ""));
-				else if (line.contains("spawnPlaceParticles="))
-					FBP.spawnPlaceParticles = Boolean.parseBoolean(line.replace("spawnPlaceParticles=", ""));
-			}
-
-			skipLines(3);
-
-			for (int i = 0; i < 2; i++) {
-				line = bufferedReader.readLine();
-
-				if (line.contains("fancyWeather="))
-					FBP.fancyWeather = Boolean.parseBoolean(line.replace("fancyWeather=", ""));
-				else if (line.contains("dynamicWeather="))
-					FBP.dynamicWeather = Boolean.parseBoolean(line.replace("dynamicWeather=", ""));
-				else if (line.contains("weatherParticleDensity="))
-					FBP.weatherParticleDensity = Float.parseFloat(line.replace("weatherParticleDensity=", ""));
-				else if (line.contains("weatherRenderDistance="))
-					FBP.weatherRenderDistance = Float.parseFloat(line.replace("weatherRenderDistance=", " "));
+				switch (currentLine) {
+					case 4:
+						FBP.enabled = Boolean.parseBoolean(line.replace("enabled=", ""));
+						break;
+					case 8:
+						FBP.minAge = Integer.parseInt(line.replace("minAge=", ""));
+						break;
+					case 9:
+						FBP.maxAge = Integer.parseInt(line.replace("maxAge=", ""));
+                        break;
+                    case 10:
+						FBP.showInMillis = Boolean.parseBoolean(line.replace("showInMillis=", ""));
+						break;
+					case 11:
+						FBP.infiniteDuration = Boolean.parseBoolean(line.replace("infiniteDuration=", ""));
+                        break;
+                    case 12:
+						FBP.particlesPerAxis = Integer.parseInt(line.replace("particlesPerAxis=", ""));
+						break;
+					case 13:
+						FBP.scaleMult = Float.parseFloat(line.replace("scaleMult=", ""));
+                        break;
+                    case 14:
+						FBP.gravityMult = Float.parseFloat(line.replace("gravityMult=", ""));
+						break;
+					case 15:
+						FBP.rotationMult = Float.parseFloat(line.replace("rotationMult=", ""));
+						break;
+					case 16:
+						FBP.randomRotation = Boolean.parseBoolean(line.replace("randomRotation=", ""));
+                        break;
+                    case 17:
+						FBP.randomizedScale = Boolean.parseBoolean(line.replace("randomizedScale=", ""));
+						break;
+					case 18:
+						FBP.randomFadingSpeed = Boolean.parseBoolean(line.replace("randomFadingSpeed=", ""));
+                        break;
+					case 19:
+						FBP.spawnRedstoneBlockParticles = Boolean.parseBoolean(line.replace("spawnRedstoneBlockParticles=", ""));
+                        break;
+                    case 20:
+						FBP.spawnWhileFrozen = Boolean.parseBoolean(line.replace("spawnWhileFrozen=", ""));
+						break;
+					case 21:
+						FBP.entityCollision = Boolean.parseBoolean(line.replace("entityCollision=", ""));
+                        break;
+                    case 22:
+						FBP.bounceOffWalls = Boolean.parseBoolean(line.replace("bounceOffWalls=", ""));
+						break;
+					case 23:
+						FBP.lowTraction = Boolean.parseBoolean(line.replace("lowTraction=", ""));
+						break;
+					case 24:
+						FBP.smartBreaking = Boolean.parseBoolean(line.replace("smartBreaking=", ""));
+                        break;
+                    case 25:
+						FBP.fancyFlame = Boolean.parseBoolean(line.replace("fancyFlame=", ""));
+						break;
+					case 26:
+						FBP.fancySmoke = Boolean.parseBoolean(line.replace("fancySmoke=", ""));
+                        break;
+                    case 27:
+						FBP.waterPhysics = Boolean.parseBoolean(line.replace("waterPhysics=", ""));
+						break;
+					case 31:
+						FBP.fancyPlaceAnim = Boolean.parseBoolean(line.replace("fancyPlaceAnim=", ""));
+						break;
+					case 32:
+						FBP.spawnPlaceParticles = Boolean.parseBoolean(line.replace("spawnPlaceParticles=", ""));
+                        break;
+                    case 36:
+						FBP.fancyWeather = Boolean.parseBoolean(line.replace("fancyWeather=", ""));
+						break;
+					case 37:
+						FBP.dynamicWeather = Boolean.parseBoolean(line.replace("dynamicWeather=", ""));
+                        break;
+                    case 38:
+						FBP.weatherParticleDensity = Float.parseFloat(line.replace("weatherParticleDensity=", ""));
+						break;
+					case 39:
+						FBP.weatherRenderDistance = Float.parseFloat(line.replace("weatherRenderDistance=", ""));
+                        break;
+				}
 			}
 
 			closeStreams();
