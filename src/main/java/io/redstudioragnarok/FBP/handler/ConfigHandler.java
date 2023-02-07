@@ -15,6 +15,8 @@ public class ConfigHandler {
 	private static InputStreamReader inputStreamReader;
 	private static BufferedReader bufferedReader;
 
+	private static PrintWriter writer;
+
 	private static String line;
 
 	public static void init() {
@@ -325,7 +327,7 @@ public class ConfigHandler {
 
 	public static void writeMainConfig() {
 		try {
-			PrintWriter writer = new PrintWriter(FBP.mainConfigFile.getPath(), "UTF-8");
+			writer = new PrintWriter(FBP.mainConfigFile.getPath(), "UTF-8");
 
 			writer.println("Main configuration file for Fancier Block Particles");
 			writer.println("I advice to use the in game configuration menu instead of manually editing this file");
@@ -369,7 +371,7 @@ public class ConfigHandler {
 
 			writer.close();
 		} catch (Exception e) {
-			closeStreams();
+			writer.close();
 
 			if (!FBP.mainConfigFile.exists()) {
 				if (!Paths.get(FBP.mainConfigFile.getParent()).toFile().exists())
@@ -388,7 +390,7 @@ public class ConfigHandler {
 
 	static void writeFloatingMaterials() {
 		try {
-			PrintWriter writer = new PrintWriter(FBP.floatingMaterialsFile.getPath(), "UTF-8");
+			writer = new PrintWriter(FBP.floatingMaterialsFile.getPath(), "UTF-8");
 
 			writer.println("Configuration file for floatings materials.");
 			writer.println("Anything added here will float, anything else will sink.");
@@ -404,7 +406,7 @@ public class ConfigHandler {
 
 			writer.close();
 		} catch (Exception e) {
-			closeStreams();
+			writer.close();
 
 			if (!FBP.floatingMaterialsFile.exists()) {
 				if (!Paths.get(FBP.floatingMaterialsFile.getParent()).toFile().exists())
@@ -423,14 +425,14 @@ public class ConfigHandler {
 
 	public static void writeAnimBlacklist() {
 		try {
-			PrintWriter writer = new PrintWriter(FBP.animBlacklistFile.getPath(), "UTF-8");
+			writer = new PrintWriter(FBP.animBlacklistFile.getPath(), "UTF-8");
 
 			for (String ex : FBP.blockAnimBlacklist)
 				writer.println(ex);
 
 			writer.close();
 		} catch (Exception e) {
-			closeStreams();
+			writer.close();
 
 			if (!FBP.animBlacklistFile.exists()) {
 				if (!Paths.get(FBP.animBlacklistFile.getParent()).toFile().exists())
@@ -447,14 +449,14 @@ public class ConfigHandler {
 
 	public static void writeParticleBlacklist() {
 		try {
-			PrintWriter writer = new PrintWriter(FBP.particleBlacklistFile.getPath(), "UTF-8");
+			writer = new PrintWriter(FBP.particleBlacklistFile.getPath(), "UTF-8");
 
 			for (String ex : FBP.blockParticleBlacklist)
 				writer.println(ex);
 
 			writer.close();
 		} catch (Exception e) {
-			closeStreams();
+			writer.close();
 
 			if (!FBP.particleBlacklistFile.exists()) {
 				if (!Paths.get(FBP.particleBlacklistFile.getParent()).toFile().exists())
