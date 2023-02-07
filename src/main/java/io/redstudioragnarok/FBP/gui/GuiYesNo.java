@@ -33,7 +33,7 @@ public class GuiYesNo extends GuiScreen {
 		}
 		this.mc.displayGuiScreen(parent);
 
-		ConfigHandler.write();
+		ConfigHandler.writeMainConfig();
 	}
 
 	@Override

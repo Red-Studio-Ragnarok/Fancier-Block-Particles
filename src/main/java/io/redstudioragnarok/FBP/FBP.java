@@ -51,7 +51,7 @@ public class FBP {
 	public static File oldAnimBlacklistFile;
 	public static File oldParticleBlacklistFile;
 
-	public static File config = null;
+	public static File mainConfigFile = null;
 	public static File floatingMaterialsFile = null;
 	public static File animBlacklistFile = null;
 	public static File particleBlacklistFile = null;
@@ -130,7 +130,7 @@ public class FBP {
 		oldAnimBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/AnimBlockBlacklist.txt");
 		oldParticleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/ParticleBlockBlacklist.txt");
 
-		config = new File(evt.getModConfigurationDirectory() + "/FBP/Config.txt");
+		mainConfigFile = new File(evt.getModConfigurationDirectory() + "/FBP/Config.txt");
 		floatingMaterialsFile = new File(evt.getModConfigurationDirectory() + "/FBP/Floating Materials.txt");
 		animBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/Animation Block Blacklist.txt");
 		particleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/Particle Block Blacklist.txt");

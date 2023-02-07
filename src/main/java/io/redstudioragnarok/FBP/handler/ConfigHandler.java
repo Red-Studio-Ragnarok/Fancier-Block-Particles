@@ -19,11 +19,11 @@ public class ConfigHandler {
 
 	public static void init() {
 		try {
-			if (!Paths.get(FBP.config.getParent()).toFile().exists())
-				Paths.get(FBP.config.getParent()).toFile().mkdirs();
+			if (!Paths.get(FBP.mainConfigFile.getParent()).toFile().exists())
+				Paths.get(FBP.mainConfigFile.getParent()).toFile().mkdirs();
 
-			if (!FBP.config.exists()) {
-				FBP.config.createNewFile();
+			if (!FBP.mainConfigFile.exists()) {
+				FBP.mainConfigFile.createNewFile();
 
 				defaults(true);
 			}
@@ -54,7 +54,7 @@ public class ConfigHandler {
 			if (FBP.oldParticleBlacklistFile.exists())
 				FBP.oldParticleBlacklistFile.delete();
 
-			read();
+			readMainConfig();
 			if (FBP.waterPhysics)
 				readFloatingMaterials();
 
@@ -65,7 +65,7 @@ public class ConfigHandler {
 		} catch (IOException e) {
 			closeStreams();
 
-			write();
+			writeMainConfig();
 		}
 	}
 
@@ -89,9 +89,9 @@ public class ConfigHandler {
 		}
 	}
 
-	static void read() {
+	static void readMainConfig() {
 		try {
-			initStreams(FBP.config);
+			initStreams(FBP.mainConfigFile);
 
 			skipLines(3);
 
@@ -163,7 +163,7 @@ public class ConfigHandler {
 		} catch (Exception e) {
 			closeStreams();
 
-			write();
+			writeMainConfig();
 		}
 	}
 
@@ -289,7 +289,7 @@ public class ConfigHandler {
 		} catch (Exception e) {
 			closeStreams();
 
-			write();
+			writeMainConfig();
 		}
 	}
 
@@ -323,9 +323,9 @@ public class ConfigHandler {
 		closeStreams();
 	}
 
-	public static void write() {
+	public static void writeMainConfig() {
 		try {
-			PrintWriter writer = new PrintWriter(FBP.config.getPath(), "UTF-8");
+			PrintWriter writer = new PrintWriter(FBP.mainConfigFile.getPath(), "UTF-8");
 
 			writer.println("Main configuration file for Fancier Block Particles");
 			writer.println("I advice to use the in game configuration menu instead of manually editing this file");
@@ -371,18 +371,18 @@ public class ConfigHandler {
 		} catch (Exception e) {
 			closeStreams();
 
-			if (!FBP.config.exists()) {
-				if (!Paths.get(FBP.config.getParent()).toFile().exists())
-					Paths.get(FBP.config.getParent()).toFile().mkdirs();
+			if (!FBP.mainConfigFile.exists()) {
+				if (!Paths.get(FBP.mainConfigFile.getParent()).toFile().exists())
+					Paths.get(FBP.mainConfigFile.getParent()).toFile().mkdirs();
 
 				try {
-					FBP.config.createNewFile();
+					FBP.mainConfigFile.createNewFile();
 				} catch (IOException e1) {
 					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 				}
 			}
 
-			write();
+			writeMainConfig();
 		}
 	}
 
@@ -494,7 +494,7 @@ public class ConfigHandler {
 		FBP.weatherRenderDistance = 1.0F;
 
 		if (write)
-			write();
+			writeMainConfig();
 	}
 
 	public static void defaultsFloatingMaterials() {

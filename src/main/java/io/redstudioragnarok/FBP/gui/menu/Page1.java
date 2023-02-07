@@ -160,6 +160,6 @@ public class Page1 extends GuiScreen {
 
 	@Override
 	public void onGuiClosed() {
-		ConfigHandler.write();
+		ConfigHandler.writeMainConfig();
 	}
 }

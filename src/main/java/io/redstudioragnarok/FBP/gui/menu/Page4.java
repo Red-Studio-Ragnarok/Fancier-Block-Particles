@@ -197,6 +197,6 @@ public class Page4 extends GuiScreen {
 
 	@Override
 	public void onGuiClosed() {
-		ConfigHandler.write();
+		ConfigHandler.writeMainConfig();
 	}
 }
