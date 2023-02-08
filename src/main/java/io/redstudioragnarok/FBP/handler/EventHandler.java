@@ -7,7 +7,6 @@ import io.redstudioragnarok.FBP.node.BlockNode;
 import io.redstudioragnarok.FBP.node.BlockPosNode;
 import io.redstudioragnarok.FBP.particle.FBPParticleBlock;
 import io.redstudioragnarok.FBP.particle.FBPParticleManager;
-import io.redstudioragnarok.FBP.renderer.CubeBatchRenderer;
 import io.redstudioragnarok.FBP.renderer.FBPWeatherRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
@@ -29,7 +28,6 @@ import net.minecraft.world.IWorldEventListener;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.IRenderHandler;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.world.BlockEvent;
@@ -139,11 +137,6 @@ public class EventHandler {
 				}
 			}
 		};
-	}
-
-	@SubscribeEvent
-	public void onRenderWorldLastEvent(RenderWorldLastEvent event) {
-		CubeBatchRenderer.endAllBatches();
 	}
 
 	@SubscribeEvent

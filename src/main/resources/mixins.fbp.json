@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "mixins.fbp.refmap.json",
   "client": [
+    "MixinEntityRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
