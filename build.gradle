@@ -5,15 +5,20 @@ buildscript {
 			name 'Forge'
 			url 'https://maven.minecraftforge.net'
 		}
+		maven {
+			url = 'https://repo.spongepowered.org/maven'
+		}
 	}
 	dependencies {
 		classpath('com.anatawa12.forge:ForgeGradle:2.3-+') {
 			changing = true
 		}
+		classpath 'org.spongepowered:mixingradle:0.8.5'
 	}
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'org.spongepowered.mixin'
 
 version = project.mod_version
 
@@ -21,6 +26,10 @@ minecraft {
 	version = '1.12.2-14.23.5.2847'
 	runDir = 'run'
 	mappings = 'stable_39'
+
+	def args = [
+		'-Dfml.coreMods.load=io.redstudioragnarok.FBP.asm.FBPPlugin'
+	]
 
 	replace('@VERSION@', project.version)
 	replaceIn('ModReference.java')
@@ -32,6 +41,10 @@ configurations {
 }
 
 repositories {
+	maven {
+		url 'https://maven.cleanroommc.com'
+	}
+
 	ivy {
 		url 'https://github.com/'
 
@@ -44,6 +57,7 @@ repositories {
 }
 
 dependencies {
+	compile 'zone.rong:mixinbooter:7.0'
 	implementation 'net.jafama:jafama:2.+'
 	embed 'net.jafama:jafama:2.+'
 	implementation 'meldexun:MatrixUtil:1.2.0@jar'
@@ -65,9 +79,23 @@ processResources {
 	}
 }
 
+sourceSets {
+	main {
+		ext.refMap = 'io.redstudioragnarok.FBP.asm.FBPPlugin'
+	}
+}
+
 jar {
 	from(configurations.embed.collect {
 		it.isDirectory() ? it : zipTree(it)
 	})
-	manifest.attributes(['FMLAT' : 'fbp_at.cfg'])
+	manifest.attributes([
+		'ModSide': 'CLIENT',
+		'FMLAT': 'fbp_at.cfg',
+		'FMLCorePlugin': 'io.redstudioragnarok.FBP.asm.FBPPlugin',
+		'FMLCorePluginContainsFMLMod': 'true',
+		'ForceLoadAsMod': 'true',
+		'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+		'TweakOrder': '0'
+	])
 }
