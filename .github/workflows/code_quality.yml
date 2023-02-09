@@ -4,7 +4,6 @@ on:
   pull_request:
   push:
     branches:
-      - main
       - 0.8-Refractor-&-Cleanup
 
 jobs:
