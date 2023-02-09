@@ -84,7 +84,7 @@ public class ConfigHandler {
 		}
 	}
 
-	public static void initStreams(File file) {
+	private static void initStreams(File file) {
 		try {
 			fileInputStream = new FileInputStream(file);
 			inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
@@ -100,7 +100,7 @@ public class ConfigHandler {
 		}
 	}
 
-	static void closeStreams() {
+	private static void closeStreams() {
 		try {
 			bufferedReader.close();
 			inputStreamReader.close();
@@ -112,7 +112,7 @@ public class ConfigHandler {
 		}
 	}
 
-	public static void initWriter(File file) {
+	private static void initWriter(File file) {
 		try {
 			writer = new PrintWriter(file.getPath(), "UTF-8");
 
@@ -145,7 +145,7 @@ public class ConfigHandler {
 		return false;
 	}
 
-	static void readMainConfig() {
+	private static void readMainConfig() {
 		try {
 			initStreams(FBP.mainConfigFile);
 
@@ -223,7 +223,7 @@ public class ConfigHandler {
 		}
 	}
 
-	static void readFloatingMaterials() {
+	private static void readFloatingMaterials() {
 		try {
 			initStreams(FBP.floatingMaterialsFile);
 
@@ -349,7 +349,7 @@ public class ConfigHandler {
 		}
 	}
 
-	static void readAnimBlacklist() {
+	private static void readAnimBlacklist() {
 		try {
 			initStreams(FBP.animBlacklistFile);
 
@@ -366,7 +366,7 @@ public class ConfigHandler {
 		}
 	}
 
-	static void readParticleBlacklist() {
+	private static void readParticleBlacklist() {
 		try {
 			initStreams(FBP.particleBlacklistFile);
 
@@ -429,7 +429,7 @@ public class ConfigHandler {
 		writer.close();
 	}
 
-	static void writeFloatingMaterials() {
+	private static void writeFloatingMaterials() {
 		initWriter(FBP.floatingMaterialsFile);
 
 		writer.println("Configuration file for floatings materials.");
@@ -501,13 +501,6 @@ public class ConfigHandler {
 		readFloatingMaterials();
 	}
 
-	public static void addMaterial(Material material) {
-		if (!FBP.floatingMaterials.contains(material))
-			FBP.floatingMaterials.add(material);
-		else
-			FBP_LOG.warn("Found duplicated material " + material + " in Floating Materials.txt");
-	}
-
 	public static void reloadMaterials() {
 		if (FBP.floatingMaterials.isEmpty())
 			readFloatingMaterials();
@@ -517,12 +510,19 @@ public class ConfigHandler {
 
 	public static void reloadAnimBlacklist() {
 		if (FBP.blockAnimBlacklist.isEmpty())
-            readAnimBlacklist();
-        else
-            FBP.blockAnimBlacklist.clear();
+			readAnimBlacklist();
+		else
+			FBP.blockAnimBlacklist.clear();
 	}
 
-	public static void skipLines(int numberOfLines) throws IOException {
+	private static void addMaterial(Material material) {
+		if (!FBP.floatingMaterials.contains(material))
+			FBP.floatingMaterials.add(material);
+		else
+			FBP_LOG.warn("Found duplicated material " + material + " in Floating Materials.txt");
+	}
+
+	private static void skipLines(int numberOfLines) throws IOException {
 		for (int i = 0; i < numberOfLines; i++)
 			bufferedReader.readLine();
 	}
