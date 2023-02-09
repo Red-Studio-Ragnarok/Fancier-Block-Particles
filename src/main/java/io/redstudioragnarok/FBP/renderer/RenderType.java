@@ -14,22 +14,15 @@ public enum RenderType {
 		@Override
 		public void setupRenderState() {
 			GlStateManager.alphaFunc(GL11.GL_GREATER, 0.003921569F);
-			GlStateManager.enableColorMaterial();
-			GlStateManager.colorMaterial(GL11.GL_FRONT, GL11.GL_AMBIENT);
 			GlStateManager.enableBlend();
 			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GlStateManager.enableFog();
 			Minecraft.getMinecraft().getTextureManager().bindTexture(PARTICLE_TEXTURES);
-			Minecraft.getMinecraft().entityRenderer.enableLightmap();
 		}
 
 		@Override
 		public void clearRenderState() {
-			Minecraft.getMinecraft().entityRenderer.disableLightmap();
 			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-			GlStateManager.disableFog();
 			GlStateManager.disableBlend();
-			GlStateManager.disableColorMaterial();
 			GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
 		}
 	},
@@ -37,22 +30,13 @@ public enum RenderType {
 		@Override
 		public void setupRenderState() {
 			GlStateManager.alphaFunc(GL11.GL_GREATER, 0.003921569F);
-			GlStateManager.enableColorMaterial();
-			GlStateManager.colorMaterial(GL11.GL_FRONT, GL11.GL_AMBIENT);
 			GlStateManager.enableBlend();
 			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GlStateManager.enableFog();
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-			Minecraft.getMinecraft().entityRenderer.enableLightmap();
 		}
 
 		@Override
 		public void clearRenderState() {
-			Minecraft.getMinecraft().entityRenderer.disableLightmap();
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-			GlStateManager.disableFog();
 			GlStateManager.disableBlend();
-			GlStateManager.disableColorMaterial();
 			GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
 		}
 	},
@@ -60,24 +44,15 @@ public enum RenderType {
 		@Override
 		public void setupRenderState() {
 			GlStateManager.alphaFunc(GL11.GL_GREATER, 0.003921569F);
-			GlStateManager.enableColorMaterial();
-			GlStateManager.colorMaterial(GL11.GL_FRONT, GL11.GL_AMBIENT);
 			GlStateManager.enableBlend();
 			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			GlStateManager.enableFog();
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-			Minecraft.getMinecraft().entityRenderer.enableLightmap();
 			RenderHelper.enableStandardItemLighting();
 		}
 
 		@Override
 		public void clearRenderState() {
 			RenderHelper.disableStandardItemLighting();
-			Minecraft.getMinecraft().entityRenderer.disableLightmap();
-			Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-			GlStateManager.disableFog();
 			GlStateManager.disableBlend();
-			GlStateManager.disableColorMaterial();
 			GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
 		}
 	};
