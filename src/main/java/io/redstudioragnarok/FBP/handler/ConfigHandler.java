@@ -22,39 +22,48 @@ public class ConfigHandler {
 	public static void init() {
 		try {
 			if (!Paths.get(FBP.mainConfigFile.getParent()).toFile().exists())
-				Paths.get(FBP.mainConfigFile.getParent()).toFile().mkdirs();
+				if (Paths.get(FBP.mainConfigFile.getParent()).toFile().mkdirs())
+					FBP_LOG.error("Could not create config directory");
 
 			if (!FBP.mainConfigFile.exists()) {
-				FBP.mainConfigFile.createNewFile();
+				if (!FBP.mainConfigFile.createNewFile())
+					FBP_LOG.error("Could not create main config file");
 
 				defaults(true);
 			}
 
 			if (!FBP.floatingMaterialsFile.exists()) {
-				FBP.floatingMaterialsFile.createNewFile();
+				if (!FBP.floatingMaterialsFile.createNewFile())
+                    FBP_LOG.error("Could not create floating materials file");
 
-				defaultsFloatingMaterials();
+                defaultsFloatingMaterials();
 			}
 
 			if (!FBP.particleBlacklistFile.exists())
-				FBP.particleBlacklistFile.createNewFile();
+				if (!FBP.particleBlacklistFile.createNewFile())
+					FBP_LOG.error("Could not create particle blacklist file");
 
 			if (!FBP.animBlacklistFile.exists())
-				FBP.animBlacklistFile.createNewFile();
+				if (!FBP.animBlacklistFile.createNewFile())
+                    FBP_LOG.error("Could not create anim blacklist file");
 
 			// Check for pre 0.8 configs and hopefully delete them
 
-			if (FBP.oldConfig.exists())
-				FBP.oldConfig.delete();
+			if (FBP.oldMainConfig.exists())
+				if (!FBP.oldMainConfig.delete())
+					FBP_LOG.error("Could not delete old main config file");
 
 			if (FBP.oldFloatingMaterialsFile.exists())
-				FBP.oldFloatingMaterialsFile.delete();
+				if (!FBP.oldFloatingMaterialsFile.delete())
+					FBP_LOG.error("Could not delete old floating materials file");
 
 			if (FBP.oldParticleBlacklistFile.exists())
-				FBP.oldParticleBlacklistFile.delete();
+				if (!FBP.oldParticleBlacklistFile.delete())
+                    FBP_LOG.error("Could not delete old particle blacklist file");
 
-			if (FBP.oldAnimBlacklistFile.exists())
-				FBP.oldAnimBlacklistFile.delete();
+            if (FBP.oldAnimBlacklistFile.exists())
+				if (!FBP.oldAnimBlacklistFile.delete())
+					FBP_LOG.error("Could not delete old anim blacklist file");
 
 			readMainConfig();
 			if (FBP.waterPhysics)
@@ -125,13 +134,15 @@ public class ConfigHandler {
 		FBP_LOG.warn("Trying to create file " + file);
 
 		try {
-			file.createNewFile();
+			if (file.createNewFile()) {
+				FBP_LOG.info("Successfully created file " + file);
+				return true;
+			}
 		} catch (Exception ex) {
 			FBP_LOG.error("Could not create file " + file);
 		}
 
-		FBP_LOG.info("Successfully created file " + file);
-		return true;
+		return false;
 	}
 
 	static void readMainConfig() {

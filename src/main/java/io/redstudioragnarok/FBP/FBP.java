@@ -46,7 +46,7 @@ public class FBP {
 	public static final ResourceLocation FBP_FBP = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/fbp.png");
 	public static final ResourceLocation FBP_WIDGETS = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/widgets.png");
 
-	public static File oldConfig;
+	public static File oldMainConfig;
 	public static File oldFloatingMaterialsFile;
 	public static File oldAnimBlacklistFile;
 	public static File oldParticleBlacklistFile;
@@ -125,7 +125,7 @@ public class FBP {
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent evt) {
-		oldConfig = new File(evt.getModConfigurationDirectory() + "/FBP/Particle.properties");
+		oldMainConfig = new File(evt.getModConfigurationDirectory() + "/FBP/Particle.properties");
 		oldFloatingMaterialsFile = new File(evt.getModConfigurationDirectory() + "/FBP/FloatingMaterials.txt");
 		oldAnimBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/AnimBlockBlacklist.txt");
 		oldParticleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/ParticleBlockBlacklist.txt");
