@@ -62,9 +62,9 @@ public class FBP {
 
 	public static boolean enabled, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles, fancyWeather, dynamicWeather, fancyFlame, fancySmoke, waterPhysics, frozen;
 
+	public static List<Material> floatingMaterials;
 	public static List<String> blockParticleBlacklist;
 	public static List<String> blockAnimBlacklist;
-	public static List<Material> floatingMaterials;
 
 	public static final SplittableRandom random = new SplittableRandom();
 
@@ -189,7 +189,7 @@ public class FBP {
 		return (particle ? blockParticleBlacklist : blockAnimBlacklist).contains(Objects.requireNonNull(b.getRegistryName()).toString());
 	}
 
-	public void addToBlacklist(Block b, boolean particle) {
+	public static void addToBlacklist(Block b, boolean particle) {
 		if (b == null)
 			return;
 
@@ -199,7 +199,7 @@ public class FBP {
 			(particle ? blockParticleBlacklist : blockAnimBlacklist).add(name);
 	}
 
-	public void addToBlacklist(String name, boolean particle) {
+	public static void addToBlacklist(String name, boolean particle) {
 		if (StringUtils.isEmpty(name))
 			return;
 
@@ -227,7 +227,7 @@ public class FBP {
 		(particle ? blockParticleBlacklist : blockAnimBlacklist).remove(name);
 	}
 
-	public void resetBlacklist(boolean particle) {
+	public static void resetBlacklist(boolean particle) {
 		if (particle)
 			blockParticleBlacklist.clear();
 		else
