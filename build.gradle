@@ -5,15 +5,21 @@ buildscript {
 			name 'Forge'
 			url 'https://maven.minecraftforge.net'
 		}
+		maven {
+			name 'Mixin'
+			url = 'https://repo.spongepowered.org/maven'
+		}
 	}
 	dependencies {
-		classpath('com.anatawa12.forge:ForgeGradle:2.3-+') {
+		classpath('com.anatawa12.forge:ForgeGradle:2.+') {
 			changing = true
 		}
+		classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
 	}
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'org.spongepowered.mixin'
 
 version = project.mod_version
 
@@ -31,9 +37,17 @@ configurations {
 	compile.extendsFrom(embed)
 }
 
+repositories {
+	maven {
+		url = 'https://maven.cleanroommc.com'
+	}
+}
+
 dependencies {
 	implementation 'net.jafama:jafama:2.+'
 	embed 'net.jafama:jafama:2.+'
+
+	compile 'zone.rong:mixinbooter:7.0'
 }
 
 processResources {
