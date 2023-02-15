@@ -1,10 +1,12 @@
 package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.renderer.FBPRenderer;
+import io.redstudioragnarok.FBP.renderer.CubeBatchRenderer;
+import io.redstudioragnarok.FBP.renderer.RenderType;
+import io.redstudioragnarok.FBP.renderer.color.ColorUtil;
+import io.redstudioragnarok.FBP.renderer.light.LightUtil;
+import io.redstudioragnarok.FBP.renderer.texture.TextureUtil;
 import io.redstudioragnarok.FBP.util.MathUtil;
-import io.redstudioragnarok.FBP.vector.Vector2D;
-import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.minecraft.block.Block;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleSmokeNormal;
@@ -14,22 +16,18 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
-import java.awt.*;
 import java.util.List;
 
 import static io.redstudioragnarok.FBP.FBP.snowTexture;
-import static io.redstudioragnarok.FBP.util.ParticleUtil.gasParticle;
 
 public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 	double scaleAlpha, prevParticleScale, prevParticleAlpha;
 	double endMult = 0.75;
 
-	Vector3D[] cube;
+	final float AngleY;
 
 	ParticleSmokeNormal original;
-
-	Color color;
 
 	protected FBPParticleSmoke(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, final double mX, final double mY, final double mZ, float scale, ParticleSmokeNormal original) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, mX, mY, mZ, scale);
@@ -84,14 +82,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 		particleScale *= FBP.scaleMult;
 
-		float angleY = rand.nextFloat() * 80;
-
-		cube = new Vector3D[FBP.CUBE.length];
-
-		for (int i = 0; i < FBP.CUBE.length; i++) {
-			Vector3D vec = FBP.CUBE[i];
-			cube[i] = FBPRenderer.rotateVector(vec, 0, angleY, 0);
-		}
+		AngleY = rand.nextFloat() * 80;
 
 		particleAlpha = 0.9f;
 
@@ -206,8 +197,6 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 
-		Vector2D particle = gasParticle(particleTexture);
-
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
 		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
 		float z = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
@@ -217,21 +206,16 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 		float alpha = (float) (prevParticleAlpha + (particleAlpha - prevParticleAlpha) * partialTicks);
 
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
+		scale *= 0.05F;
 
-		color = new Color(particleRed, particleGreen, particleBlue, alpha);
-
-		FBPRenderer.renderParticleSmoke(buffer, particle, x, y, z, scale, brightness, color, cube);
+		CubeBatchRenderer.renderCube(RenderType.BLOCK_TEXTURE, x, y, z, 0.0F, AngleY, 0.0F, scale, scale, scale,
+				TextureUtil.pointTexCoordProvider(particleTexture.getInterpolatedU(4.4F), particleTexture.getInterpolatedV(4.4F)),
+				ColorUtil.multiplyingColorProvider(particleRed, particleGreen, particleBlue, alpha, 0.875F),
+				LightUtil.uniformLightCoordProvider(brightness));
 	}
 
 	@Override
 	public int getBrightnessForRender(float partialTick) {
-		int brightnessForRender = super.getBrightnessForRender(partialTick);
-		int lighting = 0;
-
-		if (this.world.isBlockLoaded(new BlockPos(posX, posY, posZ))) {
-			lighting = this.world.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
-		}
-
-		return brightnessForRender == 0 ? lighting : brightnessForRender;
+		return LightUtil.getCombinedLight(world, posX, posY, posZ);
 	}
 }

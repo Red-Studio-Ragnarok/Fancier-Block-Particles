@@ -1,8 +1,11 @@
 package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.renderer.FBPRenderer;
-import io.redstudioragnarok.FBP.vector.Vector2D;
+import io.redstudioragnarok.FBP.renderer.CubeBatchRenderer;
+import io.redstudioragnarok.FBP.renderer.RenderType;
+import io.redstudioragnarok.FBP.renderer.color.ColorUtil;
+import io.redstudioragnarok.FBP.renderer.light.LightUtil;
+import io.redstudioragnarok.FBP.renderer.texture.TextureUtil;
 import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -15,11 +18,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.awt.*;
 import java.util.List;
 
 import static io.redstudioragnarok.FBP.FBP.snowTexture;
-import static io.redstudioragnarok.FBP.util.ParticleUtil.gasParticle;
 
 public class FBPParticleFlame extends ParticleFlame {
 
@@ -32,9 +33,7 @@ public class FBPParticleFlame extends ParticleFlame {
 
 	Vector3D startPos;
 
-	Vector3D[] cube;
-
-	Color color;
+	final float AngleY;
 
 	protected FBPParticleFlame(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double mY, boolean spawnAnother) {
 		super(worldIn, xCoordIn, yCoordIn - 0.06, zCoordIn, 0, mY, 0);
@@ -61,14 +60,7 @@ public class FBPParticleFlame extends ParticleFlame {
 		this.particleGreen = 1;
 		this.particleBlue = 0;
 
-		float angleY = rand.nextFloat() * 80;
-
-		cube = new Vector3D[FBP.CUBE.length];
-
-		for (int i = 0; i < FBP.CUBE.length; i++) {
-			Vector3D vec = FBP.CUBE[i];
-			cube[i] = FBPRenderer.rotateVector(vec, 0, angleY, 0);
-		}
+		AngleY = rand.nextFloat() * 80;
 
 		particleAlpha = 1;
 
@@ -183,8 +175,6 @@ public class FBPParticleFlame extends ParticleFlame {
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
 
-		Vector2D particle = gasParticle(particleTexture);
-
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
 		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
 		float z = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ);
@@ -198,20 +188,16 @@ public class FBPParticleFlame extends ParticleFlame {
 		if (this.particleAge >= this.particleMaxAge)
 			this.particleGreen = (float) (scale / startScale);
 
-		color = new Color(particleRed, particleGreen, particleBlue, alpha);
+		scale *= 0.0125F;
 
-		FBPRenderer.renderParticleFlame(buffer, particle, x, y, z, scale, brightness, color, cube);
+		CubeBatchRenderer.renderCube(RenderType.BLOCK_TEXTURE, x, y, z, 0.0F, AngleY, 0.0F, scale, scale, scale,
+				TextureUtil.pointTexCoordProvider(particleTexture.getInterpolatedU(4.4F), particleTexture.getInterpolatedV(4.4F)),
+				ColorUtil.multiplyingColorProvider(particleRed, particleGreen, particleBlue, alpha, 0.95F),
+				LightUtil.uniformLightCoordProvider(brightness));
 	}
 
 	@Override
 	public int getBrightnessForRender(float partialTick) {
-		int brightnessForRender = super.getBrightnessForRender(partialTick);
-		int lighting = 0;
-
-		if (this.world.isBlockLoaded(new BlockPos(posX, posY, posZ))) {
-			lighting = this.world.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
-		}
-
-		return brightnessForRender == 0 ? lighting : brightnessForRender;
+		return LightUtil.getCombinedLight(world, posX, posY, posZ);
 	}
 }

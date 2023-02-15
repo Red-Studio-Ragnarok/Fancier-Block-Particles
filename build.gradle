@@ -28,6 +28,10 @@ minecraft {
 	runDir = 'run'
 	mappings = 'stable_39'
 
+	def args = [
+			'-Dfml.coreMods.load=io.redstudioragnarok.FBP.asm.FBPPlugin'
+	]
+
 	replace('@VERSION@', version)
 	replaceIn('ModReference.java')
 }
@@ -51,18 +55,43 @@ repositories {
 	maven {
 		url = 'https://maven.cleanroommc.com'
 	}
+
+	ivy {
+		url 'https://github.com/'
+
+		layout "pattern", {
+			artifact '[organisation]/[module]/releases/download/v[revision]/[module]-[revision].[ext]'
+		}
+
+		metadataSources { artifact() }
+	}
 }
 
 dependencies {
 	implementation 'net.jafama:jafama:2.+'
 	embed 'net.jafama:jafama:2.+'
 
+	implementation 'meldexun:MatrixUtil:1.2.0@jar'
+	embed 'meldexun:MatrixUtil:1.2.0@jar'
+
 	compile 'zone.rong:mixinbooter:7.0'
 }
+
+sourceSets {
+	main {
+		ext.refMap = 'mixins.fbp.refmap.json'
+	}
+}
+
 
 jar {
 	// Add Jafama into FBP jar
 	from(configurations.embed.collect {it.isDirectory() ? it : zipTree(it)})
-
-	manifest.attributes(['FMLAT' : 'fbp_at.cfg'])
+	manifest.attributes([
+			'ModSide': 'CLIENT',
+			'FMLAT': 'fbp_at.cfg',
+			'FMLCorePlugin': 'io.redstudioragnarok.FBP.asm.FBPPlugin',
+			'FMLCorePluginContainsFMLMod': 'true',
+			'ForceLoadAsMod': 'true'
+	])
 }

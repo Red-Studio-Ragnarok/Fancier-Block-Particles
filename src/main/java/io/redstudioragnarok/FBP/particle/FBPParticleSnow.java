@@ -1,8 +1,11 @@
 package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.renderer.FBPRenderer;
-import io.redstudioragnarok.FBP.vector.Vector2D;
+import io.redstudioragnarok.FBP.renderer.CubeBatchRenderer;
+import io.redstudioragnarok.FBP.renderer.RenderType;
+import io.redstudioragnarok.FBP.renderer.color.ColorUtil;
+import io.redstudioragnarok.FBP.renderer.light.LightUtil;
+import io.redstudioragnarok.FBP.renderer.texture.TextureUtil;
 import io.redstudioragnarok.FBP.vector.Vector3D;
 import net.jafama.FastMath;
 import net.minecraft.block.state.IBlockState;
@@ -14,10 +17,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.awt.Color;
 import java.util.List;
-
-import static io.redstudioragnarok.FBP.util.ParticleUtil.texturedParticle;
 
 public class FBPParticleSnow extends ParticleDigging {
 
@@ -27,8 +27,6 @@ public class FBPParticleSnow extends ParticleDigging {
 	double endMult = 1;
 
 	Vector3D rot, prevRot, rotStep, tempRot;
-
-	Color color;
 
 	public FBPParticleSnow(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
@@ -204,14 +202,8 @@ public class FBPParticleSnow extends ParticleDigging {
 
 	@Override
 	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-		if (!FBPRenderer.render) {
-			FBPRenderer.queuedParticles.add(this);
-			return;
-		}
 		if (!FBP.isEnabled() && particleMaxAge != 0)
 			particleMaxAge = 0;
-
-		Vector2D[] particle = texturedParticle(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY);
 
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
 		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
@@ -222,8 +214,9 @@ public class FBPParticleSnow extends ParticleDigging {
 		float alpha = (float) (prevParticleAlpha + (particleAlpha - prevParticleAlpha) * partialTicks);
 
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
+		scale *= 0.1F;
 
-		y += scale / 10;
+		y += scale;
 
 		Vector3D smoothRot = new Vector3D(0, 0, 0);
 
@@ -248,20 +241,14 @@ public class FBPParticleSnow extends ParticleDigging {
 			}
 		}
 
-		color = new Color(particleRed, particleGreen, particleBlue, alpha);
-
-		FBPRenderer.renderParticle(buffer, particle, x, y, z, scale / 10, smoothRot, brightness, color);
+		CubeBatchRenderer.renderCube(RenderType.BLOCK_TEXTURE_ITEM_LIGHTING, x, y, z, smoothRot.x, smoothRot.y, smoothRot.z, scale, scale, scale,
+				TextureUtil.particleTexCoordProvider(particleTexture, particleTextureJitterX, particleTextureJitterY, particleTextureIndexX, particleTextureIndexY),
+				ColorUtil.uniformColorProvider(particleRed, particleGreen, particleBlue, alpha),
+				LightUtil.uniformLightCoordProvider(brightness));
 	}
 
 	@Override
 	public int getBrightnessForRender(float partialTick) {
-		int brightnessForRender = super.getBrightnessForRender(partialTick);
-		int lighting = 0;
-
-		if (this.world.isBlockLoaded(new BlockPos(posX, posY, posZ))) {
-			lighting = this.world.getCombinedLight(new BlockPos(posX, posY, posZ), 0);
-		}
-
-		return brightnessForRender == 0 ? lighting : brightnessForRender;
+		return LightUtil.getCombinedLight(world, posX, posY, posZ);
 	}
 }

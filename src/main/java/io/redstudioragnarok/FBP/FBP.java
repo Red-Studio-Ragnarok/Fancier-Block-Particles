@@ -9,6 +9,8 @@ import io.redstudioragnarok.FBP.keys.KeyBindings;
 import io.redstudioragnarok.FBP.particle.FBPParticleManager;
 import io.redstudioragnarok.FBP.util.ModReference;
 import io.redstudioragnarok.FBP.vector.Vector3D;
+import meldexun.matrixutil.MathUtil;
+import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -139,6 +141,9 @@ public class FBP {
 		KeyBindings.init();
 
 		MinecraftForge.EVENT_BUS.register(new KeyInputHandler());
+
+		MathUtil.setSinFunc(FastMath::sin);
+		MathUtil.setCosFunc(FastMath::cos);
 	}
 
 	@Mod.EventHandler
