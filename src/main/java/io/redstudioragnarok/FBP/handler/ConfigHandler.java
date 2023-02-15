@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 
 import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
 
+/**
+ * This class handle everything related to the config system.
+ */
 public class ConfigHandler {
 
 	private static FileInputStream fileInputStream;
@@ -19,6 +22,15 @@ public class ConfigHandler {
 
 	private static String line;
 
+	/**
+	 * Initializes the configuration system.
+	 * <p>
+	 * Check if the config files and folder exists, if not, create them.
+	 * It also checks if the old config files exists, if yes, delete them.
+	 * Then read the config files.
+	 * <p>
+	 * Only reads Floating Materials config and Animation Blacklist if theses respective features are enabled.
+	 */
 	public static void init() {
 		try {
 			if (!Paths.get(FBP.mainConfigFile.getParent()).toFile().exists())
@@ -29,7 +41,7 @@ public class ConfigHandler {
 				if (!FBP.mainConfigFile.createNewFile())
 					FBP_LOG.error("Could not create main config file");
 
-				defaults(true);
+				defaults();
 			}
 
 			if (!FBP.floatingMaterialsFile.exists()) {
@@ -84,6 +96,13 @@ public class ConfigHandler {
 		}
 	}
 
+	/**
+	 * Initializes file streams for a specified file.
+	 * <p>
+	 * This is used to read the config files.
+	 *
+	 * @param file The file object to create streams for
+	 */
 	private static void initStreams(File file) {
 		try {
 			fileInputStream = new FileInputStream(file);
@@ -97,9 +116,14 @@ public class ConfigHandler {
 		} catch (SecurityException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 			FBP_LOG.error("Cannot init streams for " + file + " an antivirus is probably causing this");
+		} finally {
+			closeStreams();
 		}
 	}
 
+	/**
+     * Closes file streams.
+     */
 	private static void closeStreams() {
 		try {
 			bufferedReader.close();
@@ -112,6 +136,13 @@ public class ConfigHandler {
 		}
 	}
 
+	/**
+     * Initializes writer for a specified file.
+	 * <p>
+	 * This is used to write to the config files.
+     *
+     * @param file The file object to create writer for
+     */
 	private static void initWriter(File file) {
 		try {
 			writer = new PrintWriter(file.getPath(), "UTF-8");
@@ -129,6 +160,17 @@ public class ConfigHandler {
 		}
 	}
 
+	/**
+	 * Handle a file not found exception.
+	 * <p>
+	 * It will output an error message to the console.
+	 * And then attempt to create a new file, if it fails, it will output an error message to the console.
+	 *
+	 * @param message The error message associated with the exception
+	 * @param source A string indicating the source of the error
+	 * @param file The file object that could not be found
+	 * @return True if the file was created successfully, false otherwise
+	 */
 	private static boolean handleFileNotFound(String message, String source, File file) {
 		FBP_LOG.error("Cannot init " + source + " for " + file + " as the file does not exist, details: " + message);
 		FBP_LOG.warn("Trying to create file " + file);
@@ -145,6 +187,9 @@ public class ConfigHandler {
 		return false;
 	}
 
+	/**
+     * Reads the main config file and set the corresponding settings.
+	 */
 	private static void readMainConfig() {
 		try {
 			initStreams(FBP.mainConfigFile);
@@ -223,6 +268,9 @@ public class ConfigHandler {
 		}
 	}
 
+	/**
+     * Reads the floating materials config file and add the found material to the floating material list.
+     */
 	private static void readFloatingMaterials() {
 		try {
 			initStreams(FBP.floatingMaterialsFile);
@@ -349,6 +397,9 @@ public class ConfigHandler {
 		}
 	}
 
+	/**
+     * Reads the animation blacklist config file and add the found blocks to the animation blacklist list.
+     */
 	private static void readAnimBlacklist() {
 		try {
 			initStreams(FBP.animBlacklistFile);
@@ -366,6 +417,10 @@ public class ConfigHandler {
 		}
 	}
 
+
+	/**
+     * Reads the particle blacklist config file and add the found blocks to the particle blacklist list.
+     */
 	private static void readParticleBlacklist() {
 		try {
 			initStreams(FBP.particleBlacklistFile);
@@ -383,6 +438,9 @@ public class ConfigHandler {
 		}
 	}
 
+	/**
+     * Writes the main config file.
+     */
 	public static void writeMainConfig() {
 		initWriter(FBP.mainConfigFile);
 
@@ -429,6 +487,11 @@ public class ConfigHandler {
 		writer.close();
 	}
 
+	/**
+     * Writes the floating materials config file.
+	 * <p>
+	 * Uses hard-coded values for the material names which are the default.
+     */
 	private static void writeFloatingMaterials() {
 		initWriter(FBP.floatingMaterialsFile);
 
@@ -447,6 +510,9 @@ public class ConfigHandler {
 		writer.close();
 	}
 
+	/**
+     * Writes the animation blacklist config file.
+     */
 	public static void writeAnimBlacklist() {
 		initWriter(FBP.animBlacklistFile);
 
@@ -456,6 +522,9 @@ public class ConfigHandler {
 		writer.close();
 	}
 
+	/**
+     * Writes the particle blacklist config file.
+     */
 	public static void writeParticleBlacklist() {
 		initWriter(FBP.particleBlacklistFile);
 
@@ -465,7 +534,10 @@ public class ConfigHandler {
 		writer.close();
 	}
 
-	public static void defaults(boolean write) {
+	/**
+	 * Set all the values in the main config file to the default.
+	 */
+	public static void defaults() {
 		FBP.enabled = true;
 		FBP.bounceOffWalls = true;
 		FBP.randomRotation = true;
@@ -489,10 +561,12 @@ public class ConfigHandler {
 		FBP.weatherParticleDensity = 1.0F;
 		FBP.weatherRenderDistance = 1.0F;
 
-		if (write)
-			writeMainConfig();
+		writeMainConfig();
 	}
 
+	/**
+	 * Set all the values in the floating materials config file to the default.
+	 */
 	public static void defaultsFloatingMaterials() {
 		FBP.floatingMaterials.clear();
 
@@ -501,11 +575,22 @@ public class ConfigHandler {
 		readFloatingMaterials();
 	}
 
+	/**
+	 * Skips a specified number of lines in a file being read by a BufferedReader.
+	 *
+	 * @param numberOfLines The number of lines to skip in the file
+	 * @throws IOException If an I/O error occurs while reading the file
+	 */
 	private static void skipLines(int numberOfLines) throws IOException {
 		for (int i = 0; i < numberOfLines; i++)
 			bufferedReader.readLine();
 	}
 
+	/**
+     * Adds a material to the floating materials list.
+     *
+     * @param material The material to add
+     */
 	private static void addMaterial(Material material) {
 		if (!FBP.floatingMaterials.contains(material))
 			FBP.floatingMaterials.add(material);
@@ -513,6 +598,11 @@ public class ConfigHandler {
 			FBP_LOG.warn("Found duplicated material " + material + " in Floating Materials.txt");
 	}
 
+	/**
+	 * Reloads the floating materials list.
+	 * If the list is empty, it is filled by calling readFloatingMaterials().
+	 * Otherwise, the list is cleared using the clear() method of the ArrayList class.
+	 */
 	public static void reloadMaterials() {
 		if (FBP.floatingMaterials.isEmpty())
 			readFloatingMaterials();
@@ -520,6 +610,11 @@ public class ConfigHandler {
 			FBP.floatingMaterials.clear();
 	}
 
+	/**
+     * Reloads the animation blacklist.
+     * If the list is empty, it is filled by calling readAnimBlacklist().
+     * Otherwise, the list is cleared using the clear() method of the ArrayList class.
+     */
 	public static void reloadAnimBlacklist() {
 		if (FBP.blockAnimBlacklist.isEmpty())
 			readAnimBlacklist();
