@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.EnumFacing;
 import sun.misc.Unsafe;
 
+@SuppressWarnings("sunapi")
 public class FastCubeUploader {
 
 	private static final MatrixStack MATRIX_STACK = new MatrixStack();

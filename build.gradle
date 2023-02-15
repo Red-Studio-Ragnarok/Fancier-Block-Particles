@@ -83,7 +83,6 @@ sourceSets {
 	}
 }
 
-
 jar {
 	// Add Jafama into FBP jar
 	from(configurations.embed.collect {it.isDirectory() ? it : zipTree(it)})
