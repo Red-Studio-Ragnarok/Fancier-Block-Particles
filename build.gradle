@@ -32,7 +32,7 @@ minecraft {
 			'-Dfml.coreMods.load=io.redstudioragnarok.FBP.asm.FBPPlugin'
 	]
 
-	replace('@VERSION@', version)
+	replace('@VERSION@', project.mod_version)
 	replaceIn('ModReference.java')
 }
 
