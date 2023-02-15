@@ -6,14 +6,15 @@ buildscript {
 			url 'https://maven.minecraftforge.net'
 		}
 		maven {
+			name 'Mixin'
 			url = 'https://repo.spongepowered.org/maven'
 		}
 	}
 	dependencies {
-		classpath('com.anatawa12.forge:ForgeGradle:2.3-+') {
+		classpath('com.anatawa12.forge:ForgeGradle:2.+') {
 			changing = true
 		}
-		classpath 'org.spongepowered:mixingradle:0.8.5'
+		classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
 	}
 }
 
@@ -28,7 +29,7 @@ minecraft {
 	mappings = 'stable_39'
 
 	def args = [
-		'-Dfml.coreMods.load=io.redstudioragnarok.FBP.asm.FBPPlugin'
+			'-Dfml.coreMods.load=io.redstudioragnarok.FBP.asm.FBPPlugin'
 	]
 
 	replace('@VERSION@', project.version)
@@ -42,26 +43,28 @@ configurations {
 
 repositories {
 	maven {
-		url 'https://maven.cleanroommc.com'
+		url = 'https://maven.cleanroommc.com'
 	}
 
 	ivy {
 		url 'https://github.com/'
 
-		patternLayout {
+		layout "pattern", {
 			artifact '[organisation]/[module]/releases/download/v[revision]/[module]-[revision].[ext]'
 		}
 
-		metadataSources { artifact() } 
+		metadataSources { artifact() }
 	}
 }
 
 dependencies {
-	compile 'zone.rong:mixinbooter:7.0'
 	implementation 'net.jafama:jafama:2.+'
 	embed 'net.jafama:jafama:2.+'
+
 	implementation 'meldexun:MatrixUtil:1.2.0@jar'
 	embed 'meldexun:MatrixUtil:1.2.0@jar'
+
+	compile 'zone.rong:mixinbooter:7.0'
 }
 
 processResources {
@@ -81,21 +84,20 @@ processResources {
 
 sourceSets {
 	main {
-		ext.refMap = 'io.redstudioragnarok.FBP.asm.FBPPlugin'
+		ext.refMap = 'mixins.fbp.refmap.json'
 	}
 }
+
 
 jar {
 	from(configurations.embed.collect {
 		it.isDirectory() ? it : zipTree(it)
 	})
 	manifest.attributes([
-		'ModSide': 'CLIENT',
-		'FMLAT': 'fbp_at.cfg',
-		'FMLCorePlugin': 'io.redstudioragnarok.FBP.asm.FBPPlugin',
-		'FMLCorePluginContainsFMLMod': 'true',
-		'ForceLoadAsMod': 'true',
-		'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-		'TweakOrder': '0'
+			'ModSide': 'CLIENT',
+			'FMLAT': 'fbp_at.cfg',
+			'FMLCorePlugin': 'io.redstudioragnarok.FBP.asm.FBPPlugin',
+			'FMLCorePluginContainsFMLMod': 'true',
+			'ForceLoadAsMod': 'true'
 	])
 }
