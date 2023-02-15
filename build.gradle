@@ -32,10 +32,20 @@ minecraft {
 			'-Dfml.coreMods.load=io.redstudioragnarok.FBP.asm.FBPPlugin'
 	]
 
-	replace('@VERSION@', project.version)
+	replace('@VERSION@', version)
 	replaceIn('ModReference.java')
 }
 
+// Replace version in `mcmod.info`
+processResources {
+	inputs.property 'version', version
+	from(sourceSets.main.resources.srcDirs) {
+		include 'mcmod.info'
+		expand 'version':version
+	}
+}
+
+// Create configuration to inc Jafama into FBP jar
 configurations {
 	implementation
 	compile.extendsFrom(embed)
@@ -67,21 +77,6 @@ dependencies {
 	compile 'zone.rong:mixinbooter:7.0'
 }
 
-processResources {
-	duplicatesStrategy = 'include'
-	// this will ensure that this task is redone when the versions change.
-	inputs.property 'version', project.version
-	from(sourceSets.main.resources.srcDirs) {
-		include 'mcmod.info'
-		// replace version and mcversion
-		expand 'version':project.version
-	}
-	// copy everything else except the mcmod.info
-	from(sourceSets.main.resources.srcDirs) {
-		exclude 'mcmod.info'
-	}
-}
-
 sourceSets {
 	main {
 		ext.refMap = 'mixins.fbp.refmap.json'
@@ -90,9 +85,8 @@ sourceSets {
 
 
 jar {
-	from(configurations.embed.collect {
-		it.isDirectory() ? it : zipTree(it)
-	})
+	// Add Jafama into FBP jar
+	from(configurations.embed.collect {it.isDirectory() ? it : zipTree(it)})
 	manifest.attributes([
 			'ModSide': 'CLIENT',
 			'FMLAT': 'fbp_at.cfg',

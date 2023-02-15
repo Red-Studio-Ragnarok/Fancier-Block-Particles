@@ -87,6 +87,7 @@ public class Page2 extends GuiScreen {
 			break;
 		case 5:
 			FBP.fancyPlaceAnim = !FBP.fancyPlaceAnim;
+			ConfigHandler.reloadAnimBlacklist();
 			break;
 		case 6:
 			FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;

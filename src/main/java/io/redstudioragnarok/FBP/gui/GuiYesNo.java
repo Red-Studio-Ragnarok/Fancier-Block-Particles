@@ -29,7 +29,7 @@ public class GuiYesNo extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		if (button.id == 1) {
-			ConfigHandler.defaults(true);
+			ConfigHandler.defaults();
 		}
 		this.mc.displayGuiScreen(parent);
 

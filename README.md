@@ -38,7 +38,7 @@ This section need some work but the basics are:
 
 You can just open in IntelliJ and work on it, normally everything should work, if not create an issue.
 
-This projects follow [Conventional Commits], [Keep a Changelog] and [Ragnarök Versioning Convention]
+This projects follow [Keep a Changelog] and [Ragnarök Versioning Convention]
 
 [Trello]: https://trello.com/b/nlEU4rO2
 [TominoCZ]: [https://www.curseforge.com/members/morphoxl/projects](https://github.com/TominoCZ)

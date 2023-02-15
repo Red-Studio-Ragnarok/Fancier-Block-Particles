@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 
 import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
 
+/**
+ * This class handle everything related to the config system.
+ */
 public class ConfigHandler {
 
 	private static FileInputStream fileInputStream;
@@ -19,79 +22,177 @@ public class ConfigHandler {
 
 	private static String line;
 
+	/**
+	 * Initializes the configuration system.
+	 * <p>
+	 * Check if the config files and folder exists, if not, create them.
+	 * It also checks if the old config files exists, if yes, delete them.
+	 * Then read the config files.
+	 * <p>
+	 * Only reads Floating Materials config and Animation Blacklist if theses respective features are enabled.
+	 */
 	public static void init() {
 		try {
 			if (!Paths.get(FBP.mainConfigFile.getParent()).toFile().exists())
-				Paths.get(FBP.mainConfigFile.getParent()).toFile().mkdirs();
+				if (Paths.get(FBP.mainConfigFile.getParent()).toFile().mkdirs())
+					FBP_LOG.error("Could not create config directory");
 
 			if (!FBP.mainConfigFile.exists()) {
-				FBP.mainConfigFile.createNewFile();
+				if (!FBP.mainConfigFile.createNewFile())
+					FBP_LOG.error("Could not create main config file");
 
-				defaults(true);
+				defaults();
 			}
 
 			if (!FBP.floatingMaterialsFile.exists()) {
-				FBP.floatingMaterialsFile.createNewFile();
+				if (!FBP.floatingMaterialsFile.createNewFile())
+                    FBP_LOG.error("Could not create floating materials file");
 
-				defaultsFloatingMaterials();
+                defaultsFloatingMaterials();
 			}
 
-			if (!FBP.animBlacklistFile.exists())
-				FBP.animBlacklistFile.createNewFile();
-
 			if (!FBP.particleBlacklistFile.exists())
-				FBP.particleBlacklistFile.createNewFile();
+				if (!FBP.particleBlacklistFile.createNewFile())
+					FBP_LOG.error("Could not create particle blacklist file");
+
+			if (!FBP.animBlacklistFile.exists())
+				if (!FBP.animBlacklistFile.createNewFile())
+                    FBP_LOG.error("Could not create anim blacklist file");
 
 			// Check for pre 0.8 configs and hopefully delete them
 
-			if (FBP.oldConfig.exists())
-				FBP.oldConfig.delete();
+			if (FBP.oldMainConfig.exists())
+				if (!FBP.oldMainConfig.delete())
+					FBP_LOG.error("Could not delete old main config file");
 
 			if (FBP.oldFloatingMaterialsFile.exists())
-				FBP.oldFloatingMaterialsFile.delete();
-
-			if (FBP.oldAnimBlacklistFile.exists())
-				FBP.oldAnimBlacklistFile.delete();
+				if (!FBP.oldFloatingMaterialsFile.delete())
+					FBP_LOG.error("Could not delete old floating materials file");
 
 			if (FBP.oldParticleBlacklistFile.exists())
-				FBP.oldParticleBlacklistFile.delete();
+				if (!FBP.oldParticleBlacklistFile.delete())
+                    FBP_LOG.error("Could not delete old particle blacklist file");
+
+            if (FBP.oldAnimBlacklistFile.exists())
+				if (!FBP.oldAnimBlacklistFile.delete())
+					FBP_LOG.error("Could not delete old anim blacklist file");
 
 			readMainConfig();
 			if (FBP.waterPhysics)
 				readFloatingMaterials();
 
-			readAnimBlacklist();
 			readParticleBlacklist();
+			if (FBP.fancyPlaceAnim)
+				readAnimBlacklist();
 
-			closeStreams();
 		} catch (IOException e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			FBP_LOG.error("Cannot init configs, an IOException occurred: " + e.getMessage());
+		} catch (SecurityException e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			FBP_LOG.error("Cannot init configs, an antivirus is probably causing this");
+		} finally {
 			closeStreams();
-
-			writeMainConfig();
 		}
 	}
 
-	public static void initStreams(File file) {
+	/**
+	 * Initializes file streams for a specified file.
+	 * <p>
+	 * This is used to read the config files.
+	 *
+	 * @param file The file object to create streams for
+	 */
+	private static void initStreams(File file) {
 		try {
 			fileInputStream = new FileInputStream(file);
 			inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
 			bufferedReader = new BufferedReader(inputStreamReader);
-		} catch (Exception e) {
+
+		} catch (FileNotFoundException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			if (handleFileNotFound(e.getMessage(), "streams", file))
+				initStreams(file);
+
+			closeStreams();
+		} catch (SecurityException e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			FBP_LOG.error("Cannot init streams for " + file + " an antivirus is probably causing this");
+
+			closeStreams();
 		}
 	}
 
-	static void closeStreams() {
+	/**
+     * Closes file streams.
+     */
+	private static void closeStreams() {
 		try {
 			bufferedReader.close();
 			inputStreamReader.close();
 			fileInputStream.close();
-		} catch (Exception e) {
+
+		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			FBP_LOG.error("Cannot close streams, an IOException occurred: " + e.getMessage());
 		}
 	}
 
-	static void readMainConfig() {
+	/**
+     * Initializes writer for a specified file.
+	 * <p>
+	 * This is used to write to the config files.
+     *
+     * @param file The file object to create writer for
+     */
+	private static void initWriter(File file) {
+		try {
+			writer = new PrintWriter(file.getPath(), "UTF-8");
+
+		} catch (FileNotFoundException e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			if (handleFileNotFound(e.getMessage(), "writer", file))
+				initWriter(file);
+		} catch (UnsupportedEncodingException e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			FBP_LOG.error("Cannot init writer for " + file + " encoding is not supported, details: " + e.getMessage());
+		} catch (SecurityException e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			FBP_LOG.error("Cannot init streams for " + file + " an antivirus is probably causing this");
+		}
+	}
+
+	/**
+	 * Handle a file not found exception.
+	 * <p>
+	 * It will output an error message to the console.
+	 * And then attempt to create a new file, if it fails, it will output an error message to the console.
+	 *
+	 * @param message The error message associated with the exception
+	 * @param source A string indicating the source of the error
+	 * @param file The file object that could not be found
+	 * @return True if the file was created successfully, false otherwise
+	 */
+	private static boolean handleFileNotFound(String message, String source, File file) {
+		FBP_LOG.error("Cannot init " + source + " for " + file + " as the file does not exist, details: " + message);
+		FBP_LOG.warn("Trying to create file " + file);
+
+		try {
+			if (file.createNewFile()) {
+				FBP_LOG.info("Successfully created file " + file);
+				return true;
+			}
+		} catch (Exception ex) {
+			FBP_LOG.error("Could not create file " + file);
+		}
+
+		return false;
+	}
+
+	/**
+     * Reads the main config file and set the corresponding settings.
+	 */
+	private static void readMainConfig() {
 		try {
 			initStreams(FBP.mainConfigFile);
 
@@ -161,15 +262,18 @@ public class ConfigHandler {
 			line = bufferedReader.readLine();
 			FBP.weatherRenderDistance = Float.parseFloat(line.replace("weatherRenderDistance=", ""));
 
+		} catch (IOException e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			FBP_LOG.error("Cannot read main config, an IOException occurred: " + e.getMessage());
+		} finally {
 			closeStreams();
-		} catch (Exception e) {
-			closeStreams();
-
-			writeMainConfig();
 		}
 	}
 
-	static void readFloatingMaterials() {
+	/**
+     * Reads the floating materials config file and add the found material to the floating material list.
+     */
+	private static void readFloatingMaterials() {
 		try {
 			initStreams(FBP.floatingMaterialsFile);
 
@@ -287,191 +391,155 @@ public class ConfigHandler {
 				}
 			}
 
-			closeStreams();
-		} catch (Exception e) {
-			closeStreams();
-
-			writeMainConfig();
+		} catch (IOException e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			FBP_LOG.error("Cannot read floating materials config, an IOException occurred: " + e.getMessage());
+		} finally {
+			 closeStreams();
 		}
 	}
 
-	static void readAnimBlacklist() {
+	/**
+     * Reads the animation blacklist config file and add the found blocks to the animation blacklist list.
+     */
+	private static void readAnimBlacklist() {
 		try {
 			initStreams(FBP.animBlacklistFile);
 
-			FBP.INSTANCE.resetBlacklist(false);
+			FBP.resetBlacklist(false);
 
 			while ((line = bufferedReader.readLine()) != null && !(line = line.replaceAll(" ", "")).equals(""))
-				FBP.INSTANCE.addToBlacklist(line, false);
-		} catch (Exception e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-		}
+				FBP.addToBlacklist(line, false);
 
-		closeStreams();
+		} catch (IOException e) {
+			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			FBP_LOG.error("Cannot read animation blacklist, an IOException occurred: " + e.getMessage());
+		} finally {
+			closeStreams();
+		}
 	}
 
-	static void readParticleBlacklist() {
+
+	/**
+     * Reads the particle blacklist config file and add the found blocks to the particle blacklist list.
+     */
+	private static void readParticleBlacklist() {
 		try {
 			initStreams(FBP.particleBlacklistFile);
 
-			FBP.INSTANCE.resetBlacklist(true);
+			FBP.resetBlacklist(true);
 
 			while ((line = bufferedReader.readLine()) != null && !(line = line.replaceAll(" ", "")).equals(""))
-				FBP.INSTANCE.addToBlacklist(line, true);
-		} catch (Exception e) {
+				FBP.addToBlacklist(line, true);
+
+		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			FBP_LOG.error("Cannot read particle blacklist, an IOException occurred: " + e.getMessage());
+		} finally {
+			closeStreams();
 		}
-
-		closeStreams();
 	}
 
+	/**
+     * Writes the main config file.
+     */
 	public static void writeMainConfig() {
-		try {
-			writer = new PrintWriter(FBP.mainConfigFile.getPath(), "UTF-8");
+		initWriter(FBP.mainConfigFile);
 
-			writer.println("Main configuration file for Fancier Block Particles");
-			writer.println("I advice to use the in game configuration menu instead of manually editing this file");
-			writer.println();
-			writer.println("enabled=" + FBP.enabled);
-			writer.println();
-			writer.println("Particles Config:");
-			writer.println();
-			writer.println("minAge=" + FBP.minAge);
-			writer.println("maxAge=" + FBP.maxAge);
-			writer.println("showInMillis=" + FBP.showInMillis);
-			writer.println("infiniteDuration=" + FBP.infiniteDuration);
-			writer.println("particlesPerAxis=" + FBP.particlesPerAxis);
-			writer.println("scaleMult=" + FBP.scaleMult);
-			writer.println("gravityMult=" + FBP.gravityMult);
-			writer.println("rotationMult=" + FBP.rotationMult);
-			writer.println("randomRotation=" + FBP.randomRotation);
-			writer.println("randomizedScale=" + FBP.randomizedScale);
-			writer.println("randomFadingSpeed=" + FBP.randomFadingSpeed);
-			writer.println("spawnRedstoneBlockParticles=" + FBP.spawnRedstoneBlockParticles);
-			writer.println("spawnWhileFrozen=" + FBP.spawnWhileFrozen);
-			writer.println("entityCollision=" + FBP.entityCollision);
-			writer.println("bounceOffWalls=" + FBP.bounceOffWalls);
-			writer.println("lowTraction=" + FBP.lowTraction);
-			writer.println("smartBreaking=" + FBP.smartBreaking);
-			writer.println("fancyFlame=" + FBP.fancyFlame);
-			writer.println("fancySmoke=" + FBP.fancySmoke);
-			writer.println("waterPhysics=" + FBP.waterPhysics);
-			writer.println();
-			writer.println("Fancy Block Placement Config:");
-			writer.println();
-			writer.println("fancyPlaceAnim=" + FBP.fancyPlaceAnim);
-			writer.println("spawnPlaceParticles=" + FBP.spawnPlaceParticles);
-			writer.println();
-			writer.println("Weather Config:");
-			writer.println();
-			writer.println("fancyWeather=" + FBP.fancyWeather);
-			writer.println("dynamicWeather=" + FBP.dynamicWeather);
-			writer.println("weatherParticleDensity=" + FBP.weatherParticleDensity);
-			writer.print("weatherRenderDistance=" + FBP.weatherRenderDistance);
+		writer.println("Main configuration file for Fancier Block Particles");
+		writer.println("I advice to use the in game configuration menu instead of manually editing this file");
+		writer.println();
+		writer.println("enabled=" + FBP.enabled);
+		writer.println();
+		writer.println("Particles Config:");
+		writer.println();
+		writer.println("minAge=" + FBP.minAge);
+		writer.println("maxAge=" + FBP.maxAge);
+		writer.println("showInMillis=" + FBP.showInMillis);
+		writer.println("infiniteDuration=" + FBP.infiniteDuration);
+		writer.println("particlesPerAxis=" + FBP.particlesPerAxis);
+		writer.println("scaleMult=" + FBP.scaleMult);
+		writer.println("gravityMult=" + FBP.gravityMult);
+		writer.println("rotationMult=" + FBP.rotationMult);
+		writer.println("randomRotation=" + FBP.randomRotation);
+		writer.println("randomizedScale=" + FBP.randomizedScale);
+		writer.println("randomFadingSpeed=" + FBP.randomFadingSpeed);
+		writer.println("spawnRedstoneBlockParticles=" + FBP.spawnRedstoneBlockParticles);
+		writer.println("spawnWhileFrozen=" + FBP.spawnWhileFrozen);
+		writer.println("entityCollision=" + FBP.entityCollision);
+		writer.println("bounceOffWalls=" + FBP.bounceOffWalls);
+		writer.println("lowTraction=" + FBP.lowTraction);
+		writer.println("smartBreaking=" + FBP.smartBreaking);
+		writer.println("fancyFlame=" + FBP.fancyFlame);
+		writer.println("fancySmoke=" + FBP.fancySmoke);
+		writer.println("waterPhysics=" + FBP.waterPhysics);
+		writer.println();
+		writer.println("Fancy Block Placement Config:");
+		writer.println();
+		writer.println("fancyPlaceAnim=" + FBP.fancyPlaceAnim);
+		writer.println("spawnPlaceParticles=" + FBP.spawnPlaceParticles);
+		writer.println();
+		writer.println("Weather Config:");
+		writer.println();
+		writer.println("fancyWeather=" + FBP.fancyWeather);
+		writer.println("dynamicWeather=" + FBP.dynamicWeather);
+		writer.println("weatherParticleDensity=" + FBP.weatherParticleDensity);
+		writer.print("weatherRenderDistance=" + FBP.weatherRenderDistance);
 
-			writer.close();
-		} catch (Exception e) {
-			writer.close();
-
-			if (!FBP.mainConfigFile.exists()) {
-				if (!Paths.get(FBP.mainConfigFile.getParent()).toFile().exists())
-					Paths.get(FBP.mainConfigFile.getParent()).toFile().mkdirs();
-
-				try {
-					FBP.mainConfigFile.createNewFile();
-				} catch (IOException e1) {
-					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-				}
-			}
-
-			writeMainConfig();
-		}
+		writer.close();
 	}
 
-	static void writeFloatingMaterials() {
-		try {
-			writer = new PrintWriter(FBP.floatingMaterialsFile.getPath(), "UTF-8");
+	/**
+     * Writes the floating materials config file.
+	 * <p>
+	 * Uses hard-coded values for the material names which are the default.
+     */
+	private static void writeFloatingMaterials() {
+		initWriter(FBP.floatingMaterialsFile);
 
-			writer.println("Configuration file for floatings materials.");
-			writer.println("Anything added here will float, anything else will sink.");
-			writer.println("List of all possible materials: https://shor.cz/Materials");
-			writer.println();
-			writer.println("Carpet");
-			writer.println("Cloth");
-			writer.println("Ice");
-			writer.println("Packed Ice");
-			writer.println("Plants");
-			writer.println("Web");
-			writer.print("Wood");
+		writer.println("Configuration file for floatings materials.");
+		writer.println("Anything added here will float, anything else will sink.");
+		writer.println("List of all possible materials: https://shor.cz/Materials");
+		writer.println();
+		writer.println("Carpet");
+		writer.println("Cloth");
+		writer.println("Ice");
+		writer.println("Packed Ice");
+		writer.println("Plants");
+		writer.println("Web");
+		writer.print("Wood");
 
-			writer.close();
-		} catch (Exception e) {
-			writer.close();
-
-			if (!FBP.floatingMaterialsFile.exists()) {
-				if (!Paths.get(FBP.floatingMaterialsFile.getParent()).toFile().exists())
-					Paths.get(FBP.floatingMaterialsFile.getParent()).toFile().mkdirs();
-
-				try {
-					FBP.floatingMaterialsFile.createNewFile();
-				} catch (IOException e1) {
-					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-				}
-			}
-
-			writeFloatingMaterials();
-		}
+		writer.close();
 	}
 
+	/**
+     * Writes the animation blacklist config file.
+     */
 	public static void writeAnimBlacklist() {
-		try {
-			writer = new PrintWriter(FBP.animBlacklistFile.getPath(), "UTF-8");
+		initWriter(FBP.animBlacklistFile);
 
-			for (String ex : FBP.blockAnimBlacklist)
-				writer.println(ex);
+		for (String ex : FBP.blockAnimBlacklist)
+			writer.println(ex);
 
-			writer.close();
-		} catch (Exception e) {
-			writer.close();
-
-			if (!FBP.animBlacklistFile.exists()) {
-				if (!Paths.get(FBP.animBlacklistFile.getParent()).toFile().exists())
-					Paths.get(FBP.animBlacklistFile.getParent()).toFile().mkdirs();
-
-				try {
-					FBP.animBlacklistFile.createNewFile();
-				} catch (IOException e1) {
-					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-				}
-			}
-		}
+		writer.close();
 	}
 
+	/**
+     * Writes the particle blacklist config file.
+     */
 	public static void writeParticleBlacklist() {
-		try {
-			writer = new PrintWriter(FBP.particleBlacklistFile.getPath(), "UTF-8");
+		initWriter(FBP.particleBlacklistFile);
 
-			for (String ex : FBP.blockParticleBlacklist)
-				writer.println(ex);
+		for (String ex : FBP.blockParticleBlacklist)
+			writer.println(ex);
 
-			writer.close();
-		} catch (Exception e) {
-			writer.close();
-
-			if (!FBP.particleBlacklistFile.exists()) {
-				if (!Paths.get(FBP.particleBlacklistFile.getParent()).toFile().exists())
-					Paths.get(FBP.particleBlacklistFile.getParent()).toFile().mkdirs();
-
-				try {
-					FBP.particleBlacklistFile.createNewFile();
-				} catch (IOException e1) {
-					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-				}
-			}
-		}
+		writer.close();
 	}
 
-	public static void defaults(boolean write) {
+	/**
+	 * Set all the values in the main config file to the default.
+	 */
+	public static void defaults() {
 		FBP.enabled = true;
 		FBP.bounceOffWalls = true;
 		FBP.randomRotation = true;
@@ -495,10 +563,12 @@ public class ConfigHandler {
 		FBP.weatherParticleDensity = 1.0F;
 		FBP.weatherRenderDistance = 1.0F;
 
-		if (write)
-			writeMainConfig();
+		writeMainConfig();
 	}
 
+	/**
+	 * Set all the values in the floating materials config file to the default.
+	 */
 	public static void defaultsFloatingMaterials() {
 		FBP.floatingMaterials.clear();
 
@@ -507,25 +577,50 @@ public class ConfigHandler {
 		readFloatingMaterials();
 	}
 
-	public static void skipLines(int numberOfLines) throws IOException {
-		for (int i = 0; i < numberOfLines; i++) {
+	/**
+	 * Skips a specified number of lines in a file being read by a BufferedReader.
+	 *
+	 * @param numberOfLines The number of lines to skip in the file
+	 * @throws IOException If an I/O error occurs while reading the file
+	 */
+	private static void skipLines(int numberOfLines) throws IOException {
+		for (int i = 0; i < numberOfLines; i++)
 			bufferedReader.readLine();
-		}
 	}
 
-	public static void addMaterial(Material material) {
-		if (!FBP.floatingMaterials.contains(material)) {
+	/**
+     * Adds a material to the floating materials list.
+     *
+     * @param material The material to add
+     */
+	private static void addMaterial(Material material) {
+		if (!FBP.floatingMaterials.contains(material))
 			FBP.floatingMaterials.add(material);
-		} else {
+		else
 			FBP_LOG.warn("Found duplicated material " + material + " in Floating Materials.txt");
-		}
 	}
 
+	/**
+	 * Reloads the floating materials list.
+	 * If the list is empty, it is filled by calling readFloatingMaterials().
+	 * Otherwise, the list is cleared using the clear() method of the ArrayList class.
+	 */
 	public static void reloadMaterials() {
-		if (FBP.floatingMaterials.isEmpty()) {
+		if (FBP.floatingMaterials.isEmpty())
 			readFloatingMaterials();
-		} else {
+		else
 			FBP.floatingMaterials.clear();
-		}
+	}
+
+	/**
+     * Reloads the animation blacklist.
+     * If the list is empty, it is filled by calling readAnimBlacklist().
+     * Otherwise, the list is cleared using the clear() method of the ArrayList class.
+     */
+	public static void reloadAnimBlacklist() {
+		if (FBP.blockAnimBlacklist.isEmpty())
+			readAnimBlacklist();
+		else
+			FBP.blockAnimBlacklist.clear();
 	}
 }
