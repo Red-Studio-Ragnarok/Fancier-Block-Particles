@@ -113,10 +113,12 @@ public class ConfigHandler {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 			if (handleFileNotFound(e.getMessage(), "streams", file))
 				initStreams(file);
+
+			closeStreams();
 		} catch (SecurityException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 			FBP_LOG.error("Cannot init streams for " + file + " an antivirus is probably causing this");
-		} finally {
+
 			closeStreams();
 		}
 	}
