@@ -1,10 +1,7 @@
 package io.redstudioragnarok.FBP;
 
 import io.redstudioragnarok.FBP.block.AnimationDummyBlock;
-import io.redstudioragnarok.FBP.handler.ConfigHandler;
-import io.redstudioragnarok.FBP.handler.EventHandler;
-import io.redstudioragnarok.FBP.handler.GuiHandler;
-import io.redstudioragnarok.FBP.handler.KeyInputHandler;
+import io.redstudioragnarok.FBP.handler.*;
 import io.redstudioragnarok.FBP.keys.KeyBindings;
 import io.redstudioragnarok.FBP.particle.FBPParticleManager;
 import io.redstudioragnarok.FBP.util.ModReference;
@@ -34,6 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.SplittableRandom;
+
+import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
 
 @Mod(clientSideOnly = true, modid = ModReference.MOD_ID, name = ModReference.MOD_NAME, version = ModReference.VERSION, guiFactory = "io.redstudioragnarok.FBP.config.FBPConfigGuiFactory")
 public class FBP {
@@ -107,7 +106,6 @@ public class FBP {
 	public static ParticleManager originalEffectRenderer;
 
 	public static final EventHandler eventHandler = new EventHandler();
-	public static final GuiHandler guiHandler = new GuiHandler();
 
 	public static TextureAtlasSprite snowTexture;
 
@@ -153,7 +151,9 @@ public class FBP {
 
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent evt) {
-		MinecraftForge.EVENT_BUS.register(guiHandler);
+		MinecraftForge.EVENT_BUS.register(new GuiHandler());
+		MinecraftForge.EVENT_BUS.register(DebugHandler.class);
+
 		snowTexture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(Blocks.SNOW.getDefaultState());
 	}
 

@@ -1,5 +1,6 @@
 package io.redstudioragnarok.FBP.util;
 
+import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,6 +12,7 @@ public class ModReference {
     public static final String MOD_ID = "fbp";
     public static final String MOD_NAME = "Fancier Block Particles";
     public static final String VERSION = "@VERSION@";
+    public static final String MIXINBOOTER_VERSION = Loader.instance().getIndexedModList().get("mixinbooter").getVersion();
     public static final Logger FBP_LOG = LogManager.getLogger(MOD_ID);
     public static URI ISSUE;
 
@@ -21,4 +23,5 @@ public class ModReference {
             // TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
         }
     }
+
 }
