@@ -19,12 +19,16 @@ public class DebugHandler {
         if (mc.gameSettings.showDebugInfo) {
             ArrayList<String> list = event.getLeft();
 
+            list.remove(4);
+            list.add(4, "T: " + mc.world.getDebugLoadedEntities());
+
             if (!list.get(list.size() - 1).equals("")) {
                 list.add("");
             }
 
             list.add(String.format("%s<FBP>%s Fancier Block Particles version is %s, Mixin Booter is %sup to date (%s).", TextFormatting.RED, TextFormatting.RESET, ModReference.VERSION, ModReference.MIXINBOOTER_VERSION.equals(latestMixinBooter) ? "" : "not ", ModReference.MIXINBOOTER_VERSION));
             list.add(String.format("%s<FBP>%s Running on %s", TextFormatting.RED, TextFormatting.RESET, System.getProperty("java.vm.name")));
+            list.add(String.format("%s<FBP>%s Running on %s, version %s", TextFormatting.RED, TextFormatting.RESET, System.getProperty("os.name"), System.getProperty("os.version")));
             list.add("");
             list.add(String.format("%s<FBP>%s FBP is %s.", TextFormatting.RED, TextFormatting.RESET, FBP.enabled ? "enabled" : "disabled"));
             list.add("");
