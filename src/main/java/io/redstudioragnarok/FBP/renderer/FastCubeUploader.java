@@ -21,9 +21,9 @@ public class FastCubeUploader {
 		MATRIX_STACK.modelMatrix().setIdentity();
 		MATRIX_STACK.normalMatrix().setIdentity();
 		MATRIX_STACK.translate(x, y, z);
-		Quaternion rotation = Quaternion.createRotateX((float) Math.toRadians(rotX));
+		Quaternion rotation = Quaternion.createRotateY((float) Math.toRadians(rotY));
 		rotation.rotateZ((float) Math.toRadians(rotZ));
-		rotation.rotateY((float) Math.toRadians(rotY));
+		rotation.rotateX((float) Math.toRadians(rotX));
 		MATRIX_STACK.rotate(rotation);
 		MATRIX_STACK.scale(scaleX, scaleY, scaleZ);
 

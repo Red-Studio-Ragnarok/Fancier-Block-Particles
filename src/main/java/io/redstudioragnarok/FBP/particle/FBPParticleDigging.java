@@ -300,8 +300,10 @@ public class FBPParticleDigging extends ParticleDigging {
 
 				move(motionX, motionY, motionZ);
 
-				rot.x = (float) FastMath.round(rot.x / 90) * 90;
-				rot.z = (float) FastMath.round(rot.z / 90) * 90;
+				if (onGround) {
+					rot.x = (float) FastMath.round(rot.x / 90) * 90;
+					rot.z = (float) FastMath.round(rot.z / 90) * 90;
+				}
 
 				if (MathUtil.absolute((float) motionX) > 0.00001)
 					prevMotionX = motionX;
