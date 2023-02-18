@@ -107,6 +107,7 @@ public class FastCubeUploader {
 		putVertex(address + 31 * 3, x3, y3, z3, u0, v0, color, light, nx, ny, nz);
 	}
 
+	@SuppressWarnings("restriction")
 	private static void putVertex(long address, float x, float y, float z, float u, float v, int color, int light, byte nx, byte ny, byte nz) {
 		Unsafe unsafe = UnsafeUtil.UNSAFE;
 		unsafe.putFloat(address, x);
