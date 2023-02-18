@@ -13,6 +13,12 @@ assignees: JustDesoroxxx
 
 > Remember that a great explanation leads to a greater understanding
 
+## Reproducibility
+Please try to reproduce the issue with as few other mods as possible. Then check one of the following checkboxes according to your results. To check a checkbox, replace the space between the square brackets with an x (like this [x]) or create the issue and check the checkbox by clicking on it.
+
+- [ ] I reproduced this issue with as few other mods as possible installed.
+- [ ] I am unable to reproduce this issue consistently.
+
 ## To Reproduce
 
 ***Steps to reproduce the behavior:***
