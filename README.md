@@ -2,9 +2,13 @@
 [![Curse Forge](https://cf.way2muchnoise.eu/title/666575_Get_%20.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/fbp)
 [![Forge Version](https://img.shields.io/badge/Minecraft%20Forge-14.23.5.2847-yellow.svg?style=for-the-badge)](http://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.12.2.html)
 
+<a href="https://www.buymeacoffee.com/desoroxxx" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/arial-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 # Fancier Block Particles
 
 Turn boring particles into fancier particles!
+
+[Buy Me a Coffee]
 
 Now with a [Trello] to see what is being worked on and a roadmap
 
@@ -40,6 +44,7 @@ You can just open in IntelliJ and work on it, normally everything should work, i
 
 This projects follow [Keep a Changelog] and [Ragnarök Versioning Convention]
 
+[Buy Me a Coffee]: https://www.buymeacoffee.com/desoroxxx
 [Trello]: https://trello.com/b/nlEU4rO2
 [TominoCZ]: [https://www.curseforge.com/members/morphoxl/projects](https://github.com/TominoCZ)
 [Fancy Block Particles]: https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles
