@@ -35,7 +35,25 @@ This mod replace the Minecraft 2D particles with fancier 3D particles, it also a
 ### Configuration Menu
 ![Example](https://user-images.githubusercontent.com/82710983/188453582-29bca653-6942-4f33-a670-ce89fbe42942.gif)
 
+## Want to have your own mod or support me?
+
+If you're looking for a mod but don't have the development skills or time, consider commissioning me!
+My commissions are currently open and I would be happy to create a custom mod to fit your needs as long as you provide assets.
+
+[Commissions]
+
+You can also support me on a monthly basis by becoming a member.
+To thank you will have the possibility to access exlcusive post and messages, Discord channel for WIP content, and even access to unreleased Prototypes or WIP Projects.
+
+[Membership]
+
+You can also [buy me a hot chocolate].
+
 [Trello]: https://trello.com/b/nlEU4rO2
 [MorphoxL]: https://www.curseforge.com/members/morphoxl/projects
 [Fancy Block Particles]: https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles
 [#69]: https://github.com/TominoCZ/FancyBlockParticles/issues/69
+
+[Commissions]: https://www.buymeacoffee.com/desoroxxx/commissions
+[Membership]: https://www.buymeacoffee.com/desoroxxx/membership
+[buy me a hot chocolate]: https://www.buymeacoffee.com/desoroxxx
