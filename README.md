@@ -36,6 +36,20 @@ This mod replace the Minecraft 2D particles with fancier 3D particles, it also a
 ### Configuration Menu
 ![Example](https://user-images.githubusercontent.com/82710983/188453582-29bca653-6942-4f33-a670-ce89fbe42942.gif)
 
+## Want to have your own mod or support me?
+
+If you're looking for a mod but don't have the development skills or time, consider commissioning me!
+My commissions are currently open and I would be happy to create a custom mod to fit your needs as long as you provide assets.
+
+[Commissions]
+
+You can also support me on a monthly basis by becoming a member.
+To thank you will have the possibility to access exlcusive post and messages, Discord channel for WIP content, and even access to unreleased Prototypes or WIP Projects.
+
+[Membership]
+
+You can also [buy me a hot chocolate].
+
 ## Contributing
 
 This section need some work but the basics are:
@@ -49,6 +63,9 @@ This projects follow [Keep a Changelog] and [Ragnarök Versioning Convention]
 [TominoCZ]: [https://www.curseforge.com/members/morphoxl/projects](https://github.com/TominoCZ)
 [Fancy Block Particles]: https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles
 [#69]: https://github.com/TominoCZ/FancyBlockParticles/issues/69
-[Conventional Commits]: https://www.conventionalcommits.org/en/v1.0.0/
+[Commissions]: https://www.buymeacoffee.com/desoroxxx/commissions
+[Membership]: https://www.buymeacoffee.com/desoroxxx/membership
+[buy me a hot chocolate]: https://www.buymeacoffee.com/desoroxxx
+
 [Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
 [Ragnarök Versioning Convention]: https://gist.github.com/JustDesoroxxx/5d4a45785ce19a6653ba99f72325c703
