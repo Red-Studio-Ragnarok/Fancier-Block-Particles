@@ -63,6 +63,7 @@ This projects follow [Keep a Changelog] and [Ragnarök Versioning Convention]
 [TominoCZ]: [https://www.curseforge.com/members/morphoxl/projects](https://github.com/TominoCZ)
 [Fancy Block Particles]: https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles
 [#69]: https://github.com/TominoCZ/FancyBlockParticles/issues/69
+
 [Commissions]: https://www.buymeacoffee.com/desoroxxx/commissions
 [Membership]: https://www.buymeacoffee.com/desoroxxx/membership
 [buy me a hot chocolate]: https://www.buymeacoffee.com/desoroxxx
