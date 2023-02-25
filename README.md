@@ -49,11 +49,11 @@ To thank you will have the possibility to access exlcusive post and messages, Di
 
 You can also [buy me a hot chocolate].
 
+[Commissions]: https://www.buymeacoffee.com/desoroxxx/commissions
+[Membership]: https://www.buymeacoffee.com/desoroxxx/membership
+[buy me a hot chocolate]: https://www.buymeacoffee.com/desoroxxx
+
 [Trello]: https://trello.com/b/nlEU4rO2
 [MorphoxL]: https://www.curseforge.com/members/morphoxl/projects
 [Fancy Block Particles]: https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles
 [#69]: https://github.com/TominoCZ/FancyBlockParticles/issues/69
-
-[Commissions]: https://www.buymeacoffee.com/desoroxxx/commissions
-[Membership]: https://www.buymeacoffee.com/desoroxxx/membership
-[buy me a hot chocolate]: https://www.buymeacoffee.com/desoroxxx
