@@ -1,4 +1,4 @@
-package io.redstudioragnarok.fbp.particle;
+package io.redstudioragnarok.fbp.particles;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;

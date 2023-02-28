@@ -3,7 +3,7 @@ package io.redstudioragnarok.fbp;
 import io.redstudioragnarok.fbp.block.AnimationDummyBlock;
 import io.redstudioragnarok.fbp.handlers.*;
 import io.redstudioragnarok.fbp.keys.KeyBindings;
-import io.redstudioragnarok.fbp.particle.FBPParticleManager;
+import io.redstudioragnarok.fbp.particles.FBPParticleManager;
 import io.redstudioragnarok.fbp.utils.ModReference;
 import meldexun.matrixutil.MathUtil;
 import net.jafama.FastMath;

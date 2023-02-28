@@ -1,4 +1,4 @@
-package io.redstudioragnarok.fbp.particle;
+package io.redstudioragnarok.fbp.particles;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.renderer.CubeBatchRenderer;
@@ -6,88 +6,66 @@ import io.redstudioragnarok.fbp.renderer.RenderType;
 import io.redstudioragnarok.fbp.renderer.color.ColorUtil;
 import io.redstudioragnarok.fbp.renderer.light.LightUtil;
 import io.redstudioragnarok.fbp.renderer.texture.TextureUtil;
-import io.redstudioragnarok.fbp.utils.MathUtil;
-import net.minecraft.block.Block;
+import io.redstudioragnarok.fbp.vectors.Vector3D;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleSmokeNormal;
+import net.minecraft.client.particle.ParticleFlame;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 import static io.redstudioragnarok.fbp.FBP.snowTexture;
 
-public class FBPParticleSmoke extends ParticleSmokeNormal {
+public class FBPParticleFlame extends ParticleFlame {
 
-	double scaleAlpha, prevParticleScale, prevParticleAlpha;
-	double endMult = 0.75;
+	Minecraft mc;
+
+	double startScale, scaleAlpha, prevParticleScale, prevParticleAlpha;
+	double endMult = 1;
+
+	boolean spawnAnother;
+
+	Vector3D startPos;
 
 	final float AngleY;
 
-	ParticleSmokeNormal original;
+	protected FBPParticleFlame(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double mY, boolean spawnAnother) {
+		super(worldIn, xCoordIn, yCoordIn - 0.06, zCoordIn, 0, mY, 0);
+		IBlockState blockState = worldIn.getBlockState(new BlockPos(posX, posY, posZ));
 
-	protected FBPParticleSmoke(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, final double mX, final double mY, final double mZ, float scale, ParticleSmokeNormal original) {
-		super(worldIn, xCoordIn, yCoordIn, zCoordIn, mX, mY, mZ, scale);
+		this.spawnAnother = spawnAnother;
 
-		this.original = original;
+		if (blockState == Blocks.TORCH.getDefaultState())
+			prevPosY = posY = posY + 0.04;
 
-		this.motionX = mX;
-		this.motionY = mY;
-		this.motionZ = mZ;
+		startPos = new Vector3D((float) posX, (float) posY, (float) posZ);
+
+		mc = Minecraft.getMinecraft();
+
+		this.motionY = -0.00085;
+		this.particleGravity = -0.05f;
 
 		this.particleTexture = snowTexture;
 
-		scaleAlpha = particleScale * 0.85;
+		particleScale *= FBP.scaleMult * 2.5;
+		particleMaxAge = FBP.random.nextInt(3, 5);
 
-		Block block = worldIn.getBlockState(new BlockPos(xCoordIn, yCoordIn, zCoordIn)).getBlock();
-
-		if (block == Blocks.FIRE) {
-			this.particleScale *= 0.65;
-			this.particleGravity *= 0.25;
-
-			this.motionX = FBP.random.nextDouble(-0.05, 0.05);
-			this.motionY = FBP.random.nextDouble() * 0.5;
-			this.motionZ = FBP.random.nextDouble(-0.05, 0.05);
-
-			this.motionY *= 0.35;
-
-			scaleAlpha = particleScale * 0.5;
-
-			particleMaxAge = FBP.random.nextInt(7, 18);
-		} else if (block == Blocks.TORCH) {
-			particleScale *= 0.45;
-
-			this.motionX = FBP.random.nextDouble(-0.05, 0.05);
-			this.motionY = FBP.random.nextDouble() * 0.5;
-			this.motionZ = FBP.random.nextDouble(-0.05, 0.05);
-
-			this.motionX *= 0.925;
-			this.motionY = 0.005;
-			this.motionZ *= 0.925;
-
-			this.particleRed = 0.275f;
-			this.particleGreen = 0.275f;
-			this.particleBlue = 0.275f;
-
-			scaleAlpha = particleScale * 0.75;
-
-			particleMaxAge = FBP.random.nextInt(5, 10);
-		} else {
-			particleScale = scale;
-			motionY *= 0.935;
-		}
-
-		particleScale *= FBP.scaleMult;
+		this.particleRed = 1;
+		this.particleGreen = 1;
+		this.particleBlue = 0;
 
 		AngleY = rand.nextFloat() * 80;
 
-		particleAlpha = 0.9f;
+		particleAlpha = 1;
 
 		if (FBP.randomFadingSpeed)
-			endMult = MathUtil.clampMaxFirst((float) FBP.random.nextDouble(0.425, 1.15), 0.5432F, 1);
+			endMult *= FBP.random.nextDouble(0.9875, 1);
 
 		multipleParticleScaleBy(1);
 	}
@@ -96,7 +74,10 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 	public Particle multipleParticleScaleBy(float scale) {
 		Particle particle = super.multipleParticleScaleBy(scale);
 
-		float newScale = particleScale / 20;
+		startScale = particleScale;
+		scaleAlpha = particleScale * 0.35;
+
+		float newScale = particleScale / 80;
 
 		this.setBoundingBox(new AxisAlignedBB(posX - newScale, posY - newScale, posZ - newScale, posX + newScale, posY + newScale, posZ + newScale));
 
@@ -105,7 +86,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 	@Override
 	public int getFXLayer() {
-		return 1;
+		return 0;
 	}
 
 	@Override
@@ -117,37 +98,34 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 		prevParticleAlpha = particleAlpha;
 		prevParticleScale = particleScale;
 
-		if (!FBP.fancySmoke)
+		if (!FBP.fancyFlame)
 			this.isExpired = true;
 
 		if (++this.particleAge >= this.particleMaxAge) {
 			if (FBP.randomFadingSpeed)
-				particleScale *= 0.88 * endMult;
+				particleScale *= 0.95 * endMult;
 			else
-				particleScale *= 0.88;
+				particleScale *= 0.95;
 
 			if (particleAlpha > 0.01 && particleScale <= scaleAlpha) {
 				if (FBP.randomFadingSpeed)
-					particleAlpha *= 0.76 * endMult;
+					particleAlpha *= 0.9 * endMult;
 				else
-					particleAlpha *= 0.76;
+					particleAlpha *= 0.9;
 			}
 
 			if (particleAlpha <= 0.01)
 				setExpired();
+			else if (particleAlpha <= 0.325 && spawnAnother && world.getBlockState(new BlockPos(posX, posY, posZ)).getBlock() == Blocks.TORCH) {
+				spawnAnother = false;
+
+				mc.effectRenderer.addEffect(new FBPParticleFlame(world, startPos.x, startPos.y, startPos.z, 0, false));
+			}
 		}
 
-		this.motionY += 0.004;
-		this.move(this.motionX, this.motionY, this.motionZ);
-
-		if (this.posY == this.prevPosY) {
-			this.motionX *= 1.1;
-			this.motionZ *= 1.1;
-		}
-
-		this.motionX *= 0.95;
-		this.motionY *= 0.95;
-		this.motionZ *= 0.95;
+		motionY -= 0.02 * this.particleGravity;
+		move(0, motionY, 0);
+		motionY *= 0.95;
 
 		if (this.onGround) {
 			this.motionX *= 0.89;
@@ -206,11 +184,15 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 		float alpha = (float) (prevParticleAlpha + (particleAlpha - prevParticleAlpha) * partialTicks);
 
 		float scale = (float) (prevParticleScale + (particleScale - prevParticleScale) * partialTicks);
-		scale *= 0.05F;
+
+		if (this.particleAge >= this.particleMaxAge)
+			this.particleGreen = (float) (scale / startScale);
+
+		scale *= 0.0125F;
 
 		CubeBatchRenderer.renderCube(RenderType.BLOCK_TEXTURE, x, y, z, 0.0F, AngleY, 0.0F, scale, scale, scale,
 				TextureUtil.pointTexCoordProvider(particleTexture.getInterpolatedU(4.4F), particleTexture.getInterpolatedV(4.4F)),
-				ColorUtil.multiplyingColorProvider(particleRed, particleGreen, particleBlue, alpha, 0.875F),
+				ColorUtil.multiplyingColorProvider(particleRed, particleGreen, particleBlue, alpha, 0.95F),
 				LightUtil.uniformLightCoordProvider(brightness));
 	}
 

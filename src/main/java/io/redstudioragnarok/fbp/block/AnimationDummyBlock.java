@@ -3,7 +3,7 @@ package io.redstudioragnarok.fbp.block;
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.material.DummyMaterial;
 import io.redstudioragnarok.fbp.node.BlockNode;
-import io.redstudioragnarok.fbp.particle.FBPParticleBlock;
+import io.redstudioragnarok.fbp.particles.FBPParticleBlock;
 import io.redstudioragnarok.fbp.utils.ModReference;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;

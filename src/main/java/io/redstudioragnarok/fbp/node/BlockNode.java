@@ -1,6 +1,6 @@
 package io.redstudioragnarok.fbp.node;
 
-import io.redstudioragnarok.fbp.particle.FBPParticleBlock;
+import io.redstudioragnarok.fbp.particles.FBPParticleBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 

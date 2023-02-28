@@ -1,8 +1,8 @@
 package io.redstudioragnarok.fbp.renderer;
 
 import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.particle.FBPParticleRain;
-import io.redstudioragnarok.fbp.particle.FBPParticleSnow;
+import io.redstudioragnarok.fbp.particles.FBPParticleRain;
+import io.redstudioragnarok.fbp.particles.FBPParticleSnow;
 import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
