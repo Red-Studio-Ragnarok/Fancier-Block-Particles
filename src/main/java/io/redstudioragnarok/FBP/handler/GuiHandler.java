@@ -13,7 +13,7 @@ public class GuiHandler {
 		if (overlay.getType() != ElementType.EXPERIENCE)
 			return;
 
-		if (FBP.isEnabled()) {
+		if (FBP.enabled) {
 			if (FBP.frozen)
 				new GuiNote();
 

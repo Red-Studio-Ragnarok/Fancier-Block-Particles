@@ -124,7 +124,7 @@ public class EventHandler {
 								isNotFalling = false;
 						}
 
-						if (!FBP.INSTANCE.isBlacklisted(state.getBlock(), false) && isNotFalling) {
+						if (!ConfigHandler.isBlacklisted(state.getBlock(), false) && isNotFalling) {
 							node.checked = true;
 
 							FBPParticleBlock particleBlock = new FBPParticleBlock(worldIn, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, state, seed);

@@ -28,7 +28,7 @@ public class KeyInputHandler {
 		if (KeyBindings.FBPMenu.isPressed())
 			mc.displayGuiScreen(new Page0());
 
-		if (KeyBindings.FBPFreeze.isPressed())
+		if (KeyBindings.FBPFreeze.isPressed() && FBP.enabled)
 			FBP.frozen = !FBP.frozen;
 
 		if (KeyBindings.FBPToggle.isPressed())

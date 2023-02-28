@@ -45,7 +45,7 @@ public class GuiHelper extends GuiScreen {
 		_drawCenteredString(fr, I18n.format("menu.fbp"), screenWidth / 2, y - 27, fr.getColorCode('6'));
 		_drawCenteredString(fr, "\u00A7L= " + ModReference.VERSION + " =", screenWidth / 2, y - 17, fr.getColorCode('a'));
 
-		if (!FBP.isEnabled())
+		if (!FBP.enabled)
 			_drawCenteredString(fr, I18n.format("menu.disabled"), screenWidth / 2, y - 35, fr.getColorCode('c'));
 	}
 

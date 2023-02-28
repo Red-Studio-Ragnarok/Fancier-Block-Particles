@@ -353,7 +353,7 @@ public class FBPParticleDigging extends ParticleDigging {
 					if (isInWater()) {
 						handleWaterMovement();
 
-						if (FBP.INSTANCE.doesMaterialFloat(this.blockState.getMaterial())) {
+						if (FBP.floatingMaterials.contains(this.blockState.getMaterial())) {
 							motionY = 0.11 + (particleScale / 1.25) * 0.02;
 						} else {
 							motionX *= 0.93;
@@ -471,7 +471,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	@Override
 	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-		if (!FBP.isEnabled() && particleMaxAge != 0)
+		if (!FBP.enabled && particleMaxAge != 0)
 			particleMaxAge = 0;
 		if (KeyBindings.FBPKillParticles.isKeyDown() && !killToggle)
 			killToggle = true;

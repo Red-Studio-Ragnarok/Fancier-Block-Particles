@@ -53,7 +53,7 @@ public class FBPGuiButton extends GuiButton {
 		hovered = (distance1 <= radius || distance2 <= radius) || isOverRectangle;
 
 		FontRenderer fontrenderer = mc.fontRenderer;
-		mc.getTextureManager().bindTexture(FBP.FBP_WIDGETS);
+		mc.getTextureManager().bindTexture(FBP.menuTexture);
 		if (fbpenabled) {
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		} else {

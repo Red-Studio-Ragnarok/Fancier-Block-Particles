@@ -1,7 +1,10 @@
 package io.redstudioragnarok.FBP.handler;
 
 import io.redstudioragnarok.FBP.FBP;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -21,6 +24,7 @@ public class ConfigHandler {
 	private static PrintWriter writer;
 
 	private static String line;
+	public static String name;
 
 	/**
 	 * Initializes the configuration system.
@@ -406,10 +410,10 @@ public class ConfigHandler {
 		try {
 			initStreams(FBP.animBlacklistFile);
 
-			FBP.resetBlacklist(false);
+			FBP.blockAnimBlacklist.clear();
 
 			while ((line = bufferedReader.readLine()) != null && !(line = line.replaceAll(" ", "")).equals(""))
-				FBP.addToBlacklist(line, false);
+				addToBlacklist(line, false);
 
 		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
@@ -427,10 +431,10 @@ public class ConfigHandler {
 		try {
 			initStreams(FBP.particleBlacklistFile);
 
-			FBP.resetBlacklist(true);
+			FBP.blockParticleBlacklist.clear();
 
 			while ((line = bufferedReader.readLine()) != null && !(line = line.replaceAll(" ", "")).equals(""))
-				FBP.addToBlacklist(line, true);
+				addToBlacklist(line, true);
 
 		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
@@ -518,8 +522,8 @@ public class ConfigHandler {
 	public static void writeAnimBlacklist() {
 		initWriter(FBP.animBlacklistFile);
 
-		for (String ex : FBP.blockAnimBlacklist)
-			writer.println(ex);
+		for (String block : FBP.blockAnimBlacklist)
+			writer.println(block);
 
 		writer.close();
 	}
@@ -530,8 +534,8 @@ public class ConfigHandler {
 	public static void writeParticleBlacklist() {
 		initWriter(FBP.particleBlacklistFile);
 
-		for (String ex : FBP.blockParticleBlacklist)
-			writer.println(ex);
+		for (String block : FBP.blockParticleBlacklist)
+			writer.println(block);
 
 		writer.close();
 	}
@@ -598,6 +602,72 @@ public class ConfigHandler {
 			FBP.floatingMaterials.add(material);
 		else
 			FBP_LOG.warn("Found duplicated material " + material + " in Floating Materials.txt");
+	}
+
+	/**
+	 * Adds a block to either the particle or animation blacklist.
+	 *
+	 * @param block The block to add
+	 * @param particle Whether the block should be added to the particle or animation blacklist
+	 */
+	public static void addToBlacklist(Block block, boolean particle) {
+		if (block == null)
+			return;
+
+		name = block.getRegistryName().toString();
+
+		if (!(particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).contains(name))
+			(particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).add(name);
+	}
+
+	/**
+     * Adds a block by name to either the particle or animation blacklist.
+     *
+     * @param name The name of the block to add
+     * @param particle Whether the block should be added to the particle or animation blacklist
+	 */
+	public static void addToBlacklist(String name, boolean particle) {
+		if (StringUtils.isEmpty(name))
+			return;
+
+		for (ResourceLocation rl : Block.REGISTRY.getKeys()) {
+			String resourceLocation = rl.toString();
+
+			if (resourceLocation.equals(name)) {
+				Block block = Block.REGISTRY.getObject(rl);
+
+				addToBlacklist(block, particle);
+				break;
+			}
+		}
+	}
+
+	/**
+     * Removes a block from either the particle or animation blacklist.
+     *
+     * @param block The block to remove
+	 * @param particle Whether the block should be removed from the particle or animation blacklist
+     */
+	public static void removeFromBlacklist(Block block, boolean particle) {
+		if (block == null)
+			return;
+
+		name = block.getRegistryName().toString();
+
+		(particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).remove(name);
+	}
+
+	/**
+     * Checks if a block is blacklisted.
+     *
+     * @param block The block to check
+     * @param particle Whether to check if the block is blacklisted in the particle or animation blacklist
+	 */
+	public static boolean isBlacklisted(Block block, boolean particle) {
+		if (block == null)
+			return true;
+
+		return (particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).contains(block.getRegistryName().toString());
 	}
 
 	/**

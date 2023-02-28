@@ -30,7 +30,7 @@ public class GuiButtonBlacklist extends FBPGuiButton {
 
 		hovered = distance <= radius;
 
-		mc.getTextureManager().bindTexture(FBP.FBP_WIDGETS);
+		mc.getTextureManager().bindTexture(FBP.menuTexture);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
 		GlStateManager.enableBlend();

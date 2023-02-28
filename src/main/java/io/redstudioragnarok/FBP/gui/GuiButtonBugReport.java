@@ -29,7 +29,7 @@ public class GuiButtonBugReport extends GuiButton {
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
-		mc.getTextureManager().bindTexture(FBP.FBP_BUG);
+		mc.getTextureManager().bindTexture(FBP.bugIcon);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
 		int centerX = x + 25 / 2;

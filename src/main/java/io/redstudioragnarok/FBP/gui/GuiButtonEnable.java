@@ -21,7 +21,7 @@ public class GuiButtonEnable extends GuiButton {
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
-		mc.getTextureManager().bindTexture(FBP.FBP_FBP);
+		mc.getTextureManager().bindTexture(FBP.fbpIcon);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
 		int centerX = x + 25 / 2;
@@ -31,14 +31,14 @@ public class GuiButtonEnable extends GuiButton {
 		double radius = FastMath.sqrtQuick(2 * Math.pow(16, 2));
 
 		boolean flag = distance <= (radius / 2);
-		int i = FBP.isEnabled() ? 0 : 50;
+		int i = FBP.enabled ? 0 : 50;
 
 		if (hovered = flag)
 			i += 25;
 
 		Gui.drawModalRectWithCustomSizedTexture(this.x, this.y, 0, i, 25, 25, 25, 100);
 
-		final String text = (FBP.isEnabled() ? I18n.format("menu.disable") : I18n.format("menu.enable")) + " FBP";
+		final String text = (FBP.enabled ? I18n.format("menu.disable") : I18n.format("menu.enable")) + " FBP";
 
 		if (flag)
 			this.drawString(_fr, text, mouseX - _fr.getStringWidth(text) - 25, mouseY - 3, _fr.getColorCode('a'));

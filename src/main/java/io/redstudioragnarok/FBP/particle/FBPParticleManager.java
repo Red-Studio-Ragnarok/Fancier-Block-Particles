@@ -1,10 +1,10 @@
 package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
+import io.redstudioragnarok.FBP.handler.ConfigHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.DestroyBlockProgress;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -12,21 +12,20 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.Map;
 
+import static io.redstudioragnarok.FBP.FBP.mc;
+
 public class FBPParticleManager extends ParticleManager {
-
-	Minecraft mc;
-
-	public static int ParticleSpawned;
 
 	public FBPParticleManager(World worldIn, TextureManager rendererIn) {
 		super(worldIn, rendererIn);
-
-		mc = Minecraft.getMinecraft();
 	}
 
 	public void carryOver() {
@@ -50,7 +49,7 @@ public class FBPParticleManager extends ParticleManager {
 				blockState = ((ParticleDigging)effect).sourceState;
 
 				if (blockState != null && !(FBP.frozen && !FBP.spawnWhileFrozen) && (FBP.spawnRedstoneBlockParticles || blockState.getBlock() != Blocks.REDSTONE_BLOCK)) {
-					if (blockState.getBlock() instanceof BlockLiquid || FBP.INSTANCE.isBlacklisted(blockState.getBlock(), true)) {
+					if (blockState.getBlock() instanceof BlockLiquid || ConfigHandler.isBlacklisted(blockState.getBlock(), true)) {
 						effect.setExpired();
 						return;
 					}
@@ -61,7 +60,7 @@ public class FBPParticleManager extends ParticleManager {
 				if (blockState != null && !(FBP.frozen && !FBP.spawnWhileFrozen) && (FBP.spawnRedstoneBlockParticles || blockState.getBlock() != Blocks.REDSTONE_BLOCK)) {
 					effect.setExpired();
 
-					if (!(blockState.getBlock() instanceof BlockLiquid) && !FBP.INSTANCE.isBlacklisted(blockState.getBlock(), true)) {
+					if (!(blockState.getBlock() instanceof BlockLiquid) && !ConfigHandler.isBlacklisted(blockState.getBlock(), true)) {
 						toAdd = new FBPParticleDigging(world, effect.posX, effect.posY - 0.1, effect.posZ, 0, 0, 0, effect.particleScale, toAdd.getRedColorF(), toAdd.getGreenColorF(), toAdd.getBlueColorF(), blockState, null, effect.particleTexture);
 					} else
 						return;
@@ -86,7 +85,6 @@ public class FBPParticleManager extends ParticleManager {
 			effect.setExpired();
 
 		super.addEffect(toAdd);
-		ParticleSpawned ++;
 	}
 
 	@Override
@@ -106,7 +104,7 @@ public class FBPParticleManager extends ParticleManager {
 						double posY = pos.getY() + ((j + 0.5) / FBP.particlesPerAxis);
 						double posZ = pos.getZ() + ((k + 0.5) / FBP.particlesPerAxis);
 
-						if ((!(block instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen)) && (FBP.spawnRedstoneBlockParticles || block != Blocks.REDSTONE_BLOCK) && !FBP.INSTANCE.isBlacklisted(block, true)) {
+						if ((!(block instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen)) && (FBP.spawnRedstoneBlockParticles || block != Blocks.REDSTONE_BLOCK) && !ConfigHandler.isBlacklisted(block, true)) {
 							double scale = FBP.random.nextDouble(0.75, 1);
 
 							FBPParticleDigging toSpawn = new FBPParticleDigging(world, posX, posY, posZ, posX - pos.getX() - 0.5, -0.001, posZ - pos.getZ() - 0.5, (float) scale, 1, 1, 1, state, null, texture).setBlockPos(pos);
@@ -193,7 +191,7 @@ public class FBPParticleManager extends ParticleManager {
 
 				Particle toSpawn;
 
-				if (!FBP.INSTANCE.isBlacklisted(iblockstate.getBlock(), true)) {
+				if (!ConfigHandler.isBlacklisted(iblockstate.getBlock(), true)) {
 					toSpawn = new FBPParticleDigging(world, hitPosX, hitPosY, hitPosZ, 0, 0, 0, -2, 1, 1, 1, iblockstate, side, null).setBlockPos(pos);
 
 					if (FBP.smartBreaking) {

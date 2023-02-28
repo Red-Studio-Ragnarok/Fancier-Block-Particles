@@ -1,6 +1,7 @@
 package io.redstudioragnarok.FBP.handler;
 
 import io.redstudioragnarok.FBP.FBP;
+import io.redstudioragnarok.FBP.particle.FBPParticleManager;
 import io.redstudioragnarok.FBP.utils.ModReference;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;

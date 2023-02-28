@@ -194,7 +194,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 	@Override
 	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-		if (!FBP.isEnabled() && particleMaxAge != 0)
+		if (!FBP.enabled && particleMaxAge != 0)
 			particleMaxAge = 0;
 
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);

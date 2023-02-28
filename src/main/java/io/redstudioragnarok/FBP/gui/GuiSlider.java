@@ -33,7 +33,7 @@ public class GuiSlider extends GuiButton {
 		// Draws the text
 		drawCenteredString(fontrenderer, displayString, x + width / 2, y + 6 - 9, fontrenderer.getColorCode('f'));
 
-		mc.getTextureManager().bindTexture(FBP.FBP_WIDGETS);
+		mc.getTextureManager().bindTexture(FBP.menuTexture);
 
 		// Draws the slider
 		drawTexturedModalRect(x, y, 0, 60 + boolToInt(enabled) * 20, width / 2, height);

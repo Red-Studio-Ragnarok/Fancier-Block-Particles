@@ -79,8 +79,8 @@ public class GuiBlacklist extends GuiScreen {
 	public void initGui() {
 		this.buttonList.clear();
 
-		animation = new GuiButtonBlacklist(0, this.width / 2 - 100 - 30, this.height / 2 - 30 + 35, "", false, FBP.INSTANCE.isBlacklisted(selectedBlock.getBlock(), false));
-		particle = new GuiButtonBlacklist(1, this.width / 2 + 100 - 30, this.height / 2 - 30 + 35, "", true, FBP.INSTANCE.isBlacklisted(selectedBlock.getBlock(), true));
+		animation = new GuiButtonBlacklist(0, this.width / 2 - 100 - 30, this.height / 2 - 30 + 35, "", false, ConfigHandler.isBlacklisted(selectedBlock.getBlock(), false));
+		particle = new GuiButtonBlacklist(1, this.width / 2 + 100 - 30, this.height / 2 - 30 + 35, "", true, ConfigHandler.isBlacklisted(selectedBlock.getBlock(), true));
 
 		Item ib = Item.getItemFromBlock(selectedBlock.getBlock());
 		Block b = ib instanceof ItemBlock ? ((ItemBlock) ib).getBlock() : null;
@@ -128,10 +128,10 @@ public class GuiBlacklist extends GuiScreen {
 				boolean isParticle = particle.isMouseOver();
 
 				if (selected.enabled) {
-					if (!FBP.INSTANCE.isBlacklisted(b, isParticle))
-						FBP.INSTANCE.addToBlacklist(b, isParticle);
+					if (!ConfigHandler.isBlacklisted(b, isParticle))
+						ConfigHandler.addToBlacklist(b, isParticle);
 					else
-						FBP.INSTANCE.removeFromBlacklist(b, isParticle);
+						ConfigHandler.removeFromBlacklist(b, isParticle);
 
 					if (isParticle)
 						ConfigHandler.writeParticleBlacklist();
@@ -203,13 +203,13 @@ public class GuiBlacklist extends GuiScreen {
 
 		this.drawCenteredString(fontRenderer, I18n.format("menu.blacklist.title"), width / 2, 20, fontRenderer.getColorCode('a'));
 
-		mc.getTextureManager().bindTexture(FBP.FBP_WIDGETS);
+		mc.getTextureManager().bindTexture(FBP.menuTexture);
 
 		// RENDER SCREEN
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
 		// RENDER MOUSE
-		mc.getTextureManager().bindTexture(FBP.FBP_WIDGETS);
+		mc.getTextureManager().bindTexture(FBP.menuTexture);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
 		GlStateManager.enableBlend();
