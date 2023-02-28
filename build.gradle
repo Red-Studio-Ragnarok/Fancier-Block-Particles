@@ -27,7 +27,7 @@ minecraft {
 	mappings = 'stable_39'
 	runDir = 'run'
 
-	def args = ['-Dfml.coreMods.load=io.redstudioragnarok.FBP.asm.FBPPlugin']
+	def args = ['-Dfml.coreMods.load=io.redstudioragnarok.fbp.asm.FBPPlugin']
 
 	replace('@VERSION@', project.mod_version)
 	replaceIn('ModReference.java')
@@ -85,7 +85,7 @@ jar {
 	manifest.attributes([
 			'ModSide': 'CLIENT',
 			'FMLAT': 'fbp_at.cfg',
-			'FMLCorePlugin': 'io.redstudioragnarok.FBP.asm.FBPPlugin',
+			'FMLCorePlugin': 'io.redstudioragnarok.fbp.asm.FBPPlugin',
 			'FMLCorePluginContainsFMLMod': 'true',
 			'ForceLoadAsMod': 'true'
 	])
