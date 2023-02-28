@@ -5,7 +5,7 @@ import io.redstudioragnarok.FBP.handler.ConfigHandler;
 import io.redstudioragnarok.FBP.handler.KeyInputHandler;
 import io.redstudioragnarok.FBP.keys.KeyBindings;
 import io.redstudioragnarok.FBP.model.ModelHelper;
-import io.redstudioragnarok.FBP.util.MathUtil;
+import io.redstudioragnarok.FBP.utils.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
@@ -102,7 +102,7 @@ public class GuiBlacklist extends GuiScreen {
 
 		if (selectedPos != null && (mc.objectMouseOver == null || !mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != selectedBlock.getBlock() && mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != FBP.FBPBlock)) {
 			keyUp = true;
-			KeyInputHandler.INSTANCE.onInput();
+			KeyInputHandler.onInput();
 		}
 		try {
 			if (!Keyboard.isKeyDown(KeyBindings.FBPBlacklistMenu.getKeyCode()) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
@@ -143,7 +143,7 @@ public class GuiBlacklist extends GuiScreen {
 			}
 
 			if (keyUp)
-				KeyInputHandler.INSTANCE.onInput();
+				KeyInputHandler.onInput();
 
 			mc.displayGuiScreen(null);
 		}

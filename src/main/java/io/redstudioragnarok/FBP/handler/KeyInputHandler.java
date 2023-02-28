@@ -17,21 +17,14 @@ import static io.redstudioragnarok.FBP.FBP.mc;
 
 public class KeyInputHandler {
 
-	public static KeyInputHandler INSTANCE;
-
-	boolean wasOpened = false;
-
-
-	public KeyInputHandler() {
-		INSTANCE = this;
-	}
+	private static boolean wasOpened = false;
 
 	@SubscribeEvent
-	public void onKeyboardInput(InputEvent.KeyInputEvent e) {
+	public static void onKeyboardInput(InputEvent.KeyInputEvent e) {
 		onInput();
 	}
 
-	public void onInput() {
+	public static void onInput() {
 		if (KeyBindings.FBPMenu.isPressed())
 			mc.displayGuiScreen(new Page0());
 

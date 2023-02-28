@@ -4,8 +4,7 @@ import io.redstudioragnarok.FBP.block.AnimationDummyBlock;
 import io.redstudioragnarok.FBP.handler.*;
 import io.redstudioragnarok.FBP.keys.KeyBindings;
 import io.redstudioragnarok.FBP.particle.FBPParticleManager;
-import io.redstudioragnarok.FBP.util.ModReference;
-import io.redstudioragnarok.FBP.vector.Vector3D;
+import io.redstudioragnarok.FBP.utils.ModReference;
 import meldexun.matrixutil.MathUtil;
 import net.jafama.FastMath;
 import net.minecraft.block.Block;
@@ -32,8 +31,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.SplittableRandom;
 
-import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
-
 @Mod(clientSideOnly = true, modid = ModReference.MOD_ID, name = ModReference.MOD_NAME, version = ModReference.VERSION, guiFactory = "io.redstudioragnarok.FBP.config.FBPConfigGuiFactory")
 public class FBP {
 
@@ -52,50 +49,22 @@ public class FBP {
 	public static File oldAnimBlacklistFile;
 	public static File oldParticleBlacklistFile;
 
-	public static File mainConfigFile = null;
-	public static File floatingMaterialsFile = null;
-	public static File animBlacklistFile = null;
-	public static File particleBlacklistFile = null;
+	public static File mainConfigFile;
+	public static File floatingMaterialsFile;
+	public static File animBlacklistFile;
+	public static File particleBlacklistFile;
+
+	public static boolean enabled, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles, fancyWeather, dynamicWeather, fancyFlame, fancySmoke, waterPhysics, frozen;
 
 	public static int minAge, maxAge, particlesPerAxis;
 
 	public static float scaleMult, gravityMult, rotationMult, weatherParticleDensity, weatherRenderDistance;
 
-	public static boolean enabled, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles, fancyWeather, dynamicWeather, fancyFlame, fancySmoke, waterPhysics, frozen;
-
-	public static List<Material> floatingMaterials;
-	public static List<String> blockParticleBlacklist;
-	public static List<String> blockAnimBlacklist;
+	public static List<Material> floatingMaterials = new ArrayList<>();
+	public static List<String> blockParticleBlacklist = new ArrayList<>();
+	public static List<String> blockAnimBlacklist = new ArrayList<>();
 
 	public static final SplittableRandom random = new SplittableRandom();
-
-	public static final Vector3D[] CUBE = {
-			// TOP
-			new Vector3D(1, 1, -1), new Vector3D(1, 1, 1), new Vector3D(-1, 1, 1), new Vector3D(-1, 1, -1),
-
-			// BOTTOM
-			new Vector3D(-1, -1, -1), new Vector3D(-1, -1, 1), new Vector3D(1, -1, 1), new Vector3D(1, -1, -1),
-
-			// FRONT
-			new Vector3D(-1, -1, 1), new Vector3D(-1, 1, 1), new Vector3D(1, 1, 1), new Vector3D(1, -1, 1),
-
-			// BACK
-			new Vector3D(1, -1, -1), new Vector3D(1, 1, -1), new Vector3D(-1, 1, -1), new Vector3D(-1, -1, -1),
-
-			// LEFT
-			new Vector3D(-1, -1, -1), new Vector3D(-1, 1, -1), new Vector3D(-1, 1, 1), new Vector3D(-1, -1, 1),
-
-			// RIGHT
-			new Vector3D(1, -1, 1), new Vector3D(1, 1, 1), new Vector3D(1, 1, -1), new Vector3D(1, -1, -1)
-	};
-
-	public static final Vector3D[] CUBE_NORMALS = {
-			new Vector3D(0, 1, 0), new Vector3D(0, -1, 0),
-
-			new Vector3D(0, 0, 1), new Vector3D(0, 0, -1),
-
-			new Vector3D(-1, 0, 0), new Vector3D(1, 0, 0)
-	};
 
 	public static final VertexFormat POSITION_TEX_COLOR_LMAP_NORMAL = new VertexFormat();
 
@@ -104,8 +73,6 @@ public class FBP {
 	public static IRenderHandler fancyWeatherRenderer, originalWeatherRenderer;
 	public static FBPParticleManager fancyEffectRenderer;
 	public static ParticleManager originalEffectRenderer;
-
-	public static final EventHandler eventHandler = new EventHandler();
 
 	public static TextureAtlasSprite snowTexture;
 
@@ -117,44 +84,40 @@ public class FBP {
 		POSITION_TEX_COLOR_LMAP_NORMAL.addElement(DefaultVertexFormats.COLOR_4UB);
 		POSITION_TEX_COLOR_LMAP_NORMAL.addElement(DefaultVertexFormats.TEX_2S);
 		POSITION_TEX_COLOR_LMAP_NORMAL.addElement(DefaultVertexFormats.NORMAL_3B);
-
-		blockParticleBlacklist = new ArrayList<>();
-		blockAnimBlacklist = new ArrayList<>();
-		floatingMaterials = new ArrayList<>();
 	}
 
 	@Mod.EventHandler
-	public void preInit(FMLPreInitializationEvent evt) {
-		oldMainConfig = new File(evt.getModConfigurationDirectory() + "/FBP/Particle.properties");
-		oldFloatingMaterialsFile = new File(evt.getModConfigurationDirectory() + "/FBP/FloatingMaterials.txt");
-		oldAnimBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/AnimBlockBlacklist.txt");
-		oldParticleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/ParticleBlockBlacklist.txt");
+	public void preInit(FMLPreInitializationEvent preInitializationEvent) {
+		oldMainConfig = new File(preInitializationEvent.getModConfigurationDirectory() + "/FBP/Particle.properties");
+		oldFloatingMaterialsFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/FBP/FloatingMaterials.txt");
+		oldAnimBlacklistFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/FBP/AnimBlockBlacklist.txt");
+		oldParticleBlacklistFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/FBP/ParticleBlockBlacklist.txt");
 
-		mainConfigFile = new File(evt.getModConfigurationDirectory() + "/FBP/Config.txt");
-		floatingMaterialsFile = new File(evt.getModConfigurationDirectory() + "/FBP/Floating Materials.txt");
-		animBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/Animation Block Blacklist.txt");
-		particleBlacklistFile = new File(evt.getModConfigurationDirectory() + "/FBP/Particle Block Blacklist.txt");
+		mainConfigFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/FBP/Config.txt");
+		floatingMaterialsFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/FBP/Floating Materials.txt");
+		animBlacklistFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/FBP/Animation Block Blacklist.txt");
+		particleBlacklistFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/FBP/Particle Block Blacklist.txt");
 
 		ConfigHandler.init();
 		KeyBindings.init();
 
-		MinecraftForge.EVENT_BUS.register(new KeyInputHandler());
+		MinecraftForge.EVENT_BUS.register(KeyInputHandler.class);
 
 		MathUtil.setSinFunc(FastMath::sin);
 		MathUtil.setCosFunc(FastMath::cos);
 	}
 
 	@Mod.EventHandler
-	public void init(FMLInitializationEvent evt) {
-		MinecraftForge.EVENT_BUS.register(eventHandler);
+	public void init(FMLInitializationEvent initializationEvent) {
+		MinecraftForge.EVENT_BUS.register(new EventHandler());
 	}
 
 	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent evt) {
+	public void postInit(FMLPostInitializationEvent postInitializationEvent) {
 		MinecraftForge.EVENT_BUS.register(new GuiHandler());
 		MinecraftForge.EVENT_BUS.register(DebugHandler.class);
 
-		snowTexture = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(Blocks.SNOW.getDefaultState());
+		snowTexture = mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(Blocks.SNOW.getDefaultState());
 	}
 
 	public static boolean isEnabled() {

@@ -1,18 +1,22 @@
-package io.redstudioragnarok.FBP.util;
+package io.redstudioragnarok.FBP.utils;
 
 import net.jafama.FastMath;
 
-import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
+import static io.redstudioragnarok.FBP.utils.ModReference.FBP_LOG;
 
 /**
  * This class provides fast focused mathematical methods.
+ * <p>
+ * By Red Studio
+ * <p>
+ * Created & Maintained by Desoroxxx
  */
 public class MathUtil {
 
 	private static float absolute1;
 	private static float absolute2;
 
-	private static int integer;
+	private static int rounded;
 
 	/**
 	 * Clamps a value within a specified range, checking for the minimum value first.
@@ -83,7 +87,7 @@ public class MathUtil {
 	public static float absoluteMax(float input1, float input2) {
 		absolute1 = input1 >= 0 ? input1 : -input1;
 		absolute2 = input2 >= 0 ? input2 : -input2;
-		return absolute1 > absolute2 ? absolute1 : absolute2;
+		return Math.max(absolute1, absolute2);
 	}
 
 	/**
@@ -108,7 +112,7 @@ public class MathUtil {
 	 */
 	public static float round(float input, int decimals) {
 		// Convert input to an integer by multiplying it by 10^decimals and rounding it
-		int rounded = (int) FastMath.round(input * FastMath.pow(10, decimals));
+		rounded = (int) FastMath.round(input * FastMath.pow(10, decimals));
         // Divide the rounded number by 10^decimals to get the rounded result
 		return (float) ((rounded) / FastMath.pow(10, decimals));
 	}
@@ -121,25 +125,5 @@ public class MathUtil {
 	 */
 	public static int boolToInt(boolean input) {
 		return input ? 1 : 0;
-	}
-
-	/**
-	 * Returns the largest integer that is less than or equal to the input value.
-	 *
-	 * @param input The input value.
-	 * @return The largest integer that is less than or equal to the input value.
-	 */
-	public static int floor(double input) {
-		return (int) FastMath.floor(input);
-	}
-
-	/**
-	 * Returns the smallest integer that is greater than or equal to the input value.
-	 *
-	 * @param input The input value.
-	 * @return The smallest integer that is greater than or equal to the input value.
-	 */
-	public static int ceiling(double input) {
-		return (int) FastMath.ceil(input);
 	}
 }

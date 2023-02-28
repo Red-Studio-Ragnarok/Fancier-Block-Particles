@@ -1,13 +1,13 @@
 package io.redstudioragnarok.FBP.gui;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.util.MathUtil;
+import io.redstudioragnarok.FBP.utils.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import org.lwjgl.input.Mouse;
 
-import static io.redstudioragnarok.FBP.util.MathUtil.boolToInt;
+import static io.redstudioragnarok.FBP.utils.MathUtil.boolToInt;
 
 public class GuiSlider extends GuiButton {
 

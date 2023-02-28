@@ -1,7 +1,7 @@
 package io.redstudioragnarok.FBP.gui;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.util.ModReference;
+import io.redstudioragnarok.FBP.utils.ModReference;
 import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

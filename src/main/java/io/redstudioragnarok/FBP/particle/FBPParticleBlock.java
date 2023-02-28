@@ -1,8 +1,9 @@
 package io.redstudioragnarok.FBP.particle;
 
 import io.redstudioragnarok.FBP.FBP;
-import io.redstudioragnarok.FBP.vector.Vector2D;
-import io.redstudioragnarok.FBP.vector.Vector3D;
+import io.redstudioragnarok.FBP.handler.EventHandler;
+import io.redstudioragnarok.FBP.vectors.Vector2D;
+import io.redstudioragnarok.FBP.vectors.Vector3D;
 import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
@@ -187,7 +188,7 @@ public class FBPParticleBlock extends Particle {
 				mc.world.sendPacketToServer(new CPacketPlayerDigging(Action.ABORT_DESTROY_BLOCK, blockPos, facing));
 
 				// cleanup just to make sure it gets removed
-				FBP.eventHandler.removePosEntry(blockPos);
+				EventHandler.removePosEntry(blockPos);
 			}
 			if (tick >= 1) {
 				killParticle();
@@ -323,11 +324,11 @@ public class FBPParticleBlock extends Particle {
 		this.isExpired = true;
 
 		FBP.FBPBlock.blockNodes.remove(blockPos);
-		FBP.eventHandler.removePosEntry(blockPos);
+		EventHandler.removePosEntry(blockPos);
 	}
 
 	@Override
 	public void setExpired() {
-		FBP.eventHandler.removePosEntry(blockPos);
+		EventHandler.removePosEntry(blockPos);
 	}
 }

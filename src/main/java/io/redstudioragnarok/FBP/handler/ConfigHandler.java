@@ -7,7 +7,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 
-import static io.redstudioragnarok.FBP.util.ModReference.FBP_LOG;
+import static io.redstudioragnarok.FBP.utils.ModReference.FBP_LOG;
 
 /**
  * This class handle everything related to the config system.

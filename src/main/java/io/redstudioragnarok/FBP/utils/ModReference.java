@@ -1,4 +1,4 @@
-package io.redstudioragnarok.FBP.util;
+package io.redstudioragnarok.FBP.utils;
 
 import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
@@ -7,6 +7,9 @@ import org.apache.logging.log4j.Logger;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * This class defines constants for FBP.
+ */
 public class ModReference {
 
     public static final String MOD_ID = "fbp";
@@ -23,5 +26,4 @@ public class ModReference {
             // TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
         }
     }
-
 }

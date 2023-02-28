@@ -3,7 +3,7 @@ package io.redstudioragnarok.FBP.gui.menu;
 import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.gui.*;
 import io.redstudioragnarok.FBP.handler.ConfigHandler;
-import io.redstudioragnarok.FBP.util.ModReference;
+import io.redstudioragnarok.FBP.utils.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;

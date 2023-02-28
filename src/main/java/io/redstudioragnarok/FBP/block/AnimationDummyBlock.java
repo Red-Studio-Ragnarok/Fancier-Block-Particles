@@ -4,7 +4,7 @@ import io.redstudioragnarok.FBP.FBP;
 import io.redstudioragnarok.FBP.material.DummyMaterial;
 import io.redstudioragnarok.FBP.node.BlockNode;
 import io.redstudioragnarok.FBP.particle.FBPParticleBlock;
-import io.redstudioragnarok.FBP.util.ModReference;
+import io.redstudioragnarok.FBP.utils.ModReference;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -25,6 +25,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import io.redstudioragnarok.FBP.handler.EventHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -272,7 +273,7 @@ public class AnimationDummyBlock extends Block {
 				node.particle.killParticle();
 
 			// cleanup just to make sure it gets removed
-			FBP.eventHandler.removePosEntry(pos);
+			EventHandler.removePosEntry(pos);
 		} catch (Throwable t) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}

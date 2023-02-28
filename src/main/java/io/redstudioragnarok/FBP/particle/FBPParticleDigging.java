@@ -8,8 +8,8 @@ import io.redstudioragnarok.FBP.renderer.RenderType;
 import io.redstudioragnarok.FBP.renderer.color.ColorUtil;
 import io.redstudioragnarok.FBP.renderer.light.LightUtil;
 import io.redstudioragnarok.FBP.renderer.texture.TextureUtil;
-import io.redstudioragnarok.FBP.util.MathUtil;
-import io.redstudioragnarok.FBP.vector.Vector3D;
+import io.redstudioragnarok.FBP.utils.MathUtil;
+import io.redstudioragnarok.FBP.vectors.Vector3D;
 import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -389,14 +389,14 @@ public class FBPParticleDigging extends ParticleDigging {
 	public boolean isInWater() {
 		double scale = particleScale / 20;
 
-		int minX = MathUtil.floor(posX - scale);
-		int maxX = MathUtil.ceiling(posX + scale);
+		int minX = (int) FastMath.floor(posX - scale);
+		int maxX = (int) FastMath.ceil(posX + scale);
 
-		int minY = MathUtil.floor(posY - scale);
-		int maxY = MathUtil.ceiling(posY + scale);
+		int minY = (int) FastMath.floor(posY - scale);
+		int maxY = (int) FastMath.ceil(posY + scale);
 
-		int minZ = MathUtil.floor(posZ - scale);
-		int maxZ = MathUtil.ceiling(posZ + scale);
+		int minZ = (int) FastMath.floor(posZ - scale);
+		int maxZ = (int) FastMath.ceil(posZ + scale);
 
 		if (world.isAreaLoaded(new StructureBoundingBox(minX, minY, minZ, maxX, maxY, maxZ), true)) {
 			for (int x = minX; x < maxX; ++x) {

@@ -44,7 +44,7 @@ public class EventHandler {
 
 	static IWorldEventListener worldEventListener;
 
-	ConcurrentSet<BlockPosNode> list;
+	static ConcurrentSet<BlockPosNode> list;
 
 	static IRenderHandler currentWeatherRenderer;
 	static ParticleManager currentEffectRenderer;
@@ -271,7 +271,7 @@ public class EventHandler {
 			placeEvent.setCanceled(true);
 	}
 
-	BlockPosNode getNodeWithPos(BlockPos pos) {
+	private static BlockPosNode getNodeWithPos(BlockPos pos) {
 		for (BlockPosNode node : list) {
 			if (node.hasPos(pos))
 				return node;
@@ -279,7 +279,7 @@ public class EventHandler {
 		return null;
 	}
 
-	public void removePosEntry(BlockPos pos) {
+	public static void removePosEntry(BlockPos pos) {
 		for (int i = 0; i < list.size(); i++) {
 			BlockPosNode node = getNodeWithPos(pos);
 
