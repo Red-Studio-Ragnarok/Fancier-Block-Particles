@@ -1,4 +1,4 @@
-package io.redstudioragnarok.fbp.model;
+package io.redstudioragnarok.fbp.models;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;

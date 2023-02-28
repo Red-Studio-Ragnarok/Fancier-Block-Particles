@@ -2,7 +2,7 @@ package io.redstudioragnarok.fbp.particle;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.keys.KeyBindings;
-import io.redstudioragnarok.fbp.model.ModelHelper;
+import io.redstudioragnarok.fbp.models.ModelHelper;
 import io.redstudioragnarok.fbp.renderer.CubeBatchRenderer;
 import io.redstudioragnarok.fbp.renderer.RenderType;
 import io.redstudioragnarok.fbp.renderer.color.ColorUtil;

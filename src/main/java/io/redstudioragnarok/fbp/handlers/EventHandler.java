@@ -2,7 +2,7 @@ package io.redstudioragnarok.fbp.handlers;
 
 import io.netty.util.internal.ConcurrentSet;
 import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.model.ModelHelper;
+import io.redstudioragnarok.fbp.models.ModelHelper;
 import io.redstudioragnarok.fbp.node.BlockNode;
 import io.redstudioragnarok.fbp.node.BlockPosNode;
 import io.redstudioragnarok.fbp.particle.FBPParticleBlock;
