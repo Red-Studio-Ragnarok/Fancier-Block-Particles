@@ -1,7 +1,7 @@
 package io.redstudioragnarok.fbp.particle;
 
 import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.handler.EventHandler;
+import io.redstudioragnarok.fbp.handlers.EventHandler;
 import io.redstudioragnarok.fbp.vectors.Vector2D;
 import io.redstudioragnarok.fbp.vectors.Vector3D;
 import net.jafama.FastMath;

@@ -1,8 +1,8 @@
 package io.redstudioragnarok.fbp.gui;
 
 import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.handler.ConfigHandler;
-import io.redstudioragnarok.fbp.handler.KeyInputHandler;
+import io.redstudioragnarok.fbp.handlers.ConfigHandler;
+import io.redstudioragnarok.fbp.handlers.KeyInputHandler;
 import io.redstudioragnarok.fbp.keys.KeyBindings;
 import io.redstudioragnarok.fbp.model.ModelHelper;
 import io.redstudioragnarok.fbp.utils.MathUtil;

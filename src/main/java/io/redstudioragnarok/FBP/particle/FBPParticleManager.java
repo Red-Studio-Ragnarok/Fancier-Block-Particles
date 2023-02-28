@@ -1,7 +1,7 @@
 package io.redstudioragnarok.fbp.particle;
 
 import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.handler.ConfigHandler;
+import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;

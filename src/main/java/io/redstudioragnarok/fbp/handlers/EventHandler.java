@@ -1,4 +1,4 @@
-package io.redstudioragnarok.fbp.handler;
+package io.redstudioragnarok.fbp.handlers;
 
 import io.netty.util.internal.ConcurrentSet;
 import io.redstudioragnarok.fbp.FBP;

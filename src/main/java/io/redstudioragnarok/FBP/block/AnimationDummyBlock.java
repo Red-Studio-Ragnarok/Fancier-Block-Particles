@@ -25,7 +25,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import io.redstudioragnarok.fbp.handler.EventHandler;
+import io.redstudioragnarok.fbp.handlers.EventHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
