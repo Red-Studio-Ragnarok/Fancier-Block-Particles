@@ -56,7 +56,7 @@ public class Page1 extends GuiScreen {
 			break;
 		case -4:
 			try {
-				Desktop.getDesktop().browse(ModReference.ISSUE);
+				Desktop.getDesktop().browse(ModReference.newIssueLink);
 			} catch (Exception e) {
 				// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 			}

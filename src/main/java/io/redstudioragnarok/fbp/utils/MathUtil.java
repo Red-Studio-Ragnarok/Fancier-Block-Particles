@@ -2,7 +2,7 @@ package io.redstudioragnarok.fbp.utils;
 
 import net.jafama.FastMath;
 
-import static io.redstudioragnarok.fbp.utils.ModReference.FBP_LOG;
+import static io.redstudioragnarok.fbp.utils.ModReference.log;
 
 /**
  * This class provides fast focused mathematical methods.
@@ -52,13 +52,13 @@ public class MathUtil {
 	 */
 	public static float clampTest(float input, float min, float max) {
 		if (input < min) {
-			FBP_LOG.info("Clamped to minimum");
+			log.info("Clamped to minimum");
 			return min;
 		} else if (input > max) {
-			FBP_LOG.info("Clamped to maximum");
+			log.info("Clamped to maximum");
 			return max;
 		} else {
-			FBP_LOG.info("Did not clamp");
+			log.info("Did not clamp");
 			return input;
 		}
 	}

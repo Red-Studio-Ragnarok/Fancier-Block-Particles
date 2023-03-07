@@ -26,7 +26,7 @@ public class DebugHandler {
                 list.add("");
             }
 
-            list.add(String.format("%s<FBP>%s Fancier Block Particles version is %s, Mixin Booter is %sup to date (%s).", TextFormatting.RED, TextFormatting.RESET, ModReference.VERSION, ModReference.MIXINBOOTER_VERSION.equals(latestMixinBooter) ? "" : "not ", ModReference.MIXINBOOTER_VERSION));
+            list.add(String.format("%s<FBP>%s Fancier Block Particles version is %s, Mixin Booter is %sup to date (%s).", TextFormatting.RED, TextFormatting.RESET, ModReference.version, ModReference.mixinBooterVersion.equals(latestMixinBooter) ? "" : "not ", ModReference.mixinBooterVersion));
             list.add(String.format("%s<FBP>%s Running on %s", TextFormatting.RED, TextFormatting.RESET, System.getProperty("java.vm.name")));
             list.add(String.format("%s<FBP>%s Running on %s, version %s", TextFormatting.RED, TextFormatting.RESET, System.getProperty("os.name"), System.getProperty("os.version")));
             list.add("");

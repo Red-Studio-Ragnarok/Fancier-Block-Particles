@@ -20,7 +20,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
@@ -28,18 +27,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SplittableRandom;
 
-@Mod(clientSideOnly = true, modid = ModReference.MOD_ID, name = ModReference.MOD_NAME, version = ModReference.VERSION, guiFactory = "io.redstudioragnarok.fbp.config.FBPConfigGuiFactory")
+@Mod(clientSideOnly = true, modid = ModReference.id, name = ModReference.name, version = ModReference.version, guiFactory = "io.redstudioragnarok.fbp.config.FBPConfigGuiFactory")
 public class FBP {
 
-	@Instance(ModReference.MOD_ID)
+	@Instance(ModReference.id)
 	public static FBP INSTANCE;
 
 	public static final Minecraft mc = Minecraft.getMinecraft();
 
 	public static final ResourceLocation particlesTexture = new ResourceLocation("textures/particle/particles.png");
-	public static final ResourceLocation menuTexture = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/widgets.png");
-	public static final ResourceLocation bugIcon = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/bug.png");
-	public static final ResourceLocation fbpIcon = new ResourceLocation(ModReference.MOD_ID + ":textures/gui/fbp.png");
+	public static final ResourceLocation menuTexture = new ResourceLocation(ModReference.id + ":textures/gui/widgets.png");
+	public static final ResourceLocation bugIcon = new ResourceLocation(ModReference.id + ":textures/gui/bug.png");
+	public static final ResourceLocation fbpIcon = new ResourceLocation(ModReference.id + ":textures/gui/fbp.png");
 
 	public static File mainConfigFile;
 	public static File floatingMaterialsFile;
@@ -51,11 +50,15 @@ public class FBP {
 	public static File oldAnimBlacklistFile;
 	public static File oldParticleBlacklistFile;
 
-	public static boolean enabled, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles, fancyWeather, dynamicWeather, fancyFlame, fancySmoke, waterPhysics, frozen;
+	public static boolean enabled, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyFlame, fancySmoke, waterPhysics, frozen;
+	public static boolean fancyPlaceAnim, spawnPlaceParticles;
+	public static boolean fancyWeather, dynamicWeather;
+	public static boolean debugMode;
 
 	public static int minAge, maxAge, particlesPerAxis;
 
-	public static float scaleMult, gravityMult, rotationMult, weatherParticleDensity, weatherRenderDistance;
+	public static float scaleMult, gravityMult, rotationMult;
+	public static float weatherParticleDensity, weatherRenderDistance;
 
 	public static List<Material> floatingMaterials = new ArrayList<>();
 	public static List<String> blockParticleBlacklist = new ArrayList<>();
@@ -63,15 +66,15 @@ public class FBP {
 
 	public static final SplittableRandom random = new SplittableRandom();
 
-	public static final VertexFormat POSITION_TEX_COLOR_MAP_NORMAL = new VertexFormat();
-
-	public static final AnimationDummyBlock FBPBlock = new AnimationDummyBlock();
-
 	public static IRenderHandler fancyWeatherRenderer, originalWeatherRenderer;
 	public static FBPParticleManager fancyEffectRenderer;
 	public static ParticleManager originalEffectRenderer;
 
 	public static TextureAtlasSprite snowTexture;
+
+	public static final AnimationDummyBlock FBPBlock = new AnimationDummyBlock();
+
+	public static final VertexFormat POSITION_TEX_COLOR_MAP_NORMAL = new VertexFormat();
 
 	public FBP() {
 		INSTANCE = this;
@@ -107,11 +110,8 @@ public class FBP {
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent initializationEvent) {
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
-	}
-
-	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent postInitializationEvent) {
 		MinecraftForge.EVENT_BUS.register(new GuiHandler());
+
 		MinecraftForge.EVENT_BUS.register(DebugHandler.class);
 
 		snowTexture = mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(Blocks.SNOW.getDefaultState());
