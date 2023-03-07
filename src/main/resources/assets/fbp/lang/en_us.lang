@@ -104,3 +104,11 @@ menu.weatherRenderDistance.title=Weather Particles Render Distance
 
 menu.weatherdensity.description=Sets the weather particles density to §6
 menu.weatherRenderDistance.description=Sets the weather particles render distance to §6
+
+# Keybindings
+
+keybind.menu=Open Menu
+keybind.toggle=Enable/Disable
+keybind.freeze=Toggle Freeze Effect
+keybind.kill=Kill Particles
+keybind.blacklistGUI=Blacklist Block
