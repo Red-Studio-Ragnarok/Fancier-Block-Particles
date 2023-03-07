@@ -25,17 +25,17 @@ public class KeyInputHandler {
 	}
 
 	public static void onInput() {
-		if (KeyBindings.FBPMenu.isPressed())
+		if (KeyBindings.menu.isPressed())
 			mc.displayGuiScreen(new Page0());
 
-		if (KeyBindings.FBPFreeze.isPressed() && FBP.enabled)
+		if (KeyBindings.freeze.isPressed() && FBP.enabled)
 			FBP.frozen = !FBP.frozen;
 
-		if (KeyBindings.FBPToggle.isPressed())
+		if (KeyBindings.toggle.isPressed())
 			FBP.setEnabled(!FBP.enabled);
 
 		boolean isShiftDown = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
-		boolean isFastAddDown = KeyBindings.FBPBlacklistMenu.isKeyDown();
+		boolean isFastAddDown = KeyBindings.blacklistGUI.isKeyDown();
 
 		if (isFastAddDown) {
 			Block block;
