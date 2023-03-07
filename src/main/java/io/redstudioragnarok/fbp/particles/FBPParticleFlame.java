@@ -20,8 +20,6 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static io.redstudioragnarok.fbp.FBP.snowTexture;
-
 public class FBPParticleFlame extends ParticleFlame {
 
 	Minecraft mc;
@@ -50,8 +48,6 @@ public class FBPParticleFlame extends ParticleFlame {
 
 		this.motionY = -0.00085;
 		this.particleGravity = -0.05f;
-
-		this.particleTexture = snowTexture;
 
 		particleScale *= FBP.scaleMult * 2.5;
 		particleMaxAge = FBP.random.nextInt(3, 5);
@@ -191,7 +187,7 @@ public class FBPParticleFlame extends ParticleFlame {
 		scale *= 0.0125F;
 
 		CubeBatchRenderer.renderCube(RenderType.BLOCK_TEXTURE, x, y, z, 0.0F, AngleY, 0.0F, scale, scale, scale,
-				TextureUtil.pointTexCoordProvider(particleTexture.getInterpolatedU(4.4F), particleTexture.getInterpolatedV(4.4F)),
+				TextureUtil.pointTexCoordProvider(0.82109374F, 0.28984374F),
 				ColorUtil.multiplyingColorProvider(particleRed, particleGreen, particleBlue, alpha, 0.95F),
 				LightUtil.uniformLightCoordProvider(brightness));
 	}

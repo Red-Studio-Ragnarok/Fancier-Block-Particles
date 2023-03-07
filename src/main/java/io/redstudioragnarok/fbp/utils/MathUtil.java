@@ -6,10 +6,7 @@ import static io.redstudioragnarok.fbp.utils.ModReference.log;
 
 /**
  * This class provides fast focused mathematical methods.
- * <p>
- * By Red Studio
- * <p>
- * Created & Maintained by Desoroxxx
+ * @author Desoroxxx
  */
 public class MathUtil {
 

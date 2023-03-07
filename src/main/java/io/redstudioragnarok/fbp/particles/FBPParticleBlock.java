@@ -117,18 +117,18 @@ public class FBPParticleBlock extends Particle {
 		if (!canCollide) {
 			IBlockState state = mc.world.getBlockState(blockPos);
 
-			if (state.getBlock() != FBP.FBPBlock || state.getBlock() == block) {
+			if (state.getBlock() != FBP.dummyBlock || state.getBlock() == block) {
 				if (blockSet && state.getBlock() == Blocks.AIR) {
 					// the block was destroyed during the animation
 					killParticle();
 
-					FBP.FBPBlock.onBlockHarvested(mc.world, blockPos, state, null);
+					FBP.dummyBlock.onBlockHarvested(mc.world, blockPos, state, null);
 					mc.world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
 					return;
 				}
 
-				FBP.FBPBlock.copyState(blockPos, blockState, this);
-				mc.world.setBlockState(blockPos, FBP.FBPBlock.getDefaultState(), 2);
+				FBP.dummyBlock.copyState(blockPos, blockState, this);
+				mc.world.setBlockState(blockPos, FBP.dummyBlock.getDefaultState(), 2);
 
 				Chunk chunk = mc.world.getChunk(blockPos);
 				chunk.resetRelightChecks();
@@ -323,7 +323,7 @@ public class FBPParticleBlock extends Particle {
 	public void killParticle() {
 		this.isExpired = true;
 
-		FBP.FBPBlock.blockNodes.remove(blockPos);
+		FBP.dummyBlock.blockNodes.remove(blockPos);
 		EventHandler.removePosEntry(blockPos);
 	}
 

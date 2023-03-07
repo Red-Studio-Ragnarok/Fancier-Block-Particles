@@ -103,7 +103,7 @@ public class EventHandler {
 					BlockPosNode node = getNodeWithPos(pos);
 
 					if (node != null && !node.checked) {
-						if (newState.getBlock() == FBP.FBPBlock || newState.getBlock() == Blocks.AIR || oldState.getBlock() == newState.getBlock()) {
+						if (newState.getBlock() == FBP.dummyBlock || newState.getBlock() == Blocks.AIR || oldState.getBlock() == newState.getBlock()) {
 							removePosEntry(pos);
 							return;
 						}
@@ -131,7 +131,7 @@ public class EventHandler {
 
 							mc.effectRenderer.addEffect(particleBlock);
 
-							FBP.FBPBlock.copyState(pos, state, particleBlock);
+							FBP.dummyBlock.copyState(pos, state, particleBlock);
 						}
 					}
 				}
@@ -158,8 +158,8 @@ public class EventHandler {
 		float y = (float) (result.getHitVec().y - pos.getY());
 		float z = (float) (result.getHitVec().z - pos.getZ());
 
-		if (atPos.getBlock() == FBP.FBPBlock) {
-			BlockNode node = FBP.FBPBlock.blockNodes.get(pos);
+		if (atPos.getBlock() == FBP.dummyBlock) {
+			BlockNode node = FBP.dummyBlock.blockNodes.get(pos);
 
 			if (node != null) {
 				node.state.getBlock();
@@ -186,8 +186,8 @@ public class EventHandler {
 			}
 		}
 
-		if (atPosOffset.getBlock() == FBP.FBPBlock) {
-			BlockNode blockNode = FBP.FBPBlock.blockNodes.get(posOffset);
+		if (atPosOffset.getBlock() == FBP.dummyBlock) {
+			BlockNode blockNode = FBP.dummyBlock.blockNodes.get(posOffset);
 
 			if (blockNode != null) {
 				blockNode.state.getBlock();
@@ -267,7 +267,7 @@ public class EventHandler {
 	public void onPlayerPlaceBlockEvent(BlockEvent.PlaceEvent placeEvent) {
 		Block placedBlock = placeEvent.getPlacedBlock().getBlock();
 
-		if (placedBlock == FBP.FBPBlock)
+		if (placedBlock == FBP.dummyBlock)
 			placeEvent.setCanceled(true);
 	}
 

@@ -91,7 +91,7 @@ public class FBPParticleManager extends ParticleManager {
 	public void addBlockDestroyEffects(BlockPos pos, IBlockState state) {
 		Block block = state.getBlock();
 
-		if (!block.isAir(state, world, pos) && !block.addDestroyEffects(world, pos, this) && block != FBP.FBPBlock) {
+		if (!block.isAir(state, world, pos) && !block.addDestroyEffects(world, pos, this) && block != FBP.dummyBlock) {
 			state = state.getActualState(world, pos);
 			block = state.getBlock();
 
@@ -121,7 +121,7 @@ public class FBPParticleManager extends ParticleManager {
 	public void addBlockHitEffects(BlockPos pos, EnumFacing side) {
 		IBlockState iblockstate = world.getBlockState(pos);
 
-		if (iblockstate.getBlock() == FBP.FBPBlock)
+		if (iblockstate.getBlock() == FBP.dummyBlock)
 			return;
 
 		if (iblockstate.getRenderType() != EnumBlockRenderType.INVISIBLE) {

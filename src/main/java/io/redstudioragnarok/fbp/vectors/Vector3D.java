@@ -2,10 +2,7 @@ package io.redstudioragnarok.fbp.vectors;
 
 /**
  * Represents a three-dimensional vector with `x`, `y`, and `z` coordinates.
- * <p>
- * By Red Studio
- * <p>
- * Created & Maintained by Desoroxxx
+ * @author Desoroxxx
  */
 public class Vector3D {
 

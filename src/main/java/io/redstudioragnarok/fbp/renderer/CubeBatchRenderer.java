@@ -30,7 +30,7 @@ public class CubeBatchRenderer {
 	private static BufferBuilder getBuffer(RenderType renderType) {
 		BufferBuilder buffer = BUFFER_BUILDERS.get(renderType);
 		if (!buffer.isDrawing) {
-			buffer.begin(GL11.GL_QUADS, FBP.POSITION_TEX_COLOR_MAP_NORMAL);
+			buffer.begin(GL11.GL_QUADS, FBP.vertexFormat);
 		}
 		return buffer;
 	}

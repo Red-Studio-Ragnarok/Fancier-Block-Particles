@@ -10,10 +10,8 @@ import net.jafama.FastMath;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -27,11 +25,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SplittableRandom;
 
+//   /$$$$$$$$                           /$$                           /$$$$$$$  /$$                     /$$             /$$$$$$$                       /$$     /$$           /$$
+//  | $$_____/                          |__/                          | $$__  $$| $$                    | $$            | $$__  $$                     | $$    |__/          | $$
+//  | $$    /$$$$$$  /$$$$$$$   /$$$$$$$ /$$  /$$$$$$   /$$$$$$       | $$  \ $$| $$  /$$$$$$   /$$$$$$$| $$   /$$      | $$  \ $$ /$$$$$$   /$$$$$$  /$$$$$$   /$$  /$$$$$$$| $$  /$$$$$$   /$$$$$$$
+//  | $$$$$|____  $$| $$__  $$ /$$_____/| $$ /$$__  $$ /$$__  $$      | $$$$$$$ | $$ /$$__  $$ /$$_____/| $$  /$$/      | $$$$$$$/|____  $$ /$$__  $$|_  $$_/  | $$ /$$_____/| $$ /$$__  $$ /$$_____/
+//  | $$__/ /$$$$$$$| $$  \ $$| $$      | $$| $$$$$$$$| $$  \__/      | $$__  $$| $$| $$  \ $$| $$      | $$$$$$/       | $$____/  /$$$$$$$| $$  \__/  | $$    | $$| $$      | $$| $$$$$$$$|  $$$$$$
+//  | $$   /$$__  $$| $$  | $$| $$      | $$| $$_____/| $$            | $$  \ $$| $$| $$  | $$| $$      | $$_  $$       | $$      /$$__  $$| $$        | $$ /$$| $$| $$      | $$| $$_____/ \____  $$
+//  | $$  |  $$$$$$$| $$  | $$|  $$$$$$$| $$|  $$$$$$$| $$            | $$$$$$$/| $$|  $$$$$$/|  $$$$$$$| $$ \  $$      | $$     |  $$$$$$$| $$        |  $$$$/| $$|  $$$$$$$| $$|  $$$$$$$ /$$$$$$$/
+//  |__/   \_______/|__/  |__/ \_______/|__/ \_______/|__/            |_______/ |__/ \______/  \_______/|__/  \__/      |__/      \_______/|__/         \___/  |__/ \_______/|__/ \_______/|_______/
 @Mod(clientSideOnly = true, modid = ModReference.id, name = ModReference.name, version = ModReference.version, guiFactory = "io.redstudioragnarok.fbp.config.FBPConfigGuiFactory")
 public class FBP {
-
-	@Instance(ModReference.id)
-	public static FBP INSTANCE;
 
 	public static final Minecraft mc = Minecraft.getMinecraft();
 
@@ -70,21 +73,9 @@ public class FBP {
 	public static FBPParticleManager fancyEffectRenderer;
 	public static ParticleManager originalEffectRenderer;
 
-	public static TextureAtlasSprite snowTexture;
+	public static final AnimationDummyBlock dummyBlock = new AnimationDummyBlock();
 
-	public static final AnimationDummyBlock FBPBlock = new AnimationDummyBlock();
-
-	public static final VertexFormat POSITION_TEX_COLOR_MAP_NORMAL = new VertexFormat();
-
-	public FBP() {
-		INSTANCE = this;
-
-		POSITION_TEX_COLOR_MAP_NORMAL.addElement(DefaultVertexFormats.POSITION_3F);
-		POSITION_TEX_COLOR_MAP_NORMAL.addElement(DefaultVertexFormats.TEX_2F);
-		POSITION_TEX_COLOR_MAP_NORMAL.addElement(DefaultVertexFormats.COLOR_4UB);
-		POSITION_TEX_COLOR_MAP_NORMAL.addElement(DefaultVertexFormats.TEX_2S);
-		POSITION_TEX_COLOR_MAP_NORMAL.addElement(DefaultVertexFormats.NORMAL_3B);
-	}
+	public static final VertexFormat vertexFormat = new VertexFormat();
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent preInitializationEvent) {
@@ -99,9 +90,6 @@ public class FBP {
 		particleBlacklistFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/Particle Block Blacklist.txt");
 
 		ConfigHandler.init();
-		KeyBindings.init();
-
-		MinecraftForge.EVENT_BUS.register(KeyInputHandler.class);
 
 		MathUtil.setSinFunc(FastMath::sin);
 		MathUtil.setCosFunc(FastMath::cos);
@@ -109,14 +97,26 @@ public class FBP {
 
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent initializationEvent) {
+		KeyBindings.init();
+
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 		MinecraftForge.EVENT_BUS.register(new GuiHandler());
 
+		MinecraftForge.EVENT_BUS.register(KeyInputHandler.class);
 		MinecraftForge.EVENT_BUS.register(DebugHandler.class);
 
-		snowTexture = mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(Blocks.SNOW.getDefaultState());
+		vertexFormat.addElement(DefaultVertexFormats.POSITION_3F);
+		vertexFormat.addElement(DefaultVertexFormats.TEX_2F);
+		vertexFormat.addElement(DefaultVertexFormats.COLOR_4UB);
+		vertexFormat.addElement(DefaultVertexFormats.TEX_2S);
+		vertexFormat.addElement(DefaultVertexFormats.NORMAL_3B);
 	}
 
+	/**
+	 * Enable or disable FBP
+	 * <p>
+	 * Currently, not really documented as it probably won't exist at least not like this when the separation from MC particle system is done
+	 */
 	public static void setEnabled(boolean newState) {
 		if (enabled != newState) {
 			if (newState) {

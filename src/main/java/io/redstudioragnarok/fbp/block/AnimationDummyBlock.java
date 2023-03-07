@@ -261,7 +261,7 @@ public class AnimationDummyBlock extends Block {
 	@Override
 	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
 		try {
-			BlockNode node = FBP.FBPBlock.blockNodes.get(pos);
+			BlockNode node = FBP.dummyBlock.blockNodes.get(pos);
 
 			if (node == null)
 				return;

@@ -45,7 +45,7 @@ public class GuiBlacklist extends GuiScreen {
 		selectedPos = selected;
 		IBlockState state = mc.world.getBlockState(selectedPos);
 
-		selectedBlock = state.getBlock() == FBP.FBPBlock ? FBP.FBPBlock.blockNodes.get(selectedPos).state : state;
+		selectedBlock = state.getBlock() == FBP.dummyBlock ? FBP.dummyBlock.blockNodes.get(selectedPos).state : state;
 
 		ItemStack is = selectedBlock.getActualState(mc.world, selectedPos).getBlock().getPickBlock(selectedBlock, mc.objectMouseOver, mc.world, selectedPos, mc.player);
 
@@ -100,17 +100,17 @@ public class GuiBlacklist extends GuiScreen {
 
 		boolean keyUp = false;
 
-		if (selectedPos != null && (mc.objectMouseOver == null || !mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != selectedBlock.getBlock() && mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != FBP.FBPBlock)) {
+		if (selectedPos != null && (mc.objectMouseOver == null || !mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != selectedBlock.getBlock() && mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != FBP.dummyBlock)) {
 			keyUp = true;
 			KeyInputHandler.onInput();
 		}
 		try {
-			if (!Keyboard.isKeyDown(KeyBindings.FBPBlacklistMenu.getKeyCode()) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
+			if (!Keyboard.isKeyDown(KeyBindings.blacklistGUI.getKeyCode()) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
 				keyUp = true;
 			}
 		} catch (Exception e) {
 			try {
-				if (!Mouse.isButtonDown(KeyBindings.FBPBlacklistMenu.getKeyCode() + 100) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
+				if (!Mouse.isButtonDown(KeyBindings.blacklistGUI.getKeyCode() + 100) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
 					keyUp = true;
 				}
 			} catch (Exception e1) {

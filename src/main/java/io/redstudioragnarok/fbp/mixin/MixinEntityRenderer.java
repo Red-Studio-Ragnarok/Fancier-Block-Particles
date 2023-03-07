@@ -16,5 +16,4 @@ public class MixinEntityRenderer {
 	private void afterParticlesRendered(int pass, float partialTicks, long finishTimeNano, CallbackInfo info) {
 		CubeBatchRenderer.endAllBatches();
 	}
-
 }

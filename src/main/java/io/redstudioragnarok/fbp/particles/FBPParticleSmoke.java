@@ -18,8 +18,6 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static io.redstudioragnarok.fbp.FBP.snowTexture;
-
 public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 	double scaleAlpha, prevParticleScale, prevParticleAlpha;
@@ -37,8 +35,6 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 		this.motionX = mX;
 		this.motionY = mY;
 		this.motionZ = mZ;
-
-		this.particleTexture = snowTexture;
 
 		scaleAlpha = particleScale * 0.85;
 
@@ -209,7 +205,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 		scale *= 0.05F;
 
 		CubeBatchRenderer.renderCube(RenderType.BLOCK_TEXTURE, x, y, z, 0.0F, AngleY, 0.0F, scale, scale, scale,
-				TextureUtil.pointTexCoordProvider(particleTexture.getInterpolatedU(4.4F), particleTexture.getInterpolatedV(4.4F)),
+				TextureUtil.pointTexCoordProvider(0.82109374F, 0.28984374F),
 				ColorUtil.multiplyingColorProvider(particleRed, particleGreen, particleBlue, alpha, 0.875F),
 				LightUtil.uniformLightCoordProvider(brightness));
 	}

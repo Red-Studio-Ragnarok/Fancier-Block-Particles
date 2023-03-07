@@ -2,10 +2,7 @@ package io.redstudioragnarok.fbp.vectors;
 
 /**
  * Represents a two-dimensional vector with `x` and `y` coordinates.
- * <p>
- * By Red Studio
- * <p>
- * Created & Maintained by Desoroxxx
+ * @author Desoroxxx
  */
 public class Vector2D {
 

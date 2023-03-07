@@ -473,7 +473,7 @@ public class FBPParticleDigging extends ParticleDigging {
 	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
 		if (!FBP.enabled && particleMaxAge != 0)
 			particleMaxAge = 0;
-		if (KeyBindings.FBPKillParticles.isKeyDown() && !killToggle)
+		if (KeyBindings.killParticles.isKeyDown() && !killToggle)
 			killToggle = true;
 
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
