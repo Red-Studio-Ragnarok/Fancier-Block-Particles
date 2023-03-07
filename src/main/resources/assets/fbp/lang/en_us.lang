@@ -1,9 +1,11 @@
+# General
+name=Fancier Block Particles
+
 # HUD
 hud.freeze=§LFreeze Effect
 
 # Menu
-menu.fbp=§l= Fancier Block Particles =
-menu.disabled=§l= Disabled =
+menu.disabled=Disabled
 menu.bugreport=Found a §cbug§a? Click to report it!
 
 menu.enable=§cEnable
