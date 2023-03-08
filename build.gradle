@@ -27,7 +27,7 @@ minecraft {
 	mappings = 'stable_39'
 	runDir = 'run'
 
-	def args = ['-Dfml.coreMods.load=io.redstudioragnarok.fbp.asm.FBPPlugin']
+	def args = ['-Dfml.coreMods.load=io.redstudioragnarok.fbp.asm.FBPPlugin', '-Dforge.logging.console.level=debug']
 
 	replace('@VERSION@', project.mod_version)
 	replaceIn('ModReference.java')
