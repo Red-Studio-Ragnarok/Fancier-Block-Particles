@@ -33,6 +33,10 @@ minecraft {
 	replaceIn('ModReference.java')
 }
 
+runClient {
+	args '--username=FancierDev'
+}
+
 // Replace version in `mcmod.info`
 processResources {
 	inputs.property 'version', version
