@@ -35,9 +35,10 @@ minecraft {
 
 // Replace version in `mcmod.info`
 processResources {
+	inputs.property 'version', version
 	from(sourceSets.main.resources.srcDirs) {
 		include 'mcmod.info'
-		expand 'version': project.mod_version
+		expand 'version': version
 	}
 }
 
