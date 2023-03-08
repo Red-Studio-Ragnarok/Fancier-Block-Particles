@@ -16,7 +16,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -103,7 +102,8 @@ public class FBP {
 		MinecraftForge.EVENT_BUS.register(new GuiHandler());
 
 		MinecraftForge.EVENT_BUS.register(KeyInputHandler.class);
-		MinecraftForge.EVENT_BUS.register(DebugHandler.class);
+		if (debugMode)
+			MinecraftForge.EVENT_BUS.register(DebugHandler.class);
 
 		vertexFormat.addElement(DefaultVertexFormats.POSITION_3F);
 		vertexFormat.addElement(DefaultVertexFormats.TEX_2F);
