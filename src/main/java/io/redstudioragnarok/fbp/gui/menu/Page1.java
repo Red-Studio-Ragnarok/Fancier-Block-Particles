@@ -138,7 +138,7 @@ public class Page1 extends GuiScreen {
 						description = I18n.format("menu.spawnfreeze.description");
 						break;
 					default:
-						description = "No description available please report this";
+						description = I18n.format("menu.noDescriptionFound");
 				}
 			}
 		}

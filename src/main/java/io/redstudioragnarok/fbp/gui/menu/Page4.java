@@ -164,7 +164,7 @@ public class Page4 extends GuiScreen {
 		} else if (selected == 2){
 			text = I18n.format("menu.weatherRenderDistance.description") + (int) (FBP.weatherRenderDistance * 100) + "%" + I18n.format("menu.period");
 		} else {
-			text = "No description available please report this";
+			text = I18n.format("menu.noDescriptionFound");
 		}
 
 		if (mouseX >= WeatherParticleDensity.x - 2 && mouseX <= WeatherParticleDensity.x + WeatherParticleDensity.width + 2 && mouseY < WeatherRenderDistance.y + WeatherRenderDistance.height && mouseY >= WeatherParticleDensity.y && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= WeatherParticleDensity.y) {

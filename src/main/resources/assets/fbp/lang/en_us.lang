@@ -2,7 +2,7 @@
 name=Fancier Block Particles
 
 # HUD
-hud.freeze=§LFreeze Effect
+hud.freeze=§LFrozen Particles
 
 # Menu
 menu.disabled=Disabled
@@ -23,7 +23,9 @@ menu.reloadconfig=Reload Config
 
 menu.period=§f.
 
-menu.confirmation=Are you sure you want to reset your config §cthis cannot be undone§f?
+menu.confirmation=Are you sure you want to reset your config, §cthis cannot be undone§f?
+
+menu.noDescriptionFound=No description available please report this
 
 # Menu Blacklist
 menu.blacklist.title=§LBlacklist a Block
@@ -113,4 +115,4 @@ keybind.menu=Open Menu
 keybind.toggle=Enable/Disable
 keybind.freeze=Toggle Freeze Effect
 keybind.kill=Kill Particles
-keybind.blacklistGUI=Blacklist Block
+keybind.blacklistGUI=Blacklist Menu

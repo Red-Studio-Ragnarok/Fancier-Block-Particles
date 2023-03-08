@@ -1,0 +1,117 @@
+# General
+name=Fancier Block Particles
+
+# HUD
+hud.freeze=§LParticules Gelées
+
+# Menu
+menu.disabled=Désactivée
+menu.bugreport=Vous avez trouvé un §cbug§a ? Cliquez pour le signaler !
+
+menu.enable=§cActivée
+menu.disable=§aDésactivée
+
+menu.on=§aON
+menu.off=§cOFF
+
+menu.yes=§aOui
+menu.no=§cNon
+
+menu.defaults=Défauts
+menu.done=Fini
+menu.reloadconfig=Rafraichir la configuration
+
+menu.period=§f.
+
+menu.confirmation=Êtes-vous sûr de vouloir réinitialiser votre configuration, §ccela ne peut pas être annulé§f ?
+
+menu.noDescriptionFound=Aucune description disponible s’il vous plaît signaler ceci
+
+# Menu Blacklist
+menu.blacklist.title=§LListe noire d'un bloc
+menu.blacklist.placeanimation=§f§lANIMATION DE PLACEMENT
+menu.blacklist.particles=§f§lPARTICULES
+menu.blacklist.add=§a§lAJOUTÉ
+menu.blacklist.remove=§c§lRETIRER
+menu.blacklist.cantanimate=§c§lNE PEUT PAS ÊTRE ANIMÉ
+menu.blacklist.cantadd=§c§lNE PEUT PAS ÊTRE AJOUTÉ
+
+# Menu Page 0
+menu.destroyparticles.info=Nombre de Particles a la Destruction
+menu.minduration.info=Durée Min.
+menu.maxduration.info=Durée Max.
+menu.scalemult.info=Multiplicateur de Taille
+menu.gravityscale.info=Multiplicateur de Gravité
+menu.rotationspeed.info=Multiplicateur de la Vitesse de Rotation
+
+menu.particlelife.description.duration=Définit la durée de vie des particules
+menu.particlelife.description.duration.range=de §6
+menu.particlelife.description.duration.and=§fa et §6
+menu.particlelife.description.duration.to=à §6
+menu.particlelife.description.infinity=Définit la durée de vie des particules à §6infini§f.
+menu.destroyparticles.description=Définit le nombre de particules de destruction de blocs à §6
+menu.particlescale.description=Multiplie la taille des particules à §6
+menu.particlegravity.description=Multiplie la force de gravité par défaut des particules par §6
+menu.particlerotation.description=Multiplie la rotation des particules par §6
+menu.infiniteduration.description= §fdurée de vie des particules infinie.
+menu.time.description=Affiche le temp en §6
+menu.timems.description=millisecondes
+
+# Menu Page 1
+menu.randomrotation.info=Rotation Aléatoire
+menu.cartonmode.info=Mode Cartoon
+menu.randomizedscale.info=Taille Aléatoire
+menu.randomfadespeed.info=Vitesse de Disparition Aléatoire
+menu.redstoneblock.info=Apparition de Particules de Blocs de Redstone
+menu.spawnfreeze.info=Apparition de Particules en Mode Gelée
+
+menu.randomrotation.description=Active une rotation aléatoire et simple.
+menu.cartonmode.description=§4DÉPRECATION§f/§4SUPPRIMÉ §fDonne un aspect de dessin animé aux particules.
+menu.randomizedscale.description=Rend légèrement aléatoire l'échelle des particules.
+menu.randomfadespeed.description=Active une vitesse de disparition aléatoire des particules.
+menu.redstoneblock.description=Permet l'apparition des particules de blocs de redstone.
+menu.spawnfreeze.description=Permet l'apparition des particules en mode gel.
+
+# Menu Page 2
+menu.entitycollide.info=Collision avec les Entités
+menu.bounceoffwalls.info=Rebondir sur les Murs
+menu.lowtraction.info=Faible Adhérence
+menu.smartbreaking.info=Casse Intelligente
+menu.fancyplaceanimation.info=Animation de Pose Sophistiquée
+menu.spawnplaceparticles.info=Apparition de Particules de Pose
+
+menu.entitycollide.description=Permet la collision avec les entités.
+menu.bounceoffwalls.description=Permet aux particules de ricocher/rebondir sur les murs.
+menu.lowtraction.description=Abaisse la décélération de traction au sol.
+menu.smartbreaking.description=Motion et mise à l'échelle des particules de frappe de bloc intelligentes.
+menu.fancyplaceanimation.description=Ajoute une animation sophistiquée de pose de bloc.
+menu.spawnplaceparticles.description=Permet l'apparition des particules de pose de blocs.
+
+# Menu Page 3
+menu.fancyflame.info=Flamme Sophistiquée
+menu.fancysmoke.info=Fumée Sophistiquée
+menu.fancyweather.info=Météo Sophistiquée
+menu.dynamicWeather.title=Météo Dynamique
+menu.waterphysics.info=Physique de l'Eau
+menu.restonfloor.info=Repos sur le Sol
+
+menu.fancyflame.description=Rend les particules de flamme sophistiquées.
+menu.fancysmoke.description=Rend les particules de fumée sophistiquées.
+menu.fancyweather.description=Rend les particules de pluie et de neige sophistiquées.
+menu.dynamicWeather.description=Rend les particules de pluie et de neige plus denses lors des orages.
+menu.waterphysics.description=Fait flotter les particules de bois et les autres coulent plus lentement.
+menu.restonfloor.description=§4DÉPRECATION§f/§4SUPPRIMÉ §fFait reposer les particules alignées sur le sol.
+
+# Menu Page 4
+menu.weatherdensity.info=Densité des Particules de Météo
+menu.weatherRenderDistance.title=Distance d'Affichage des Particules de Météo
+
+menu.weatherdensity.description=Définit la densité des particules de météo à §6
+menu.weatherRenderDistance.description=Définit la distance d'affichage des particules de météo à §6
+
+
+keybind.menu=Ouvrir le menu
+keybind.toggle=Activer/Désactiver
+keybind.freeze=Activer/Désactiver l'effet de gel
+keybind.kill=Tuer les particules
+keybind.blacklistGUI=Menu de liste noiremenu.noDescriptionFound

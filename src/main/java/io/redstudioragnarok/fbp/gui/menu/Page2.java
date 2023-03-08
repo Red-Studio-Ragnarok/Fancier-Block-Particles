@@ -140,7 +140,7 @@ public class Page2 extends GuiScreen {
 					description = I18n.format("menu.spawnplaceparticles.description");
 					break;
 				default:
-					description = "No description available please report this";
+					description = I18n.format("menu.noDescriptionFound");
 				}
 			}
 		}

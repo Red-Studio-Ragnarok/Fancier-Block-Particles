@@ -252,7 +252,7 @@ public class Page0 extends GuiScreen {
 			text = I18n.format("menu.time.description") + (!FBP.showInMillis ? I18n.format("menu.timems.description") : "ticks") + I18n.format("menu.period");
 			break;
 		default:
-			text = "No description available please report this";
+			text = I18n.format("menu.noDescriptionFound");
 		}
 
 		if (mouseX >= MinDurationSlider.x - 2 && mouseX <= MinDurationSlider.x + MinDurationSlider.width + 2 && mouseY < RotSpeedSlider.y + RotSpeedSlider.height && mouseY >= MinDurationSlider.y && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= MinDurationSlider.y || InfiniteDuration.isMouseOver() || TimeUnit.isMouseOver()) {

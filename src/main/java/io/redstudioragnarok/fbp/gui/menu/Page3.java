@@ -146,7 +146,7 @@ public class Page3 extends GuiScreen {
 					description = I18n.format("menu.restonfloor.description");
 					break;
 				default:
-					description = "No description available please report this";
+					description = I18n.format("menu.noDescriptionFound");
 				}
 			}
 		}
