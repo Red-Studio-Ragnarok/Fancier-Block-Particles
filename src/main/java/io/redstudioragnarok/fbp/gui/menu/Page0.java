@@ -11,7 +11,8 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 
-import java.awt.*;
+import java.awt.Desktop;
+import java.awt.Dimension;
 import java.util.Arrays;
 
 public class Page0 extends GuiScreen {

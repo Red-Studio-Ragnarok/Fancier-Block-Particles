@@ -9,7 +9,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 
-import java.awt.*;
+import java.awt.Dimension;
 
 public class GuiButtonBugReport extends GuiButton {
 

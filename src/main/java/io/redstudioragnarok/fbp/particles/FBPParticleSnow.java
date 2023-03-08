@@ -9,7 +9,6 @@ import io.redstudioragnarok.fbp.renderer.texture.TextureUtil;
 import io.redstudioragnarok.fbp.vectors.Vector3D;
 import net.jafama.FastMath;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleDigging;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
@@ -19,9 +18,9 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class FBPParticleSnow extends ParticleDigging {
+import static io.redstudioragnarok.fbp.FBP.mc;
 
-	Minecraft mc;
+public class FBPParticleSnow extends ParticleDigging {
 
 	double scaleAlpha, prevParticleScale, prevParticleAlpha;
 	double endMult = 1;
@@ -43,8 +42,6 @@ public class FBPParticleSnow extends ParticleDigging {
 		this.motionY = -ySpeedIn;
 		this.motionZ = zSpeedIn;
 		this.particleGravity = 1;
-
-		mc = Minecraft.getMinecraft();
 
 		particleScale *= FBP.random.nextDouble(FBP.scaleMult - 0.25, FBP.scaleMult + 0.25);
 		particleMaxAge = (int) FBP.random.nextDouble(250, 300);

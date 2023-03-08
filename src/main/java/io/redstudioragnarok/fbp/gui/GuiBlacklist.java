@@ -9,7 +9,6 @@ import io.redstudioragnarok.fbp.utils.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -40,8 +39,6 @@ public class GuiBlacklist extends GuiScreen {
 	boolean closing = false;
 
 	public GuiBlacklist(BlockPos selected) {
-		this.mc = Minecraft.getMinecraft();
-
 		selectedPos = selected;
 		IBlockState state = mc.world.getBlockState(selectedPos);
 
@@ -62,8 +59,6 @@ public class GuiBlacklist extends GuiScreen {
 	}
 
 	public GuiBlacklist(ItemStack is) {
-		this.mc = Minecraft.getMinecraft();
-
 		selectedPos = null;
 		selectedBlock = Block.getBlockFromName(is.getItem().getRegistryName().toString()).getStateFromMeta(is.getMetadata());
 

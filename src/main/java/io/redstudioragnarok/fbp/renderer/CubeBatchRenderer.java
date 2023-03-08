@@ -1,18 +1,17 @@
 package io.redstudioragnarok.fbp.renderer;
 
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.lwjgl.opengl.GL11;
-
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.renderer.color.IColorProvider;
 import io.redstudioragnarok.fbp.renderer.light.ILightCoordProvider;
 import io.redstudioragnarok.fbp.renderer.texture.ITexCoordProvider;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.WorldVertexBufferUploader;
+import org.lwjgl.opengl.GL11;
+
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CubeBatchRenderer {
 

@@ -8,7 +8,6 @@ import io.redstudioragnarok.fbp.renderer.light.LightUtil;
 import io.redstudioragnarok.fbp.renderer.texture.TextureUtil;
 import io.redstudioragnarok.fbp.vectors.Vector3D;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFlame;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -20,9 +19,9 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class FBPParticleFlame extends ParticleFlame {
+import static io.redstudioragnarok.fbp.FBP.mc;
 
-	Minecraft mc;
+public class FBPParticleFlame extends ParticleFlame {
 
 	double startScale, scaleAlpha, prevParticleScale, prevParticleAlpha;
 	double endMult = 1;
@@ -43,8 +42,6 @@ public class FBPParticleFlame extends ParticleFlame {
 			prevPosY = posY = posY + 0.04;
 
 		startPos = new Vector3D((float) posX, (float) posY, (float) posZ);
-
-		mc = Minecraft.getMinecraft();
 
 		this.motionY = -0.00085;
 		this.particleGravity = -0.05f;

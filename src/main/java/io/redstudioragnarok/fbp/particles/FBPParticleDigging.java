@@ -15,7 +15,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleDigging;
 import net.minecraft.client.renderer.BlockModelShapes;
@@ -34,13 +33,13 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static io.redstudioragnarok.fbp.FBP.mc;
+
 public class FBPParticleDigging extends ParticleDigging {
 
 	private final IBlockState blockState;
 
 	static boolean killToggle;
-
-	Minecraft mc;
 
 	float prevGravity;
 
@@ -76,8 +75,6 @@ public class FBPParticleDigging extends ParticleDigging {
 		this.particleRed = R;
 		this.particleGreen = G;
 		this.particleBlue = B;
-
-		mc = Minecraft.getMinecraft();
 
 		rot = new Vector3D();
 		prevRot = new Vector3D();

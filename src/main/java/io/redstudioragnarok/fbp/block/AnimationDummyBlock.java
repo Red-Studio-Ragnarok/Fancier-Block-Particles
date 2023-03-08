@@ -1,6 +1,7 @@
 package io.redstudioragnarok.fbp.block;
 
 import io.redstudioragnarok.fbp.FBP;
+import io.redstudioragnarok.fbp.handlers.EventHandler;
 import io.redstudioragnarok.fbp.material.DummyMaterial;
 import io.redstudioragnarok.fbp.node.BlockNode;
 import io.redstudioragnarok.fbp.particles.FBPParticleBlock;
@@ -25,7 +26,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import io.redstudioragnarok.fbp.handlers.EventHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;

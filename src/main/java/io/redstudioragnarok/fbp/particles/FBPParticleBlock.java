@@ -8,7 +8,6 @@ import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BlockModelRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -29,6 +28,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import org.lwjgl.opengl.GL11;
 
+import static io.redstudioragnarok.fbp.FBP.mc;
+
 public class FBPParticleBlock extends Particle {
 
 	public BlockPos blockPos;
@@ -39,8 +40,6 @@ public class FBPParticleBlock extends Particle {
 	BlockModelRenderer blockModelRenderer;
 
 	IBakedModel bakedModel;
-
-	Minecraft mc;
 
 	EnumFacing facing;
 
@@ -69,8 +68,6 @@ public class FBPParticleBlock extends Particle {
 		super(worldIn, posXIn, posYIn, posZIn);
 
 		blockPos = new BlockPos(posXIn, posYIn, posZIn);
-
-		mc = Minecraft.getMinecraft();
 
 		facing = mc.player.getHorizontalFacing();
 
