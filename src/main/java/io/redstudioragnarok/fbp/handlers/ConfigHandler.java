@@ -196,7 +196,7 @@ public class ConfigHandler {
 	}
 
 	/**
-     * Reads the main config file and set the corresponding settings.
+     * Reads the main config file and set the corresponding settings if not found sets default.
 	 */
 	private static void readMainConfig() {
 		try {
@@ -246,7 +246,6 @@ public class ConfigHandler {
 			FBP.weatherRenderDistance = Float.parseFloat(configValues.getOrDefault("weatherRenderDistance", "1.0"));
 
 			FBP.debugMode = Boolean.parseBoolean(configValues.getOrDefault("debugMode", "false"));
-
 
 		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
