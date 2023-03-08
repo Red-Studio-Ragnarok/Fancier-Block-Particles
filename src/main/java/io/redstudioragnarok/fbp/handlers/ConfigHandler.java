@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import static io.redstudioragnarok.fbp.utils.ModReference.log;
 
@@ -24,7 +26,7 @@ public class ConfigHandler {
 	private static PrintWriter writer;
 
 	private static String line;
-	public static String name;
+	private static String name;
 
 	/**
 	 * Initializes the configuration system.
@@ -200,71 +202,51 @@ public class ConfigHandler {
 		try {
 			initStreams(FBP.mainConfigFile);
 
-			skipLines(3);
+			Map<String, String> configValues = new HashMap<>();
 
-			line = bufferedReader.readLine();
-			FBP.enabled = Boolean.parseBoolean(line.replace("enabled=", ""));
+			while ((line = bufferedReader.readLine()) != null) {
+				if (line.startsWith("#") || line.trim().isEmpty()) {
+					continue;
+				}
 
-			skipLines(3);
+				String[] keyValue = line.split("=");
+				if (keyValue.length == 2) {
+					configValues.put(keyValue[0], keyValue[1]);
+				}
+			}
 
-			line = bufferedReader.readLine();
-			FBP.minAge = Integer.parseInt(line.replace("minAge=", ""));
-			line = bufferedReader.readLine();
-			FBP.maxAge = Integer.parseInt(line.replace("maxAge=", ""));
-			line = bufferedReader.readLine();
-			FBP.showInMillis = Boolean.parseBoolean(line.replace("showInMillis=", ""));
-			line = bufferedReader.readLine();
-			FBP.infiniteDuration = Boolean.parseBoolean(line.replace("infiniteDuration=", ""));
-			line = bufferedReader.readLine();
-			FBP.particlesPerAxis = Integer.parseInt(line.replace("particlesPerAxis=", ""));
-			line = bufferedReader.readLine();
-			FBP.scaleMult = Float.parseFloat(line.replace("scaleMult=", ""));
-			line = bufferedReader.readLine();
-			FBP.gravityMult = Float.parseFloat(line.replace("gravityMult=", ""));
-			line = bufferedReader.readLine();
-			FBP.rotationMult = Float.parseFloat(line.replace("rotationMult=", ""));
-			line = bufferedReader.readLine();
-			FBP.randomRotation = Boolean.parseBoolean(line.replace("randomRotation=", ""));
-			line = bufferedReader.readLine();
-			FBP.randomizedScale = Boolean.parseBoolean(line.replace("randomizedScale=", ""));
-			line = bufferedReader.readLine();
-			FBP.randomFadingSpeed = Boolean.parseBoolean(line.replace("randomFadingSpeed=", ""));
-			line = bufferedReader.readLine();
-			FBP.spawnRedstoneBlockParticles = Boolean.parseBoolean(line.replace("spawnRedstoneBlockParticles=", ""));
-			line = bufferedReader.readLine();
-			FBP.spawnWhileFrozen = Boolean.parseBoolean(line.replace("spawnWhileFrozen=", ""));
-			line = bufferedReader.readLine();
-			FBP.entityCollision = Boolean.parseBoolean(line.replace("entityCollision=", ""));
-			line = bufferedReader.readLine();
-			FBP.bounceOffWalls = Boolean.parseBoolean(line.replace("bounceOffWalls=", ""));
-			line = bufferedReader.readLine();
-			FBP.lowTraction = Boolean.parseBoolean(line.replace("lowTraction=", ""));
-			line = bufferedReader.readLine();
-			FBP.smartBreaking = Boolean.parseBoolean(line.replace("smartBreaking=", ""));
-			line = bufferedReader.readLine();
-			FBP.fancyFlame = Boolean.parseBoolean(line.replace("fancyFlame=", ""));
-			line = bufferedReader.readLine();
-			FBP.fancySmoke = Boolean.parseBoolean(line.replace("fancySmoke=", ""));
-			line = bufferedReader.readLine();
-			FBP.waterPhysics = Boolean.parseBoolean(line.replace("waterPhysics=", ""));
+			FBP.enabled = Boolean.parseBoolean(configValues.getOrDefault("enabled", "true"));
+			FBP.minAge = Integer.parseInt(configValues.getOrDefault("minAge", "10"));
+			FBP.maxAge = Integer.parseInt(configValues.getOrDefault("maxAge", "64"));
+			FBP.showInMillis = Boolean.parseBoolean(configValues.getOrDefault("showInMillis", "false"));
+			FBP.infiniteDuration = Boolean.parseBoolean(configValues.getOrDefault("infiniteDuration", "false"));
+			FBP.particlesPerAxis = Integer.parseInt(configValues.getOrDefault("particlesPerAxis", "4"));
+			FBP.scaleMult = Float.parseFloat(configValues.getOrDefault("scaleMult", "0.75"));
+			FBP.gravityMult = Float.parseFloat(configValues.getOrDefault("gravityMult", "1.0"));
+			FBP.rotationMult = Float.parseFloat(configValues.getOrDefault("rotationMult", "1.0"));
+			FBP.randomRotation = Boolean.parseBoolean(configValues.getOrDefault("randomRotation", "true"));
+			FBP.randomizedScale = Boolean.parseBoolean(configValues.getOrDefault("randomizedScale", "true"));
+			FBP.randomFadingSpeed = Boolean.parseBoolean(configValues.getOrDefault("randomFadingSpeed", "true"));
+			FBP.spawnRedstoneBlockParticles = Boolean.parseBoolean(configValues.getOrDefault("spawnRedstoneBlockParticles", "true"));
+			FBP.spawnWhileFrozen = Boolean.parseBoolean(configValues.getOrDefault("spawnWhileFrozen", "true"));
+			FBP.entityCollision = Boolean.parseBoolean(configValues.getOrDefault("entityCollision", "true"));
+			FBP.bounceOffWalls = Boolean.parseBoolean(configValues.getOrDefault("bounceOffWalls", "true"));
+			FBP.lowTraction = Boolean.parseBoolean(configValues.getOrDefault("lowTraction", "false"));
+			FBP.smartBreaking = Boolean.parseBoolean(configValues.getOrDefault("smartBreaking", "true"));
+			FBP.fancyFlame = Boolean.parseBoolean(configValues.getOrDefault("fancyFlame", "false"));
+			FBP.fancySmoke = Boolean.parseBoolean(configValues.getOrDefault("fancySmoke", "false"));
+			FBP.waterPhysics = Boolean.parseBoolean(configValues.getOrDefault("waterPhysics", "true"));
 
-			skipLines(3);
+			FBP.fancyPlaceAnim = Boolean.parseBoolean(configValues.getOrDefault("fancyPlaceAnim", "true"));
+			FBP.spawnPlaceParticles = Boolean.parseBoolean(configValues.getOrDefault("spawnPlaceParticles", "true"));
 
-			line = bufferedReader.readLine();
-			FBP.fancyPlaceAnim = Boolean.parseBoolean(line.replace("fancyPlaceAnim=", ""));
-			line = bufferedReader.readLine();
-			FBP.spawnPlaceParticles = Boolean.parseBoolean(line.replace("spawnPlaceParticles=", ""));
+			FBP.fancyWeather = Boolean.parseBoolean(configValues.getOrDefault("fancyWeather", "false"));
+			FBP.dynamicWeather = Boolean.parseBoolean(configValues.getOrDefault("dynamicWeather", "false"));
+			FBP.weatherParticleDensity = Float.parseFloat(configValues.getOrDefault("weatherParticleDensity", "1.0"));
+			FBP.weatherRenderDistance = Float.parseFloat(configValues.getOrDefault("weatherRenderDistance", "1.0"));
 
-			skipLines(3);
+			FBP.debugMode = Boolean.parseBoolean(configValues.getOrDefault("debugMode", "false"));
 
-			line = bufferedReader.readLine();
-			FBP.fancyWeather = Boolean.parseBoolean(line.replace("fancyWeather=", ""));
-			line = bufferedReader.readLine();
-			FBP.dynamicWeather = Boolean.parseBoolean(line.replace("dynamicWeather=", ""));
-			line = bufferedReader.readLine();
-			FBP.weatherParticleDensity = Float.parseFloat(line.replace("weatherParticleDensity=", ""));
-			line = bufferedReader.readLine();
-			FBP.weatherRenderDistance = Float.parseFloat(line.replace("weatherRenderDistance=", ""));
 
 		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
@@ -283,10 +265,12 @@ public class ConfigHandler {
 
 			FBP.floatingMaterials.clear();
 
-			skipLines(4);
-
 			while ((line = bufferedReader.readLine()) != null) {
 				line = line.trim();
+
+				if (line.startsWith("#") || line.isEmpty()) {
+					continue;
+				}
 
 				switch (line) {
 					case "Anvil":
@@ -450,12 +434,12 @@ public class ConfigHandler {
 	public static void writeMainConfig() {
 		initWriter(FBP.mainConfigFile);
 
-		writer.println("Main configuration file for Fancier Block Particles");
-		writer.println("I advice to use the in game configuration menu instead of manually editing this file");
+		writer.println("# Main configuration file for Fancier Block Particles");
+		writer.println("# I advice to use the in game configuration menu instead of manually editing this file");
 		writer.println();
 		writer.println("enabled=" + FBP.enabled);
 		writer.println();
-		writer.println("Particles Config:");
+		writer.println("# Particles Config:");
 		writer.println();
 		writer.println("minAge=" + FBP.minAge);
 		writer.println("maxAge=" + FBP.maxAge);
@@ -478,17 +462,21 @@ public class ConfigHandler {
 		writer.println("fancySmoke=" + FBP.fancySmoke);
 		writer.println("waterPhysics=" + FBP.waterPhysics);
 		writer.println();
-		writer.println("Fancy Block Placement Config:");
+		writer.println("# Fancy Block Placement Config:");
 		writer.println();
 		writer.println("fancyPlaceAnim=" + FBP.fancyPlaceAnim);
 		writer.println("spawnPlaceParticles=" + FBP.spawnPlaceParticles);
 		writer.println();
-		writer.println("Weather Config:");
+		writer.println("# Weather Config:");
 		writer.println();
 		writer.println("fancyWeather=" + FBP.fancyWeather);
 		writer.println("dynamicWeather=" + FBP.dynamicWeather);
 		writer.println("weatherParticleDensity=" + FBP.weatherParticleDensity);
-		writer.print("weatherRenderDistance=" + FBP.weatherRenderDistance);
+		writer.println("weatherRenderDistance=" + FBP.weatherRenderDistance);
+		writer.println();
+		writer.println("# Debug Config:");
+		writer.println();
+		writer.print("debugMode=" + FBP.debugMode);
 
 		writer.close();
 	}
@@ -501,9 +489,9 @@ public class ConfigHandler {
 	private static void writeFloatingMaterials() {
 		initWriter(FBP.floatingMaterialsFile);
 
-		writer.println("Configuration file for floatings materials.");
-		writer.println("Anything added here will float, anything else will sink.");
-		writer.println("List of all possible materials: https://shor.cz/Materials");
+		writer.println("# Configuration file for floatings materials.");
+		writer.println("# Anything added here will float, anything else will sink.");
+		writer.println("# List of all possible materials: https://shor.cz/Materials");
 		writer.println();
 		writer.println("Carpet");
 		writer.println("Cloth");
@@ -579,17 +567,6 @@ public class ConfigHandler {
 		writeFloatingMaterials();
 
 		readFloatingMaterials();
-	}
-
-	/**
-	 * Skips a specified number of lines in a file being read by a BufferedReader.
-	 *
-	 * @param numberOfLines The number of lines to skip in the file
-	 * @throws IOException If an I/O error occurs while reading the file
-	 */
-	private static void skipLines(int numberOfLines) throws IOException {
-		for (int i = 0; i < numberOfLines; i++)
-			bufferedReader.readLine();
 	}
 
 	/**
