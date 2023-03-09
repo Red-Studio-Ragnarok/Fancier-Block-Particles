@@ -25,8 +25,7 @@ public class ConfigHandler {
 
 	private static PrintWriter writer;
 
-	private static String line;
-	private static String name;
+	private static String line, name;
 
 	/**
 	 * Initializes the configuration system.
@@ -67,8 +66,8 @@ public class ConfigHandler {
 
 			// Check for pre 0.8 configs and hopefully delete them
 
-			if (FBP.oldMainConfig.exists())
-				if (!FBP.oldMainConfig.delete())
+			if (FBP.oldMainConfigFile.exists())
+				if (!FBP.oldMainConfigFile.delete())
 					log.error("Could not delete old main config file");
 
 			if (FBP.oldFloatingMaterialsFile.exists())
@@ -82,6 +81,10 @@ public class ConfigHandler {
             if (FBP.oldAnimBlacklistFile.exists())
 				if (!FBP.oldAnimBlacklistFile.delete())
 					log.error("Could not delete old anim blacklist file");
+
+			if (FBP.oldNewMainConfigFile.exists())
+				if (!FBP.oldNewMainConfigFile.delete())
+					log.error("Could not delete old new main config file");
 
 			readMainConfig();
 			if (FBP.waterPhysics)
@@ -209,7 +212,7 @@ public class ConfigHandler {
 					continue;
 				}
 
-				String[] keyValue = line.split("=");
+				String[] keyValue = line.split(": ");
 				if (keyValue.length == 2) {
 					configValues.put(keyValue[0], keyValue[1]);
 				}
@@ -267,9 +270,8 @@ public class ConfigHandler {
 			while ((line = bufferedReader.readLine()) != null) {
 				line = line.trim();
 
-				if (line.startsWith("#") || line.isEmpty()) {
+				if (line.startsWith("#") || line.isEmpty())
 					continue;
-				}
 
 				switch (line) {
 					case "Anvil":
@@ -436,46 +438,46 @@ public class ConfigHandler {
 		writer.println("# Main configuration file for Fancier Block Particles");
 		writer.println("# I advice to use the in game configuration menu instead of manually editing this file");
 		writer.println();
-		writer.println("enabled=" + FBP.enabled);
+		writer.println("enabled: " + FBP.enabled);
 		writer.println();
 		writer.println("# Particles Config:");
 		writer.println();
-		writer.println("minAge=" + FBP.minAge);
-		writer.println("maxAge=" + FBP.maxAge);
-		writer.println("showInMillis=" + FBP.showInMillis);
-		writer.println("infiniteDuration=" + FBP.infiniteDuration);
-		writer.println("particlesPerAxis=" + FBP.particlesPerAxis);
-		writer.println("scaleMult=" + FBP.scaleMult);
-		writer.println("gravityMult=" + FBP.gravityMult);
-		writer.println("rotationMult=" + FBP.rotationMult);
-		writer.println("randomRotation=" + FBP.randomRotation);
-		writer.println("randomizedScale=" + FBP.randomizedScale);
-		writer.println("randomFadingSpeed=" + FBP.randomFadingSpeed);
-		writer.println("spawnRedstoneBlockParticles=" + FBP.spawnRedstoneBlockParticles);
-		writer.println("spawnWhileFrozen=" + FBP.spawnWhileFrozen);
-		writer.println("entityCollision=" + FBP.entityCollision);
-		writer.println("bounceOffWalls=" + FBP.bounceOffWalls);
-		writer.println("lowTraction=" + FBP.lowTraction);
-		writer.println("smartBreaking=" + FBP.smartBreaking);
-		writer.println("fancyFlame=" + FBP.fancyFlame);
-		writer.println("fancySmoke=" + FBP.fancySmoke);
-		writer.println("waterPhysics=" + FBP.waterPhysics);
+		writer.println("minAge: " + FBP.minAge);
+		writer.println("maxAge: " + FBP.maxAge);
+		writer.println("showInMillis: " + FBP.showInMillis);
+		writer.println("infiniteDuration: " + FBP.infiniteDuration);
+		writer.println("particlesPerAxis: " + FBP.particlesPerAxis);
+		writer.println("scaleMult: " + FBP.scaleMult);
+		writer.println("gravityMult: " + FBP.gravityMult);
+		writer.println("rotationMult: " + FBP.rotationMult);
+		writer.println("randomRotation: " + FBP.randomRotation);
+		writer.println("randomizedScale: " + FBP.randomizedScale);
+		writer.println("randomFadingSpeed: " + FBP.randomFadingSpeed);
+		writer.println("spawnRedstoneBlockParticles: " + FBP.spawnRedstoneBlockParticles);
+		writer.println("spawnWhileFrozen: " + FBP.spawnWhileFrozen);
+		writer.println("entityCollision: " + FBP.entityCollision);
+		writer.println("bounceOffWalls: " + FBP.bounceOffWalls);
+		writer.println("lowTraction: " + FBP.lowTraction);
+		writer.println("smartBreaking: " + FBP.smartBreaking);
+		writer.println("fancyFlame: " + FBP.fancyFlame);
+		writer.println("fancySmoke: " + FBP.fancySmoke);
+		writer.println("waterPhysics: " + FBP.waterPhysics);
 		writer.println();
 		writer.println("# Fancy Block Placement Config:");
 		writer.println();
-		writer.println("fancyPlaceAnim=" + FBP.fancyPlaceAnim);
-		writer.println("spawnPlaceParticles=" + FBP.spawnPlaceParticles);
+		writer.println("fancyPlaceAnim: " + FBP.fancyPlaceAnim);
+		writer.println("spawnPlaceParticles: " + FBP.spawnPlaceParticles);
 		writer.println();
 		writer.println("# Weather Config:");
 		writer.println();
-		writer.println("fancyWeather=" + FBP.fancyWeather);
-		writer.println("dynamicWeather=" + FBP.dynamicWeather);
-		writer.println("weatherParticleDensity=" + FBP.weatherParticleDensity);
-		writer.println("weatherRenderDistance=" + FBP.weatherRenderDistance);
+		writer.println("fancyWeather: " + FBP.fancyWeather);
+		writer.println("dynamicWeather: " + FBP.dynamicWeather);
+		writer.println("weatherParticleDensity: " + FBP.weatherParticleDensity);
+		writer.println("weatherRenderDistance: " + FBP.weatherRenderDistance);
 		writer.println();
 		writer.println("# Debug Config:");
 		writer.println();
-		writer.print("debugMode=" + FBP.debugMode);
+		writer.print("debugMode: " + FBP.debugMode);
 
 		writer.close();
 	}
