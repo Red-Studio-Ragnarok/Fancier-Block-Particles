@@ -14,45 +14,12 @@ public class FBPGuiButton extends GuiButton {
 	boolean toggle;
 
 	public int offsetX;
-	boolean buttonEnabled;
-
-	public static enum ButtonSize {
-		small, medium, large
-	}
-
-	public FBPGuiButton(int buttonId, int x, int y, ButtonSize buttonSize, String buttonText, boolean toggle, boolean toggleButton, boolean enabled) {
-		super(buttonId, x, y, buttonText);
-
-		buttonEnabled = enabled;
-
-		if (buttonText.equals("\u00A76<<")){
-			offsetX = (this.height - 10) / 2;
-		} else if (buttonText.equals("\u00A76>>")) {
-			offsetX = (this.height - 7) / 2;
-		} else {
-			offsetX = -1;
-		}
-
-		switch (buttonSize) {
-			case small:
-                this.width = 20;
-                break;
-            case medium:
-                this.width = 98;
-                break;
-            case large:
-                this.width = 200;
-                break;
-		}
-
-		if (this.toggleButton = toggleButton)
-			this.toggle = toggle;
-	}
+	boolean fbpenabled;
 
 	public FBPGuiButton(int buttonId, int x, int y, String buttonText, boolean toggle, boolean toggleButton, boolean enabled) {
 		super(buttonId, x, y, buttonText);
 
-		buttonEnabled = enabled;
+		fbpenabled = enabled;
 
 		if (buttonText.equals("<<")){
 			this.displayString = "\u00A76" + this.displayString;
@@ -87,7 +54,7 @@ public class FBPGuiButton extends GuiButton {
 
 		FontRenderer fontrenderer = mc.fontRenderer;
 		mc.getTextureManager().bindTexture(FBP.menuTexture);
-		if (buttonEnabled) {
+		if (fbpenabled) {
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		} else {
 			GlStateManager.color(0.5F, 0.5F, 0.5F, 1.0F);
@@ -108,7 +75,7 @@ public class FBPGuiButton extends GuiButton {
 
 		if (packedFGColour != 0) {
 			j = packedFGColour;
-		} else if (!buttonEnabled) {
+		} else if (!fbpenabled) {
 			j = 10526880;
 		} else if (this.hovered) {
 			j = 16777120;
@@ -128,7 +95,7 @@ public class FBPGuiButton extends GuiButton {
 
 	@Override
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-		if (buttonEnabled && this.enabled && this.visible && hovered) {
+		if (fbpenabled && this.enabled && this.visible && hovered) {
 			playPressSound(mc.getSoundHandler());
 			toggle = !toggle;
 			return true;

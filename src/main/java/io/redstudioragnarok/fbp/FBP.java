@@ -42,11 +42,15 @@ public class FBP {
 	public static final ResourceLocation bugIcon = new ResourceLocation(ModReference.id + ":textures/gui/bug.png");
 	public static final ResourceLocation fbpIcon = new ResourceLocation(ModReference.id + ":textures/gui/fbp.png");
 
-	public static File mainConfigFile, floatingMaterialsFile, animBlacklistFile, particleBlacklistFile;
+	public static File mainConfigFile;
+	public static File floatingMaterialsFile;
+	public static File animBlacklistFile;
+	public static File particleBlacklistFile;
 
-	public static File oldMainConfigFile, oldFloatingMaterialsFile, oldParticleBlacklistFile, oldAnimBlacklistFile;
-
-	public static File oldNewMainConfigFile;
+	public static File oldMainConfig;
+	public static File oldFloatingMaterialsFile;
+	public static File oldAnimBlacklistFile;
+	public static File oldParticleBlacklistFile;
 
 	public static boolean enabled, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyFlame, fancySmoke, waterPhysics, frozen;
 	public static boolean fancyPlaceAnim, spawnPlaceParticles;
@@ -74,14 +78,12 @@ public class FBP {
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent preInitializationEvent) {
-		oldMainConfigFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/Particle.properties");
+		oldMainConfig = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/Particle.properties");
 		oldFloatingMaterialsFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/FloatingMaterials.txt");
 		oldAnimBlacklistFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/AnimBlockBlacklist.txt");
 		oldParticleBlacklistFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/ParticleBlockBlacklist.txt");
 
-		oldNewMainConfigFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/Config.txt");
-
-		mainConfigFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/Config.yaml");
+		mainConfigFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/Config.txt");
 		floatingMaterialsFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/Floating Materials.txt");
 		animBlacklistFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/Animation Block Blacklist.txt");
 		particleBlacklistFile = new File(preInitializationEvent.getModConfigurationDirectory() + "/fbp/Particle Block Blacklist.txt");
