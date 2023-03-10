@@ -38,6 +38,8 @@ Please try to reproduce the issue with as few other mods as possible. Then check
 
 ## Logs or/and crash reports
 
+***Please use https://mclo.gs/ to upload your logs and crash reports***
+
 ## Versions
 
 - FBP: [e.g. FBP-0.7] 
