@@ -11,11 +11,14 @@ import net.minecraft.client.resources.I18n;
 import java.awt.Desktop;
 import java.awt.Dimension;
 
-import static io.redstudioragnarok.fbp.FBP.dynamicWeather;
+import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.*;
 
 public class Page3 extends GuiScreen {
 
-	GuiButton b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug;
+	GuiButton defaults, done, reload, enable, reportBug;
+	GuiButton back, next;
+
+	GuiButton fancyFlame, fancySmoke, fancyWeather, dynamicWeather, waterPhysics, restOnFloor;
 
 	String description;
 
@@ -23,29 +26,26 @@ public class Page3 extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		int x = this.width / 2 - (96 * 2 + 8) / 2;
+		int x = this.width / 2 - 200 / 2;
 
-		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, I18n.format("menu.fancyflame.info"), FBP.fancyFlame, true, true);
-		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, I18n.format("menu.fancysmoke.info"), FBP.fancySmoke, true, true);
-		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.fancyweather.info"), FBP.fancyWeather, true, true);
-		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.dynamicWeather.title"), dynamicWeather, true, true);
-		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.waterphysics.info"), FBP.waterPhysics, true, true);
-		b6 = new FBPGuiButton(6, x, b5.y + b1.height + 1, I18n.format("menu.restonfloor.info"), false,false, false);
+		fancyFlame = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, large, I18n.format("menu.fancyflame.info"), FBP.fancyFlame, true, true);
+		fancySmoke = new FBPGuiButton(2, x, fancyFlame.y + fancyFlame.height + 1, large, I18n.format("menu.fancysmoke.info"), FBP.fancySmoke, true, true);
+		fancyWeather = new FBPGuiButton(3, x, fancySmoke.y + fancySmoke.height + 6, large, I18n.format("menu.fancyweather.info"), FBP.fancyWeather, true, true);
+		dynamicWeather = new FBPGuiButton(4, x, fancyWeather.y + fancyWeather.height + 1, large, I18n.format("menu.dynamicWeather.title"), FBP.dynamicWeather, true, true);
+		waterPhysics = new FBPGuiButton(5, x, dynamicWeather.y + dynamicWeather.height + 6, large, I18n.format("menu.waterphysics.info"), FBP.waterPhysics, true, true);
+		restOnFloor = new FBPGuiButton(6, x, waterPhysics.y + fancyFlame.height + 1, large, I18n.format("menu.restonfloor.info"), false,false, false);
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
-		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, I18n.format("menu.done"), false, false, true);
-		Defaults.width = Done.width = 98;
-		Reload = new FBPGuiButton(-2, this.width / 2 - 100, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
-		Reload.width = b1.width = b2.width = b3.width = b4.width = b5.width = b6.width = 200;
+		defaults = new FBPGuiButton(0, this.width / 2 + 2, restOnFloor.y + restOnFloor.height + 24 - GUIOffsetY, medium, I18n.format("menu.defaults"), false, false, true);
+		done = new FBPGuiButton(-1, this.width / 2 - 100, defaults.y, medium, I18n.format("menu.done"), false, false, true);
+		reload = new FBPGuiButton(-2, this.width / 2 - 100, defaults.y + defaults.height + 1, large, I18n.format("menu.reloadconfig"), false, false, true);
+		enable = new GuiButtonEnable(-5, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
+		reportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 
-		Back = new FBPGuiButton(-3, b6.x - 44, b6.y + 2 - GUIOffsetY, "<<", false, false, true);
-		Next = new FBPGuiButton(-6, b6.x + b6.width + 25, b6.y + 2 - GUIOffsetY, ">>", false, false, true);
-		Back.width = Next.width = 20;
-
-		Enable = new GuiButtonEnable(-5, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
-		ReportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-
-		this.buttonList.addAll(java.util.Arrays.asList(b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug));
+		back = new FBPGuiButton(-3, restOnFloor.x - 45, restOnFloor.y - 4 - GUIOffsetY, small, "\u00A76<<", false, false, true);
+		next = new FBPGuiButton(-6, restOnFloor.x + restOnFloor.width + 25, restOnFloor.y - 4 - GUIOffsetY, small, "\u00A76>>", false, false, true);
+		
+		this.buttonList.addAll(java.util.Arrays.asList(defaults, done, reload, back, next, enable, reportBug));
+		this.buttonList.addAll(java.util.Arrays.asList(fancyFlame, fancySmoke, fancyWeather, dynamicWeather, waterPhysics, restOnFloor));
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class Page3 extends GuiScreen {
 				mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
 			break;
 		case 4:
-			dynamicWeather = !dynamicWeather;
+			FBP.dynamicWeather = !FBP.dynamicWeather;
 			break;
 		case 5:
 			FBP.waterPhysics = !FBP.waterPhysics;
@@ -109,17 +109,17 @@ public class Page3 extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		GuiHelper.background(b1.y - 6 - GUIOffsetY, Done.y - 4, width, height);
+		GuiHelper.background(fancyFlame.y - 6 - GUIOffsetY, done.y - 4, width, height);
 
-		int posY = Done.y - 18;
+		int posY = done.y - 18;
 
 		getDescription();
 
-		if ((mouseX >= b1.x && mouseX < b1.x + b1.width) && (mouseY >= b1.y && mouseY < b6.y + b1.height)) {
+		if ((mouseX >= fancyFlame.x && mouseX < fancyFlame.x + fancyFlame.width) && (mouseY >= fancyFlame.y && mouseY < restOnFloor.y + fancyFlame.height)) {
 			this.drawCenteredString(fontRenderer, description, this.width / 2, posY, fontRenderer.getColorCode('f'));
 		}
 
-		GuiHelper.drawTitle(b1.y - GUIOffsetY, width, fontRenderer);
+		GuiHelper.drawTitle(fancyFlame.y - GUIOffsetY, width, fontRenderer);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}

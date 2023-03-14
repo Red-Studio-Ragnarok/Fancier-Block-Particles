@@ -10,10 +10,16 @@ import net.minecraft.client.resources.I18n;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.util.Arrays;
+
+import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.*;
 
 public class Page2 extends GuiScreen {
 
-	GuiButton b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug;
+	GuiButton defaults, done, reload, enable, reportBug;
+	GuiButton back, next;
+
+	GuiButton entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles;
 
 	String description;
 
@@ -21,29 +27,26 @@ public class Page2 extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		int x = this.width / 2 - (96 * 2 + 8) / 2;
+		int x = this.width / 2 - 200 / 2;
 
-		b1 = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, I18n.format("menu.entitycollide.info"), FBP.entityCollision, true, true);
-		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, I18n.format("menu.bounceoffwalls.info"), FBP.bounceOffWalls, true, true);
-		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.lowtraction.info"), FBP.lowTraction, true, true);
-		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.smartbreaking.info"), FBP.smartBreaking, true, true);
-		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.fancyplaceanimation.info"), FBP.fancyPlaceAnim, true, true);
-		b6 = new FBPGuiButton(6, x, b5.y + b5.height + 1, I18n.format("menu.spawnplaceparticles.info"), FBP.spawnPlaceParticles, true, true);
+		entityCollision = new FBPGuiButton(1, x, (this.height / 5) - 10 + GUIOffsetY, large, I18n.format("menu.entitycollide.info"), FBP.entityCollision, true, true);
+		bounceOffWalls = new FBPGuiButton(2, x, entityCollision.y + entityCollision.height + 1, large, I18n.format("menu.bounceoffwalls.info"), FBP.bounceOffWalls, true, true);
+		lowTraction = new FBPGuiButton(3, x, bounceOffWalls.y + bounceOffWalls.height + 6, large, I18n.format("menu.lowtraction.info"), FBP.lowTraction, true, true);
+		smartBreaking = new FBPGuiButton(4, x, lowTraction.y + lowTraction.height + 1, large, I18n.format("menu.smartbreaking.info"), FBP.smartBreaking, true, true);
+		fancyPlaceAnim = new FBPGuiButton(5, x, smartBreaking.y + smartBreaking.height + 6, large, I18n.format("menu.fancyplaceanimation.info"), FBP.fancyPlaceAnim, true, true);
+		spawnPlaceParticles = new FBPGuiButton(6, x, fancyPlaceAnim.y + fancyPlaceAnim.height + 1, large, I18n.format("menu.spawnplaceparticles.info"), FBP.spawnPlaceParticles, true, true);
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
-		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, I18n.format("menu.done"), false, false, true);
-		Defaults.width = Done.width = 98;
-		Reload = new FBPGuiButton(-2, this.width / 2 - 100, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
-		Reload.width = b1.width = b2.width = b3.width = b4.width = b5.width = b6.width = 200;
+		defaults = new FBPGuiButton(0, this.width / 2 + 2, spawnPlaceParticles.y + spawnPlaceParticles.height + 24 - GUIOffsetY, medium, I18n.format("menu.defaults"), false, false, true);
+		done = new FBPGuiButton(-1, this.width / 2 - 100, defaults.y, medium, I18n.format("menu.done"), false, false, true);
+		reload = new FBPGuiButton(-2, this.width / 2 - 100, defaults.y + defaults.height + 1, large, I18n.format("menu.reloadconfig"), false, false, true);
+		enable = new GuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
+		reportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 
-		Back = new FBPGuiButton(-3, b6.x - 44, b6.y + 2 - GUIOffsetY, "<<", false, false, true);
-		Next = new FBPGuiButton(-5, b6.x + b6.width + 25, b6.y + 2 - GUIOffsetY, ">>", false, false, true);
-		Back.width = Next.width = 20;
+		back = new FBPGuiButton(-3, spawnPlaceParticles.x - 45, spawnPlaceParticles.y - 4 - GUIOffsetY, small, "\u00A76<<", false, false, true);
+		next = new FBPGuiButton(-5, spawnPlaceParticles.x + spawnPlaceParticles.width + 25, spawnPlaceParticles.y - 4 - GUIOffsetY, small, "\u00A76>>", false, false, true);
 
-		Enable = new GuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
-		ReportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-
-		this.buttonList.addAll(java.util.Arrays.asList(b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug));
+		this.buttonList.addAll(Arrays.asList(defaults, done, reload, enable, reportBug, back, next));
+		this.buttonList.addAll(java.util.Arrays.asList(entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles));
 	}
 
 	@Override
@@ -103,17 +106,17 @@ public class Page2 extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		GuiHelper.background(b1.y - 6 - GUIOffsetY, Done.y - 4, width, height);
+		GuiHelper.background(entityCollision.y - 6 - GUIOffsetY, done.y - 4, width, height);
 
-		int posY = Done.y - 18;
+		int posY = done.y - 18;
 
 		getDescription();
 
-		if ((mouseX >= b1.x && mouseX < b1.x + b1.width) && (mouseY >= b1.y && mouseY < b6.y + b1.height)) {
+		if ((mouseX >= entityCollision.x && mouseX < entityCollision.x + entityCollision.width) && (mouseY >= entityCollision.y && mouseY < spawnPlaceParticles.y + entityCollision.height)) {
 			this.drawCenteredString(fontRenderer, description, this.width / 2, posY, fontRenderer.getColorCode('f'));
 		}
 
-		GuiHelper.drawTitle(b1.y - GUIOffsetY, width, fontRenderer);
+		GuiHelper.drawTitle(entityCollision.y - GUIOffsetY, width, fontRenderer);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}

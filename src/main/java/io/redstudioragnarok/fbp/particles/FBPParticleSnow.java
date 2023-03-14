@@ -248,6 +248,6 @@ public class FBPParticleSnow extends ParticleDigging {
 
 	@Override
 	public int getBrightnessForRender(float partialTick) {
-		return LightUtil.getCombinedLight(world, posX, posY, posZ);
+		return LightUtil.getCombinedLight((float) posX, (float) posY, (float) posZ);
 	}
 }

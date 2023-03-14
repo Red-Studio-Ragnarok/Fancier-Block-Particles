@@ -39,18 +39,18 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	private final IBlockState blockState;
 
-	static boolean killToggle;
+	private float prevGravity;
 
-	float prevGravity;
+	private double startY, scaleAlpha, prevParticleScale, prevParticleAlpha, prevMotionX, prevMotionZ;
+	private double endMult = 0.75;
 
-	double startY, scaleAlpha, prevParticleScale, prevParticleAlpha, prevMotionX, prevMotionZ;
-	double endMult = 0.75;
+	private boolean modeDebounce, wasFrozen, destroyed;
 
-	boolean modeDebounce, wasFrozen, destroyed;
+	private EnumFacing facing;
 
-	EnumFacing facing;
+	private Vector3D rot, prevRot, rotStep;
 
-	Vector3D rot, prevRot, rotStep;
+	private AxisAlignedBB boundingBox;
 
 	static Entity dummyEntity = new Entity(null) {
 		@Override
@@ -205,6 +205,9 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	@Override
 	public void onUpdate() {
+		if (KeyBindings.killParticles.isPressed())
+			setExpired();
+
 		boolean allowedToMove = MathUtil.absolute((float) motionX) > 0.0001 || MathUtil.absolute((float) motionZ) > 0.0001;
 
 		if (!FBP.frozen && FBP.bounceOffWalls && !mc.isGamePaused() && particleAge > 0) {
@@ -234,54 +237,52 @@ public class FBPParticleDigging extends ParticleDigging {
 		prevParticleAlpha = particleAlpha;
 		prevParticleScale = particleScale;
 
-		if (!mc.isGamePaused() && (!FBP.frozen || killToggle)) {
-			if (!killToggle) {
-				if (!FBP.randomRotation) {
-					if (!modeDebounce) {
-						modeDebounce = true;
+		if (!mc.isGamePaused() && (!FBP.frozen)) {
+			if (!FBP.randomRotation) {
+				if (!modeDebounce) {
+					modeDebounce = true;
 
-						rot.z = 0;
+					rot.z = 0;
 
-						calculateYAngle();
-					}
+					calculateYAngle();
+				}
 
-					if (allowedToMove) {
-						float x = MathUtil.absolute(rotStep.x * getMult());
+				if (allowedToMove) {
+					float x = MathUtil.absolute(rotStep.x * getMult());
 
-						if (motionX > 0) {
-							if (motionZ > 0)
-								rot.x -= x;
-							else if (motionZ < 0)
-								rot.x += x;
-						} else if (motionX < 0) {
-							if (motionZ < 0)
-								rot.x += x;
-							else if (motionZ > 0)
-							{
-								rot.x -= x;
-							}
+					if (motionX > 0) {
+						if (motionZ > 0)
+							rot.x -= x;
+						else if (motionZ < 0)
+							rot.x += x;
+					} else if (motionX < 0) {
+						if (motionZ < 0)
+							rot.x += x;
+						else if (motionZ > 0)
+						{
+							rot.x -= x;
 						}
 					}
-				} else {
-					if (modeDebounce)
-					{
-						modeDebounce = false;
+				}
+			} else {
+				if (modeDebounce)
+				{
+					modeDebounce = false;
 
-						rot.z = (float) FBP.random.nextDouble(30, 400);
-					}
+					rot.z = (float) FBP.random.nextDouble(30, 400);
+				}
 
-					if (allowedToMove) {
-						Vector3D newVector = new Vector3D(rotStep);
-						newVector.scale(getMult());
-						rot.add(newVector);
-					}
+				if (allowedToMove) {
+					Vector3D newVector = new Vector3D(rotStep);
+					newVector.scale(getMult());
+					rot.add(newVector);
 				}
 			}
 
 			if (!FBP.infiniteDuration)
 				particleAge++;
 
-			if (this.particleAge >= this.particleMaxAge || killToggle) {
+			if (this.particleAge >= this.particleMaxAge) {
 				particleScale *= 0.88 * endMult;
 
 				if (particleAlpha > 0.01 && particleScale <= scaleAlpha)
@@ -291,93 +292,91 @@ public class FBPParticleDigging extends ParticleDigging {
 					setExpired();
 			}
 
-			if (!killToggle) {
-				if (!onGround)
-					motionY -= 0.04 * particleGravity;
+			if (!onGround)
+				motionY -= 0.04 * particleGravity;
 
-				move(motionX, motionY, motionZ);
+			move(motionX, motionY, motionZ);
 
-				if (onGround) {
-					rot.x = (float) FastMath.round(rot.x / 90) * 90;
-					rot.z = (float) FastMath.round(rot.z / 90) * 90;
-				}
+			if (onGround) {
+				rot.x = (float) FastMath.round(rot.x / 90) * 90;
+				rot.z = (float) FastMath.round(rot.z / 90) * 90;
+			}
 
-				if (MathUtil.absolute((float) motionX) > 0.00001)
-					prevMotionX = motionX;
-				if (MathUtil.absolute((float) motionZ) > 0.00001)
-					prevMotionZ = motionZ;
+			if (MathUtil.absolute((float) motionX) > 0.00001)
+				prevMotionX = motionX;
+			if (MathUtil.absolute((float) motionZ) > 0.00001)
+				prevMotionZ = motionZ;
 
-				if (allowedToMove) {
-					motionX *= 0.98;
-					motionZ *= 0.98;
-				}
+			if (allowedToMove) {
+				motionX *= 0.98;
+				motionZ *= 0.98;
+			}
 
-				motionY *= 0.98;
+			motionY *= 0.98;
 
-				// PHYSICS
-				if (FBP.entityCollision) {
-					List<Entity> list = world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox());
+			// PHYSICS
+			if (FBP.entityCollision) {
+				List<Entity> list = world.getEntitiesWithinAABB(Entity.class, this.getBoundingBox());
 
-					for (Entity entityIn : list) {
-						if (!entityIn.noClip) {
-							float posX = (float) (this.posX - entityIn.posX);
-							float posZ = (float) (this.posZ - entityIn.posZ);
-							float posMax = MathUtil.absoluteMax(posX, posZ);
+				for (Entity entityIn : list) {
+					if (!entityIn.noClip) {
+						float posX = (float) (this.posX - entityIn.posX);
+						float posZ = (float) (this.posZ - entityIn.posZ);
+						float posMax = MathUtil.absoluteMax(posX, posZ);
 
-							if (posMax >= 0.0099) {
-								posMax = (float) FastMath.sqrtQuick(posMax);
-								posX /= posMax;
-								posZ /= posMax;
+						if (posMax >= 0.0099) {
+							posMax = (float) FastMath.sqrtQuick(posMax);
+							posX /= posMax;
+							posZ /= posMax;
 
-								float f3 = 1 / posMax;
+							float f3 = 1 / posMax;
 
-								if (f3 > 1)
-									f3 = 1;
+							if (f3 > 1)
+								f3 = 1;
 
-								this.motionX += posX * f3 / 20;
-								this.motionZ += posZ * f3 / 20;
+							this.motionX += posX * f3 / 20;
+							this.motionZ += posZ * f3 / 20;
 
-								if (!FBP.randomRotation)
-									calculateYAngle();
-								if (!FBP.frozen)
-									this.onGround = false;
-							}
+							if (!FBP.randomRotation)
+								calculateYAngle();
+							if (!FBP.frozen)
+								this.onGround = false;
 						}
 					}
 				}
+			}
 
-				if (FBP.waterPhysics) {
-					if (isInWater()) {
-						handleWaterMovement();
+			if (FBP.waterPhysics) {
+				if (isInWater()) {
+					handleWaterMovement();
 
-						if (FBP.floatingMaterials.contains(this.blockState.getMaterial())) {
-							motionY = 0.11 + (particleScale / 1.25) * 0.02;
-						} else {
-							motionX *= 0.93;
-							motionZ *= 0.93;
-							particleGravity = 0.35F;
-
-							motionY *= 0.85;
-						}
-
-						if (!FBP.randomRotation)
-							calculateYAngle();
-
-						if (onGround)
-							onGround = false;
+					if (FBP.floatingMaterials.contains(this.blockState.getMaterial())) {
+						motionY = 0.11 + (particleScale / 1.25) * 0.02;
 					} else {
-						particleGravity = prevGravity;
-					}
-				}
-
-				if (onGround) {
-					if (FBP.lowTraction) {
 						motionX *= 0.93;
 						motionZ *= 0.93;
-					} else {
-						motionX *= 0.66;
-						motionZ *= 0.66;
+						particleGravity = 0.35F;
+
+						motionY *= 0.85;
 					}
+
+					if (!FBP.randomRotation)
+						calculateYAngle();
+
+					if (onGround)
+						onGround = false;
+				} else {
+					particleGravity = prevGravity;
+				}
+			}
+
+			if (onGround) {
+				if (FBP.lowTraction) {
+					motionX *= 0.93;
+					motionZ *= 0.93;
+				} else {
+					motionX *= 0.66;
+					motionZ *= 0.66;
 				}
 			}
 		}
@@ -470,8 +469,6 @@ public class FBPParticleDigging extends ParticleDigging {
 	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
 		if (!FBP.enabled && particleMaxAge != 0)
 			particleMaxAge = 0;
-		if (KeyBindings.killParticles.isKeyDown() && !killToggle)
-			killToggle = true;
 
 		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX);
 		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY);
@@ -528,9 +525,9 @@ public class FBPParticleDigging extends ParticleDigging {
 	@Override
 	public int getBrightnessForRender(float partialTicks) {
 		AxisAlignedBB boundingBox = getBoundingBox();
-		double boundingBoxHeight = (boundingBox.maxY - boundingBox.minY) * 0.66;
-		double y = this.posY + boundingBoxHeight + 0.01 - particleScale / 10;
-		return LightUtil.getCombinedLight(world, posX, y, posZ);
+		float boundingBoxHeight = (float) ((boundingBox.maxY - boundingBox.minY) * 0.66);
+		float y = (float) (this.posY + boundingBoxHeight + 0.01 - particleScale / 10);
+		return LightUtil.getCombinedLight((float) posX, y, (float) posZ);
 	}
 
 	private void calculateYAngle() {

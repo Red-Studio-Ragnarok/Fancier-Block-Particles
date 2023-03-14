@@ -14,6 +14,7 @@ public class MathUtil {
 	private static float absolute2;
 
 	private static int rounded;
+	private static int floored;
 
 	/**
 	 * Clamps a value within a specified range, checking for the minimum value first.
@@ -122,5 +123,10 @@ public class MathUtil {
 	 */
 	public static int boolToInt(boolean input) {
 		return input ? 1 : 0;
+	}
+
+	public static int floorToInt(float input) {
+		floored = (int) input;
+		return input < floored ? floored - 1 : floored;
 	}
 }

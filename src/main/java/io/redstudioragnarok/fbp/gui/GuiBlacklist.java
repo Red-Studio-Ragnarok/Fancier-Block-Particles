@@ -40,17 +40,17 @@ public class GuiBlacklist extends GuiScreen {
 
 	public GuiBlacklist(BlockPos selected) {
 		selectedPos = selected;
-		IBlockState state = mc.world.getBlockState(selectedPos);
+		IBlockState state = FBP.mc.world.getBlockState(selectedPos);
 
 		selectedBlock = state.getBlock() == FBP.dummyBlock ? FBP.dummyBlock.blockNodes.get(selectedPos).state : state;
 
-		ItemStack is = selectedBlock.getActualState(mc.world, selectedPos).getBlock().getPickBlock(selectedBlock, mc.objectMouseOver, mc.world, selectedPos, mc.player);
+		ItemStack is = selectedBlock.getActualState(FBP.mc.world, selectedPos).getBlock().getPickBlock(selectedBlock, FBP.mc.objectMouseOver, FBP.mc.world, selectedPos, FBP.mc.player);
 
-		TileEntity te = mc.world.getTileEntity(selectedPos);
+		TileEntity te = FBP.mc.world.getTileEntity(selectedPos);
 
 		try {
 			if (te != null)
-				mc.storeTEInStack(is, te);
+				FBP.mc.storeTEInStack(is, te);
 		} catch (Throwable t) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
@@ -95,7 +95,7 @@ public class GuiBlacklist extends GuiScreen {
 
 		boolean keyUp = false;
 
-		if (selectedPos != null && (mc.objectMouseOver == null || !mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != selectedBlock.getBlock() && mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != FBP.dummyBlock)) {
+		if (selectedPos != null && (FBP.mc.objectMouseOver == null || !FBP.mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || FBP.mc.world.getBlockState(FBP.mc.objectMouseOver.getBlockPos()).getBlock() != selectedBlock.getBlock() && FBP.mc.world.getBlockState(FBP.mc.objectMouseOver.getBlockPos()).getBlock() != FBP.dummyBlock)) {
 			keyUp = true;
 			KeyInputHandler.onInput();
 		}
@@ -133,14 +133,14 @@ public class GuiBlacklist extends GuiScreen {
 					else
 						ConfigHandler.writeAnimBlacklist();
 
-					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+					FBP.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 				}
 			}
 
 			if (keyUp)
 				KeyInputHandler.onInput();
 
-			mc.displayGuiScreen(null);
+			FBP.mc.displayGuiScreen(null);
 		}
 	}
 
@@ -170,7 +170,7 @@ public class GuiBlacklist extends GuiScreen {
 		GlStateManager.translate(x, y, 0);
 		GlStateManager.scale(4, 4, 4);
 		GlStateManager.enableColorMaterial();
-		this.itemRender.renderItemAndEffectIntoGUI(this.mc.player, displayItemStack, 0, 0);
+		this.itemRender.renderItemAndEffectIntoGUI(FBP.mc.player, displayItemStack, 0, 0);
 
 		this.itemRender.zLevel = 0.0F;
 		this.zLevel = 0.0F;
@@ -198,13 +198,13 @@ public class GuiBlacklist extends GuiScreen {
 
 		this.drawCenteredString(fontRenderer, I18n.format("menu.blacklist.title"), width / 2, 20, fontRenderer.getColorCode('a'));
 
-		mc.getTextureManager().bindTexture(FBP.menuTexture);
+		FBP.mc.getTextureManager().bindTexture(FBP.menuTexture);
 
 		// RENDER SCREEN
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
 		// RENDER MOUSE
-		mc.getTextureManager().bindTexture(FBP.menuTexture);
+		FBP.mc.getTextureManager().bindTexture(FBP.menuTexture);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
 		GlStateManager.enableBlend();

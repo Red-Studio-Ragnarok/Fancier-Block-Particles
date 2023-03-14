@@ -1,11 +1,19 @@
 package io.redstudioragnarok.fbp.renderer.light;
 
-import net.minecraft.util.math.MathHelper;
+import io.redstudioragnarok.fbp.utils.MathUtil;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 
+import static io.redstudioragnarok.fbp.FBP.mc;
+
 public class LightUtil {
+
+	private static World world;
+
+	private static Chunk chunk;
+
+	private static ExtendedBlockStorage section;
 
 	private static int lightCoord;
 	private static final ILightCoordProvider UNIFORM_LIGHT_COORD_PROVIDER = facing -> lightCoord;
@@ -31,15 +39,16 @@ public class LightUtil {
 		return UNIFORM_LIGHT_COORD_PROVIDER;
 	}
 
-	public static int getCombinedLight(World world, double x, double y, double z) {
-		return getCombinedLight(world, MathHelper.floor(x), MathHelper.floor(y), MathHelper.floor(z));
+	public static int getCombinedLight(float x, float y, float z) {
+		return getCombinedLight(MathUtil.floorToInt(x), MathUtil.floorToInt(y), MathUtil.floorToInt(z));
 	}
 
-	public static int getCombinedLight(World world, int x, int y, int z) {
+	public static int getCombinedLight(int x, int y, int z) {
 		if (y < 0 || y >= 256)
 			return 0;
-		Chunk chunk = world.getChunk(x >> 4, z >> 4);
-		ExtendedBlockStorage section = chunk.getBlockStorageArray()[y >> 4];
+		world = mc.player.world;
+		chunk = world.getChunk(x >> 4, z >> 4);
+		section = chunk.getBlockStorageArray()[y >> 4];
 		if (section != null) {
 			if (section.get(x & 15, y & 15, z & 15).useNeighborBrightness()) {
 				int light = 0;

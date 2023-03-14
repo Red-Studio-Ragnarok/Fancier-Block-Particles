@@ -5,13 +5,15 @@ import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
+import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.medium;
+
 public class GuiButtonBlacklist extends FBPGuiButton {
 
 	public boolean particle;
 	public boolean isInExceptions;
 
 	public GuiButtonBlacklist(int buttonId, int x, int y, String buttonText, boolean particle, boolean isInExceptions) {
-		super(buttonId, x, y, buttonText, false, false, true);
+		super(buttonId, x, y, medium, buttonText,false, false, true);
 
 		this.particle = particle;
 		this.isInExceptions = isInExceptions;

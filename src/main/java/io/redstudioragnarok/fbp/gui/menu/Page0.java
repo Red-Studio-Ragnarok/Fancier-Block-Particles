@@ -15,10 +15,15 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.util.Arrays;
 
+import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.*;
+
 public class Page0 extends GuiScreen {
 
-	GuiButton InfiniteDuration, TimeUnit, Defaults, Done, Reload, Next, Enable, ReportBug;
-	GuiSlider MinDurationSlider, MaxDurationSlider, ParticleCountBase, ScaleMultSlider, GravitiyForceSlider, RotSpeedSlider;
+	GuiButton defaults, done, reload, enable, reportBug;
+	GuiButton next;
+
+	GuiButton infiniteDuration, timeUnit;
+	GuiSlider minAge, maxAge, particlesPerAxis, scaleMult, gravityMult, rotationMult;
 
 	Vector2D lastHandle = new Vector2D();
 	Vector2D lastSize = new Vector2D();
@@ -34,33 +39,29 @@ public class Page0 extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		int X = this.width / 2 - 100;
+		int x = this.width / 2 - 100;
 
-		MinDurationSlider = new GuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (float) ((FBP.minAge - 10) / 90.0));
-		MaxDurationSlider = new GuiSlider(X, MinDurationSlider.y + MinDurationSlider.height + 1, (float) ((FBP.maxAge - 10) / 90.0));
+		minAge = new GuiSlider(x, this.height / 5 - 10 + GUIOffsetY, (float) ((FBP.minAge - 10) / 90.0));
+		maxAge = new GuiSlider(x, minAge.y + minAge.height + 1, (float) ((FBP.maxAge - 10) / 90.0));
 
-		ParticleCountBase = new GuiSlider(X, MaxDurationSlider.y + 6 + MaxDurationSlider.height, (float) ((FBP.particlesPerAxis - 2) / 3.0));
-		ScaleMultSlider = new GuiSlider(X, ParticleCountBase.y + ParticleCountBase.height + 1, (float) ((FBP.scaleMult - 0.75) / 0.5));
-		GravitiyForceSlider = new GuiSlider(X, ScaleMultSlider.y + ScaleMultSlider.height + 6, (float) ((FBP.gravityMult - 0.05) / 2.95));
-		RotSpeedSlider = new GuiSlider(X, GravitiyForceSlider.y + GravitiyForceSlider.height + 1, (float) (FBP.rotationMult / 1.5));
-		InfiniteDuration = new FBPGuiButton(11, X + 205, MinDurationSlider.y + 10, (FBP.infiniteDuration ? "\u00A7a" : "\u00A7c") + "\u221e", false, false, true);
+		particlesPerAxis = new GuiSlider(x, maxAge.y + 6 + maxAge.height, (float) ((FBP.particlesPerAxis - 2) / 3.0));
+		scaleMult = new GuiSlider(x, particlesPerAxis.y + particlesPerAxis.height + 1, (float) ((FBP.scaleMult - 0.75) / 0.5));
+		gravityMult = new GuiSlider(x, scaleMult.y + scaleMult.height + 6, (float) ((FBP.gravityMult - 0.05) / 2.95));
+		rotationMult = new GuiSlider(x, gravityMult.y + gravityMult.height + 1, (float) (FBP.rotationMult / 1.5));
 
-		TimeUnit = new FBPGuiButton(12, X - 25, MinDurationSlider.y + 10, "\u00A7a\u00A7L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
+		infiniteDuration = new FBPGuiButton(11, x + 205, minAge.y + 10, small , (FBP.infiniteDuration ? "\u00A7a" : "\u00A7c") + "\u221e", false, false, true);
+		timeUnit = new FBPGuiButton(12, x - 25, minAge.y + 10, small , "\u00A7a\u00A7L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, RotSpeedSlider.y + RotSpeedSlider.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
-		Done = new FBPGuiButton(-1, X, Defaults.y, I18n.format("menu.done"), false, false, true);
-		Defaults.width = Done.width = 98;
-		Reload = new FBPGuiButton(-2, X, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
-		Reload.width = 96 * 2 + 8;
+		defaults = new FBPGuiButton(0, this.width / 2 + 2, rotationMult.y + rotationMult.height + 24 - GUIOffsetY, medium , I18n.format("menu.defaults"), false, false, true);
+		done = new FBPGuiButton(-1, x, defaults.y, medium , I18n.format("menu.done"), false, false, true);
+		reload = new FBPGuiButton(-2, x, defaults.y + defaults.height + 1, large , I18n.format("menu.reloadconfig"), false, false, true);
+		enable = new GuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
+		reportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 
-		Next = new FBPGuiButton(-3, RotSpeedSlider.x + RotSpeedSlider.width + 25, RotSpeedSlider.y + 2 - GUIOffsetY, ">>", false, false, true);
+		next = new FBPGuiButton(-3, rotationMult.x + rotationMult.width + 25, rotationMult.y - 4 - GUIOffsetY, small, "\u00A76>>", false, false, true);
 
-		Enable = new GuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
-		ReportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-
-		InfiniteDuration.width = TimeUnit.width = Next.width = 20;
-
-		this.buttonList.addAll(Arrays.asList(MinDurationSlider, MaxDurationSlider, ParticleCountBase, ScaleMultSlider, GravitiyForceSlider, RotSpeedSlider, InfiniteDuration, TimeUnit, Defaults, Done, Reload, Next, Enable, ReportBug));
+		this.buttonList.addAll(Arrays.asList(defaults, done, reload, enable, reportBug, next));
+		this.buttonList.addAll(Arrays.asList(minAge, maxAge, particlesPerAxis, scaleMult, gravityMult, rotationMult, infiniteDuration, timeUnit));
 
 		update();
 	}
@@ -94,11 +95,11 @@ public class Page0 extends GuiScreen {
 			this.mc.displayGuiScreen(new GuiYesNo(this));
 			break;
 		case 11:
-			InfiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "\u00A7a" : "\u00A7c") + "\u221e";
+			infiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "\u00A7a" : "\u00A7c") + "\u221e";
 			update();
 			break;
 		case 12:
-			TimeUnit.displayString = "\u00A7a\u00A7L" + ((FBP.showInMillis = !FBP.showInMillis) ? "ms" : "ti");
+			timeUnit.displayString = "\u00A7a\u00A7L" + ((FBP.showInMillis = !FBP.showInMillis) ? "ms" : "ti");
 			break;
 		}
 	}
@@ -110,27 +111,27 @@ public class Page0 extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		GuiHelper.background(MinDurationSlider.y - 6 - GUIOffsetY, Done.y - 4, width, height);
+		GuiHelper.background(minAge.y - 6 - GUIOffsetY, done.y - 4, width, height);
 
-		int sParticleCountBase = FastMath.round(2 + 3 * ParticleCountBase.value);
+		int sParticleCountBase = FastMath.round(2 + 3 * particlesPerAxis.value);
 
-		int sMinAge = (int) (10 + 90 * MinDurationSlider.value);
-		int sMaxAge = (int) (10 + 90 * MaxDurationSlider.value);
+		int sMinAge = (int) (10 + 90 * minAge.value);
+		int sMaxAge = (int) (10 + 90 * maxAge.value);
 
-		double sScaleMult = MathUtil.round((float) (0.75 + 0.5 * ScaleMultSlider.value), 2);
-		double sGravityForce = MathUtil.round((float) (0.05 + 2.95 * GravitiyForceSlider.value), 2);
-		double sRotSpeed = MathUtil.round((float) (1.5 * RotSpeedSlider.value), 2);
+		double sScaleMult = MathUtil.round((float) (0.75 + 0.5 * scaleMult.value), 2);
+		double sGravityForce = MathUtil.round((float) (0.05 + 2.95 * gravityMult.value), 2);
+		double sRotSpeed = MathUtil.round((float) (1.5 * rotationMult.value), 2);
 
 		if (FBP.maxAge < sMinAge) {
 			FBP.maxAge = sMinAge;
 
-			MaxDurationSlider.value = (float) ((FBP.maxAge - 10) / 90.0);
+			maxAge.value = (float) ((FBP.maxAge - 10) / 90.0);
 		}
 
 		if (FBP.minAge > sMaxAge) {
 			FBP.minAge = sMaxAge;
 
-			MinDurationSlider.value = (float) ((FBP.minAge - 10) / 90.0);
+			minAge.value = (float) ((FBP.minAge - 10) / 90.0);
 		}
 
 		FBP.minAge = sMinAge;
@@ -141,11 +142,11 @@ public class Page0 extends GuiScreen {
 		FBP.rotationMult = (float) sRotSpeed;
 		FBP.particlesPerAxis = sParticleCountBase;
 
-		ParticleCountBase.value = (float) ((FBP.particlesPerAxis - 2) / 3.0);
+		particlesPerAxis.value = (float) ((FBP.particlesPerAxis - 2) / 3.0);
 
 		drawMouseOverSelection(mouseX, mouseY);
 
-		GuiHelper.drawTitle(MinDurationSlider.y - GUIOffsetY, width, fontRenderer);
+		GuiHelper.drawTitle(minAge.y - GUIOffsetY, width, fontRenderer);
 
 		drawInfo();
 
@@ -153,31 +154,31 @@ public class Page0 extends GuiScreen {
 	}
 
 	private void drawMouseOverSelection(int mouseX, int mouseY) {
-		final int posY = Done.y - 18;
+		final int posY = done.y - 18;
 
-		if (MinDurationSlider.isMouseOver(mouseX, mouseY) || MaxDurationSlider.isMouseOver(mouseX, mouseY)) {
-			handle.y = MinDurationSlider.y;
-			size = new Vector2D(MinDurationSlider.width, 39);
+		if (minAge.isMouseOver(mouseX, mouseY) || maxAge.isMouseOver(mouseX, mouseY)) {
+			handle.y = minAge.y;
+			size = new Vector2D(minAge.width, 39);
 			selected = 1;
-		} else if (ParticleCountBase.isMouseOver(mouseX, mouseY)) {
-			handle.y = ParticleCountBase.y;
-			size = new Vector2D(ParticleCountBase.width, 18);
+		} else if (particlesPerAxis.isMouseOver(mouseX, mouseY)) {
+			handle.y = particlesPerAxis.y;
+			size = new Vector2D(particlesPerAxis.width, 18);
 			selected = 2;
-		} else if (ScaleMultSlider.isMouseOver(mouseX, mouseY)) {
-			handle.y = ScaleMultSlider.y;
-			size = new Vector2D(ScaleMultSlider.width, 18);
+		} else if (scaleMult.isMouseOver(mouseX, mouseY)) {
+			handle.y = scaleMult.y;
+			size = new Vector2D(scaleMult.width, 18);
 			selected = 3;
-		} else if (GravitiyForceSlider.isMouseOver(mouseX, mouseY)) {
-			handle.y = GravitiyForceSlider.y;
-			size = new Vector2D(GravitiyForceSlider.width, 18);
+		} else if (gravityMult.isMouseOver(mouseX, mouseY)) {
+			handle.y = gravityMult.y;
+			size = new Vector2D(gravityMult.width, 18);
 			selected = 4;
-		} else if (RotSpeedSlider.isMouseOver(mouseX, mouseY)) {
-			handle.y = RotSpeedSlider.y;
-			size = new Vector2D(RotSpeedSlider.x - (RotSpeedSlider.x + RotSpeedSlider.width), 18);
+		} else if (rotationMult.isMouseOver(mouseX, mouseY)) {
+			handle.y = rotationMult.y;
+			size = new Vector2D(rotationMult.x - (rotationMult.x + rotationMult.width), 18);
 			selected = 5;
-		} else if (InfiniteDuration.isMouseOver())
+		} else if (infiniteDuration.isMouseOver())
 			selected = 6;
-		else if (TimeUnit.isMouseOver())
+		else if (timeUnit.isMouseOver())
 			selected = 7;
 
 		int step = 1;
@@ -203,7 +204,7 @@ public class Page0 extends GuiScreen {
 					lastHandle.y += step;
 			}
 
-			lastHandle.x = MinDurationSlider.x;
+			lastHandle.x = minAge.x;
 		}
 
 		if (lastSize != new Vector2D()) {
@@ -219,7 +220,7 @@ public class Page0 extends GuiScreen {
 				else
 					lastSize.y += step;
 
-			lastSize.x = GravitiyForceSlider.width;
+			lastSize.x = gravityMult.width;
 		}
 
 		String text;
@@ -256,7 +257,7 @@ public class Page0 extends GuiScreen {
 			text = I18n.format("menu.noDescriptionFound");
 		}
 
-		if (mouseX >= MinDurationSlider.x - 2 && mouseX <= MinDurationSlider.x + MinDurationSlider.width + 2 && mouseY < RotSpeedSlider.y + RotSpeedSlider.height && mouseY >= MinDurationSlider.y && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= MinDurationSlider.y || InfiniteDuration.isMouseOver() || TimeUnit.isMouseOver()) {
+		if (mouseX >= minAge.x - 2 && mouseX <= minAge.x + minAge.width + 2 && mouseY < rotationMult.y + rotationMult.height && mouseY >= minAge.y && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= minAge.y || infiniteDuration.isMouseOver() || timeUnit.isMouseOver()) {
 			if (selected <= 5)
 				GuiHelper.drawRect(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
 
@@ -267,27 +268,27 @@ public class Page0 extends GuiScreen {
 	private void drawInfo() {
 
 		String s = I18n.format("menu.destroyparticles.info") + " [\u00A76" + (int) Math.pow(FBP.particlesPerAxis, 3) + "\u00A7f]";
-		ParticleCountBase.displayString = s;
+		particlesPerAxis.displayString = s;
 
 		if (FBP.infiniteDuration)
 			s = I18n.format("menu.minduration.info") + " [\u00A76" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "\u00A7f]";
 		else
 			s = I18n.format("menu.minduration.info") + " [\u00A76" + (FBP.showInMillis ? ((FBP.minAge * 50) + "ms") : (FBP.minAge + " tick")) + "\u00A7f]";
 
-		MinDurationSlider.displayString = s;
+		minAge.displayString = s;
 
 		if (FBP.infiniteDuration)
 			s = I18n.format("menu.maxduration.info") + " [\u00A76" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "\u00A7f]";
 		else
 			s = I18n.format("menu.maxduration.info") + " [\u00A76" + (FBP.showInMillis ? ((FBP.maxAge * 50) + "ms") : (FBP.maxAge + (FBP.maxAge > 1 ? " ticks" : " tick"))) + "\u00A7f]";
 
-		MaxDurationSlider.displayString = s;
+		maxAge.displayString = s;
 
-		ScaleMultSlider.displayString = I18n.format("menu.scalemult.info") + " [\u00A76" + FBP.scaleMult + "\u00A7f]";
+		scaleMult.displayString = I18n.format("menu.scalemult.info") + " [\u00A76" + FBP.scaleMult + "\u00A7f]";
 
-		GravitiyForceSlider.displayString = I18n.format("menu.gravityscale.info") + " [\u00A76" + FBP.gravityMult + "\u00A7f]";
+		gravityMult.displayString = I18n.format("menu.gravityscale.info") + " [\u00A76" + FBP.gravityMult + "\u00A7f]";
 
-		RotSpeedSlider.displayString = I18n.format("menu.rotationspeed.info") + " [\u00A76" + (FBP.rotationMult != 0 ? FBP.rotationMult : I18n.format("menu.off")) + "\u00A7f]";
+		rotationMult.displayString = I18n.format("menu.rotationspeed.info") + " [\u00A76" + (FBP.rotationMult != 0 ? FBP.rotationMult : I18n.format("menu.off")) + "\u00A7f]";
 	}
 
 	@Override
@@ -304,9 +305,9 @@ public class Page0 extends GuiScreen {
 		}
 	}
 
-	void update() {
-		MinDurationSlider.enabled = !FBP.infiniteDuration;
-		MaxDurationSlider.enabled = !FBP.infiniteDuration;
+	private void update() {
+		minAge.enabled = !FBP.infiniteDuration;
+		maxAge.enabled = !FBP.infiniteDuration;
 	}
 
 	@Override

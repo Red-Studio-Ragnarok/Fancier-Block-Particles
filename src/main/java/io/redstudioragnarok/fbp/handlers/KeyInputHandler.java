@@ -17,7 +17,7 @@ import static io.redstudioragnarok.fbp.FBP.mc;
 
 public class KeyInputHandler {
 
-	private static boolean wasOpened = false;
+	private static boolean blacklistGUIOpen = false;
 
 	@SubscribeEvent
 	public static void onKeyboardInput(InputEvent.KeyInputEvent e) {
@@ -34,23 +34,20 @@ public class KeyInputHandler {
 		if (KeyBindings.toggle.isPressed())
 			FBP.setEnabled(!FBP.enabled);
 
-		boolean isShiftDown = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
-		boolean isFastAddDown = KeyBindings.blacklistGUI.isKeyDown();
-
-		if (isFastAddDown) {
+		if (KeyBindings.blacklistGUI.isKeyDown()) {
 			Block block;
 			ItemStack stack = null;
 
-			boolean useHeldBlock = isShiftDown && (block = Block.getBlockFromName((stack = mc.player.getHeldItemMainhand()).getItem().getRegistryName().toString())) != null && block != Blocks.AIR;
+			boolean useHeldBlock = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && (block = Block.getBlockFromName((stack = mc.player.getHeldItemMainhand()).getItem().getRegistryName().toString())) != null && block != Blocks.AIR;
 
-			if (!wasOpened && (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || useHeldBlock)) {
+			if (!blacklistGUIOpen && (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || useHeldBlock)) {
 				mc.displayGuiScreen(useHeldBlock ? (new GuiBlacklist(stack)) : (new GuiBlacklist(mc.objectMouseOver.getBlockPos())));
 
 				Mouse.setGrabbed(true);
 
-				wasOpened = true;
+				blacklistGUIOpen = true;
 			}
-		} else if (wasOpened)
-			wasOpened = false;
+		} else if (blacklistGUIOpen)
+			blacklistGUIOpen = false;
 	}
 }

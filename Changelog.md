@@ -64,15 +64,12 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - Updated to Gradle 7.6
 - Cleanup build.gradle & gradle.properties
 - Gradle now automatically updates the version in `ModReference.java`
-- Gradle now automatically increment the dev version by one each build
-- Now use a forked version of [Universal Tweaks] for faster development environment loading times
 - Cleanup the entire code
 - Vectors redesign
 - Major Refactors
 - Renamed most of the variables from unreadable names to readable names
 - Finished removing useless `@SideOnly`
 - Removed useless `isRemote` checks
-- Moved creation of particles to `ParticleUtil.java`
 
 #### Vectors Redesign
 
@@ -97,7 +94,6 @@ Non-critical try-catch blocks should now never throw a runtime exception or prin
 [#10]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/10
 [Anatawa]: https://github.com/anatawa12
 [FG2.3 fork]: https://github.com/anatawa12/ForgeGradle-2.3
-[Universal Tweaks]: https://www.curseforge.com/minecraft/mc-mods/universal-tweaks
 [WildMihai]: https://github.com/WildMihai
 
 ---

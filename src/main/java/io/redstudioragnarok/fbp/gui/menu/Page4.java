@@ -14,10 +14,14 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.util.Arrays;
 
+import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.*;
+
 public class Page4 extends GuiScreen {
 
-	GuiButton Reload, Done, Defaults, Back, ReportBug, Enable;
-	GuiSlider WeatherParticleDensity, WeatherRenderDistance;
+	GuiButton defaults, done, reload, enable, reportBug;
+	GuiButton back;
+
+	GuiSlider weatherParticleDensity, weatherRenderDistance;
 
 	Vector2D lastHandle = new Vector2D();
 	Vector2D lastSize = new Vector2D();
@@ -33,25 +37,22 @@ public class Page4 extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		int X = this.width / 2 - 100;
+		int x = this.width / 2 - 100;
 
-		WeatherParticleDensity = new GuiSlider(X, this.height / 5 - 10 + GUIOffsetY, (float) ((FBP.weatherParticleDensity - 0.75) / 4.25));
-		WeatherRenderDistance = new GuiSlider(X, WeatherParticleDensity.y + WeatherParticleDensity.height + 1, (float) ((FBP.weatherRenderDistance - 0.75) / 1.75));
-		int Y = WeatherParticleDensity.y + WeatherParticleDensity.height + 2 + 4 * (WeatherParticleDensity.height + 1) + 5;
+		weatherParticleDensity = new GuiSlider(x, this.height / 5 - 10 + GUIOffsetY, (float) ((FBP.weatherParticleDensity - 0.75) / 4.25));
+		weatherRenderDistance = new GuiSlider(x, weatherParticleDensity.y + weatherParticleDensity.height + 1, (float) ((FBP.weatherRenderDistance - 0.75) / 1.75));
+		int y = weatherParticleDensity.y + weatherParticleDensity.height + 2 + 4 * (weatherParticleDensity.height + 1) + 5;
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, Y + 48 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
-		Done = new FBPGuiButton(-1, X, Defaults.y, I18n.format("menu.done"), false, false, true);
-		Defaults.width = Done.width = 98;
-		Reload = new FBPGuiButton(-2, X, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
-		Reload.width = 96 * 2 + 8;
+		defaults = new FBPGuiButton(0, this.width / 2 + 2, y + 48 - GUIOffsetY, medium, I18n.format("menu.defaults"), false, false, true);
+		done = new FBPGuiButton(-1, x, defaults.y, medium, I18n.format("menu.done"), false, false, true);
+		reload = new FBPGuiButton(-2, x, defaults.y + defaults.height + 1, large, I18n.format("menu.reloadconfig"), false, false, true);
+		enable = new GuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
+		reportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 
-		Back = new FBPGuiButton(-7, X - 44, Y + 2 - GUIOffsetY + 4, "<<", false, false, true);
-		Back.width = 20;
-
-		Enable = new GuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
-		ReportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-
-		this.buttonList.addAll(Arrays.asList(WeatherParticleDensity, WeatherRenderDistance, Defaults, Done, Reload, Back, Enable, ReportBug));
+		back = new FBPGuiButton(-7, x - 45, y - 4 - GUIOffsetY + 4, small, "\u00A76<<", false, false, true);
+		
+		this.buttonList.addAll(Arrays.asList(defaults, done, reload, back, enable, reportBug));
+		this.buttonList.addAll(Arrays.asList(weatherParticleDensity, weatherRenderDistance));
 	}
 
 	@Override
@@ -89,14 +90,14 @@ public class Page4 extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		GuiHelper.background(WeatherParticleDensity.y - 6 - GUIOffsetY, Done.y - 4, width, height);
+		GuiHelper.background(weatherParticleDensity.y - 6 - GUIOffsetY, done.y - 4, width, height);
 
-		FBP.weatherParticleDensity = MathUtil.round((float) (0.75 + 4.25 * WeatherParticleDensity.value), 2);
-		FBP.weatherRenderDistance = MathUtil.round((float) (0.75 + 1.75 * WeatherRenderDistance.value), 2);
+		FBP.weatherParticleDensity = MathUtil.round((float) (0.75 + 4.25 * weatherParticleDensity.value), 2);
+		FBP.weatherRenderDistance = MathUtil.round((float) (0.75 + 1.75 * weatherRenderDistance.value), 2);
 
 		drawMouseOverSelection(mouseX, mouseY);
 
-		GuiHelper.drawTitle(WeatherParticleDensity.y - GUIOffsetY, width, fontRenderer);
+		GuiHelper.drawTitle(weatherParticleDensity.y - GUIOffsetY, width, fontRenderer);
 
 		drawInfo();
 
@@ -104,15 +105,15 @@ public class Page4 extends GuiScreen {
 	}
 
 	private void drawMouseOverSelection(int mouseX, int mouseY) {
-		int posY = Done.y - 18;
+		int posY = done.y - 18;
 
-		if (WeatherParticleDensity.isMouseOver(mouseX, mouseY)) {
-			handle.y = WeatherParticleDensity.y;
-			size = new Vector2D(WeatherParticleDensity.width, 18);
+		if (weatherParticleDensity.isMouseOver(mouseX, mouseY)) {
+			handle.y = weatherParticleDensity.y;
+			size = new Vector2D(weatherParticleDensity.width, 18);
 			selected = 1;
-		} else if (WeatherRenderDistance.isMouseOver(mouseX, mouseY)) {
-			handle.y = WeatherRenderDistance.y;
-			size = new Vector2D(WeatherRenderDistance.width, 18);
+		} else if (weatherRenderDistance.isMouseOver(mouseX, mouseY)) {
+			handle.y = weatherRenderDistance.y;
+			size = new Vector2D(weatherRenderDistance.width, 18);
 			selected = 2;
 		}
 
@@ -139,7 +140,7 @@ public class Page4 extends GuiScreen {
 					lastHandle.y += step;
 			}
 
-			lastHandle.x = WeatherParticleDensity.x;
+			lastHandle.x = weatherParticleDensity.x;
 		}
 
 		if (lastSize != new Vector2D()) {
@@ -155,7 +156,7 @@ public class Page4 extends GuiScreen {
 				else
 					lastSize.y += step;
 
-			lastSize.x = WeatherRenderDistance.width;
+			lastSize.x = weatherRenderDistance.width;
 		}
 
 		String text;
@@ -168,7 +169,7 @@ public class Page4 extends GuiScreen {
 			text = I18n.format("menu.noDescriptionFound");
 		}
 
-		if (mouseX >= WeatherParticleDensity.x - 2 && mouseX <= WeatherParticleDensity.x + WeatherParticleDensity.width + 2 && mouseY < WeatherRenderDistance.y + WeatherRenderDistance.height && mouseY >= WeatherParticleDensity.y && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= WeatherParticleDensity.y) {
+		if (mouseX >= weatherParticleDensity.x - 2 && mouseX <= weatherParticleDensity.x + weatherParticleDensity.width + 2 && mouseY < weatherRenderDistance.y + weatherRenderDistance.height && mouseY >= weatherParticleDensity.y && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= weatherParticleDensity.y) {
 
 			if (selected <= 5)
 				GuiHelper.drawRect(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
@@ -178,8 +179,8 @@ public class Page4 extends GuiScreen {
 	}
 
 	private void drawInfo() {
-		WeatherParticleDensity.displayString = I18n.format("menu.weatherdensity.info")+" [\u00A76" + (int) (FBP.weatherParticleDensity * 100) + "%\u00A7f]";
-		WeatherRenderDistance.displayString = I18n.format("menu.weatherRenderDistance.title")+" [\u00A76" + (int) (FBP.weatherRenderDistance * 100) + "%\u00A7f]";
+		weatherParticleDensity.displayString = I18n.format("menu.weatherdensity.info")+" [\u00A76" + (int) (FBP.weatherParticleDensity * 100) + "%\u00A7f]";
+		weatherRenderDistance.displayString = I18n.format("menu.weatherRenderDistance.title")+" [\u00A76" + (int) (FBP.weatherRenderDistance * 100) + "%\u00A7f]";
 	}
 
 	@Override

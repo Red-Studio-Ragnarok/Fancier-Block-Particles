@@ -10,10 +10,16 @@ import net.minecraft.client.resources.I18n;
 
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.util.Arrays;
+
+import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.small;
 
 public class Page1 extends GuiScreen {
 
-	GuiButton b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug;
+	GuiButton defaults, done, reload, enable, reportBug;
+	GuiButton back, next;
+
+	GuiButton randomRotation, cartoonMode, randomizedScale, randomFadingSpeed, spawnRedstoneBlockParticles, spawnWhileFrozen;
 
 	String description;
 
@@ -21,29 +27,28 @@ public class Page1 extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		int x = this.width / 2 - (96 * 2 + 8) / 2;
+		int x = this.width / 2 - 200 / 2;
 
-		b1 = new FBPGuiButton(1, x, this.height / 5 - 10 + GUIOffsetY, I18n.format("menu.randomrotation.info"), FBP.randomRotation, true, true);
-		b2 = new FBPGuiButton(2, x, b1.y + b1.height + 1, I18n.format("menu.cartonmode.info"), false, false, false);
-		b3 = new FBPGuiButton(3, x, b2.y + b2.height + 6, I18n.format("menu.randomizedscale.info"), FBP.randomizedScale, true, true);
-		b4 = new FBPGuiButton(4, x, b3.y + b3.height + 1, I18n.format("menu.randomfadespeed.info"), FBP.randomFadingSpeed, true, true);
-		b5 = new FBPGuiButton(5, x, b4.y + b4.height + 6, I18n.format("menu.redstoneblock.info"), FBP.spawnRedstoneBlockParticles, true, true);
-		b6 = new FBPGuiButton(6, x, b5.y + b5.height + 1, I18n.format("menu.spawnfreeze.info"), FBP.spawnWhileFrozen, true, true);
+		randomRotation = new FBPGuiButton(1, x, this.height / 5 - 10 + GUIOffsetY, I18n.format("menu.randomrotation.info"), FBP.randomRotation, true, true);
+		cartoonMode = new FBPGuiButton(2, x, randomRotation.y + randomRotation.height + 1, I18n.format("menu.cartonmode.info"), false, false, false);
+		randomizedScale = new FBPGuiButton(3, x, cartoonMode.y + cartoonMode.height + 6, I18n.format("menu.randomizedscale.info"), FBP.randomizedScale, true, true);
+		randomFadingSpeed = new FBPGuiButton(4, x, randomizedScale.y + randomizedScale.height + 1, I18n.format("menu.randomfadespeed.info"), FBP.randomFadingSpeed, true, true);
+		spawnRedstoneBlockParticles = new FBPGuiButton(5, x, randomFadingSpeed.y + randomFadingSpeed.height + 6, I18n.format("menu.redstoneblock.info"), FBP.spawnRedstoneBlockParticles, true, true);
+		spawnWhileFrozen = new FBPGuiButton(6, x, spawnRedstoneBlockParticles.y + spawnRedstoneBlockParticles.height + 1, I18n.format("menu.spawnfreeze.info"), FBP.spawnWhileFrozen, true, true);
 
-		Defaults = new FBPGuiButton(0, this.width / 2 + 2, b6.y + b6.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
-		Done = new FBPGuiButton(-1, this.width / 2 - 100, Defaults.y, I18n.format("menu.done"), false, false, true);
-		Defaults.width = Done.width = 98;
-		Reload = new FBPGuiButton(-2, this.width / 2 - 100, Defaults.y + Defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
-		Reload.width = b1.width = b2.width = b3.width = b4.width = b5.width = b6.width = 200;
+		defaults = new FBPGuiButton(0, this.width / 2 + 2, spawnWhileFrozen.y + spawnWhileFrozen.height + 24 - GUIOffsetY, I18n.format("menu.defaults"), false, false, true);
+		done = new FBPGuiButton(-1, this.width / 2 - 100, defaults.y, I18n.format("menu.done"), false, false, true);
+		defaults.width = done.width = 98;
+		reload = new FBPGuiButton(-2, this.width / 2 - 100, defaults.y + defaults.height + 1, I18n.format("menu.reloadconfig"), false, false, true);
+		reload.width = randomRotation.width = cartoonMode.width = randomizedScale.width = randomFadingSpeed.width = spawnRedstoneBlockParticles.width = spawnWhileFrozen.width = 200;
+		enable = new GuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
+		reportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
 
-		Back = new FBPGuiButton(-3, b6.x - 44, b6.y + 2 - GUIOffsetY, "<<", false, false, true);
-		Next = new FBPGuiButton(-5, b6.x + b6.width + 25, b6.y + 2 - GUIOffsetY, ">>", false, false, true);
-		Back.width = Next.width = 20;
+		back = new FBPGuiButton(-3, spawnWhileFrozen.x - 45, spawnWhileFrozen.y - 4 - GUIOffsetY, small, "\u00A76<<", false, false, true);
+		next = new FBPGuiButton(-5, spawnWhileFrozen.x + spawnWhileFrozen.width + 25, spawnWhileFrozen.y - 4 - GUIOffsetY, small, "\u00A76>>", false, false, true);
 
-		Enable = new GuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
-		ReportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-
-		this.buttonList.addAll(java.util.Arrays.asList(b1, b2, b3, b4, b5, b6, Defaults, Done, Reload, Back, Next, Enable, ReportBug));
+		this.buttonList.addAll(Arrays.asList(defaults, done, reload, enable, reportBug, back, next));
+		this.buttonList.addAll(Arrays.asList(randomRotation, cartoonMode, randomizedScale, randomFadingSpeed, spawnRedstoneBlockParticles, spawnWhileFrozen));
 	}
 
 	@Override
@@ -101,17 +106,17 @@ public class Page1 extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		GuiHelper.background(b1.y - 6 - GUIOffsetY, Done.y - 4, width, height);
+		GuiHelper.background(randomRotation.y - 6 - GUIOffsetY, done.y - 4, width, height);
 
-		int posY = Done.y - 18;
+		int posY = done.y - 18;
 
 		getDescription();
 
-		if ((mouseX >= b1.x && mouseX < b1.x + b1.width) && (mouseY >= b1.y && mouseY < b6.y + b1.height)) {
+		if ((mouseX >= randomRotation.x && mouseX < randomRotation.x + randomRotation.width) && (mouseY >= randomRotation.y && mouseY < spawnWhileFrozen.y + randomRotation.height)) {
 			this.drawCenteredString(fontRenderer, description, this.width / 2, posY, fontRenderer.getColorCode('f'));
 		}
 
-		GuiHelper.drawTitle(b1.y - GUIOffsetY, width, fontRenderer);
+		GuiHelper.drawTitle(randomRotation.y - GUIOffsetY, width, fontRenderer);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}

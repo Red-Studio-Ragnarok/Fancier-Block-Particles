@@ -19,7 +19,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
 
-// Add FBP to the jar name
+// Add FBP version to the jar name
 version project.mod_version
 
 minecraft {
@@ -94,4 +94,10 @@ jar {
 			'FMLCorePluginContainsFMLMod': 'true',
 			'ForceLoadAsMod': 'true'
 	])
+}
+
+idea {
+	module {
+		excludeDirs = [file(".github"), file(".gradle"), file(".idea"), file("build"), file("gradle"), file("run")]
+	}
 }
