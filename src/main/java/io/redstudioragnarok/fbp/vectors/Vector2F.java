@@ -1,20 +1,20 @@
 package io.redstudioragnarok.fbp.vectors;
 
 /**
- * Represents a two-dimensional vector with `x` and `y` coordinates.
+ * Represents a two-dimensional vector with `x` and `y` coordinates using float.
  * @author Desoroxxx
  */
-public class Vector2D {
+public class Vector2F {
 
     /** The x component of this vector. */
     public float x;
     /** The y component of this vector. */
-    public  float y;
+    public float y;
 
     /**
      * Constructs a new empty vector.
      */
-    public Vector2D() {
+    public Vector2F() {
     }
 
     /**
@@ -23,7 +23,7 @@ public class Vector2D {
      * @param inputX The X coordinate
      * @param inputY The Y coordinate
      */
-    public Vector2D(float inputX, float inputY) {
+    public Vector2F(float inputX, float inputY) {
         x = inputX;
         y = inputY;
     }
