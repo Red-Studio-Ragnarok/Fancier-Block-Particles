@@ -384,7 +384,7 @@ public class ConfigHandler {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
 			log.error("Cannot read floating materials config, an IOException occurred: " + e.getMessage());
 		} finally {
-			 closeStreams();
+			closeStreams();
 		}
 	}
 
