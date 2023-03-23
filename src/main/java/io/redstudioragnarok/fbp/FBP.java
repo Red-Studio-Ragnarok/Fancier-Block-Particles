@@ -32,7 +32,7 @@ import java.util.SplittableRandom;
 //  | $$   /$$__  $$| $$  | $$| $$      | $$| $$_____/| $$            | $$  \ $$| $$| $$  | $$| $$      | $$_  $$       | $$      /$$__  $$| $$        | $$ /$$| $$| $$      | $$| $$_____/ \____  $$
 //  | $$  |  $$$$$$$| $$  | $$|  $$$$$$$| $$|  $$$$$$$| $$            | $$$$$$$/| $$|  $$$$$$/|  $$$$$$$| $$ \  $$      | $$     |  $$$$$$$| $$        |  $$$$/| $$|  $$$$$$$| $$|  $$$$$$$ /$$$$$$$/
 //  |__/   \_______/|__/  |__/ \_______/|__/ \_______/|__/            |_______/ |__/ \______/  \_______/|__/  \__/      |__/      \_______/|__/         \___/  |__/ \_______/|__/ \_______/|_______/
-@Mod(clientSideOnly = true, modid = ModReference.id, name = ModReference.name, version = ModReference.version, guiFactory = "io.redstudioragnarok.fbp.config.FBPConfigGuiFactory")
+@Mod(clientSideOnly = true, modid = ModReference.id, name = ModReference.name, version = ModReference.version, guiFactory = "io.redstudioragnarok.fbp.config.FBPConfigGuiFactory", updateJSON = "https://raw.githubusercontent.com/Red-Studio-Ragnarok/Fancier-Block-Particles/main/update.json")
 public class FBP {
 
 	public static final Minecraft mc = Minecraft.getMinecraft();
