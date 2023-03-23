@@ -6,7 +6,7 @@ import io.redstudioragnarok.fbp.renderer.RenderType;
 import io.redstudioragnarok.fbp.renderer.color.ColorUtil;
 import io.redstudioragnarok.fbp.renderer.light.LightUtil;
 import io.redstudioragnarok.fbp.renderer.texture.TextureUtil;
-import io.redstudioragnarok.fbp.vectors.Vector3D;
+import io.redstudioragnarok.fbp.vectors.Vector3F;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFlame;
@@ -28,7 +28,7 @@ public class FBPParticleFlame extends ParticleFlame {
 
 	boolean spawnAnother;
 
-	Vector3D startPos;
+	Vector3F startPos;
 
 	final float AngleY;
 
@@ -41,7 +41,7 @@ public class FBPParticleFlame extends ParticleFlame {
 		if (blockState == Blocks.TORCH.getDefaultState())
 			prevPosY = posY = posY + 0.04;
 
-		startPos = new Vector3D((float) posX, (float) posY, (float) posZ);
+		startPos = new Vector3F((float) posX, (float) posY, (float) posZ);
 
 		this.motionY = -0.00085;
 		this.particleGravity = -0.05f;

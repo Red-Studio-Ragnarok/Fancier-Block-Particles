@@ -9,7 +9,7 @@ import io.redstudioragnarok.fbp.renderer.color.ColorUtil;
 import io.redstudioragnarok.fbp.renderer.light.LightUtil;
 import io.redstudioragnarok.fbp.renderer.texture.TextureUtil;
 import io.redstudioragnarok.fbp.utils.MathUtil;
-import io.redstudioragnarok.fbp.vectors.Vector3D;
+import io.redstudioragnarok.fbp.vectors.Vector3F;
 import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -48,7 +48,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	private EnumFacing facing;
 
-	private Vector3D rot, prevRot, rotStep;
+	private Vector3F rot, prevRot, rotStep;
 
 	private AxisAlignedBB boundingBox;
 
@@ -76,8 +76,8 @@ public class FBPParticleDigging extends ParticleDigging {
 		this.particleGreen = G;
 		this.particleBlue = B;
 
-		rot = new Vector3D();
-		prevRot = new Vector3D();
+		rot = new Vector3F();
+		prevRot = new Vector3F();
 
 		this.facing = facing;
 
@@ -273,7 +273,7 @@ public class FBPParticleDigging extends ParticleDigging {
 				}
 
 				if (allowedToMove) {
-					Vector3D newVector = new Vector3D(rotStep);
+					Vector3F newVector = new Vector3F(rotStep);
 					newVector.scale(getMult());
 					rot.add(newVector);
 				}
@@ -483,7 +483,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 		y += scale;
 
-		Vector3D smoothRot = new Vector3D(0, 0, 0);
+		Vector3F smoothRot = new Vector3F(0, 0, 0);
 
 		if (FBP.rotationMult > 0) {
 			smoothRot.y = rot.y;
@@ -494,7 +494,7 @@ public class FBPParticleDigging extends ParticleDigging {
 
 			// SMOOTH ROTATION
 			if (!FBP.frozen) {
-				Vector3D vector = new Vector3D();
+				Vector3F vector = new Vector3F();
 				rot.partialVector(prevRot, partialTicks, vector);
 
 				if (FBP.randomRotation) {
@@ -517,7 +517,7 @@ public class FBPParticleDigging extends ParticleDigging {
 		double ry0 = FBP.random.nextDouble();
 		double rz0 = FBP.random.nextDouble();
 
-		rotStep = new Vector3D(rx0 > 0.5 ? 1 : -1, ry0 > 0.5 ? 1 : -1, rz0 > 0.5 ? 1 : -1);
+		rotStep = new Vector3F(rx0 > 0.5 ? 1 : -1, ry0 > 0.5 ? 1 : -1, rz0 > 0.5 ? 1 : -1);
 
 		rot.copy(rotStep);
 	}

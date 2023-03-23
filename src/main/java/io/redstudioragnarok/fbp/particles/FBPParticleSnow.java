@@ -6,7 +6,7 @@ import io.redstudioragnarok.fbp.renderer.RenderType;
 import io.redstudioragnarok.fbp.renderer.color.ColorUtil;
 import io.redstudioragnarok.fbp.renderer.light.LightUtil;
 import io.redstudioragnarok.fbp.renderer.texture.TextureUtil;
-import io.redstudioragnarok.fbp.vectors.Vector3D;
+import io.redstudioragnarok.fbp.vectors.Vector3F;
 import net.jafama.FastMath;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.ParticleDigging;
@@ -25,16 +25,16 @@ public class FBPParticleSnow extends ParticleDigging {
 	double scaleAlpha, prevParticleScale, prevParticleAlpha;
 	double endMult = 1;
 
-	Vector3D rot, prevRot, rotStep, tempRot;
+	Vector3F rot, prevRot, rotStep, tempRot;
 
 	public FBPParticleSnow(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, IBlockState state) {
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn, state);
 
 		this.sourcePos = new BlockPos(xCoordIn, yCoordIn, zCoordIn);
 
-		rot = new Vector3D();
-		prevRot = new Vector3D();
-		tempRot = new Vector3D();
+		rot = new Vector3F();
+		prevRot = new Vector3F();
+		tempRot = new Vector3F();
 
 		createRotationMatrix();
 
@@ -63,7 +63,7 @@ public class FBPParticleSnow extends ParticleDigging {
 		double ry = FBP.random.nextDouble();
 		double rz = FBP.random.nextDouble();
 
-		rotStep = new Vector3D(rx > 0.5 ? 1 : -1, ry > 0.5 ? 1 : -1, rz > 0.5 ? 1 : -1);
+		rotStep = new Vector3F(rx > 0.5 ? 1 : -1, ry > 0.5 ? 1 : -1, rz > 0.5 ? 1 : -1);
 
 		rot.copy(rotStep);
 	}
@@ -217,7 +217,7 @@ public class FBPParticleSnow extends ParticleDigging {
 
 		y += scale;
 
-		Vector3D smoothRot = new Vector3D(0, 0, 0);
+		Vector3F smoothRot = new Vector3F(0, 0, 0);
 
 		if (FBP.rotationMult > 0) {
 			smoothRot.y = rot.y;
@@ -228,7 +228,7 @@ public class FBPParticleSnow extends ParticleDigging {
 
 			// SMOOTH ROTATION
 			if (!FBP.frozen) {
-				Vector3D vector = new Vector3D();
+				Vector3F vector = new Vector3F();
 				rot.partialVector(prevRot, partialTicks, vector);
 
 				if (FBP.randomRotation) {

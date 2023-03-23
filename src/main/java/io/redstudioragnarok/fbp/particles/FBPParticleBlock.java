@@ -2,8 +2,8 @@ package io.redstudioragnarok.fbp.particles;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.handlers.EventHandler;
-import io.redstudioragnarok.fbp.vectors.Vector2D;
-import io.redstudioragnarok.fbp.vectors.Vector3D;
+import io.redstudioragnarok.fbp.vectors.Vector2F;
+import io.redstudioragnarok.fbp.vectors.Vector3F;
 import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
@@ -43,9 +43,9 @@ public class FBPParticleBlock extends Particle {
 
 	EnumFacing facing;
 
-	Vector3D prevRotation;
-	Vector3D smoothRot = new Vector3D();
-	Vector3D rot;
+	Vector3F prevRotation;
+	Vector3F smoothRot = new Vector3F();
+	Vector3F rot;
 
 	long textureSeed;
 
@@ -73,8 +73,8 @@ public class FBPParticleBlock extends Particle {
 
 		startingAngle = (float) FBP.random.nextDouble(0.03125, 0.0635);
 
-		prevRotation = new Vector3D();
-		rot = new Vector3D();
+		prevRotation = new Vector3F();
+		rot = new Vector3F();
 
 		switch (facing) {
 		case EAST:
@@ -208,8 +208,8 @@ public class FBPParticleBlock extends Particle {
 		if (smoothStep <= 0)
 			smoothStep = 0;
 
-		Vector3D t = new Vector3D(0, smoothStep, 0);
-		Vector3D tRot = new Vector3D(0, smoothStep, 0);
+		Vector3F t = new Vector3F(0, smoothStep, 0);
+		Vector3F tRot = new Vector3F(0, smoothStep, 0);
 
 		switch (facing) {
 		case EAST:
@@ -302,11 +302,11 @@ public class FBPParticleBlock extends Particle {
 
 		AxisAlignedBB aabb = block.getSelectedBoundingBox(blockState, mc.world, blockPos);
 
-		Vector2D[] corners = new Vector2D[] { new Vector2D((float) aabb.minX, (float) aabb.minZ), new Vector2D((float) aabb.maxX, (float) aabb.maxZ), new Vector2D((float) aabb.minX, (float) aabb.maxZ), new Vector2D((float) aabb.maxX, (float) aabb.minZ) };
+		Vector2F[] corners = new Vector2F[] { new Vector2F((float) aabb.minX, (float) aabb.minZ), new Vector2F((float) aabb.maxX, (float) aabb.maxZ), new Vector2F((float) aabb.minX, (float) aabb.maxZ), new Vector2F((float) aabb.maxX, (float) aabb.minZ) };
 
-		Vector2D middle = new Vector2D((float) (blockPos.getX() + 0.5), (float) (blockPos.getZ() + 0.5));
+		Vector2F middle = new Vector2F((float) (blockPos.getX() + 0.5), (float) (blockPos.getZ() + 0.5));
 
-		for (Vector2D corner : corners) {
+		for (Vector2F corner : corners) {
 			double mX = middle.x - corner.x;
 			double mZ = middle.y - corner.y;
 
