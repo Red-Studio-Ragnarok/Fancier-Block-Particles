@@ -1,6 +1,6 @@
 [
   {
-    "modid": "fbp",
+    "modid": "${id}",
     "name": "Fancier Block Particles",
     "description": "Fancier Block Particles is a fork of the popular Fancy Block Particles by MorphoxL which is more optimized and less buggy than the original mod.",
     "version": "${version}",

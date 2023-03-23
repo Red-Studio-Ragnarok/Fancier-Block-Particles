@@ -9,10 +9,12 @@ import java.net.URISyntaxException;
 
 /**
  * This class defines constants for FBP.
+ * <p>
+ * They are automatically updated by Gradle on compile time, except for the name as Gradle would remove spaces.
  */
 public class ModReference {
 
-    public static final String id = "fbp";
+    public static final String id = "@ID@";
     public static final String name = "Fancier Block Particles";
     public static final String version = "@VERSION@";
     public static final Logger log = LogManager.getLogger(id);

@@ -19,8 +19,8 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
 
-// Add FBP version to the jar name
-version project.mod_version
+// Add version to the jar name
+version project.version
 
 minecraft {
 	version = '1.12.2-14.23.5.2847'
@@ -29,7 +29,8 @@ minecraft {
 
 	def args = ['-Dfml.coreMods.load=io.redstudioragnarok.fbp.asm.FBPPlugin', '-Dforge.logging.console.level=debug']
 
-	replace('@VERSION@', project.mod_version)
+	replace('@ID@', project.id)
+	replace('@VERSION@', project.version)
 	replaceIn('ModReference.java')
 }
 
@@ -39,10 +40,11 @@ runClient {
 
 // Replace version in `mcmod.info`
 processResources {
-	inputs.property 'version', version
+	inputs.property 'id', project.id
+	inputs.property 'version', project.version
 	from(sourceSets.main.resources.srcDirs) {
 		include 'mcmod.info'
-		expand 'version': version
+		expand 'id': project.id, 'version': project.version
 	}
 }
 
@@ -65,10 +67,19 @@ repositories {
 
 		metadataSources { artifact() }
 	}
+
+	ivy {
+		url 'https://github.com/'
+
+		layout "pattern", { artifact '[organisation]/[module]/releases/download/[revision]/[module]-[revision].[ext]' }
+
+		metadataSources { artifact() }
+	}
 }
 
 dependencies {
 	implementation 'zone.rong:mixinbooter:7.0'
+	implementation 'Red-Studio-Ragnarok:Red-Core:0.2-Dev-2@jar'
 
 	implementation 'net.jafama:jafama:2.+'
 	embed 'net.jafama:jafama:2.+'
@@ -84,7 +95,7 @@ sourceSets {
 }
 
 jar {
-	// Add all embedded dependencies into FBP jar
+	// Add all embedded dependencies into the jar
 	from(configurations.embed.collect {it.isDirectory() ? it : zipTree(it)})
 
 	manifest.attributes([
