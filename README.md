@@ -37,13 +37,13 @@ This mod replace the Minecraft 2D particles with fancier 3D particles, it also a
 
 ## Want to have your own mod or support me?
 
-If you're looking for a mod but don't have the development skills or time, consider commissioning me!
-My commissions are currently open and I would be happy to create a custom mod to fit your needs as long as you provide assets.
+If you are looking for a mod but do not have the development skills or time, consider commissioning me!
+My commissions are currently open, and I would be happy to create a custom mod to fit your needs as long as you provide assets.
 
 [Commissions]
 
-You can also support me on a monthly basis by becoming a member.
-To thank you will have the possibility to access exlcusive post and messages, Discord channel for WIP content, and even access to unreleased Prototypes or WIP Projects.
+You can also support me monthly by becoming a member.
+To thank you will have the possibility to access exclusive post and messages, Discord channel for WIP content, and even access to unreleased Prototypes or WIP Projects.
 
 [Membership]
 
