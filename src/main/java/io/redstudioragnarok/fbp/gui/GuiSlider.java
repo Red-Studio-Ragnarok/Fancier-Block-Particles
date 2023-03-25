@@ -93,7 +93,7 @@ public class GuiSlider extends GuiButton {
 		int Y1 = y + 4;
 		int Y2 = y + 15;
 
-		boolean inRectangle = mouseX > X1 && mouseX < X2 && mouseY > Y1 && mouseY <= Y2;
+		boolean inRectangle = GuiHelper.isMouseInsideRectangle(mouseX, mouseY, X1, Y1, X2, Y2);
 
 		boolean inCircle1 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X1, Y1 + 5, 5);
 		boolean inCircle2 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X2, Y1 + 5, 5);
@@ -107,8 +107,8 @@ public class GuiSlider extends GuiButton {
 
 		int Y1 = y + 4;
 		int Y2 = y + 15;
-
-		boolean inRectangle = mouseX > X1 && mouseX < X2 && mouseY > Y1 && mouseY <= Y2;
+		
+		boolean inRectangle = GuiHelper.isMouseInsideRectangle(mouseX, mouseY, X1, Y1, X2, Y2);
 
 		boolean inCircle1 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X1, Y1 + 5, 5);
 		boolean inCircle2 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X2, Y1 + 5, 5);

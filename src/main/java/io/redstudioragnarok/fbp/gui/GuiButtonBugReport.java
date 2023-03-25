@@ -21,8 +21,8 @@ public class GuiButtonBugReport extends GuiButton {
 	long lastTime, time;
 	int fadeAmmount = 0;
 
-	public GuiButtonBugReport(int buttonID, int xPos, int yPos, Dimension screen, FontRenderer fr) {
-		super(buttonID, xPos, yPos, 25, 25, "");
+	public GuiButtonBugReport(int buttonID, int x, int y, Dimension screen, FontRenderer fr) {
+		super(buttonID, x, y, 25, 25, "");
 		_screen = screen;
 		_fr = fr;
 	}
@@ -66,7 +66,7 @@ public class GuiButtonBugReport extends GuiButton {
 				fadeAmmount = 0;
 
 		if (fadeAmmount > 0)
-			GuiHelper.drawRect(0, 0, _screen.width, _screen.height, 0, 0, 0, fadeAmmount);
+			GuiHelper.drawRectangle(0, 0, _screen.width, _screen.height, 0, 0, 0, fadeAmmount);
 		else
 			fadeAmmount = 0;
 

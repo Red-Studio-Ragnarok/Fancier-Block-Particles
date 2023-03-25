@@ -13,8 +13,8 @@ public class GuiButtonEnable extends GuiButton {
 
 	FontRenderer _fr;
 
-	public GuiButtonEnable(int buttonID, int xPos, int yPos, FontRenderer fr) {
-		super(buttonID, xPos, yPos, 25, 25, "");
+	public GuiButtonEnable(int buttonID, int x, int y, FontRenderer fr) {
+		super(buttonID, x, y, 25, 25, "");
 
 		_fr = fr;
 	}

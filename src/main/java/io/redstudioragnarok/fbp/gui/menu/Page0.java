@@ -1,67 +1,49 @@
 package io.redstudioragnarok.fbp.gui.menu;
 
 import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.gui.*;
+import io.redstudioragnarok.fbp.gui.GuiHelper;
+import io.redstudioragnarok.fbp.gui.GuiSlider;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import io.redstudioragnarok.fbp.utils.MathUtil;
-import io.redstudioragnarok.fbp.utils.ModReference;
-import io.redstudioragnarok.fbp.vectors.Vector2D;
+import io.redstudioragnarok.fbp.vectors.Vector2F;
 import net.jafama.FastMath;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.util.Arrays;
+import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.small;
 
-import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.*;
-
-public class Page0 extends GuiScreen {
-
-	GuiButton defaults, done, reload, enable, reportBug;
-	GuiButton next;
+public class Page0 extends BaseSettingsPage {
 
 	GuiButton infiniteDuration, timeUnit;
 	GuiSlider minAge, maxAge, particlesPerAxis, scaleMult, gravityMult, rotationMult;
 
-	Vector2D lastHandle = new Vector2D();
-	Vector2D lastSize = new Vector2D();
+	Vector2F lastHandle = new Vector2F();
+	Vector2F lastSize = new Vector2F();
 
-	Vector2D handle = new Vector2D();
-	Vector2D size = new Vector2D();
+	Vector2F handle = new Vector2F();
+	Vector2F size = new Vector2F();
 
 	long time, lastTime;
 
 	int selected = 0;
 
-	final int GUIOffsetY = 8;
-
 	@Override
 	public void initGui() {
+		super.initGui();
+		super.initNavigation(null, new Page1());
+
 		int x = this.width / 2 - 100;
 
-		minAge = new GuiSlider(x, this.height / 5 - 10 + GUIOffsetY, (float) ((FBP.minAge - 10) / 90.0));
-		maxAge = new GuiSlider(x, minAge.y + minAge.height + 1, (float) ((FBP.maxAge - 10) / 90.0));
+		minAge = addSlider(x, this.height / 5 - 6, (float) ((FBP.minAge - 10) / 90.0));
+		maxAge = addSlider(x, minAge.y + minAge.height + 1, (float) ((FBP.maxAge - 10) / 90.0));
 
-		particlesPerAxis = new GuiSlider(x, maxAge.y + 6 + maxAge.height, (float) ((FBP.particlesPerAxis - 2) / 3.0));
-		scaleMult = new GuiSlider(x, particlesPerAxis.y + particlesPerAxis.height + 1, (float) ((FBP.scaleMult - 0.75) / 0.5));
-		gravityMult = new GuiSlider(x, scaleMult.y + scaleMult.height + 6, (float) ((FBP.gravityMult - 0.05) / 2.95));
-		rotationMult = new GuiSlider(x, gravityMult.y + gravityMult.height + 1, (float) (FBP.rotationMult / 1.5));
+		particlesPerAxis = addSlider(x, maxAge.y + 6 + maxAge.height, (float) ((FBP.particlesPerAxis - 2) / 3.0));
+		scaleMult = addSlider(x, particlesPerAxis.y + particlesPerAxis.height + 1, (float) ((FBP.scaleMult - 0.75) / 0.5));
+		gravityMult = addSlider(x, scaleMult.y + scaleMult.height + 6, (float) ((FBP.gravityMult - 0.05) / 2.95));
+		rotationMult = addSlider(x, gravityMult.y + gravityMult.height + 1, (float) (FBP.rotationMult / 1.5));
 
-		infiniteDuration = new FBPGuiButton(11, x + 205, minAge.y + 10, small , (FBP.infiniteDuration ? "\u00A7a" : "\u00A7c") + "\u221e", false, false, true);
-		timeUnit = new FBPGuiButton(12, x - 25, minAge.y + 10, small , "\u00A7a\u00A7L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
-
-		defaults = new FBPGuiButton(0, this.width / 2 + 2, rotationMult.y + rotationMult.height + 24 - GUIOffsetY, medium , I18n.format("menu.defaults"), false, false, true);
-		done = new FBPGuiButton(-1, x, defaults.y, medium , I18n.format("menu.done"), false, false, true);
-		reload = new FBPGuiButton(-2, x, defaults.y + defaults.height + 1, large , I18n.format("menu.reloadconfig"), false, false, true);
-		enable = new GuiButtonEnable(-6, (this.width - 25 - 27) - 4, 2, this.fontRenderer);
-		reportBug = new GuiButtonBugReport(-4, this.width - 27, 2, new Dimension(width, height), this.fontRenderer);
-
-		next = new FBPGuiButton(-3, rotationMult.x + rotationMult.width + 25, rotationMult.y - 4 - GUIOffsetY, small, "\u00A76>>", false, false, true);
-
-		this.buttonList.addAll(Arrays.asList(defaults, done, reload, enable, reportBug, next));
-		this.buttonList.addAll(Arrays.asList(minAge, maxAge, particlesPerAxis, scaleMult, gravityMult, rotationMult, infiniteDuration, timeUnit));
+		infiniteDuration = addButton(11, x + 205, minAge.y + 10, small, (FBP.infiniteDuration ? "\u00A7a" : "\u00A7c") + "\u221e", false, false, true);
+		timeUnit = addButton(12, x - 25, minAge.y + 10, small, "\u00A7a\u00A7L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
 
 		update();
 	}
@@ -69,31 +51,6 @@ public class Page0 extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
-		case -6:
-			FBP.setEnabled(!FBP.enabled);
-			break;
-		case -5:
-			FBP.showInMillis = !FBP.showInMillis;
-			break;
-		case -4:
-			try {
-				Desktop.getDesktop().browse(ModReference.newIssueLink);
-			} catch (Exception e) {
-				// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			}
-			break;
-		case -3:
-			this.mc.displayGuiScreen(new Page1());
-			break;
-		case -2:
-			ConfigHandler.init();
-			break;
-		case -1:
-			this.mc.displayGuiScreen(null);
-			break;
-		case 0:
-			this.mc.displayGuiScreen(new GuiYesNo(this));
-			break;
 		case 11:
 			infiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "\u00A7a" : "\u00A7c") + "\u221e";
 			update();
@@ -102,16 +59,13 @@ public class Page0 extends GuiScreen {
 			timeUnit.displayString = "\u00A7a\u00A7L" + ((FBP.showInMillis = !FBP.showInMillis) ? "ms" : "ti");
 			break;
 		}
-	}
 
-	@Override
-	public boolean doesGuiPauseGame() {
-		return true;
+		super.actionPerformed(button);
 	}
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		GuiHelper.background(minAge.y - 6 - GUIOffsetY, done.y - 4, width, height);
+		super.drawScreen(mouseX, mouseY, partialTicks);
 
 		int sParticleCountBase = FastMath.round(2 + 3 * particlesPerAxis.value);
 
@@ -146,35 +100,29 @@ public class Page0 extends GuiScreen {
 
 		drawMouseOverSelection(mouseX, mouseY);
 
-		GuiHelper.drawTitle(minAge.y - GUIOffsetY, width, fontRenderer);
-
 		drawInfo();
-
-		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	private void drawMouseOverSelection(int mouseX, int mouseY) {
-		final int posY = done.y - 18;
-
 		if (minAge.isMouseOver(mouseX, mouseY) || maxAge.isMouseOver(mouseX, mouseY)) {
 			handle.y = minAge.y;
-			size = new Vector2D(minAge.width, 39);
+			size = new Vector2F(minAge.width, 39);
 			selected = 1;
 		} else if (particlesPerAxis.isMouseOver(mouseX, mouseY)) {
 			handle.y = particlesPerAxis.y;
-			size = new Vector2D(particlesPerAxis.width, 18);
+			size = new Vector2F(particlesPerAxis.width, 18);
 			selected = 2;
 		} else if (scaleMult.isMouseOver(mouseX, mouseY)) {
 			handle.y = scaleMult.y;
-			size = new Vector2D(scaleMult.width, 18);
+			size = new Vector2F(scaleMult.width, 18);
 			selected = 3;
 		} else if (gravityMult.isMouseOver(mouseX, mouseY)) {
 			handle.y = gravityMult.y;
-			size = new Vector2D(gravityMult.width, 18);
+			size = new Vector2F(gravityMult.width, 18);
 			selected = 4;
 		} else if (rotationMult.isMouseOver(mouseX, mouseY)) {
 			handle.y = rotationMult.y;
-			size = new Vector2D(rotationMult.x - (rotationMult.x + rotationMult.width), 18);
+			size = new Vector2F(rotationMult.x - (rotationMult.x + rotationMult.width), 18);
 			selected = 5;
 		} else if (infiniteDuration.isMouseOver())
 			selected = 6;
@@ -189,7 +137,7 @@ public class Page0 extends GuiScreen {
 
 		lastTime = time;
 
-		if (lastHandle != new Vector2D()) {
+		if (lastHandle != new Vector2F()) {
 			if (lastHandle.y > handle.y) {
 				if (lastHandle.y - handle.y <= step)
 					lastHandle.y = handle.y;
@@ -207,7 +155,7 @@ public class Page0 extends GuiScreen {
 			lastHandle.x = minAge.x;
 		}
 
-		if (lastSize != new Vector2D()) {
+		if (lastSize != new Vector2F()) {
 			if (lastSize.y > size.y)
 				if (lastSize.y - size.y <= step)
 					lastSize.y = size.y;
@@ -259,9 +207,9 @@ public class Page0 extends GuiScreen {
 
 		if (mouseX >= minAge.x - 2 && mouseX <= minAge.x + minAge.width + 2 && mouseY < rotationMult.y + rotationMult.height && mouseY >= minAge.y && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= minAge.y || infiniteDuration.isMouseOver() || timeUnit.isMouseOver()) {
 			if (selected <= 5)
-				GuiHelper.drawRect(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
+				GuiHelper.drawRectangle(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
 
-			this.drawCenteredString(fontRenderer, text, this.width / 2, posY, fontRenderer.getColorCode('f'));
+			this.drawCenteredString(fontRenderer, text, this.width / 2, height / 5 + 131, fontRenderer.getColorCode('f'));
 		}
 	}
 
