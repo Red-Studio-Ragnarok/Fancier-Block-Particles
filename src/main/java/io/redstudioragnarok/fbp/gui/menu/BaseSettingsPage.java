@@ -91,7 +91,7 @@ public abstract class BaseSettingsPage extends GuiScreen {
         if (FBP.mc.world != null)
             GuiHelper.drawRectangle(0, 0, width, height, 0, 0, 0, 191);
         else
-            drawWorldBackground(0);
+            drawBackground(0);
 
         drawCenteredString(fontRenderer, "\u00A7L= " + I18n.format("name") + " =", width / 2, y - 27, fontRenderer.getColorCode('6'));
         drawCenteredString(fontRenderer, "\u00A7L= " + ModReference.version + " =", width / 2, y - 17, fontRenderer.getColorCode('a'));
