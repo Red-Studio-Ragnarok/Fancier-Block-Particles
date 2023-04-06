@@ -1,8 +1,6 @@
 package io.redstudioragnarok.fbp.gui.menu;
 
 import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.gui.GuiHelper;
-import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
@@ -14,10 +12,7 @@ public class Page1 extends BaseSettingsPage {
 
 	@Override
 	public void initGui() {
-		super.initGui();
-		super.initNavigation(new Page0(), new Page2());
-
-		int x = this.width / 2 - 200 / 2;
+		super.initPage(new Page0(), new Page2());
 
 		randomRotation = addButton(1, x, this.height / 5 - 6, I18n.format("menu.randomrotation.info"), FBP.randomRotation, true, true);
 		cartoonMode = addButton(2, x, randomRotation.y + randomRotation.height + 1, I18n.format("menu.cartonmode.info"), false, false, false);
@@ -28,7 +23,7 @@ public class Page1 extends BaseSettingsPage {
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) {
+	protected void onActionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 1:
 			FBP.randomRotation = !FBP.randomRotation;
@@ -48,8 +43,6 @@ public class Page1 extends BaseSettingsPage {
 			FBP.spawnWhileFrozen = !FBP.spawnWhileFrozen;
 			break;
 		}
-
-		super.actionPerformed(button);
 	}
 
 	@Override
@@ -90,24 +83,5 @@ public class Page1 extends BaseSettingsPage {
 				}
 			}
 		}
-	}
-
-	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-		if (mouseButton == 0) {
-			for (GuiButton guibutton : this.buttonList) {
-				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
-					if (!guibutton.isMouseOver())
-						return;
-
-					this.actionPerformed(guibutton);
-				}
-			}
-		}
-	}
-
-	@Override
-	public void onGuiClosed() {
-		ConfigHandler.writeMainConfig();
 	}
 }

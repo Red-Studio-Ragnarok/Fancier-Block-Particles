@@ -27,15 +27,10 @@ public class Page4 extends BaseSettingsPage {
 
 	@Override
 	public void initGui() {
-		super.initGui();
-		super.initNavigation(new Page3(), null);
-
-		int x = this.width / 2 - 100;
+		super.initPage(new Page3(), null);
 
 		weatherParticleDensity = addSlider(x, this.height / 5 - 6, (float) ((FBP.weatherParticleDensity - 0.75) / 4.25));
 		weatherRenderDistance = addSlider(x, weatherParticleDensity.y + weatherParticleDensity.height + 1, (float) ((FBP.weatherRenderDistance - 0.75) / 1.75));
-
-		this.buttonList.addAll(Arrays.asList(weatherParticleDensity, weatherRenderDistance));
 	}
 
 	@Override
@@ -125,24 +120,5 @@ public class Page4 extends BaseSettingsPage {
 	private void drawInfo() {
 		weatherParticleDensity.displayString = I18n.format("menu.weatherdensity.info")+" [\u00A76" + (int) (FBP.weatherParticleDensity * 100) + "%\u00A7f]";
 		weatherRenderDistance.displayString = I18n.format("menu.weatherRenderDistance.title")+" [\u00A76" + (int) (FBP.weatherRenderDistance * 100) + "%\u00A7f]";
-	}
-
-	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-		if (mouseButton == 0) {
-			for (GuiButton guibutton : this.buttonList) {
-				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
-					if (!guibutton.isMouseOver())
-						return;
-
-					this.actionPerformed(guibutton);
-				}
-			}
-		}
-	}
-
-	@Override
-	public void onGuiClosed() {
-		ConfigHandler.writeMainConfig();
 	}
 }

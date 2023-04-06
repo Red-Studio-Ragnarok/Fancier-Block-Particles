@@ -1,6 +1,5 @@
 package io.redstudioragnarok.fbp.gui;
 
-import net.jafama.FastMath;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

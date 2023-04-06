@@ -3,7 +3,6 @@ package io.redstudioragnarok.fbp.gui.menu;
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.GuiHelper;
 import io.redstudioragnarok.fbp.gui.GuiSlider;
-import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import io.redstudioragnarok.fbp.utils.MathUtil;
 import io.redstudioragnarok.fbp.vectors.Vector2F;
 import net.jafama.FastMath;
@@ -29,10 +28,7 @@ public class Page0 extends BaseSettingsPage {
 
 	@Override
 	public void initGui() {
-		super.initGui();
-		super.initNavigation(null, new Page1());
-
-		int x = this.width / 2 - 100;
+		super.initPage(null, new Page1());
 
 		minAge = addSlider(x, this.height / 5 - 6, (float) ((FBP.minAge - 10) / 90.0));
 		maxAge = addSlider(x, minAge.y + minAge.height + 1, (float) ((FBP.maxAge - 10) / 90.0));
@@ -49,7 +45,7 @@ public class Page0 extends BaseSettingsPage {
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) {
+	protected void onActionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 11:
 			infiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "\u00A7a" : "\u00A7c") + "\u221e";
@@ -59,8 +55,6 @@ public class Page0 extends BaseSettingsPage {
 			timeUnit.displayString = "\u00A7a\u00A7L" + ((FBP.showInMillis = !FBP.showInMillis) ? "ms" : "ti");
 			break;
 		}
-
-		super.actionPerformed(button);
 	}
 
 	@Override
@@ -239,27 +233,8 @@ public class Page0 extends BaseSettingsPage {
 		rotationMult.displayString = I18n.format("menu.rotationspeed.info") + " [\u00A76" + (FBP.rotationMult != 0 ? FBP.rotationMult : I18n.format("menu.off")) + "\u00A7f]";
 	}
 
-	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-		if (mouseButton == 0) {
-			for (GuiButton guibutton : this.buttonList) {
-				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
-					if (!guibutton.isMouseOver())
-						return;
-
-					this.actionPerformed(guibutton);
-				}
-			}
-		}
-	}
-
 	private void update() {
 		minAge.enabled = !FBP.infiniteDuration;
 		maxAge.enabled = !FBP.infiniteDuration;
-	}
-
-	@Override
-	public void onGuiClosed() {
-		ConfigHandler.writeMainConfig();
 	}
 }

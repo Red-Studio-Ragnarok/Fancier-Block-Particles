@@ -1,7 +1,6 @@
 package io.redstudioragnarok.fbp.gui.menu;
 
 import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.gui.GuiHelper;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
@@ -16,10 +15,7 @@ public class Page2 extends BaseSettingsPage {
 
 	@Override
 	public void initGui() {
-		super.initGui();
-		super.initNavigation(new Page1(), new Page3());
-
-		int x = this.width / 2 - 200 / 2;
+		super.initPage(new Page1(), new Page3());
 
 		entityCollision = addButton(1, x, (this.height / 5) - 6, large, I18n.format("menu.entitycollide.info"), FBP.entityCollision, true, true);
 		bounceOffWalls = addButton(2, x, entityCollision.y + entityCollision.height + 1, large, I18n.format("menu.bounceoffwalls.info"), FBP.bounceOffWalls, true, true);
@@ -30,7 +26,7 @@ public class Page2 extends BaseSettingsPage {
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) {
+	protected void onActionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 1:
 			FBP.entityCollision = !FBP.entityCollision;
@@ -52,8 +48,6 @@ public class Page2 extends BaseSettingsPage {
 			FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;
 			break;
 		}
-
-		super.actionPerformed(button);
 	}
 
 	@Override
@@ -94,24 +88,5 @@ public class Page2 extends BaseSettingsPage {
 				}
 			}
 		}
-	}
-
-	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-		if (mouseButton == 0) {
-			for (GuiButton guibutton : this.buttonList) {
-				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
-					if (!guibutton.isMouseOver())
-						return;
-
-					this.actionPerformed(guibutton);
-				}
-			}
-		}
-	}
-
-	@Override
-	public void onGuiClosed() {
-		ConfigHandler.writeMainConfig();
 	}
 }

@@ -1,7 +1,6 @@
 package io.redstudioragnarok.fbp.gui.menu;
 
 import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.gui.GuiHelper;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
@@ -16,10 +15,7 @@ public class Page3 extends BaseSettingsPage {
 
 	@Override
 	public void initGui() {
-		super.initGui();
-		super.initNavigation(new Page2(), new Page4());
-
-		int x = this.width / 2 - 200 / 2;
+		super.initPage(new Page2(), new Page4());
 
 		fancyFlame = addButton(1, x, (this.height / 5) - 6, large, I18n.format("menu.fancyflame.info"), FBP.fancyFlame, true, true);
 		fancySmoke = addButton(2, x, fancyFlame.y + fancyFlame.height + 1, large, I18n.format("menu.fancysmoke.info"), FBP.fancySmoke, true, true);
@@ -30,7 +26,7 @@ public class Page3 extends BaseSettingsPage {
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) {
+	protected void onActionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 1:
 			FBP.fancyFlame = !FBP.fancyFlame;
@@ -56,8 +52,6 @@ public class Page3 extends BaseSettingsPage {
 		case 6:
 			break;
 		}
-
-		super.actionPerformed(button);
 	}
 
 	@Override
@@ -98,24 +92,5 @@ public class Page3 extends BaseSettingsPage {
 				}
 			}
 		}
-	}
-
-	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-		if (mouseButton == 0) {
-			for (GuiButton guibutton : this.buttonList) {
-				if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
-					if (!guibutton.isMouseOver())
-						return;
-
-					this.actionPerformed(guibutton);
-				}
-			}
-		}
-	}
-
-	@Override
-	public void onGuiClosed() {
-		ConfigHandler.writeMainConfig();
 	}
 }
