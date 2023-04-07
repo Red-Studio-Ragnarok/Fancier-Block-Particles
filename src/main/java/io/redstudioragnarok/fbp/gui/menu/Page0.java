@@ -55,6 +55,8 @@ public class Page0 extends BaseSettingsPage {
 			timeUnit.displayString = "\u00A7a\u00A7L" + ((FBP.showInMillis = !FBP.showInMillis) ? "ms" : "ti");
 			break;
 		}
+
+		writeConfig = true;
 	}
 
 	@Override
@@ -204,6 +206,8 @@ public class Page0 extends BaseSettingsPage {
 				GuiHelper.drawRectangle(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
 
 			this.drawCenteredString(fontRenderer, text, this.width / 2, height / 5 + 131, fontRenderer.getColorCode('f'));
+
+			writeConfig = true;
 		}
 	}
 

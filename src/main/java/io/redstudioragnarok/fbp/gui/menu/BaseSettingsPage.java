@@ -17,14 +17,13 @@ import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.*;
 // Todo: Rename this class to something else I don't like the name.
 public abstract class BaseSettingsPage extends GuiScreen {
 
+    protected boolean writeConfig;
+
     protected int x;
 
     protected GuiButton toggle, issue;
 
     private GuiScreen previousPage, nextPage;
-
-    // Todo: Actually use this and set it to true in the actionPerformed method & check against it in onGuiClosed
-    private boolean writeConfig;
 
     public void initPage(GuiScreen previousPage, GuiScreen nextPage) {
         x = width / 2 - 100;
@@ -68,6 +67,7 @@ public abstract class BaseSettingsPage extends GuiScreen {
                 break;
             case -3:
                 FBP.setEnabled(!FBP.enabled);
+                writeConfig = true;
                 break;
             case -4:
                 try {
@@ -124,9 +124,10 @@ public abstract class BaseSettingsPage extends GuiScreen {
 
     @Override
     public void onGuiClosed() {
-        ConfigHandler.writeMainConfig();
+        if (writeConfig)
+            ConfigHandler.writeMainConfig();
     }
-    
+
     protected FBPGuiButton addButton(int id, int x, int y, FBPGuiButton.ButtonSize size, String text, Boolean toggle, Boolean toggleButton, Boolean enabled) {
         FBPGuiButton button = new FBPGuiButton(id, x, y, size, text, toggle, toggleButton, enabled);
         this.buttonList.add(button);

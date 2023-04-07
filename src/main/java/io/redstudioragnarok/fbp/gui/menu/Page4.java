@@ -3,13 +3,9 @@ package io.redstudioragnarok.fbp.gui.menu;
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.GuiHelper;
 import io.redstudioragnarok.fbp.gui.GuiSlider;
-import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import io.redstudioragnarok.fbp.utils.MathUtil;
 import io.redstudioragnarok.fbp.vectors.Vector2F;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
-
-import java.util.Arrays;
 
 public class Page4 extends BaseSettingsPage {
 
@@ -110,10 +106,12 @@ public class Page4 extends BaseSettingsPage {
 
 		if (mouseX >= weatherParticleDensity.x - 2 && mouseX <= weatherParticleDensity.x + weatherParticleDensity.width + 2 && mouseY < weatherRenderDistance.y + weatherRenderDistance.height && mouseY >= weatherParticleDensity.y && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= weatherParticleDensity.y) {
 
-			if (selected <= 5)
+			if (selected <= 2)
 				GuiHelper.drawRectangle(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
 
 			this.drawCenteredString(fontRenderer, text, this.width / 2, height / 5 + 131, fontRenderer.getColorCode('f'));
+
+			writeConfig = true;
 		}
 	}
 

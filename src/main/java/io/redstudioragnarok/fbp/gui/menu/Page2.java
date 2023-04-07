@@ -48,6 +48,8 @@ public class Page2 extends BaseSettingsPage {
 			FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;
 			break;
 		}
+
+		writeConfig = true;
 	}
 
 	@Override

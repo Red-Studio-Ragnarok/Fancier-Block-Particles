@@ -30,8 +30,6 @@ public class Page1 extends BaseSettingsPage {
 		case 1:
 			FBP.randomRotation = !FBP.randomRotation;
 			break;
-		case 2:
-			break;
 		case 3:
 			FBP.randomizedScale = !FBP.randomizedScale;
 			break;
@@ -45,6 +43,8 @@ public class Page1 extends BaseSettingsPage {
 			FBP.spawnWhileFrozen = !FBP.spawnWhileFrozen;
 			break;
 		}
+
+		writeConfig = true;
 	}
 
 	@Override

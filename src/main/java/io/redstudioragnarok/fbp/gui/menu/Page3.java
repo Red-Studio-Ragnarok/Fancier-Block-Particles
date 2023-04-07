@@ -49,9 +49,9 @@ public class Page3 extends BaseSettingsPage {
 			FBP.waterPhysics = !FBP.waterPhysics;
 			ConfigHandler.reloadMaterials();
 			break;
-		case 6:
-			break;
 		}
+
+		writeConfig = true;
 	}
 
 	@Override
