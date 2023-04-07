@@ -4,6 +4,8 @@ import io.redstudioragnarok.fbp.FBP;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
+import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.large;
+
 public class Page1 extends BaseSettingsPage {
 
 	GuiButton randomRotation, cartoonMode, randomizedScale, randomFadingSpeed, spawnRedstoneBlockParticles, spawnWhileFrozen;
@@ -14,12 +16,12 @@ public class Page1 extends BaseSettingsPage {
 	public void initGui() {
 		super.initPage(new Page0(), new Page2());
 
-		randomRotation = addButton(1, x, this.height / 5 - 6, I18n.format("menu.randomrotation.info"), FBP.randomRotation, true, true);
-		cartoonMode = addButton(2, x, randomRotation.y + randomRotation.height + 1, I18n.format("menu.cartonmode.info"), false, false, false);
-		randomizedScale = addButton(3, x, cartoonMode.y + cartoonMode.height + 6, I18n.format("menu.randomizedscale.info"), FBP.randomizedScale, true, true);
-		randomFadingSpeed = addButton(4, x, randomizedScale.y + randomizedScale.height + 1, I18n.format("menu.randomfadespeed.info"), FBP.randomFadingSpeed, true, true);
-		spawnRedstoneBlockParticles = addButton(5, x, randomFadingSpeed.y + randomFadingSpeed.height + 6, I18n.format("menu.redstoneblock.info"), FBP.spawnRedstoneBlockParticles, true, true);
-		spawnWhileFrozen = addButton(6, x, spawnRedstoneBlockParticles.y + spawnRedstoneBlockParticles.height + 1, I18n.format("menu.spawnfreeze.info"), FBP.spawnWhileFrozen, true, true);
+		randomRotation = addButton(1, x, this.height / 5 - 6, large, I18n.format("menu.randomrotation.info"), FBP.randomRotation, true, true);
+		cartoonMode = addButton(2, x, randomRotation.y + randomRotation.height + 1, large, I18n.format("menu.cartonmode.info"), false, false, false);
+		randomizedScale = addButton(3, x, cartoonMode.y + cartoonMode.height + 6, large, I18n.format("menu.randomizedscale.info"), FBP.randomizedScale, true, true);
+		randomFadingSpeed = addButton(4, x, randomizedScale.y + randomizedScale.height + 1, large, I18n.format("menu.randomfadespeed.info"), FBP.randomFadingSpeed, true, true);
+		spawnRedstoneBlockParticles = addButton(5, x, randomFadingSpeed.y + randomFadingSpeed.height + 6, large, I18n.format("menu.redstoneblock.info"), FBP.spawnRedstoneBlockParticles, true, true);
+		spawnWhileFrozen = addButton(6, x, spawnRedstoneBlockParticles.y + spawnRedstoneBlockParticles.height + 1, large, I18n.format("menu.spawnfreeze.info"), FBP.spawnWhileFrozen, true, true);
 	}
 
 	@Override
