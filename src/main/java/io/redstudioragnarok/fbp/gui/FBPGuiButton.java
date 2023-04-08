@@ -25,9 +25,9 @@ public class FBPGuiButton extends GuiButton {
 
 		buttonEnabled = enabled;
 
-		if (buttonText.equals("\u00A76<<")){
+		if (buttonText.equals("§6<<")){
 			offsetX = (this.height - 10) / 2;
-		} else if (buttonText.equals("\u00A76>>")) {
+		} else if (buttonText.equals("§6>>")) {
 			offsetX = (this.height - 7) / 2;
 		} else {
 			offsetX = -1;
@@ -43,25 +43,6 @@ public class FBPGuiButton extends GuiButton {
             case large:
                 this.width = 200;
                 break;
-		}
-
-		if (this.toggleButton = toggleButton)
-			this.toggle = toggle;
-	}
-
-	public FBPGuiButton(int buttonId, int x, int y, String buttonText, boolean toggle, boolean toggleButton, boolean enabled) {
-		super(buttonId, x, y, buttonText);
-
-		buttonEnabled = enabled;
-
-		if (buttonText.equals("<<")){
-			this.displayString = "\u00A76" + this.displayString;
-			offsetX = (this.height - 10) / 2;
-		} else if (buttonText.equals(">>")) {
-			this.displayString = "\u00A76" + this.displayString;
-			offsetX = (this.height - 7) / 2;
-		} else {
-			offsetX = -1;
 		}
 
 		if (this.toggleButton = toggleButton)

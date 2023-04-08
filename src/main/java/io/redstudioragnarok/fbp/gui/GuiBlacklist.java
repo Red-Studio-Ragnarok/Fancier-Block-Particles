@@ -27,6 +27,8 @@ import org.lwjgl.input.Mouse;
 
 import java.util.Arrays;
 
+import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.small;
+
 public class GuiBlacklist extends GuiScreen {
 
 	GuiButtonBlacklist animation, particle;
@@ -83,7 +85,7 @@ public class GuiBlacklist extends GuiScreen {
 		animation.enabled = b != null && !(b instanceof BlockDoublePlant) && ModelHelper.isModelValid(b.getDefaultState());
 		particle.enabled = selectedBlock.getBlock() != Blocks.REDSTONE_BLOCK;
 
-		FBPGuiButton guide = new FBPGuiButton(-1, animation.x + 30, animation.y + 30 - 10, (animation.enabled ? "\u00A7a<" : "\u00A7c<") + "             " + (particle.enabled ? "\u00A7a>" : "\u00A7c>"), false, false, true);
+		FBPGuiButton guide = new FBPGuiButton(-1, animation.x + 30, animation.y + 30 - 10, small, (animation.enabled ? "§a<" : "§c<") + "             " + (particle.enabled ? "§a>" : "§c>"), false, false, true);
 		guide.enabled = false;
 
 		this.buttonList.addAll(Arrays.asList(guide, animation, particle));
@@ -180,7 +182,7 @@ public class GuiBlacklist extends GuiScreen {
 
 		// BLOCK INFO
 		String itemName = (selectedPos == null ? displayItemStack.getItem() : selectedBlock.getBlock()).getRegistryName().toString();
-		itemName = ((itemName.contains(":") ? "\u00A76\u00A7l" : "\u00A7a\u00A7l") + itemName).replaceAll(":", "\u00A7c\u00A7l:\u00A7a\u00A7l");
+		itemName = ((itemName.contains(":") ? "§6§l" : "§a§l") + itemName).replaceAll(":", "§c§l:§a§l");
 
 		drawCenteredString(fontRenderer, itemName, width / 2, height / 2 - 19, 0);
 

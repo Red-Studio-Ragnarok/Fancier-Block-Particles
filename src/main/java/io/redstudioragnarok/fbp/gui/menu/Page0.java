@@ -38,8 +38,8 @@ public class Page0 extends BaseSettingsPage {
 		gravityMult = addSlider(x, scaleMult.y + scaleMult.height + 6, (float) ((FBP.gravityMult - 0.05) / 2.95));
 		rotationMult = addSlider(x, gravityMult.y + gravityMult.height + 1, (float) (FBP.rotationMult / 1.5));
 
-		infiniteDuration = addButton(11, x + 205, minAge.y + 10, small, (FBP.infiniteDuration ? "\u00A7a" : "\u00A7c") + "\u221e", false, false, true);
-		timeUnit = addButton(12, x - 25, minAge.y + 10, small, "\u00A7a\u00A7L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
+		infiniteDuration = addButton(11, x + 205, minAge.y + 10, small, (FBP.infiniteDuration ? "§a" : "§c") + "\u221e", false, false, true);
+		timeUnit = addButton(12, x - 25, minAge.y + 10, small, "§a§L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
 
 		update();
 	}
@@ -48,11 +48,11 @@ public class Page0 extends BaseSettingsPage {
 	protected void onActionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 11:
-			infiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "\u00A7a" : "\u00A7c") + "\u221e";
+			infiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "§a" : "§c") + "\u221e";
 			update();
 			break;
 		case 12:
-			timeUnit.displayString = "\u00A7a\u00A7L" + ((FBP.showInMillis = !FBP.showInMillis) ? "ms" : "ti");
+			timeUnit.displayString = "§a§L" + ((FBP.showInMillis = !FBP.showInMillis) ? "ms" : "ti");
 			break;
 		}
 
@@ -180,7 +180,7 @@ public class Page0 extends BaseSettingsPage {
 			}
 			break;
 		case 2:
-			text = I18n.format("menu.destroyparticles.description") + (int) Math.pow(FBP.particlesPerAxis, 3) + " \u00A7c[\u00A76" + FBP.particlesPerAxis + "^3\u00A7c]"+ I18n.format("menu.period");
+			text = I18n.format("menu.destroyparticles.description") + (int) Math.pow(FBP.particlesPerAxis, 3) + " §c[§6" + FBP.particlesPerAxis + "^3§c]"+ I18n.format("menu.period");
 			break;
 		case 3:
 			text = I18n.format("menu.particlescale.description") + FBP.scaleMult +  I18n.format("menu.period");
@@ -213,28 +213,28 @@ public class Page0 extends BaseSettingsPage {
 
 	private void drawInfo() {
 
-		String s = I18n.format("menu.destroyparticles.info") + " [\u00A76" + (int) Math.pow(FBP.particlesPerAxis, 3) + "\u00A7f]";
+		String s = I18n.format("menu.destroyparticles.info") + " [§6" + (int) Math.pow(FBP.particlesPerAxis, 3) + "§f]";
 		particlesPerAxis.displayString = s;
 
 		if (FBP.infiniteDuration)
-			s = I18n.format("menu.minduration.info") + " [\u00A76" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "\u00A7f]";
+			s = I18n.format("menu.minduration.info") + " [§6" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "§f]";
 		else
-			s = I18n.format("menu.minduration.info") + " [\u00A76" + (FBP.showInMillis ? ((FBP.minAge * 50) + "ms") : (FBP.minAge + " tick")) + "\u00A7f]";
+			s = I18n.format("menu.minduration.info") + " [§6" + (FBP.showInMillis ? ((FBP.minAge * 50) + "ms") : (FBP.minAge + " tick")) + "§f]";
 
 		minAge.displayString = s;
 
 		if (FBP.infiniteDuration)
-			s = I18n.format("menu.maxduration.info") + " [\u00A76" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "\u00A7f]";
+			s = I18n.format("menu.maxduration.info") + " [§6" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "§f]";
 		else
-			s = I18n.format("menu.maxduration.info") + " [\u00A76" + (FBP.showInMillis ? ((FBP.maxAge * 50) + "ms") : (FBP.maxAge + (FBP.maxAge > 1 ? " ticks" : " tick"))) + "\u00A7f]";
+			s = I18n.format("menu.maxduration.info") + " [§6" + (FBP.showInMillis ? ((FBP.maxAge * 50) + "ms") : (FBP.maxAge + (FBP.maxAge > 1 ? " ticks" : " tick"))) + "§f]";
 
 		maxAge.displayString = s;
 
-		scaleMult.displayString = I18n.format("menu.scalemult.info") + " [\u00A76" + FBP.scaleMult + "\u00A7f]";
+		scaleMult.displayString = I18n.format("menu.scalemult.info") + " [§6" + FBP.scaleMult + "§f]";
 
-		gravityMult.displayString = I18n.format("menu.gravityscale.info") + " [\u00A76" + FBP.gravityMult + "\u00A7f]";
+		gravityMult.displayString = I18n.format("menu.gravityscale.info") + " [§6" + FBP.gravityMult + "§f]";
 
-		rotationMult.displayString = I18n.format("menu.rotationspeed.info") + " [\u00A76" + (FBP.rotationMult != 0 ? FBP.rotationMult : I18n.format("menu.off")) + "\u00A7f]";
+		rotationMult.displayString = I18n.format("menu.rotationspeed.info") + " [§6" + (FBP.rotationMult != 0 ? FBP.rotationMult : I18n.format("menu.off")) + "§f]";
 	}
 
 	private void update() {

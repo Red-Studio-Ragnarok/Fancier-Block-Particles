@@ -44,10 +44,10 @@ public abstract class BaseSettingsPage extends GuiScreen {
         this.nextPage = nextPage;
 
         if (previousPage!= null)
-            addButton(-5, x - 45, y - 50, small, "\u00A76<<", false, false, true);
+            addButton(-5, x - 45, y - 50, small, "§6<<", false, false, true);
 
         if (nextPage!= null)
-            addButton(-6, x + 225, y - 50, small, "\u00A76>>", false, false, true);
+            addButton(-6, x + 225, y - 50, small, "§6>>", false, false, true);
     }
 
     @Override
@@ -96,11 +96,11 @@ public abstract class BaseSettingsPage extends GuiScreen {
         else
             drawBackground(0);
 
-        drawCenteredString(fontRenderer, "\u00A7L= " + I18n.format("name") + " =", width / 2, y - 27, fontRenderer.getColorCode('6'));
-        drawCenteredString(fontRenderer, "\u00A7L= " + ModReference.version + " =", width / 2, y - 17, fontRenderer.getColorCode('a'));
+        drawCenteredString(fontRenderer, "§L= " + I18n.format("name") + " =", width / 2, y - 27, fontRenderer.getColorCode('6'));
+        drawCenteredString(fontRenderer, "§L= " + ModReference.version + " =", width / 2, y - 17, fontRenderer.getColorCode('a'));
 
         if (!FBP.enabled)
-            drawCenteredString(fontRenderer, "\u00A7L= " + I18n.format("menu.disabled") + " =", width / 2, y - 35, fontRenderer.getColorCode('c'));
+            drawCenteredString(fontRenderer, "§L= " + I18n.format("menu.disabled") + " =", width / 2, y - 35, fontRenderer.getColorCode('c'));
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

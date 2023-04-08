@@ -116,7 +116,7 @@ public class Page4 extends BaseSettingsPage {
 	}
 
 	private void drawInfo() {
-		weatherParticleDensity.displayString = I18n.format("menu.weatherdensity.info")+" [\u00A76" + (int) (FBP.weatherParticleDensity * 100) + "%\u00A7f]";
-		weatherRenderDistance.displayString = I18n.format("menu.weatherRenderDistance.title")+" [\u00A76" + (int) (FBP.weatherRenderDistance * 100) + "%\u00A7f]";
+		weatherParticleDensity.displayString = I18n.format("menu.weatherdensity.info")+" [§6" + (int) (FBP.weatherParticleDensity * 100) + "%§f]";
+		weatherRenderDistance.displayString = I18n.format("menu.weatherRenderDistance.title")+" [§6" + (int) (FBP.weatherRenderDistance * 100) + "%§f]";
 	}
 }
