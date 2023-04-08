@@ -38,7 +38,7 @@ public class Page0 extends BaseSettingsPage {
 		gravityMult = addSlider(x, scaleMult.y + scaleMult.height + 6, (float) ((FBP.gravityMult - 0.05) / 2.95));
 		rotationMult = addSlider(x, gravityMult.y + gravityMult.height + 1, (float) (FBP.rotationMult / 1.5));
 
-		infiniteDuration = addButton(11, x + 205, minAge.y + 10, small, (FBP.infiniteDuration ? "§a" : "§c") + "\u221e", false, false, true);
+		infiniteDuration = addButton(11, x + 205, minAge.y + 10, small, (FBP.infiniteDuration ? "§a" : "§c") + "∞", false, false, true);
 		timeUnit = addButton(12, x - 25, minAge.y + 10, small, "§a§L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
 
 		update();
@@ -48,7 +48,7 @@ public class Page0 extends BaseSettingsPage {
 	protected void onActionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 11:
-			infiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "§a" : "§c") + "\u221e";
+			infiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "§a" : "§c") + "∞";
 			update();
 			break;
 		case 12:
@@ -217,14 +217,14 @@ public class Page0 extends BaseSettingsPage {
 		particlesPerAxis.displayString = title;
 
 		if (FBP.infiniteDuration)
-			title = I18n.format("menu.minDuration.title") + " [§6" + "\u221e " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
+			title = I18n.format("menu.minDuration.title") + " [§6" + "∞ " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 		else
 			title = I18n.format("menu.minDuration.title") + " [§6" + (FBP.showInMillis ? FBP.minAge * 50 : FBP.minAge) + " " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 
 		minAge.displayString = title;
 
 		if (FBP.infiniteDuration)
-			title = I18n.format("menu.maxDuration.title") + " [§6" + "\u221e" + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
+			title = I18n.format("menu.maxDuration.title") + " [§6" + "∞" + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 		else
 			title = I18n.format("menu.maxDuration.title") + " [§6" + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + " " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 
