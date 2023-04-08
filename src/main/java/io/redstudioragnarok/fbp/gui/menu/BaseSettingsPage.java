@@ -28,18 +28,15 @@ public abstract class BaseSettingsPage extends GuiScreen {
     public void initPage(GuiScreen previousPage, GuiScreen nextPage) {
         x = width / 2 - 100;
 
-        int xTop = width - 32;
-
-        int y = height / 5 + 149;
+        final int y = height / 5 + 149;
 
         addButton(0, x, y, medium, I18n.format("menu.defaults"), false, false, true);
         addButton(-1, x + 102, y, medium, I18n.format("menu.reloadconfig"), false, false, true);
 
         addButton(-2, x, y + 20 + 1, large, I18n.format("menu.done"), false, false, true);
 
-        // Todo: Use the global X instead of xTop variable and use math to get it to the same pos
-        toggle = new GuiButtonEnable(-3, xTop - 31, 6, this.fontRenderer);
-        issue = new GuiButtonBugReport(-4, xTop, 6, new Dimension(width, height), this.fontRenderer);
+        issue = new GuiButtonBugReport(-3, width - 32, 6, new Dimension(width, height), this.fontRenderer);
+        toggle = new GuiButtonEnable(-4, width - 64, 6, this.fontRenderer);
 
         this.buttonList.addAll(Arrays.asList(toggle, issue));
 
@@ -66,15 +63,15 @@ public abstract class BaseSettingsPage extends GuiScreen {
                 mc.displayGuiScreen(null);
                 break;
             case -3:
-                FBP.setEnabled(!FBP.enabled);
-                writeConfig = true;
-                break;
-            case -4:
                 try {
                     Desktop.getDesktop().browse(ModReference.newIssueLink);
                 } catch (Exception e) {
                     // TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
                 }
+                break;
+            case -4:
+                FBP.setEnabled(!FBP.enabled);
+                writeConfig = true;
                 break;
             case -5:
                 mc.displayGuiScreen(previousPage);
