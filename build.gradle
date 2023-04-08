@@ -107,6 +107,10 @@ jar {
 	])
 }
 
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = "UTF-8"
+}
+
 idea {
 	module {
 		excludeDirs = [file(".github"), file(".gradle"), file(".idea"), file("build"), file("gradle"), file("run")]
