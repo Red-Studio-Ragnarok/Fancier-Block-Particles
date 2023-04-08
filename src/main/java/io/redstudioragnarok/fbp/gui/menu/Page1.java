@@ -1,12 +1,13 @@
 package io.redstudioragnarok.fbp.gui.menu;
 
 import io.redstudioragnarok.fbp.FBP;
+import io.redstudioragnarok.fbp.gui.BasePage;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
 import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.large;
 
-public class Page1 extends BaseSettingsPage {
+public class Page1 extends BasePage {
 
 	GuiButton randomRotation, cartoonMode, randomizedScale, randomFadingSpeed, spawnRedstoneBlockParticles, spawnWhileFrozen;
 

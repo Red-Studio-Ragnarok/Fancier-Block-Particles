@@ -1,13 +1,14 @@
 package io.redstudioragnarok.fbp.gui.menu;
 
 import io.redstudioragnarok.fbp.FBP;
+import io.redstudioragnarok.fbp.gui.BasePage;
 import io.redstudioragnarok.fbp.gui.GuiHelper;
 import io.redstudioragnarok.fbp.gui.GuiSlider;
 import io.redstudioragnarok.fbp.utils.MathUtil;
 import io.redstudioragnarok.fbp.vectors.Vector2F;
 import net.minecraft.client.resources.I18n;
 
-public class Page4 extends BaseSettingsPage {
+public class Page4 extends BasePage {
 
 	GuiSlider weatherParticleDensity, weatherRenderDistance;
 

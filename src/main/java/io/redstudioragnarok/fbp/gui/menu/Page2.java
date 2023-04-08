@@ -1,13 +1,14 @@
 package io.redstudioragnarok.fbp.gui.menu;
 
 import io.redstudioragnarok.fbp.FBP;
+import io.redstudioragnarok.fbp.gui.BasePage;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
 import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.large;
 
-public class Page2 extends BaseSettingsPage {
+public class Page2 extends BasePage {
 
 	GuiButton entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles;
 

@@ -1,6 +1,7 @@
 package io.redstudioragnarok.fbp.gui.menu;
 
 import io.redstudioragnarok.fbp.FBP;
+import io.redstudioragnarok.fbp.gui.BasePage;
 import io.redstudioragnarok.fbp.gui.GuiHelper;
 import io.redstudioragnarok.fbp.gui.GuiSlider;
 import io.redstudioragnarok.fbp.utils.MathUtil;
@@ -11,7 +12,7 @@ import net.minecraft.client.resources.I18n;
 
 import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.small;
 
-public class Page0 extends BaseSettingsPage {
+public class Page0 extends BasePage {
 
 	GuiButton infiniteDuration, timeUnit;
 	GuiSlider minAge, maxAge, particlesPerAxis, scaleMult, gravityMult, rotationMult;

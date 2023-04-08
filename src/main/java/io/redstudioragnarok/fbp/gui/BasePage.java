@@ -1,7 +1,6 @@
-package io.redstudioragnarok.fbp.gui.menu;
+package io.redstudioragnarok.fbp.gui;
 
 import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.gui.*;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import io.redstudioragnarok.fbp.utils.ModReference;
 import net.minecraft.client.gui.GuiButton;
@@ -14,8 +13,7 @@ import java.util.Arrays;
 
 import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.*;
 
-// Todo: Rename this class to something else I don't like the name.
-public abstract class BaseSettingsPage extends GuiScreen {
+public abstract class BasePage extends GuiScreen {
 
     protected boolean writeConfig;
 
