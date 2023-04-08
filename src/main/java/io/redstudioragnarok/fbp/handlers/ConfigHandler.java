@@ -1,7 +1,6 @@
 package io.redstudioragnarok.fbp.handlers;
 
 import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.utils.ModReference;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
@@ -434,8 +433,6 @@ public class ConfigHandler {
      * Writes the main config file.
      */
 	public static void writeMainConfig() {
-		ModReference.log.info("Writing main config...");
-
 		initWriter(FBP.mainConfigFile);
 
 		writer.println("# Main configuration file for Fancier Block Particles");
