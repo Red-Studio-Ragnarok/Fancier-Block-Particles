@@ -13,7 +13,7 @@ import java.awt.Dimension;
 
 public class GuiButtonBugReport extends GuiButton {
 
-	static final String _textOnHover = I18n.format("menu.bugreport");
+	static final String _textOnHover = I18n.format("menu.bugReport");
 
 	FontRenderer _fr;
 	Dimension _screen;

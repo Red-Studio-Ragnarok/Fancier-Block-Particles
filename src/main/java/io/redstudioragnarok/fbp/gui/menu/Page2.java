@@ -17,12 +17,12 @@ public class Page2 extends BaseSettingsPage {
 	public void initGui() {
 		super.initPage(new Page1(), new Page3());
 
-		entityCollision = addButton(1, x, (this.height / 5) - 6, large, I18n.format("menu.entitycollide.info"), FBP.entityCollision, true, true);
-		bounceOffWalls = addButton(2, x, entityCollision.y + entityCollision.height + 1, large, I18n.format("menu.bounceoffwalls.info"), FBP.bounceOffWalls, true, true);
-		lowTraction = addButton(3, x, bounceOffWalls.y + bounceOffWalls.height + 6, large, I18n.format("menu.lowtraction.info"), FBP.lowTraction, true, true);
-		smartBreaking = addButton(4, x, lowTraction.y + lowTraction.height + 1, large, I18n.format("menu.smartbreaking.info"), FBP.smartBreaking, true, true);
-		fancyPlaceAnim = addButton(5, x, smartBreaking.y + smartBreaking.height + 6, large, I18n.format("menu.fancyplaceanimation.info"), FBP.fancyPlaceAnim, true, true);
-		spawnPlaceParticles = addButton(6, x, fancyPlaceAnim.y + fancyPlaceAnim.height + 1, large, I18n.format("menu.spawnplaceparticles.info"), FBP.spawnPlaceParticles, true, true);
+		entityCollision = addButton(1, x, (this.height / 5) - 6, large, I18n.format("menu.entityCollide.title"), FBP.entityCollision, true, true);
+		bounceOffWalls = addButton(2, x, entityCollision.y + entityCollision.height + 1, large, I18n.format("menu.bounceOffWalls.title"), FBP.bounceOffWalls, true, true);
+		lowTraction = addButton(3, x, bounceOffWalls.y + bounceOffWalls.height + 6, large, I18n.format("menu.lowTraction.title"), FBP.lowTraction, true, true);
+		smartBreaking = addButton(4, x, lowTraction.y + lowTraction.height + 1, large, I18n.format("menu.smartBreaking.title"), FBP.smartBreaking, true, true);
+		fancyPlaceAnim = addButton(5, x, smartBreaking.y + smartBreaking.height + 6, large, I18n.format("menu.fancyPlaceAnimation.title"), FBP.fancyPlaceAnim, true, true);
+		spawnPlaceParticles = addButton(6, x, fancyPlaceAnim.y + fancyPlaceAnim.height + 1, large, I18n.format("menu.spawnPlaceParticles.title"), FBP.spawnPlaceParticles, true, true);
 	}
 
 	@Override
@@ -68,22 +68,22 @@ public class Page2 extends BaseSettingsPage {
 			if (b.isMouseOver()) {
 				switch (b.id) {
 				case 1:
-					description = I18n.format("menu.entitycollide.description");
+					description = I18n.format("menu.entityCollide.description");
 					break;
 				case 2:
-					description = I18n.format("menu.bounceoffwalls.description");
+					description = I18n.format("menu.bounceOffWalls.description");
 					break;
 				case 3:
-					description = I18n.format("menu.lowtraction.description");
+					description = I18n.format("menu.lowTraction.description");
 					break;
 				case 4:
-					description = I18n.format("menu.smartbreaking.description");
+					description = I18n.format("menu.smartBreaking.description");
 					break;
 				case 5:
-					description = I18n.format("menu.fancyplaceanimation.description");
+					description = I18n.format("menu.fancyPlaceAnimation.description");
 					break;
 				case 6:
-					description = I18n.format("menu.spawnplaceparticles.description");
+					description = I18n.format("menu.spawnPlaceParticles.description");
 					break;
 				default:
 					description = I18n.format("menu.noDescriptionFound");

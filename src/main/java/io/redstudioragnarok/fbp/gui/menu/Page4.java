@@ -97,7 +97,7 @@ public class Page4 extends BaseSettingsPage {
 		String text;
 
 		if (selected == 1) {
-			text = I18n.format("menu.weatherdensity.description") + (int) (FBP.weatherParticleDensity * 100) + "%" + I18n.format("menu.period");
+			text = I18n.format("menu.weatherDensity.description") + (int) (FBP.weatherParticleDensity * 100) + "%" + I18n.format("menu.period");
 		} else if (selected == 2){
 			text = I18n.format("menu.weatherRenderDistance.description") + (int) (FBP.weatherRenderDistance * 100) + "%" + I18n.format("menu.period");
 		} else {
@@ -116,7 +116,7 @@ public class Page4 extends BaseSettingsPage {
 	}
 
 	private void drawInfo() {
-		weatherParticleDensity.displayString = I18n.format("menu.weatherdensity.info")+" [§6" + (int) (FBP.weatherParticleDensity * 100) + "%§f]";
+		weatherParticleDensity.displayString = I18n.format("menu.weatherDensity.title")+" [§6" + (int) (FBP.weatherParticleDensity * 100) + "%§f]";
 		weatherRenderDistance.displayString = I18n.format("menu.weatherRenderDistance.title")+" [§6" + (int) (FBP.weatherRenderDistance * 100) + "%§f]";
 	}
 }

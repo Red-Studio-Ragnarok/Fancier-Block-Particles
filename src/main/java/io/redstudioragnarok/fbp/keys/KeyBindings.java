@@ -21,11 +21,11 @@ public class KeyBindings {
 
 	public static final String categoryName = I18n.format("name");;
 
-	public static final KeyBinding menu = new KeyBinding(I18n.format("keybind.menu"), Keyboard.KEY_P, categoryName);
-	public static final KeyBinding toggle = new KeyBinding(I18n.format("keybind.toggle"), Keyboard.KEY_NONE, categoryName);
-	public static final KeyBinding freeze = new KeyBinding(I18n.format("keybind.freeze"), Keyboard.KEY_NONE, categoryName);
-	public static final KeyBinding killParticles = new KeyBinding(I18n.format("keybind.kill"), Keyboard.KEY_NONE, categoryName);
-	public static final KeyBinding blacklistGUI = new KeyBinding(I18n.format("keybind.blacklistGUI"), Keyboard.KEY_B, categoryName);
+	public static final KeyBinding menu = new KeyBinding(I18n.format("keyBinding.menu"), Keyboard.KEY_P, categoryName);
+	public static final KeyBinding toggle = new KeyBinding(I18n.format("keyBinding.toggle"), Keyboard.KEY_NONE, categoryName);
+	public static final KeyBinding freeze = new KeyBinding(I18n.format("keyBinding.freeze"), Keyboard.KEY_NONE, categoryName);
+	public static final KeyBinding killParticles = new KeyBinding(I18n.format("keyBinding.kill"), Keyboard.KEY_NONE, categoryName);
+	public static final KeyBinding blacklistGUI = new KeyBinding(I18n.format("keyBinding.blacklistGUI"), Keyboard.KEY_B, categoryName);
 
 	public static void init() {
 		final ArrayList<KeyBinding> keybinds = new ArrayList<>(Arrays.asList(menu, toggle, freeze, killParticles, blacklistGUI));

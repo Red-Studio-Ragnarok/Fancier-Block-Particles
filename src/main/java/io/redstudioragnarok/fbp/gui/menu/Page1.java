@@ -16,12 +16,12 @@ public class Page1 extends BaseSettingsPage {
 	public void initGui() {
 		super.initPage(new Page0(), new Page2());
 
-		randomRotation = addButton(1, x, this.height / 5 - 6, large, I18n.format("menu.randomrotation.info"), FBP.randomRotation, true, true);
-		cartoonMode = addButton(2, x, randomRotation.y + randomRotation.height + 1, large, I18n.format("menu.cartonmode.info"), false, false, false);
-		randomizedScale = addButton(3, x, cartoonMode.y + cartoonMode.height + 6, large, I18n.format("menu.randomizedscale.info"), FBP.randomizedScale, true, true);
-		randomFadingSpeed = addButton(4, x, randomizedScale.y + randomizedScale.height + 1, large, I18n.format("menu.randomfadespeed.info"), FBP.randomFadingSpeed, true, true);
-		spawnRedstoneBlockParticles = addButton(5, x, randomFadingSpeed.y + randomFadingSpeed.height + 6, large, I18n.format("menu.redstoneblock.info"), FBP.spawnRedstoneBlockParticles, true, true);
-		spawnWhileFrozen = addButton(6, x, spawnRedstoneBlockParticles.y + spawnRedstoneBlockParticles.height + 1, large, I18n.format("menu.spawnfreeze.info"), FBP.spawnWhileFrozen, true, true);
+		randomRotation = addButton(1, x, this.height / 5 - 6, large, I18n.format("menu.randomRotation.title"), FBP.randomRotation, true, true);
+		cartoonMode = addButton(2, x, randomRotation.y + randomRotation.height + 1, large, I18n.format("menu.cartonMode.title"), false, false, false);
+		randomizedScale = addButton(3, x, cartoonMode.y + cartoonMode.height + 6, large, I18n.format("menu.randomizedScale.title"), FBP.randomizedScale, true, true);
+		randomFadingSpeed = addButton(4, x, randomizedScale.y + randomizedScale.height + 1, large, I18n.format("menu.randomFadeSpeed.title"), FBP.randomFadingSpeed, true, true);
+		spawnRedstoneBlockParticles = addButton(5, x, randomFadingSpeed.y + randomFadingSpeed.height + 6, large, I18n.format("menu.redstoneBlock.title"), FBP.spawnRedstoneBlockParticles, true, true);
+		spawnWhileFrozen = addButton(6, x, spawnRedstoneBlockParticles.y + spawnRedstoneBlockParticles.height + 1, large, I18n.format("menu.spawnFreeze.title"), FBP.spawnWhileFrozen, true, true);
 	}
 
 	@Override
@@ -63,22 +63,22 @@ public class Page1 extends BaseSettingsPage {
 			if (b.isMouseOver()) {
 				switch (b.id) {
 					case 1:
-						description = I18n.format("menu.randomrotation.description");
+						description = I18n.format("menu.randomRotation.description");
 						break;
 					case 2:
-						description = I18n.format("menu.cartonmode.description");
+						description = I18n.format("menu.cartonMode.description");
 						break;
 					case 3:
-						description = I18n.format("menu.randomizedscale.description");
+						description = I18n.format("menu.randomizedScale.description");
 						break;
 					case 4:
-						description = I18n.format("menu.randomfadespeed.description");
+						description = I18n.format("menu.randomFadeSpeed.description");
 						break;
 					case 5:
-						description = I18n.format("menu.redstoneblock.description");
+						description = I18n.format("menu.redstoneBlock.description");
 						break;
 					case 6:
-						description = I18n.format("menu.spawnfreeze.description");
+						description = I18n.format("menu.spawnFreeze.description");
 						break;
 					default:
 						description = I18n.format("menu.noDescriptionFound");

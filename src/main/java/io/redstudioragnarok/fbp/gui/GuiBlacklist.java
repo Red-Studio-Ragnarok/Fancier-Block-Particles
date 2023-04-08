@@ -187,14 +187,14 @@ public class GuiBlacklist extends GuiScreen {
 		drawCenteredString(fontRenderer, itemName, width / 2, height / 2 - 19, 0);
 
 		// EXCEPTIONS INFO
-		String animationText1 = animation.enabled ? (animation.isMouseOver() ? (animation.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : "") : I18n.format("menu.blacklist.cantanimate");
-		String particleText1 = particle.enabled ? (particle.isMouseOver() ? (particle.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : "") : I18n.format("menu.blacklist.cantadd");
+		String animationText1 = animation.enabled ? (animation.isMouseOver() ? (animation.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : "") : I18n.format("menu.blacklist.cantAnimate");
+		String particleText1 = particle.enabled ? (particle.isMouseOver() ? (particle.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : "") : I18n.format("menu.blacklist.cantAdd");
 
 		drawCenteredString(fontRenderer, animationText1, animation.x + 30, animation.y + 65, 0);
 		drawCenteredString(fontRenderer, particleText1, particle.x + 30, particle.y + 65, 0);
 
 		if (animation.isMouseOver())
-			drawCenteredString(fontRenderer, I18n.format("menu.blacklist.placeanimation"), animation.x + 30, animation.y - 12, 0);
+			drawCenteredString(fontRenderer, I18n.format("menu.blacklist.placeAnimation"), animation.x + 30, animation.y - 12, 0);
 		if (particle.isMouseOver())
 			drawCenteredString(fontRenderer, I18n.format("menu.blacklist.particles"), particle.x + 30, particle.y - 12, 0);
 

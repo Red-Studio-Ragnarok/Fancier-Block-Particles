@@ -17,12 +17,12 @@ public class Page3 extends BaseSettingsPage {
 	public void initGui() {
 		super.initPage(new Page2(), new Page4());
 
-		fancyFlame = addButton(1, x, (this.height / 5) - 6, large, I18n.format("menu.fancyflame.info"), FBP.fancyFlame, true, true);
-		fancySmoke = addButton(2, x, fancyFlame.y + fancyFlame.height + 1, large, I18n.format("menu.fancysmoke.info"), FBP.fancySmoke, true, true);
-		fancyWeather = addButton(3, x, fancySmoke.y + fancySmoke.height + 6, large, I18n.format("menu.fancyweather.info"), FBP.fancyWeather, true, true);
+		fancyFlame = addButton(1, x, (this.height / 5) - 6, large, I18n.format("menu.fancyFlame.title"), FBP.fancyFlame, true, true);
+		fancySmoke = addButton(2, x, fancyFlame.y + fancyFlame.height + 1, large, I18n.format("menu.fancySmoke.title"), FBP.fancySmoke, true, true);
+		fancyWeather = addButton(3, x, fancySmoke.y + fancySmoke.height + 6, large, I18n.format("menu.fancyWeather.title"), FBP.fancyWeather, true, true);
 		dynamicWeather = addButton(4, x, fancyWeather.y + fancyWeather.height + 1, large, I18n.format("menu.dynamicWeather.title"), FBP.dynamicWeather, true, true);
-		waterPhysics = addButton(5, x, dynamicWeather.y + dynamicWeather.height + 6, large, I18n.format("menu.waterphysics.info"), FBP.waterPhysics, true, true);
-		restOnFloor = addButton(6, x, waterPhysics.y + fancyFlame.height + 1, large, I18n.format("menu.restonfloor.info"), false,false, false);
+		waterPhysics = addButton(5, x, dynamicWeather.y + dynamicWeather.height + 6, large, I18n.format("menu.waterPhysics.title"), FBP.waterPhysics, true, true);
+		restOnFloor = addButton(6, x, waterPhysics.y + fancyFlame.height + 1, large, I18n.format("menu.restOnFloor.title"), false,false, false);
 	}
 
 	@Override
@@ -70,22 +70,22 @@ public class Page3 extends BaseSettingsPage {
 			if (b.isMouseOver()) {
 				switch (b.id) {
 				case 1:
-					description = I18n.format("menu.fancyflame.description");
+					description = I18n.format("menu.fancyFlame.description");
 					break;
 				case 2:
-					description = I18n.format("menu.fancysmoke.description");
+					description = I18n.format("menu.fancySmoke.description");
 					break;
 				case 3:
-					description = I18n.format("menu.fancyweather.description");
+					description = I18n.format("menu.fancyWeather.description");
 					break;
 				case 4:
 					description = I18n.format("menu.dynamicWeather.description");
 					break;
 				case 5:
-					description = I18n.format("menu.waterphysics.description");
+					description = I18n.format("menu.waterPhysics.description");
 					break;
 				case 6:
-					description = I18n.format("menu.restonfloor.description");
+					description = I18n.format("menu.restOnFloor.description");
 					break;
 				default:
 					description = I18n.format("menu.noDescriptionFound");

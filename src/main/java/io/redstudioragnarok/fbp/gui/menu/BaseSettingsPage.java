@@ -31,7 +31,7 @@ public abstract class BaseSettingsPage extends GuiScreen {
         final int y = height / 5 + 149;
 
         addButton(0, x, y, medium, I18n.format("menu.defaults"), false, false, true);
-        addButton(-1, x + 102, y, medium, I18n.format("menu.reloadconfig"), false, false, true);
+        addButton(-1, x + 102, y, medium, I18n.format("menu.reloadConfig"), false, false, true);
 
         addButton(-2, x, y + 20 + 1, large, I18n.format("menu.done"), false, false, true);
 

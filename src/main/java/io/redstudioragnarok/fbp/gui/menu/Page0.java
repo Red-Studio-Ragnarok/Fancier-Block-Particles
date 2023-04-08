@@ -172,30 +172,30 @@ public class Page0 extends BaseSettingsPage {
 		switch (selected) {
 		case 1:
 			if (!FBP.infiniteDuration) {
-				String _text = (FBP.minAge != FBP.maxAge ? (I18n.format("menu.particlelife.description.duration.range") + (FBP.showInMillis ? FBP.minAge * 50 : FBP.minAge) + I18n.format("menu.particlelife.description.duration.and") + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + (FBP.showInMillis ? "ms" : " ticks")) : (I18n.format("menu.particlelife.description.duration.to") + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + (FBP.showInMillis ? "ms" : " ticks")));
+				String _text = (FBP.minAge != FBP.maxAge ? (I18n.format("menu.particleLife.description.duration.range") + (FBP.showInMillis ? FBP.minAge * 50 : FBP.minAge) + I18n.format("menu.particleLife.description.duration.and") + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + " " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks"))) : (I18n.format("menu.particleLife.description.duration.to") + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + " " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks"))));
 
-				text = I18n.format("menu.particlelife.description.duration") + _text + I18n.format("menu.period");
+				text = I18n.format("menu.particleLife.description.duration") + _text + I18n.format("menu.period");
 			} else {
-				text = I18n.format("menu.particlelife.description.infinity");
+				text = I18n.format("menu.particleLife.description.infinity");
 			}
 			break;
 		case 2:
-			text = I18n.format("menu.destroyparticles.description") + (int) Math.pow(FBP.particlesPerAxis, 3) + " §c[§6" + FBP.particlesPerAxis + "^3§c]"+ I18n.format("menu.period");
+			text = I18n.format("menu.destroyParticles.description") + (int) Math.pow(FBP.particlesPerAxis, 3) + " §c[§6" + FBP.particlesPerAxis + "^3§c]"+ I18n.format("menu.period");
 			break;
 		case 3:
-			text = I18n.format("menu.particlescale.description") + FBP.scaleMult +  I18n.format("menu.period");
+			text = I18n.format("menu.particleScale.description") + FBP.scaleMult +  I18n.format("menu.period");
 			break;
 		case 4:
-			text = I18n.format("menu.particlegravity.description")  + FBP.gravityMult + I18n.format("menu.period");
+			text = I18n.format("menu.particleGravity.description")  + FBP.gravityMult + I18n.format("menu.period");
 			break;
 		case 5:
-			text = I18n.format("menu.particlerotation.description")  + FBP.rotationMult + I18n.format("menu.period");
+			text = I18n.format("menu.particleRotation.description")  + FBP.rotationMult + I18n.format("menu.period");
 			break;
 		case 6:
-			text = (FBP.infiniteDuration ? I18n.format("menu.disable") : I18n.format("menu.enable")) + I18n.format("menu.infiniteduration.description");
+			text = (FBP.infiniteDuration ? I18n.format("menu.disable") : I18n.format("menu.enable")) + I18n.format("menu.infiniteDuration.description");
 			break;
 		case 7:
-			text = I18n.format("menu.time.description") + (!FBP.showInMillis ? I18n.format("menu.timems.description") : "ticks") + I18n.format("menu.period");
+			text = I18n.format("menu.time.description") + (!FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + I18n.format("menu.period");
 			break;
 		default:
 			text = I18n.format("menu.noDescriptionFound");
@@ -213,28 +213,28 @@ public class Page0 extends BaseSettingsPage {
 
 	private void drawInfo() {
 
-		String s = I18n.format("menu.destroyparticles.info") + " [§6" + (int) Math.pow(FBP.particlesPerAxis, 3) + "§f]";
-		particlesPerAxis.displayString = s;
+		String title = I18n.format("menu.destroyParticles.title") + " [§6" + (int) Math.pow(FBP.particlesPerAxis, 3) + "§f]";
+		particlesPerAxis.displayString = title;
 
 		if (FBP.infiniteDuration)
-			s = I18n.format("menu.minduration.info") + " [§6" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "§f]";
+			title = I18n.format("menu.minDuration.title") + " [§6" + "\u221e " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 		else
-			s = I18n.format("menu.minduration.info") + " [§6" + (FBP.showInMillis ? ((FBP.minAge * 50) + "ms") : (FBP.minAge + " tick")) + "§f]";
+			title = I18n.format("menu.minDuration.title") + " [§6" + (FBP.showInMillis ? FBP.minAge * 50 : FBP.minAge) + " " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 
-		minAge.displayString = s;
+		minAge.displayString = title;
 
 		if (FBP.infiniteDuration)
-			s = I18n.format("menu.maxduration.info") + " [§6" + "\u221e" + (FBP.showInMillis ? " ms" : " ticks") + "§f]";
+			title = I18n.format("menu.maxDuration.title") + " [§6" + "\u221e" + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 		else
-			s = I18n.format("menu.maxduration.info") + " [§6" + (FBP.showInMillis ? ((FBP.maxAge * 50) + "ms") : (FBP.maxAge + (FBP.maxAge > 1 ? " ticks" : " tick"))) + "§f]";
+			title = I18n.format("menu.maxDuration.title") + " [§6" + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + " " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 
-		maxAge.displayString = s;
+		maxAge.displayString = title;
 
-		scaleMult.displayString = I18n.format("menu.scalemult.info") + " [§6" + FBP.scaleMult + "§f]";
+		scaleMult.displayString = I18n.format("menu.scaleMult.title") + " [§6" + FBP.scaleMult + "§f]";
 
-		gravityMult.displayString = I18n.format("menu.gravityscale.info") + " [§6" + FBP.gravityMult + "§f]";
+		gravityMult.displayString = I18n.format("menu.gravityScale.title") + " [§6" + FBP.gravityMult + "§f]";
 
-		rotationMult.displayString = I18n.format("menu.rotationspeed.info") + " [§6" + (FBP.rotationMult != 0 ? FBP.rotationMult : I18n.format("menu.off")) + "§f]";
+		rotationMult.displayString = I18n.format("menu.rotationSpeed.title") + " [§6" + (FBP.rotationMult != 0 ? FBP.rotationMult : I18n.format("menu.off")) + "§f]";
 	}
 
 	private void update() {
