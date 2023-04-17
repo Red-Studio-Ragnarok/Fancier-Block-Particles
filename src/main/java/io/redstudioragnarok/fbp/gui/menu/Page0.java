@@ -226,7 +226,7 @@ public class Page0 extends BasePage {
 		minAge.displayString = title;
 
 		if (FBP.infiniteDuration)
-			title = I18n.format("menu.maxDuration.title") + " [§6" + "∞" + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
+			title = I18n.format("menu.maxDuration.title") + " [§6" + "∞ " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 		else
 			title = I18n.format("menu.maxDuration.title") + " [§6" + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + " " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 
