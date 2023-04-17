@@ -10,9 +10,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.Desktop;
+import java.io.IOException;
 import java.util.Arrays;
 
 import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.*;
@@ -127,6 +129,23 @@ public abstract class BasePage extends GuiScreen {
     public void onGuiClosed() {
         if (writeConfig)
             ConfigHandler.writeMainConfig();
+    }
+
+    @Override
+    public void handleMouseInput() throws IOException {
+        super.handleMouseInput();
+
+        int scrollAmount = Mouse.getEventDWheel();
+
+        if (scrollAmount != 0) {
+            if (scrollAmount > 0) {
+                if (previousPage != null)
+                    mc.displayGuiScreen(previousPage);
+            } else {
+                if (nextPage != null)
+                    mc.displayGuiScreen(nextPage);
+            }
+        }
     }
 
     protected FBPGuiButton addButton(int id, int x, int y, FBPGuiButton.ButtonSize size, String text, Boolean toggle, Boolean toggleButton, Boolean enabled) {
