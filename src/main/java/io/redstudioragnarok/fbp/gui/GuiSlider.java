@@ -86,37 +86,28 @@ public class GuiSlider extends GuiButton {
 		return false;
 	}
 
+	public boolean isMouseOver(int mouseX, int mouseY) {
+		return isMouseOverBar(mouseX, mouseY) || isMouseOverSlider(mouseX, mouseY);
+	}
+
 	boolean isMouseOverBar(int mouseX, int mouseY) {
-		int X1 = x + 4;
-		int X2 = x + width - 6;
-
-		int Y1 = y + 4;
-		int Y2 = y + 15;
-
-		boolean inRectangle = GuiHelper.isMouseInsideRectangle(mouseX, mouseY, X1, Y1, X2, Y2);
-
-		boolean inCircle1 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X1, Y1 + 5, 5);
-		boolean inCircle2 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X2, Y1 + 5, 5);
-
-		return inRectangle || inCircle1 || inCircle2;
+		return isMouseInsideEllipse(mouseX, mouseY, x + 4, y + 4, x + width - 6, y + 15);
 	}
 
 	boolean isMouseOverSlider(int mouseX, int mouseY) {
-		int X1 = (int) (sliderPosX - 15 + 5);
-		int X2 = (int) (sliderPosX + 15 - 5);
-
-		int Y1 = y + 4;
-		int Y2 = y + 15;
-		
-		boolean inRectangle = GuiHelper.isMouseInsideRectangle(mouseX, mouseY, X1, Y1, X2, Y2);
-
-		boolean inCircle1 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X1, Y1 + 5, 5);
-		boolean inCircle2 = GuiHelper.isMouseInsideCircle(mouseX, mouseY, X2, Y1 + 5, 5);
-
-		return inRectangle || inCircle1 || inCircle2;
+		return isMouseInsideEllipse(mouseX, mouseY, (int) (sliderPosX - 15 + 5), y + 4, (int) (sliderPosX + 15 - 5), y + 15);
 	}
 
-	public boolean isMouseOver(int mouseX, int mouseY) {
-		return isMouseOverBar(mouseX, mouseY) || isMouseOverSlider(mouseX, mouseY);
+	private static boolean isMouseInsideEllipse(int mouseX, int mouseY, int x, int y, int x2, int y2) {
+		final int deltaX = x - mouseX;
+		final int deltaX2 = x2 - mouseX;
+
+		final int deltaY = (y + 5) - mouseY;
+
+		final boolean insideRectangle = mouseX > x && mouseX < x2 && mouseY > y && mouseY <= y2;
+		final boolean insideLeftEllipse = deltaX * deltaX + deltaY * deltaY <= 25;
+		final boolean insideRightEllipse = deltaX2 * deltaX2 + deltaY * deltaY <= 25;
+
+		return insideRectangle || insideLeftEllipse || insideRightEllipse;
 	}
 }

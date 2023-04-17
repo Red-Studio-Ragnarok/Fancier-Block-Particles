@@ -2,7 +2,6 @@ package io.redstudioragnarok.fbp.gui.menu;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.BasePage;
-import io.redstudioragnarok.fbp.gui.GuiHelper;
 import io.redstudioragnarok.fbp.gui.GuiSlider;
 import io.redstudioragnarok.fbp.utils.MathUtil;
 import io.redstudioragnarok.fbp.vectors.Vector2F;
@@ -98,6 +97,8 @@ public class Page0 extends BasePage {
 		drawMouseOverSelection(mouseX, mouseY);
 
 		drawInfo();
+
+		issue.checkHover(width, height);
 	}
 
 	private void drawMouseOverSelection(int mouseX, int mouseY) {
@@ -204,7 +205,7 @@ public class Page0 extends BasePage {
 
 		if (mouseX >= minAge.x - 2 && mouseX <= minAge.x + minAge.width + 2 && mouseY < rotationMult.y + rotationMult.height && mouseY >= minAge.y && (lastSize.y <= 20 || lastSize.y < 50) && lastHandle.y >= minAge.y || infiniteDuration.isMouseOver() || timeUnit.isMouseOver()) {
 			if (selected <= 5)
-				GuiHelper.drawRectangle(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
+				drawRectangle(lastHandle.x - 2, lastHandle.y + 2, lastSize.x + 4, lastSize.y - 2, 200, 200, 200, 35);
 
 			this.drawCenteredString(fontRenderer, text, this.width / 2, height / 5 + 131, fontRenderer.getColorCode('f'));
 

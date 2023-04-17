@@ -5,10 +5,14 @@ import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import io.redstudioragnarok.fbp.utils.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
+import org.lwjgl.opengl.GL11;
 
 import java.awt.Desktop;
-import java.awt.Dimension;
 import java.util.Arrays;
 
 import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.*;
@@ -19,7 +23,9 @@ public abstract class BasePage extends GuiScreen {
 
     protected int x;
 
-    protected GuiButton toggle, issue;
+    protected GuiButtonEnable toggle;
+
+    protected GuiButtonBugReport issue;
 
     private GuiScreen previousPage, nextPage;
 
@@ -33,8 +39,8 @@ public abstract class BasePage extends GuiScreen {
 
         addButton(-2, x, y + 20 + 1, large, I18n.format("menu.done"), false, false, true);
 
-        issue = new GuiButtonBugReport(-3, width - 32, 6, new Dimension(width, height), this.fontRenderer);
-        toggle = new GuiButtonEnable(-4, width - 64, 6, this.fontRenderer);
+        issue = new GuiButtonBugReport(-3, width - 32, 6);
+        toggle = new GuiButtonEnable(-4, width - 64, 6);
 
         this.buttonList.addAll(Arrays.asList(toggle, issue));
 
@@ -90,7 +96,7 @@ public abstract class BasePage extends GuiScreen {
         int y = this.height / 5 - 10;
 
         if (FBP.mc.world != null)
-            GuiHelper.drawRectangle(0, 0, width, height, 0, 0, 0, 191);
+            drawRectangle(0, 0, width, height, 0, 0, 0, 191);
         else
             drawBackground(0);
 
@@ -133,5 +139,25 @@ public abstract class BasePage extends GuiScreen {
         GuiSlider slider = new GuiSlider(x, y, value);
         this.buttonList.add(slider);
         return slider;
+    }
+
+    protected static void drawRectangle(double x, double y, double x2, double y2, int red, int green, int blue, int alpha) {
+        final Tessellator tessellator = Tessellator.getInstance();
+        final BufferBuilder buffer = tessellator.getBuffer();
+
+        GlStateManager.disableTexture2D();
+        GlStateManager.enableBlend();
+
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+
+        buffer.pos(x, y + y2, 0).color(red, green, blue, alpha).endVertex();
+        buffer.pos(x + x2, y + y2, 0).color(red, green, blue, alpha).endVertex();
+        buffer.pos(x + x2, y, 0).color(red, green, blue, alpha).endVertex();
+        buffer.pos(x, y, 0).color(red, green, blue, alpha).endVertex();
+
+        tessellator.draw();
+
+        GlStateManager.disableBlend();
+        GlStateManager.enableTexture2D();
     }
 }

@@ -69,7 +69,7 @@ public class FBPGuiButton extends GuiButton {
 		FontRenderer fontrenderer = mc.fontRenderer;
 		mc.getTextureManager().bindTexture(FBP.menuTexture);
 		if (buttonEnabled) {
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+			GlStateManager.color(1, 1, 1, 1);
 		} else {
 			GlStateManager.color(0.5F, 0.5F, 0.5F, 1.0F);
 		}

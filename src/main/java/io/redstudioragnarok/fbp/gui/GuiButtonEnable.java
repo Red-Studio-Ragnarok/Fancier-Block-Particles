@@ -1,7 +1,6 @@
 package io.redstudioragnarok.fbp.gui;
 
 import io.redstudioragnarok.fbp.FBP;
-import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -9,39 +8,37 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 
+import static io.redstudioragnarok.fbp.FBP.mc;
+
 public class GuiButtonEnable extends GuiButton {
 
-	FontRenderer _fr;
+	private static final FontRenderer fontRenderer = mc.fontRenderer;
 
-	public GuiButtonEnable(int buttonID, int x, int y, FontRenderer fr) {
+	public GuiButtonEnable(int buttonID, int x, int y) {
 		super(buttonID, x, y, 25, 25, "");
-
-		_fr = fr;
 	}
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		mc.getTextureManager().bindTexture(FBP.fbpIcon);
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.color(1, 1, 1, 1);
 
-		int centerX = x + 25 / 2;
-		int centerY = y + 25 / 2;
+		final int deltaX = mouseX - (x + width / 2);
+		final int deltaY = mouseY - (y + height / 2);
 
-		double distance = FastMath.sqrtQuick((mouseX - centerX) * (mouseX - centerX) + (mouseY - centerY) * (mouseY - centerY));
-		double radius = FastMath.sqrtQuick(2 * Math.pow(16, 2));
+		hovered = deltaX * deltaX + deltaY * deltaY <= 128;
 
-		boolean flag = distance <= (radius / 2);
-		int i = FBP.enabled ? 0 : 50;
+		int v = FBP.enabled ? 0 : 50;
 
-		if (hovered = flag)
-			i += 25;
+		if (hovered)
+			v += 25;
 
-		Gui.drawModalRectWithCustomSizedTexture(this.x, this.y, 0, i, 25, 25, 25, 100);
+		Gui.drawModalRectWithCustomSizedTexture(x, y, 0, v, width, height, width, height * 4);
 
-		final String text = (FBP.enabled ? I18n.format("menu.disable") : I18n.format("menu.enable")) + " FBP";
+		final String hoverText = (FBP.enabled ? I18n.format("menu.disable") : I18n.format("menu.enable")) + " FBP";
 
-		if (flag)
-			this.drawString(_fr, text, mouseX - _fr.getStringWidth(text) - 25, mouseY - 3, _fr.getColorCode('a'));
+		if (hovered)
+			drawString(fontRenderer, hoverText, mouseX - fontRenderer.getStringWidth(hoverText) - width, mouseY - 3, fontRenderer.getColorCode('a'));
 	}
 
 	@Override

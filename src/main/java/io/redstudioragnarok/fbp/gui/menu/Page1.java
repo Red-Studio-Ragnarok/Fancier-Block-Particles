@@ -60,9 +60,9 @@ public class Page1 extends BasePage {
 	}
 
 	private void getDescription() {
-		for (GuiButton b : this.buttonList) {
-			if (b.isMouseOver()) {
-				switch (b.id) {
+		for (GuiButton button : this.buttonList) {
+			if (button.isMouseOver()) {
+				switch (button.id) {
 					case 1:
 						description = I18n.format("menu.randomRotation.description");
 						break;

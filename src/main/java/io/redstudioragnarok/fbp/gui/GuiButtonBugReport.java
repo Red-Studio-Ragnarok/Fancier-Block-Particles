@@ -1,7 +1,6 @@
 package io.redstudioragnarok.fbp.gui;
 
 import io.redstudioragnarok.fbp.FBP;
-import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -9,76 +8,47 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 
-import java.awt.Dimension;
+import static io.redstudioragnarok.fbp.FBP.mc;
+import static io.redstudioragnarok.fbp.gui.BasePage.drawRectangle;
 
 public class GuiButtonBugReport extends GuiButton {
 
-	static final String _textOnHover = I18n.format("menu.bugReport");
+	private static final String hoverText = I18n.format("menu.bugReport");
 
-	FontRenderer _fr;
-	Dimension _screen;
+	private static final FontRenderer fontRenderer = mc.fontRenderer;
 
-	long lastTime, time;
-	int fadeAmmount = 0;
+	private static int mouseX, mouseY;
 
-	public GuiButtonBugReport(int buttonID, int x, int y, Dimension screen, FontRenderer fr) {
+	public GuiButtonBugReport(int buttonID, int x, int y) {
 		super(buttonID, x, y, 25, 25, "");
-		_screen = screen;
-		_fr = fr;
 	}
 
 	@Override
-	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+	public void drawButton(Minecraft mc, int mouseXInput, int mouseYInput, float partialTicks) {
 		mc.getTextureManager().bindTexture(FBP.bugIcon);
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.color(1, 1, 1, 1);
 
-		int centerX = x + 25 / 2;
-		int centerY = y + 25 / 2;
+		mouseX = mouseXInput;
+		mouseY = mouseYInput;
 
-		double distance = FastMath.sqrtQuick((mouseX - centerX) * (mouseX - centerX) + (mouseY - centerY) * (mouseY - centerY));
-		double radius = FastMath.sqrtQuick(2 * Math.pow(16, 2));
+		final int deltaX = mouseX - (x + width / 2);
+		final int deltaY = mouseY - (y + height / 2);
 
-		boolean flag = distance <= (radius / 2);
+		hovered = deltaX * deltaX + deltaY * deltaY <= 128;
 
-		int i = 0;
+		Gui.drawModalRectWithCustomSizedTexture(x, y, 0, hovered ? height : 0, width, height, width, height * 2);
+	}
 
-		if (hovered = flag)
-			i = 25;
-
-		int step = 1;
-		time = System.currentTimeMillis();
-
-		if (lastTime > 0)
-			step = (int) (time - lastTime);
-
-		lastTime = time;
-
-		if (fadeAmmount < step)
-			fadeAmmount = step;
-
-		if (fadeAmmount <= 160)
-			fadeAmmount += (flag ? step : -step);
-
-		if (fadeAmmount > 150)
-			if (flag)
-				fadeAmmount = 150;
-		else
-				fadeAmmount = 0;
-
-		if (fadeAmmount > 0)
-			GuiHelper.drawRectangle(0, 0, _screen.width, _screen.height, 0, 0, 0, fadeAmmount);
-		else
-			fadeAmmount = 0;
-
-		Gui.drawModalRectWithCustomSizedTexture(this.x, this.y, 0, i, 25, 25, 25, 50);
-
-		if (flag)
-			this.drawString(_fr, _textOnHover, mouseX - _fr.getStringWidth(_textOnHover) - 25, mouseY - 3, _fr.getColorCode('a'));
+	public void checkHover(int width, int height) {
+		if (hovered) {
+			drawRectangle(0, 0, width, height, 0, 0, 0, 191);
+			drawString(fontRenderer, hoverText, mouseX - fontRenderer.getStringWidth(hoverText) - width, mouseY - 3, fontRenderer.getColorCode('a'));
+		}
 	}
 
 	@Override
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-		if (this.hovered) {
+		if (hovered) {
 			playPressSound(mc.getSoundHandler());
 			return true;
 		} else
