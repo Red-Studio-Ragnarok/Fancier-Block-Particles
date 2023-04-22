@@ -12,8 +12,6 @@ public class Page2 extends BasePage {
 
 	GuiButton entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles;
 
-	String description;
-
 	@Override
 	public void initGui() {
 		super.initPage(new Page1(), new Page3());
@@ -29,67 +27,65 @@ public class Page2 extends BasePage {
 	@Override
 	protected void onActionPerformed(GuiButton button) {
 		switch (button.id) {
-		case 1:
-			FBP.entityCollision = !FBP.entityCollision;
-			break;
-		case 2:
-			FBP.bounceOffWalls = !FBP.bounceOffWalls;
-			break;
-		case 3:
-			FBP.lowTraction = !FBP.lowTraction;
-			break;
-		case 4:
-			FBP.smartBreaking = !FBP.smartBreaking;
-			break;
-		case 5:
-			FBP.fancyPlaceAnim = !FBP.fancyPlaceAnim;
-			ConfigHandler.reloadAnimBlacklist();
-			break;
-		case 6:
-			FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;
-			break;
-		}
-
-		writeConfig = true;
-	}
-
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		super.drawScreen(mouseX, mouseY, partialTicks);
-
-		getDescription();
-
-		if ((mouseX >= entityCollision.x && mouseX < entityCollision.x + entityCollision.width) && (mouseY >= entityCollision.y && mouseY < spawnPlaceParticles.y + entityCollision.height)) {
-			this.drawCenteredString(fontRenderer, description, this.width / 2, height / 5 + 131, fontRenderer.getColorCode('f'));
+			case 1:
+				FBP.entityCollision = !FBP.entityCollision;
+				writeConfig = true;
+				break;
+			case 2:
+				FBP.bounceOffWalls = !FBP.bounceOffWalls;
+				writeConfig = true;
+				break;
+			case 3:
+				FBP.lowTraction = !FBP.lowTraction;
+				writeConfig = true;
+				break;
+			case 4:
+				FBP.smartBreaking = !FBP.smartBreaking;
+				writeConfig = true;
+				break;
+			case 5:
+				FBP.fancyPlaceAnim = !FBP.fancyPlaceAnim;
+				ConfigHandler.reloadAnimBlacklist();
+				writeConfig = true;
+				break;
+			case 6:
+				FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;
+				writeConfig = true;
+				break;
 		}
 	}
 
-	private void getDescription() {
-		for (GuiButton b : this.buttonList) {
-			if (b.isMouseOver()) {
-				switch (b.id) {
-				case 1:
-					description = I18n.format("menu.entityCollide.description");
-					break;
-				case 2:
-					description = I18n.format("menu.bounceOffWalls.description");
-					break;
-				case 3:
-					description = I18n.format("menu.lowTraction.description");
-					break;
-				case 4:
-					description = I18n.format("menu.smartBreaking.description");
-					break;
-				case 5:
-					description = I18n.format("menu.fancyPlaceAnimation.description");
-					break;
-				case 6:
-					description = I18n.format("menu.spawnPlaceParticles.description");
-					break;
-				default:
-					description = I18n.format("menu.noDescriptionFound");
+	protected String getDescription() {
+		String description = "";
+
+		for (GuiButton button : this.buttonList) {
+			if (button.isMouseOver()) {
+				switch (button.id) {
+					case 1:
+						description = I18n.format("menu.entityCollide.description");
+						break;
+					case 2:
+						description = I18n.format("menu.bounceOffWalls.description");
+						break;
+					case 3:
+						description = I18n.format("menu.lowTraction.description");
+						break;
+					case 4:
+						description = I18n.format("menu.smartBreaking.description");
+						break;
+					case 5:
+						description = I18n.format("menu.fancyPlaceAnimation.description");
+						break;
+					case 6:
+						description = I18n.format("menu.spawnPlaceParticles.description");
+						break;
+					default:
+						description = I18n.format("menu.noDescriptionFound");
+						break;
 				}
 			}
 		}
+
+		return description;
 	}
 }

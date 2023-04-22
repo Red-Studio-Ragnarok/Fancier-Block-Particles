@@ -11,8 +11,6 @@ public class Page1 extends BasePage {
 
 	GuiButton randomRotation, cartoonMode, randomizedScale, randomFadingSpeed, spawnRedstoneBlockParticles, spawnWhileFrozen;
 
-	String description;
-
 	@Override
 	public void initGui() {
 		super.initPage(new Page0(), new Page2());
@@ -28,38 +26,32 @@ public class Page1 extends BasePage {
 	@Override
 	protected void onActionPerformed(GuiButton button) {
 		switch (button.id) {
-		case 1:
-			FBP.randomRotation = !FBP.randomRotation;
-			break;
-		case 3:
-			FBP.randomizedScale = !FBP.randomizedScale;
-			break;
-		case 4:
-			FBP.randomFadingSpeed = !FBP.randomFadingSpeed;
-			break;
-		case 5:
-			FBP.spawnRedstoneBlockParticles = !FBP.spawnRedstoneBlockParticles;
-			break;
-		case 6:
-			FBP.spawnWhileFrozen = !FBP.spawnWhileFrozen;
-			break;
-		}
-
-		writeConfig = true;
-	}
-
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		super.drawScreen(mouseX, mouseY, partialTicks);
-
-		getDescription();
-
-		if ((mouseX >= randomRotation.x && mouseX < randomRotation.x + randomRotation.width) && (mouseY >= randomRotation.y && mouseY < spawnWhileFrozen.y + randomRotation.height)) {
-			this.drawCenteredString(fontRenderer, description, this.width / 2, height / 5 + 131, fontRenderer.getColorCode('f'));
+			case 1:
+				FBP.randomRotation = !FBP.randomRotation;
+				writeConfig = true;
+				break;
+			case 3:
+				FBP.randomizedScale = !FBP.randomizedScale;
+				writeConfig = true;
+				break;
+			case 4:
+				FBP.randomFadingSpeed = !FBP.randomFadingSpeed;
+				writeConfig = true;
+				break;
+			case 5:
+				FBP.spawnRedstoneBlockParticles = !FBP.spawnRedstoneBlockParticles;
+				writeConfig = true;
+				break;
+			case 6:
+				FBP.spawnWhileFrozen = !FBP.spawnWhileFrozen;
+				writeConfig = true;
+				break;
 		}
 	}
 
-	private void getDescription() {
+	protected String getDescription() {
+		String description = "";
+
 		for (GuiButton button : this.buttonList) {
 			if (button.isMouseOver()) {
 				switch (button.id) {
@@ -83,8 +75,11 @@ public class Page1 extends BasePage {
 						break;
 					default:
 						description = I18n.format("menu.noDescriptionFound");
+						break;
 				}
 			}
 		}
+
+		return description;
 	}
 }

@@ -12,8 +12,6 @@ public class Page3 extends BasePage {
 
 	GuiButton fancyFlame, fancySmoke, fancyWeather, dynamicWeather, waterPhysics, restOnFloor;
 
-	String description;
-
 	@Override
 	public void initGui() {
 		super.initPage(new Page2(), new Page4());
@@ -29,69 +27,67 @@ public class Page3 extends BasePage {
 	@Override
 	protected void onActionPerformed(GuiButton button) {
 		switch (button.id) {
-		case 1:
-			FBP.fancyFlame = !FBP.fancyFlame;
-			break;
-		case 2:
-			FBP.fancySmoke = !FBP.fancySmoke;
-			break;
-		case 3:
-			FBP.fancyWeather = !FBP.fancyWeather;
+			case 1:
+				FBP.fancyFlame = !FBP.fancyFlame;
+				writeConfig = true;
+				break;
+			case 2:
+				FBP.fancySmoke = !FBP.fancySmoke;
+				writeConfig = true;
+				break;
+			case 3:
+				FBP.fancyWeather = !FBP.fancyWeather;
 
-			if (FBP.fancyWeather && FBP.enabled)
-				mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
-			else
-				mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
-			break;
-		case 4:
-			FBP.dynamicWeather = !FBP.dynamicWeather;
-			break;
-		case 5:
-			FBP.waterPhysics = !FBP.waterPhysics;
-			ConfigHandler.reloadMaterials();
-			break;
-		}
+				if (FBP.fancyWeather && FBP.enabled)
+					mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
+				else
+					mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
 
-		writeConfig = true;
-	}
-
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		super.drawScreen(mouseX, mouseY, partialTicks);
-
-		getDescription();
-
-		if ((mouseX >= fancyFlame.x && mouseX < fancyFlame.x + fancyFlame.width) && (mouseY >= fancyFlame.y && mouseY < restOnFloor.y + fancyFlame.height)) {
-			this.drawCenteredString(fontRenderer, description, this.width / 2, height / 5 + 131, fontRenderer.getColorCode('f'));
+				writeConfig = true;
+				break;
+			case 4:
+				FBP.dynamicWeather = !FBP.dynamicWeather;
+				writeConfig = true;
+				break;
+			case 5:
+				FBP.waterPhysics = !FBP.waterPhysics;
+				ConfigHandler.reloadMaterials();
+				writeConfig = true;
+				break;
 		}
 	}
 
-	private void getDescription() {
-		for (GuiButton b : this.buttonList) {
-			if (b.isMouseOver()) {
-				switch (b.id) {
-				case 1:
-					description = I18n.format("menu.fancyFlame.description");
-					break;
-				case 2:
-					description = I18n.format("menu.fancySmoke.description");
-					break;
-				case 3:
-					description = I18n.format("menu.fancyWeather.description");
-					break;
-				case 4:
-					description = I18n.format("menu.dynamicWeather.description");
-					break;
-				case 5:
-					description = I18n.format("menu.waterPhysics.description");
-					break;
-				case 6:
-					description = I18n.format("menu.restOnFloor.description");
-					break;
-				default:
-					description = I18n.format("menu.noDescriptionFound");
+	protected String getDescription() {
+		String description = "";
+
+		for (GuiButton button : this.buttonList) {
+			if (button.isMouseOver()) {
+				switch (button.id) {
+					case 1:
+						description = I18n.format("menu.fancyFlame.description");
+						break;
+					case 2:
+						description = I18n.format("menu.fancySmoke.description");
+						break;
+					case 3:
+						description = I18n.format("menu.fancyWeather.description");
+						break;
+					case 4:
+						description = I18n.format("menu.dynamicWeather.description");
+						break;
+					case 5:
+						description = I18n.format("menu.waterPhysics.description");
+						break;
+					case 6:
+						description = I18n.format("menu.restOnFloor.description");
+						break;
+					default:
+						description = I18n.format("menu.noDescriptionFound");
+						break;
 				}
 			}
 		}
+
+		return description;
 	}
 }
