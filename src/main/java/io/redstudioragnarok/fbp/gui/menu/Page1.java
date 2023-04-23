@@ -7,18 +7,16 @@ import net.minecraft.client.resources.I18n;
 
 public class Page1 extends BasePage {
 
-	GuiButton randomRotation, cartoonMode, randomizedScale, randomFadingSpeed, spawnRedstoneBlockParticles, spawnWhileFrozen;
-
 	@Override
 	public void initGui() {
 		super.initPage(new Page0(), new Page2());
 
-		randomRotation = addButton(1, I18n.format("menu.randomRotation.title"), FBP.randomRotation, true);
-		cartoonMode = addButton(2, I18n.format("menu.cartonMode.title"), false, false, true);
-		randomizedScale = addButton(3, I18n.format("menu.randomizedScale.title"), FBP.randomizedScale, true);
-		randomFadingSpeed = addButton(4, I18n.format("menu.randomFadeSpeed.title"), FBP.randomFadingSpeed, true);
-		spawnRedstoneBlockParticles = addButton(5, I18n.format("menu.redstoneBlock.title"), FBP.spawnRedstoneBlockParticles, true);
-		spawnWhileFrozen = addButton(6, I18n.format("menu.spawnFreeze.title"), FBP.spawnWhileFrozen, true);
+		addButton(1, I18n.format("menu.randomRotation.title"), FBP.randomRotation, true);
+		addButton(2, I18n.format("menu.randomizedScale.title"), FBP.randomizedScale, true);
+		addButton(3, I18n.format("menu.randomFadeSpeed.title"), FBP.randomFadingSpeed, true);
+		addButton(4, I18n.format("menu.spawnPlaceParticles.title"), FBP.spawnPlaceParticles, true);
+		addButton(5, I18n.format("menu.redstoneBlock.title"), FBP.spawnRedstoneBlockParticles, true);
+		addButton(6, I18n.format("menu.spawnFreeze.title"), FBP.spawnWhileFrozen, true);
 	}
 
 	@Override
@@ -28,12 +26,16 @@ public class Page1 extends BasePage {
 				FBP.randomRotation = !FBP.randomRotation;
 				writeConfig = true;
 				break;
-			case 3:
+			case 2:
 				FBP.randomizedScale = !FBP.randomizedScale;
 				writeConfig = true;
 				break;
-			case 4:
+			case 3:
 				FBP.randomFadingSpeed = !FBP.randomFadingSpeed;
+				writeConfig = true;
+				break;
+			case 4:
+				FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;
 				writeConfig = true;
 				break;
 			case 5:
@@ -57,14 +59,14 @@ public class Page1 extends BasePage {
 						description = I18n.format("menu.randomRotation.description");
 						break;
 					case 2:
-						description = I18n.format("menu.cartonMode.description");
-						break;
-					case 3:
 						description = I18n.format("menu.randomizedScale.description");
 						break;
-					case 4:
+					case 3:
 						description = I18n.format("menu.randomFadeSpeed.description");
 						break;
+					case 4:
+						description = I18n.format("menu.spawnPlaceParticles.description");
+                        break;
 					case 5:
 						description = I18n.format("menu.redstoneBlock.description");
 						break;

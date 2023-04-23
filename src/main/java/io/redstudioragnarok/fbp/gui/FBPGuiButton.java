@@ -16,7 +16,7 @@ public class FBPGuiButton extends GuiButton {
 	public int offsetX;
 	boolean buttonEnabled;
 
-	public static enum ButtonSize {
+	public enum ButtonSize {
 		small, medium, large
 	}
 

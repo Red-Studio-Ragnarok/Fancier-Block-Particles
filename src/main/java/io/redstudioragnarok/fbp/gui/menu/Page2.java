@@ -8,18 +8,16 @@ import net.minecraft.client.resources.I18n;
 
 public class Page2 extends BasePage {
 
-	GuiButton entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles;
-
 	@Override
 	public void initGui() {
 		super.initPage(new Page1(), new Page3());
 
-		entityCollision = addButton(1, I18n.format("menu.entityCollide.title"), FBP.entityCollision, true);
-		bounceOffWalls = addButton(2, I18n.format("menu.bounceOffWalls.title"), FBP.bounceOffWalls, true);
-		lowTraction = addButton(3, I18n.format("menu.lowTraction.title"), FBP.lowTraction, true);
-		smartBreaking = addButton(4, I18n.format("menu.smartBreaking.title"), FBP.smartBreaking, true);
-		fancyPlaceAnim = addButton(5, I18n.format("menu.fancyPlaceAnimation.title"), FBP.fancyPlaceAnim, true);
-		spawnPlaceParticles = addButton(6, I18n.format("menu.spawnPlaceParticles.title"), FBP.spawnPlaceParticles, true);
+		addButton(1, I18n.format("menu.entityCollide.title"), FBP.entityCollision, true);
+		addButton(2, I18n.format("menu.bounceOffWalls.title"), FBP.bounceOffWalls, true);
+		addButton(3, I18n.format("menu.lowTraction.title"), FBP.lowTraction, true);
+		addButton(4, I18n.format("menu.waterPhysics.title"), FBP.waterPhysics, true);
+		addButton(5, I18n.format("menu.smartBreaking.title"), FBP.smartBreaking, true);
+		addButton(6, I18n.format("menu.fancyPlaceAnimation.title"), FBP.fancyPlaceAnim, true);
 	}
 
 	@Override
@@ -38,16 +36,17 @@ public class Page2 extends BasePage {
 				writeConfig = true;
 				break;
 			case 4:
-				FBP.smartBreaking = !FBP.smartBreaking;
+				FBP.waterPhysics = !FBP.waterPhysics;
+				ConfigHandler.reloadMaterials();
 				writeConfig = true;
 				break;
 			case 5:
-				FBP.fancyPlaceAnim = !FBP.fancyPlaceAnim;
-				ConfigHandler.reloadAnimBlacklist();
+				FBP.smartBreaking = !FBP.smartBreaking;
 				writeConfig = true;
 				break;
 			case 6:
-				FBP.spawnPlaceParticles = !FBP.spawnPlaceParticles;
+				FBP.fancyPlaceAnim = !FBP.fancyPlaceAnim;
+				ConfigHandler.reloadAnimBlacklist();
 				writeConfig = true;
 				break;
 		}
@@ -69,13 +68,13 @@ public class Page2 extends BasePage {
 						description = I18n.format("menu.lowTraction.description");
 						break;
 					case 4:
+						description = I18n.format("menu.waterPhysics.description");
+                        break;
+					case 5:
 						description = I18n.format("menu.smartBreaking.description");
 						break;
-					case 5:
-						description = I18n.format("menu.fancyPlaceAnimation.description");
-						break;
 					case 6:
-						description = I18n.format("menu.spawnPlaceParticles.description");
+						description = I18n.format("menu.fancyPlaceAnimation.description");
 						break;
 					default:
 						description = I18n.format("menu.noDescriptionFound");

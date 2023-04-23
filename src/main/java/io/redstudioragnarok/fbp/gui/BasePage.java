@@ -210,13 +210,13 @@ public abstract class BasePage extends GuiScreen {
 
         final int scrollAmount = Mouse.getEventDWheel();
 
-        if (scrollAmount != 0)
-            if (scrollAmount > 0)
+        if (scrollAmount != 0) {
+            if (scrollAmount > 0) {
                 if (previousPage != null)
                     mc.displayGuiScreen(previousPage);
-            else
-                if (nextPage != null)
-                    mc.displayGuiScreen(nextPage);
+            } else if (nextPage != null)
+                mc.displayGuiScreen(nextPage);
+        }
     }
 
     @Override
@@ -231,10 +231,9 @@ public abstract class BasePage extends GuiScreen {
         return button;
     }
 
-    protected FBPGuiButton addButton(final int id, final String text, final Boolean toggle, final Boolean toggleButton, final Boolean... disabled) {
+    protected void addButton(final int id, final String text, final Boolean toggle, final Boolean toggleButton, final Boolean... disabled) {
         FBPGuiButton button = new FBPGuiButton(id, x, calculatePosition(id), large, text, toggle, toggleButton, disabled.length < 1);
         this.buttonList.add(button);
-        return button;
     }
 
     protected Slider addSlider(final int id, final float value) {
