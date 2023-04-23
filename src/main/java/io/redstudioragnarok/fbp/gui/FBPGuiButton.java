@@ -95,15 +95,15 @@ public class FBPGuiButton extends GuiButton {
 			j = 16777120;
 		}
 
-		if (!toggleButton) {
+		if (toggleButton) {
+			this.drawString(fontrenderer, this.displayString, this.x + 8, this.y + (this.height - 8) / 2, j);
+
+			this.drawString(fontrenderer, toggle ? I18n.format("menu.on") : I18n.format("menu.off"), this.x + this.width - 25, this.y + (this.height - 8) / 2, j);
+		} else {
 			if (offsetX == -1)
 				this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
 			else
 				this.drawString(fontrenderer, this.displayString, this.x + offsetX, this.y + (this.height - 8) / 2, j);
-		} else {
-			this.drawString(fontrenderer, this.displayString, this.x + 8, this.y + (this.height - 8) / 2, j);
-
-			this.drawString(fontrenderer, toggle ? I18n.format("menu.on") : I18n.format("menu.off"), this.x + this.width - 25, this.y + (this.height - 8) / 2, j);
 		}
 	}
 

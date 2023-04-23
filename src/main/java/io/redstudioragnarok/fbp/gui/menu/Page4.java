@@ -15,8 +15,8 @@ public class Page4 extends BasePage {
 	public void initGui() {
 		super.initPage(new Page3(), null);
 
-		weatherParticleDensity = addSlider(1, x, this.height / 5 - 6, (float) ((FBP.weatherParticleDensity - 0.75) / 4.25));
-		weatherRenderDistance = addSlider(2, x, weatherParticleDensity.y + weatherParticleDensity.height + 1, (float) ((FBP.weatherRenderDistance - 0.75) / 1.75));
+		weatherParticleDensity = addSlider(1, (float) ((FBP.weatherParticleDensity - 0.75) / 4.25));
+		weatherRenderDistance = addSlider(2, (float) ((FBP.weatherRenderDistance - 0.75) / 1.75));
 	}
 
 	@Override
@@ -28,8 +28,9 @@ public class Page4 extends BasePage {
 	}
 
 	@Override
-	protected void drawInfo() {
+	protected void drawTitle() {
 		weatherParticleDensity.displayString = I18n.format("menu.weatherDensity.title")+" [§6" + (int) (FBP.weatherParticleDensity * 100) + "%§f]";
+
 		weatherRenderDistance.displayString = I18n.format("menu.weatherRenderDistance.title")+" [§6" + (int) (FBP.weatherRenderDistance * 100) + "%§f]";
 	}
 

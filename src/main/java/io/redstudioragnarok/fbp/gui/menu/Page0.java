@@ -20,16 +20,16 @@ public class Page0 extends BasePage {
 	public void initGui() {
 		super.initPage(null, new Page1());
 
-		minAge = addSlider(1, x, this.height / 5 - 6, (float) ((FBP.minAge - 10) / 90.0));
-		maxAge = addSlider(2, x, minAge.y + minAge.height + 1, (float) ((FBP.maxAge - 10) / 90.0));
+		minAge = addSlider(1, (float) ((FBP.minAge - 10) / 90.0));
+		maxAge = addSlider(2, (float) ((FBP.maxAge - 10) / 90.0));
 
-		particlesPerAxis = addSlider(3, x, maxAge.y + 6 + maxAge.height, (float) ((FBP.particlesPerAxis - 2) / 3.0));
-		scaleMult = addSlider(4, x, particlesPerAxis.y + particlesPerAxis.height + 1, (float) ((FBP.scaleMult - 0.75) / 0.5));
-		gravityMult = addSlider(5, x, scaleMult.y + scaleMult.height + 6, (float) ((FBP.gravityMult - 0.05) / 2.95));
-		rotationMult = addSlider(6, x, gravityMult.y + gravityMult.height + 1, (float) (FBP.rotationMult / 1.5));
+		particlesPerAxis = addSlider(3, (float) ((FBP.particlesPerAxis - 2) / 3.0));
+		scaleMult = addSlider(4, (float) ((FBP.scaleMult - 0.75) / 0.5));
+		gravityMult = addSlider(5, (float) ((FBP.gravityMult - 0.05) / 2.95));
+		rotationMult = addSlider(6, (float) (FBP.rotationMult / 1.5));
 
-		infiniteDuration = addButton(7, x + 205, minAge.y + 10, small, (FBP.infiniteDuration ? "§a" : "§c") + "∞", false, false, true);
-		timeUnit = addButton(8, x - 25, minAge.y + 10, small, "§a§L" + (FBP.showInMillis ? "ms" : "ti"), false, false, true);
+		infiniteDuration = addButton(7, x + 205, minAge.y + 10, small, (FBP.infiniteDuration ? "§a" : "§c") + "∞");
+		timeUnit = addButton(8, x - 25, minAge.y + 10, small, "§a§L" + (FBP.showInMillis ? "ms" : "ti"));
 
 		update();
 	}
@@ -79,34 +79,18 @@ public class Page0 extends BasePage {
 	}
 
 	@Override
-	protected void drawInfo() {
-		String title = I18n.format("menu.destroyParticles.title") + " [§6" + (int) Math.pow(FBP.particlesPerAxis, 3) + "§f]";
-		particlesPerAxis.displayString = title;
+	protected void drawTitle() {
+		minAge.displayString = FBP.infiniteDuration ? I18n.format("menu.minDuration.title") + " [§6" + "∞ " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]" : I18n.format("menu.minDuration.title") + " [§6" + (FBP.showInMillis ? FBP.minAge * 50 : FBP.minAge) + " " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 
-		if (FBP.infiniteDuration)
-			title = I18n.format("menu.minDuration.title") + " [§6" + "∞ " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
-		else
-			title = I18n.format("menu.minDuration.title") + " [§6" + (FBP.showInMillis ? FBP.minAge * 50 : FBP.minAge) + " " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
+		maxAge.displayString = FBP.infiniteDuration ? I18n.format("menu.maxDuration.title") + " [§6" + "∞ " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]" : I18n.format("menu.maxDuration.title") + " [§6" + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + " " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
 
-		minAge.displayString = title;
-
-		if (FBP.infiniteDuration)
-			title = I18n.format("menu.maxDuration.title") + " [§6" + "∞ " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
-		else
-			title = I18n.format("menu.maxDuration.title") + " [§6" + (FBP.showInMillis ? FBP.maxAge * 50 : FBP.maxAge) + " " + (FBP.showInMillis ? I18n.format("menu.time.description.milliseconds") : I18n.format("menu.time.description.ticks")) + "§f]";
-
-		maxAge.displayString = title;
+		particlesPerAxis.displayString = I18n.format("menu.destroyParticles.title") + " [§6" + (int) Math.pow(FBP.particlesPerAxis, 3) + "§f]";
 
 		scaleMult.displayString = I18n.format("menu.scaleMult.title") + " [§6" + FBP.scaleMult + "§f]";
 
 		gravityMult.displayString = I18n.format("menu.gravityScale.title") + " [§6" + FBP.gravityMult + "§f]";
 
 		rotationMult.displayString = I18n.format("menu.rotationSpeed.title") + " [§6" + (FBP.rotationMult != 0 ? FBP.rotationMult : I18n.format("menu.off")) + "§f]";
-	}
-
-	private void update() {
-		minAge.enabled = !FBP.infiniteDuration;
-		maxAge.enabled = !FBP.infiniteDuration;
 	}
 
 	protected String getDescription() {
@@ -150,5 +134,10 @@ public class Page0 extends BasePage {
 		}
 
 		return description;
+	}
+
+	private void update() {
+		minAge.enabled = !FBP.infiniteDuration;
+		maxAge.enabled = !FBP.infiniteDuration;
 	}
 }

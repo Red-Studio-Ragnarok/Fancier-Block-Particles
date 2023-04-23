@@ -6,8 +6,6 @@ import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
-import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.large;
-
 public class Page2 extends BasePage {
 
 	GuiButton entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyPlaceAnim, spawnPlaceParticles;
@@ -16,12 +14,12 @@ public class Page2 extends BasePage {
 	public void initGui() {
 		super.initPage(new Page1(), new Page3());
 
-		entityCollision = addButton(1, x, (this.height / 5) - 6, large, I18n.format("menu.entityCollide.title"), FBP.entityCollision, true, true);
-		bounceOffWalls = addButton(2, x, entityCollision.y + entityCollision.height + 1, large, I18n.format("menu.bounceOffWalls.title"), FBP.bounceOffWalls, true, true);
-		lowTraction = addButton(3, x, bounceOffWalls.y + bounceOffWalls.height + 6, large, I18n.format("menu.lowTraction.title"), FBP.lowTraction, true, true);
-		smartBreaking = addButton(4, x, lowTraction.y + lowTraction.height + 1, large, I18n.format("menu.smartBreaking.title"), FBP.smartBreaking, true, true);
-		fancyPlaceAnim = addButton(5, x, smartBreaking.y + smartBreaking.height + 6, large, I18n.format("menu.fancyPlaceAnimation.title"), FBP.fancyPlaceAnim, true, true);
-		spawnPlaceParticles = addButton(6, x, fancyPlaceAnim.y + fancyPlaceAnim.height + 1, large, I18n.format("menu.spawnPlaceParticles.title"), FBP.spawnPlaceParticles, true, true);
+		entityCollision = addButton(1, I18n.format("menu.entityCollide.title"), FBP.entityCollision, true);
+		bounceOffWalls = addButton(2, I18n.format("menu.bounceOffWalls.title"), FBP.bounceOffWalls, true);
+		lowTraction = addButton(3, I18n.format("menu.lowTraction.title"), FBP.lowTraction, true);
+		smartBreaking = addButton(4, I18n.format("menu.smartBreaking.title"), FBP.smartBreaking, true);
+		fancyPlaceAnim = addButton(5, I18n.format("menu.fancyPlaceAnimation.title"), FBP.fancyPlaceAnim, true);
+		spawnPlaceParticles = addButton(6, I18n.format("menu.spawnPlaceParticles.title"), FBP.spawnPlaceParticles, true);
 	}
 
 	@Override

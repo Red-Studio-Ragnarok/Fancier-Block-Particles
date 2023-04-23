@@ -6,8 +6,6 @@ import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
-import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.large;
-
 public class Page3 extends BasePage {
 
 	GuiButton fancyFlame, fancySmoke, fancyWeather, dynamicWeather, waterPhysics, restOnFloor;
@@ -16,12 +14,12 @@ public class Page3 extends BasePage {
 	public void initGui() {
 		super.initPage(new Page2(), new Page4());
 
-		fancyFlame = addButton(1, x, (this.height / 5) - 6, large, I18n.format("menu.fancyFlame.title"), FBP.fancyFlame, true, true);
-		fancySmoke = addButton(2, x, fancyFlame.y + fancyFlame.height + 1, large, I18n.format("menu.fancySmoke.title"), FBP.fancySmoke, true, true);
-		fancyWeather = addButton(3, x, fancySmoke.y + fancySmoke.height + 6, large, I18n.format("menu.fancyWeather.title"), FBP.fancyWeather, true, true);
-		dynamicWeather = addButton(4, x, fancyWeather.y + fancyWeather.height + 1, large, I18n.format("menu.dynamicWeather.title"), FBP.dynamicWeather, true, true);
-		waterPhysics = addButton(5, x, dynamicWeather.y + dynamicWeather.height + 6, large, I18n.format("menu.waterPhysics.title"), FBP.waterPhysics, true, true);
-		restOnFloor = addButton(6, x, waterPhysics.y + fancyFlame.height + 1, large, I18n.format("menu.restOnFloor.title"), false,false, false);
+		fancyFlame = addButton(1, I18n.format("menu.fancyFlame.title"), FBP.fancyFlame, true);
+		fancySmoke = addButton(2, I18n.format("menu.fancySmoke.title"), FBP.fancySmoke, true);
+		fancyWeather = addButton(3, I18n.format("menu.fancyWeather.title"), FBP.fancyWeather, true);
+		dynamicWeather = addButton(4, I18n.format("menu.dynamicWeather.title"), FBP.dynamicWeather, true);
+		waterPhysics = addButton(5, I18n.format("menu.waterPhysics.title"), FBP.waterPhysics, true);
+		restOnFloor = addButton(6, I18n.format("menu.restOnFloor.title"), false,false, false);
 	}
 
 	@Override
