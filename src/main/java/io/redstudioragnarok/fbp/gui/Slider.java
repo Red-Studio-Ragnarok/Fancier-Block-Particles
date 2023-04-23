@@ -14,10 +14,11 @@ public class Slider extends GuiButton {
 
 	private static int mouseX;
 	private static int mouseY;
-	private int handleState;
+	private int handleState = 1;
 
 	public final float originalValue;
 	public float value;
+	private final float minX = x + 15;
 	private float sliderPosX;
 
 	public Slider() {
@@ -30,6 +31,8 @@ public class Slider extends GuiButton {
 		originalValue = inputValue;
 		value = inputValue;
 		width = 200;
+
+		sliderPosX = x + (15 + value * (width - 30));
 	}
 
 	public void update() {
@@ -38,14 +41,10 @@ public class Slider extends GuiButton {
 		if (dragging && !Mouse.isButtonDown(0))
 			dragging = false;
 
-		sliderPosX = x + (15 + value * (width - 30));
-
 		if (dragging) {
-			final double min = x + 15;
+			sliderPosX = MathUtil.clampMinFirst((float) mouseX, minX, (float) x + width - 15);
 
-			sliderPosX = MathUtil.clampMinFirst((float) mouseX, (float) min, (float) x + width - 15);
-
-			value = MathUtil.clampMinFirst(MathUtil.absolute((float) ((sliderPosX - min) / (width - 30))), 0, 1);
+			value = MathUtil.clampMinFirst(MathUtil.absolute((sliderPosX - minX) / (width - 30)), 0, 1);
 		}
 	}
 
