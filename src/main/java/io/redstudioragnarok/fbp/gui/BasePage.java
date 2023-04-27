@@ -236,8 +236,8 @@ public abstract class BasePage extends GuiScreen {
         this.buttonList.add(button);
     }
 
-    protected Slider addSlider(final int id, final float value) {
-        Slider slider = new Slider(id, x, calculatePosition(id), value);
+    protected Slider addSlider(final int id, final float minValue, final float inputValue, final float maxValue) {
+        Slider slider = new Slider(id, x, calculatePosition(id), minValue, inputValue, maxValue);
         this.sliderList.add(slider);
         this.buttonList.add(slider);
 
@@ -248,7 +248,6 @@ public abstract class BasePage extends GuiScreen {
 
         return slider;
     }
-
 
     private int calculatePosition(final int id) {
         final int evenButtonSpacing = 26;

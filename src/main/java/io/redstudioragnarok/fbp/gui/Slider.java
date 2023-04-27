@@ -17,6 +17,8 @@ public class Slider extends GuiButton {
 	private int handleState = 1;
 
 	public final float originalValue;
+	public final float minValue;
+	public final float maxValue;
 	public float value;
 	private final float minX = x + 15;
 	private float sliderPosX;
@@ -24,15 +26,20 @@ public class Slider extends GuiButton {
 	public Slider() {
 		super(Integer.MIN_VALUE, 0, 0, "");
 		originalValue = 0;
+
+		this.minValue = 0;
+		this.maxValue = 0;
 	}
 
-	public Slider(final int id, final int x, final int y, final float inputValue) {
+	public Slider(final int id, final int x, final int y, final float minValue, final float inputValue, final float maxValue) {
 		super(id, x, y, "");
+		this.minValue = minValue;
+		this.maxValue = maxValue;
 		originalValue = inputValue;
 		value = inputValue;
 		width = 200;
 
-		sliderPosX = x + (15 + value * (width - 30));
+		sliderPosX = x + 15 + ((value - minValue) / (maxValue - minValue)) * (width - 30);
 	}
 
 	public void update() {
@@ -44,7 +51,7 @@ public class Slider extends GuiButton {
 		if (dragging) {
 			sliderPosX = MathUtil.clampMinFirst((float) mouseX, minX, (float) x + width - 15);
 
-			value = MathUtil.clampMinFirst(MathUtil.absolute((sliderPosX - minX) / (width - 30)), 0, 1);
+			value = MathUtil.round(minValue + ((sliderPosX - minX) / (width - 30)) * (maxValue - minValue), 2);
 		}
 	}
 

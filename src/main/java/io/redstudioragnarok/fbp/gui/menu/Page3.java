@@ -20,8 +20,8 @@ public class Page3 extends BasePage {
 		addButton(3, I18n.format("menu.fancyWeather.title"), FBP.fancyWeather, true);
 		addButton(4, I18n.format("menu.dynamicWeather.title"), FBP.dynamicWeather, true);
 
-		weatherParticleDensity = addSlider(5, (float) ((FBP.weatherParticleDensity - 0.75) / 4.25));
-		weatherRenderDistance = addSlider(6, (float) ((FBP.weatherRenderDistance - 0.75) / 1.75));
+		weatherParticleDensity = addSlider(5, 0.75F, FBP.weatherParticleDensity, 5);
+		weatherRenderDistance = addSlider(6, 0.75F, FBP.weatherRenderDistance, 2.5F);
 	}
 
 	@Override
@@ -56,8 +56,8 @@ public class Page3 extends BasePage {
 	public void updateScreen() {
 		super.updateScreen();
 
-		FBP.weatherParticleDensity = MathUtil.round((float) (0.75 + 4.25 * weatherParticleDensity.value), 2);
-		FBP.weatherRenderDistance = MathUtil.round((float) (0.75 + 1.75 * weatherRenderDistance.value), 2);
+		FBP.weatherParticleDensity = weatherParticleDensity.value;
+		FBP.weatherRenderDistance = weatherRenderDistance.value;
 	}
 
 	@Override

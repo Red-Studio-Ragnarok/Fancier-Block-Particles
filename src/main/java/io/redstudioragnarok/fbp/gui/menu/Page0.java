@@ -20,13 +20,13 @@ public class Page0 extends BasePage {
 	public void initGui() {
 		super.initPage(null, new Page1());
 
-		minAge = addSlider(1, (float) ((FBP.minAge - 10) / 90.0));
-		maxAge = addSlider(2, (float) ((FBP.maxAge - 10) / 90.0));
+		minAge = addSlider(1, 10, FBP.minAge, 100);
+		maxAge = addSlider(2, 10, FBP.maxAge, 100);
 
-		particlesPerAxis = addSlider(3, (float) ((FBP.particlesPerAxis - 2) / 3.0));
-		scaleMult = addSlider(4, (float) ((FBP.scaleMult - 0.75) / 0.5));
-		gravityMult = addSlider(5, (float) ((FBP.gravityMult - 0.05) / 2.95));
-		rotationMult = addSlider(6, (float) (FBP.rotationMult / 1.5));
+		particlesPerAxis = addSlider(3, 2, FBP.particlesPerAxis, 5);
+		scaleMult = addSlider(4, 0.75F, FBP.scaleMult, 1.25F);
+		gravityMult = addSlider(5, 0.05F, FBP.gravityMult, 3);
+		rotationMult = addSlider(6, 0, FBP.rotationMult, 1.5F);
 
 		infiniteDuration = addButton(7, x + 205, minAge.y + 10, small, (FBP.infiniteDuration ? "§a" : "§c") + "∞");
 		timeUnit = addButton(8, x - 25, minAge.y + 10, small, "§a§L" + (FBP.showInMillis ? "ms" : "ti"));
@@ -53,29 +53,29 @@ public class Page0 extends BasePage {
     public void updateScreen() {
 		super.updateScreen();
 
-		final int sMinAge = (int) (10 + 90 * minAge.value);
-		final int sMaxAge = (int) (10 + 90 * maxAge.value);
+		final int sMinAge = (int) minAge.value;
+		final int sMaxAge = (int) maxAge.value;
 
 		if (FBP.maxAge < sMinAge) {
 			FBP.maxAge = sMinAge;
 
-			maxAge.value = (float) ((FBP.maxAge - 10) / 90.0);
+			maxAge.value = FBP.maxAge;
 		}
 
 		if (FBP.minAge > sMaxAge) {
 			FBP.minAge = sMaxAge;
 
-			minAge.value = (float) ((FBP.minAge - 10) / 90.0);
+			minAge.value = FBP.minAge;
 		}
 
 		FBP.minAge = sMinAge;
 		FBP.maxAge = sMaxAge;
-		FBP.scaleMult = MathUtil.round((float) (0.75 + 0.5 * scaleMult.value), 2);
-		FBP.gravityMult = MathUtil.round((float) (0.05 + 2.95 * gravityMult.value), 2);
-		FBP.rotationMult = MathUtil.round((float) (1.5 * rotationMult.value), 2);
-		FBP.particlesPerAxis = FastMath.round(2 + 3 * particlesPerAxis.value);
+		FBP.scaleMult = scaleMult.value;
+		FBP.gravityMult = gravityMult.value;
+		FBP.rotationMult = rotationMult.value;
+		FBP.particlesPerAxis = (int) particlesPerAxis.value;
 
-		particlesPerAxis.value = (float) ((FBP.particlesPerAxis - 2) / 3.0);
+		particlesPerAxis.value = FBP.particlesPerAxis;
 	}
 
 	@Override
