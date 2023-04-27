@@ -1,5 +1,6 @@
 package io.redstudioragnarok.fbp.utils;
 
+import io.redstudioragnarok.fbp.Tags;
 import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,9 +15,9 @@ import java.net.URISyntaxException;
  */
 public class ModReference {
 
-    public static final String id = "@ID@";
+    public static final String id = Tags.ID;
     public static final String name = "Fancier Block Particles";
-    public static final String version = "@VERSION@";
+    public static final String version = Tags.VERSION;
     public static final Logger log = LogManager.getLogger(id);
     public static URI newIssueLink;
 
