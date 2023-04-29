@@ -30,6 +30,8 @@ tasks.withType(JavaCompile).configureEach {
 minecraft {
 	mcVersion = '1.12.2'
 
+	username = "Desoroxxx"
+
 	def args = ['-Dfml.coreMods.load=io.redstudioragnarok.fbp.asm.FBPPlugin']
 
 	injectedTags.put('ID', project.id)
@@ -151,16 +153,16 @@ idea {
 
 	project { settings {
 		runConfigurations {
-			"1. Run Client"(Gradle) {
+			"1. Client"(Gradle) {
 				taskNames = ["runClient"]
 			}
-			"2. Run Server"(Gradle) {
+			"2. Server"(Gradle) {
 				taskNames = ["runServer"]
 			}
-			"3. Run Obfuscated Client"(Gradle) {
+			"3. Obfuscated Client"(Gradle) {
 				taskNames = ["runObfClient"]
 			}
-			"4. Run Obfuscated Server"(Gradle) {
+			"4. Obfuscated Server"(Gradle) {
 				taskNames = ["runObfServer"]
 			}
 		}
