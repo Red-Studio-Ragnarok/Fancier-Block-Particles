@@ -101,7 +101,7 @@ public class Button extends InteractiveElement {
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 		if (hovered && enabled) {
 			playPressSound(mc.getSoundHandler());
-\			toggle = !toggle;
+			toggle = !toggle;
 			return true;
 		} else
 			return false;
