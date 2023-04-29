@@ -71,9 +71,7 @@ public class Page3 extends BasePage {
 		String description = "";
 
 		for (GuiButton button : this.buttonList) {
-			Slider slider = button instanceof Slider ? (Slider) button : new Slider();
-
-			if (button.isMouseOver() || slider.isMouseOver(mouseX, mouseY, 6)) {
+			if (button.isMouseOver()) {
 				switch (button.id) {
 					case 1:
 						description = I18n.format("menu.fancyFlame.description");

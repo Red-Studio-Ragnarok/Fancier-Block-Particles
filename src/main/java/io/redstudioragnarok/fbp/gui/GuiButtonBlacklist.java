@@ -5,9 +5,9 @@ import net.jafama.FastMath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
-import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.medium;
+import static io.redstudioragnarok.fbp.gui.Button.ButtonSize.medium;
 
-public class GuiButtonBlacklist extends FBPGuiButton {
+public class GuiButtonBlacklist extends Button {
 
 	public boolean particle;
 	public boolean isInExceptions;
@@ -23,11 +23,11 @@ public class GuiButtonBlacklist extends FBPGuiButton {
 	}
 
 	@Override
-	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+	public void drawButton(Minecraft mc, int mouseXIn, int mouseYIn, float partialTicks) {
 		int centerX1 = x + this.height / 2;
 		int centerY1 = y + this.height / 2 - 1;
 
-		double distance = FastMath.sqrtQuick((mouseX - centerX1) * (mouseX - centerX1) + (mouseY - centerY1) * (mouseY - centerY1));
+		double distance = FastMath.sqrtQuick((mouseXIn - centerX1) * (mouseXIn - centerX1) + (mouseYIn - centerY1) * (mouseYIn - centerY1));
 		int radius = (this.height - 1) / 2;
 
 		hovered = distance <= radius;
@@ -46,6 +46,6 @@ public class GuiButtonBlacklist extends FBPGuiButton {
 		// render icon
 		this.drawTexturedModalRect(x + width / 2.0f - 22.5f + (particle ? 0 : 2), y + height / 2.0f - 22.5f, 256 - 45, particle ? 45 : 0, 45, 45);
 
-		this.mouseDragged(mc, mouseX, mouseY);
+		this.mouseDragged(mc, mouseXIn, mouseYIn);
 	}
 }

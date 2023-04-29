@@ -3,12 +3,10 @@ package io.redstudioragnarok.fbp.gui.menu;
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.BasePage;
 import io.redstudioragnarok.fbp.gui.Slider;
-import io.redstudioragnarok.fbp.utils.MathUtil;
-import net.jafama.FastMath;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
-import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.small;
+import static io.redstudioragnarok.fbp.gui.Button.ButtonSize.small;
 
 public class Page0 extends BasePage {
 
@@ -96,10 +94,8 @@ public class Page0 extends BasePage {
 	protected String getDescription() {
 		String description = "";
 
-		for (GuiButton button : this.buttonList) {
-			Slider slider = button instanceof Slider ? (Slider) button : new Slider();
-
-			if (button.isMouseOver() || slider.isMouseOver(mouseX, mouseY, 6)) {
+		for (GuiButton button : super.buttonList) {
+			if (button.isMouseOver()) {
 				switch (button.id) {
 					case 1:
 					case 2:

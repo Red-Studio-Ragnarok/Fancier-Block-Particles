@@ -20,13 +20,14 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.*;
+import static io.redstudioragnarok.fbp.gui.Button.ButtonSize.*;
 
 public abstract class BasePage extends GuiScreen {
 
     protected static int mouseX;
     protected static int mouseY;
-    protected int x;
+    protected static int x;
+    protected static int y;
 
     private long lastTime;
 
@@ -34,38 +35,39 @@ public abstract class BasePage extends GuiScreen {
     private float targetHoverBoxY;
 
     protected boolean writeConfig;
+    protected boolean isSettings;
 
     protected GuiButtonEnable toggle;
 
-    protected GuiButtonBugReport issue;
+    protected ButtonBugReport issue, settings;
 
     private GuiScreen previousPage, nextPage;
 
-    protected List<Slider> sliderList = Lists.newArrayList();
-
     public void initPage(GuiScreen previousPage, GuiScreen nextPage) {
         x = width / 2 - 100;
-
-        final int y = height / 5 + 149;
+        y = height / 5 + 148;
 
         addButton(0, x, y, medium, I18n.format("menu.defaults"));
         addButton(-1, x + 102, y, medium, I18n.format("menu.reloadConfig"));
 
-        addButton(-2, x, y + 20 + 1, large, I18n.format("menu.done"));
+        addButton(-2, x, y + 22, large, I18n.format("menu.done"));
 
-        issue = new GuiButtonBugReport(-3, width - 32, 6);
-        toggle = new GuiButtonEnable(-4, width - 64, 6);
+        if (!isSettings)
+            settings = new ButtonBugReport(-3, width - 32, 6);
 
-        this.buttonList.addAll(Arrays.asList(toggle, issue));
+        issue = new ButtonBugReport(-4, width - (isSettings ? 32 : 64), 6);
+        toggle = new GuiButtonEnable(-5, width - (isSettings ? 64 : 96), 6);
+
+        super.buttonList.addAll(Arrays.asList(toggle, issue, settings));
 
         this.previousPage = previousPage;
         this.nextPage = nextPage;
 
         if (previousPage!= null)
-            addButton(-5, x - 45, y - 50, small, "§6<<");
+            addButton(-6, x - 45, y - 50, small, "§6<<");
 
         if (nextPage!= null)
-            addButton(-6, x + 225, y - 50, small, "§6>>");
+            addButton(-7, x + 225, y - 50, small, "§6>>");
     }
 
     @Override
@@ -81,20 +83,22 @@ public abstract class BasePage extends GuiScreen {
                 mc.displayGuiScreen(null);
                 break;
             case -3:
+                break;
+            case -4:
                 try {
                     Desktop.getDesktop().browse(ModReference.newIssueLink);
-                } catch (Exception e) {
+                } catch (Exception exception) {
                     // TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
                 }
                 break;
-            case -4:
+            case -5:
                 FBP.setEnabled(!FBP.enabled);
                 writeConfig = true;
                 break;
-            case -5:
+            case -6:
                 mc.displayGuiScreen(previousPage);
                 break;
-            case -6:
+            case -7:
                 mc.displayGuiScreen(nextPage);
                 break;
         }
@@ -107,17 +111,20 @@ public abstract class BasePage extends GuiScreen {
 
     @Override
     public void updateScreen() {
-        if (!sliderList.isEmpty()) {
-            sliderList.forEach(slider -> {
-                slider.update();
+        buttonList.forEach(button -> {
+            if (button instanceof InteractiveElement)
+                ((InteractiveElement) button).update(mouseX, mouseY);
 
-                if (slider.isMouseOver(mouseX, mouseY, 6))
+            if (button instanceof Slider) {
+                Slider slider = (Slider) button;
+
+                if (slider.isMouseOver())
                     targetHoverBoxY = slider.y;
 
                 if (!((MathUtil.round(slider.originalValue, 2))  == (MathUtil.round(slider.value, 2))))
                     writeConfig = true;
-            });
-        }
+            }
+        });
     }
 
     protected void updateSliderHoverBox() {
@@ -149,34 +156,32 @@ public abstract class BasePage extends GuiScreen {
         mouseX = mouseXIn;
         mouseY = mouseYIn;
 
-        int y = this.height / 5 - 10;
-
         if (FBP.mc.world != null)
             drawRectangle(0, 0, width, height, 0, 0, 0, 191);
         else
             drawBackground(0);
 
-        drawCenteredString(fontRenderer, "§L= " + I18n.format("name") + " =", width / 2, y - 27, fontRenderer.getColorCode('6'));
-        drawCenteredString(fontRenderer, "§L= " + ModReference.version + " =", width / 2, y - 17, fontRenderer.getColorCode('a'));
-
         if (!FBP.enabled)
-            drawCenteredString(fontRenderer, "§L= " + I18n.format("menu.disabled") + " =", width / 2, y - 35, fontRenderer.getColorCode('c'));
+            drawCenteredString(fontRenderer, "§L= " + I18n.format("menu.disabled") + " =", x + 100, y - 193, fontRenderer.getColorCode('c'));
+
+        drawCenteredString(fontRenderer, "§L= " + I18n.format("name") + " =", x + 100, y - 183, fontRenderer.getColorCode('6'));
+        drawCenteredString(fontRenderer, "§L= " + ModReference.version + " =", x + 100, y - 173, fontRenderer.getColorCode('a'));
 
         drawTitle();
 
-        if (!sliderList.isEmpty())
+        if (targetHoverBoxY > 0)
             updateSliderHoverBox();
 
-        for (GuiButton button : this.buttonList) {
+        for (GuiButton button : super.buttonList) {
             if (button.id <= 0)
                 continue;
 
             Slider slider = button instanceof Slider ? (Slider) button : new Slider();
 
-            if (slider.isMouseOver(mouseX, mouseY, 6))
+            if (slider.isMouseOver())
                 drawRectangle(x - 2, hoverBoxY + 2, 204, 16, 200, 200, 200, 35);
 
-            if (button.isMouseOver() || slider.isMouseOver(mouseX, mouseY, 6)) {
+            if (button.isMouseOver() || slider.isMouseOver()) {
                 drawCenteredString(fontRenderer, getDescription(), this.width / 2, height / 5 + 131, fontRenderer.getColorCode('f'));
                 break;
             }
@@ -193,7 +198,7 @@ public abstract class BasePage extends GuiScreen {
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
-            for (GuiButton guibutton : this.buttonList) {
+            for (GuiButton guibutton : super.buttonList) {
                 if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
                     if (!guibutton.isMouseOver())
                         return;
@@ -225,21 +230,20 @@ public abstract class BasePage extends GuiScreen {
             ConfigHandler.writeMainConfig();
     }
 
-    protected FBPGuiButton addButton(final int id, final int x, final int y, final FBPGuiButton.ButtonSize size, final String text) {
-        FBPGuiButton button = new FBPGuiButton(id, x, y, size, text, false, false, true);
-        this.buttonList.add(button);
+    protected Button addButton(final int id, final int x, final int y, final Button.ButtonSize size, final String text) {
+        Button button = new Button(id, x, y, size, text, false, false, true);
+        buttonList.add(button);
+
         return button;
     }
 
     protected void addButton(final int id, final String text, final Boolean toggle, final Boolean toggleButton, final Boolean... disabled) {
-        FBPGuiButton button = new FBPGuiButton(id, x, calculatePosition(id), large, text, toggle, toggleButton, disabled.length < 1);
-        this.buttonList.add(button);
+        buttonList.add(new Button(id, x, calculatePosition(id), large, text, toggle, toggleButton, disabled.length < 1));
     }
 
-    protected Slider addSlider(final int id, final float minValue, final float inputValue, final float maxValue) {
-        Slider slider = new Slider(id, x, calculatePosition(id), minValue, inputValue, maxValue);
-        this.sliderList.add(slider);
-        this.buttonList.add(slider);
+    protected Slider addSlider(final int id, final float minValue, final float inputValue, final float maxValue, final Boolean... disabled) {
+        Slider slider = new Slider(id, x, calculatePosition(id), minValue, inputValue, maxValue, disabled.length < 1);
+        buttonList.add(slider);
 
         if (hoverBoxY == 0) {
             hoverBoxY = slider.y;

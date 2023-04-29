@@ -7,9 +7,12 @@ import net.minecraft.client.resources.I18n;
 
 import java.io.IOException;
 
-import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.medium;
+import static io.redstudioragnarok.fbp.gui.Button.ButtonSize.medium;
 
 public class GuiYesNo extends GuiScreen {
+
+	private static int mouseX;
+	private static int mouseY;
 
 	GuiButton Yes, No;
 
@@ -21,8 +24,8 @@ public class GuiYesNo extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		Yes = new FBPGuiButton(1, this.width / 2 - 75, (int) (this.height / 1.85), medium, I18n.format("menu.yes"), false, false, true);
-		No = new FBPGuiButton(0, this.width / 2 + 26, (int) (this.height / 1.85), medium, I18n.format("menu.no"), false, false, true);
+		Yes = new Button(1, this.width / 2 - 75, (int) (this.height / 1.85), medium, I18n.format("menu.yes"), false, false, true);
+		No = new Button(0, this.width / 2 + 26, (int) (this.height / 1.85), medium, I18n.format("menu.no"), false, false, true);
 		Yes.width = No.width = 50;
 
 		this.buttonList.addAll(java.util.Arrays.asList(Yes, No));
@@ -49,13 +52,24 @@ public class GuiYesNo extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void updateScreen() {
+		buttonList.forEach(button -> {
+			if (button instanceof Button)
+				((Button) button).update(mouseX, mouseY);
+		});
+	}
+
+	@Override
+	public void drawScreen(int mouseXIn, int mouseYIn, float partialTicks) {
+		mouseX = mouseXIn;
+		mouseY = mouseYIn;
+
 		parent.width = this.width;
 		parent.height = this.height;
 
 		this.drawDefaultBackground();
 
 		this.drawCenteredString(fontRenderer, I18n.format("menu.confirmation"), this.width / 2, Yes.y - 30, Integer.parseInt("FFFFFF", 16));
-		super.drawScreen(mouseX, mouseY, partialTicks);
+		super.drawScreen(mouseXIn, mouseYIn, partialTicks);
 	}
 }

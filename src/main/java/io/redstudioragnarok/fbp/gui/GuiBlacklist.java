@@ -27,7 +27,7 @@ import org.lwjgl.input.Mouse;
 
 import java.util.Arrays;
 
-import static io.redstudioragnarok.fbp.gui.FBPGuiButton.ButtonSize.small;
+import static io.redstudioragnarok.fbp.gui.Button.ButtonSize.small;
 
 public class GuiBlacklist extends GuiScreen {
 
@@ -85,7 +85,7 @@ public class GuiBlacklist extends GuiScreen {
 		animation.enabled = b != null && !(b instanceof BlockDoublePlant) && ModelHelper.isModelValid(b.getDefaultState());
 		particle.enabled = selectedBlock.getBlock() != Blocks.REDSTONE_BLOCK;
 
-		FBPGuiButton guide = new FBPGuiButton(-1, animation.x + 30, animation.y + 30 - 10, small, (animation.enabled ? "§a<" : "§c<") + "             " + (particle.enabled ? "§a>" : "§c>"), false, false, true);
+		Button guide = new Button(-1, animation.x + 30, animation.y + 30 - 10, small, (animation.enabled ? "§a<" : "§c<") + "             " + (particle.enabled ? "§a>" : "§c>"), false, false, true);
 		guide.enabled = false;
 
 		this.buttonList.addAll(Arrays.asList(guide, animation, particle));
