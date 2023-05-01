@@ -1,5 +1,7 @@
 package io.redstudioragnarok.fbp.gui;
 
+import io.redstudioragnarok.fbp.utils.LogUtils;
+
 public class GuiUtils {
 
     /**
@@ -35,5 +37,27 @@ public class GuiUtils {
 
         // Return true if the mouse is inside either of the semicircle ends or the rectangular part
         return (distanceLeftSquared <= radiusSquared || distanceRightSquared <= radiusSquared) || isOverRectangle;
+    }
+
+    // Todo: Javadoc, and maybe comments???
+    /**
+     * Converts a hexadecimal color string to its decimal equivalent.
+     * The input string should start with a '#' character followed by a 6-character hexadecimal value.
+     * <p>
+     * If the input is invalid, the method returns the decimal value for white (16777215) and logs an error.
+     *
+     * @param hexColor The hexadecimal color string to convert.
+     * @return The decimal equivalent of the hexadecimal color or the decimal value for white if the input is invalid.
+     */
+    public static int hexToDecimalColor(String hexColor) {
+        try {
+            // Parse the hexadecimal string (excluding the '#' character) to an integer
+            return Integer.parseInt(hexColor.substring(1), 16);
+        } catch (NumberFormatException numberFormatException) {
+            LogUtils.printFramedError("GUI Rendering", "Hexadecimal to decimal color conversion failed", "Non critical exception falling back to white", numberFormatException.getMessage());
+
+            // Return the decimal value for white
+            return 16777215;
+        }
     }
 }
