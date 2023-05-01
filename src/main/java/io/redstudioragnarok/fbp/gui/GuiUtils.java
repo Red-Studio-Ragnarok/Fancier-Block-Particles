@@ -38,8 +38,7 @@ public class GuiUtils {
         // Return true if the mouse is inside either of the semicircle ends or the rectangular part
         return (distanceLeftSquared <= radiusSquared || distanceRightSquared <= radiusSquared) || isOverRectangle;
     }
-
-    // Todo: Javadoc, and maybe comments???
+    
     /**
      * Converts a hexadecimal color string to its decimal equivalent.
      * The input string should start with a '#' character followed by a 6-character hexadecimal value.
