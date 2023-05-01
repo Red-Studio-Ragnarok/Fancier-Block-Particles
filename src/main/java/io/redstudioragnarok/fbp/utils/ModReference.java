@@ -25,7 +25,7 @@ public class ModReference {
 
     static {
         try {
-            newIssueLink = new URI("https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/new?assignees=JustDesoroxxx&labels=&template=bug_report.md&title=");
+            newIssueLink = new URI("https://linkify.cz/FancierBugReport");
         } catch (URISyntaxException e) {
             // TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
         }
