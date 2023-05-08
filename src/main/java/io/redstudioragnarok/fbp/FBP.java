@@ -48,7 +48,7 @@ public class FBP {
 
 	public static File oldNewMainConfigFile;
 
-	public static boolean enabled, frozen, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyFlame, fancySmoke, waterPhysics;
+	public static boolean enabled, frozen, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyFlame, fancySmoke, waterPhysics;
 	public static boolean fancyPlaceAnim, spawnPlaceParticles;
 	public static boolean fancyWeather, dynamicWeather;
 	public static boolean debugMode;

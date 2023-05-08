@@ -262,7 +262,7 @@ public class FBPParticleBlock extends Particle {
 		}
 
 		if (tick == 0) {
-			if ((!(FBP.frozen && !FBP.spawnWhileFrozen) && (FBP.spawnRedstoneBlockParticles || block != Blocks.REDSTONE_BLOCK)) && mc.gameSettings.particleSetting < 2) {
+			if (!(FBP.frozen && !FBP.spawnWhileFrozen) && mc.gameSettings.particleSetting < 2) {
 				spawnParticles();
 			}
 		}

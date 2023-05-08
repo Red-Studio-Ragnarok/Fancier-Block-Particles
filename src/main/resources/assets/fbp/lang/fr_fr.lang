@@ -63,14 +63,12 @@ menu.randomRotation.title=Rotation Aléatoire
 menu.cartonMode.title=Mode Cartoon
 menu.randomizedScale.title=Taille Aléatoire
 menu.randomFadeSpeed.title=Vitesse de Disparition Aléatoire
-menu.redstoneBlock.title=Apparition de Particules de Blocs de Redstone
 menu.spawnFreeze.title=Apparition de Particules en Mode Gelée
 
 menu.randomRotation.description=Active une rotation aléatoire et simple.
 menu.cartonMode.description=§4DEPRECATION§f/§4SUPPRIMÉ §fDonne un aspect de dessin animé aux particules.
 menu.randomizedScale.description=Rend légèrement aléatoire l'échelle des particules.
 menu.randomFadeSpeed.description=Active une vitesse de disparition aléatoire des particules.
-menu.redstoneBlock.description=Permet l'apparition des particules de blocs de redstone.
 menu.spawnFreeze.description=Permet l'apparition des particules en mode gel.
 
 # Menu Page 2

@@ -63,14 +63,12 @@ menu.randomRotation.title=Random Rotation
 menu.cartonMode.title=Cartoon Mode
 menu.randomizedScale.title=Randomized Scale
 menu.randomFadeSpeed.title=Random Fade Speed
-menu.redstoneBlock.title=Spawn Redstone Block Particles
 menu.spawnFreeze.title=Spawn Particles in Freeze Mode
 
 menu.randomRotation.description=Enables random and simple rotation math.
 menu.cartonMode.description=§4DEPRECATED§f/§4REMOVED §fMakes the particles look cartoon-ish.
 menu.randomizedScale.description=Makes the particle scale slightly randomized.
 menu.randomFadeSpeed.description=Enables random particle fade away speed.
-menu.redstoneBlock.description=Allows spawning redstone block particles.
 menu.spawnFreeze.description=Allows spawning particles in freeze mode.
 
 # Menu Page 2

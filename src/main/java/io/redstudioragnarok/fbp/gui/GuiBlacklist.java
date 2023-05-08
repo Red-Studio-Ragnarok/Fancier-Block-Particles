@@ -14,7 +14,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -82,7 +81,6 @@ public class GuiBlacklist extends GuiScreen {
 		Block b = ib instanceof ItemBlock ? ((ItemBlock) ib).getBlock() : null;
 
 		animation.enabled = b != null && !(b instanceof BlockDoublePlant) && ModelHelper.isModelValid(b.getDefaultState());
-		particle.enabled = selectedBlock.getBlock() != Blocks.REDSTONE_BLOCK;
 
 		Button guide = new Button(-1, animation.x + 30, animation.y + 30 - 10, large, (animation.enabled ? "§a<" : "§c<") + "             " + (particle.enabled ? "§a>" : "§c>"), false, false);
 		guide.enabled = false;

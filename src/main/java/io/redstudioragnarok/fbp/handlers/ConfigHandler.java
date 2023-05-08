@@ -230,7 +230,6 @@ public class ConfigHandler {
 			FBP.randomRotation = Boolean.parseBoolean(configValues.getOrDefault("randomRotation", "true"));
 			FBP.randomizedScale = Boolean.parseBoolean(configValues.getOrDefault("randomizedScale", "true"));
 			FBP.randomFadingSpeed = Boolean.parseBoolean(configValues.getOrDefault("randomFadingSpeed", "true"));
-			FBP.spawnRedstoneBlockParticles = Boolean.parseBoolean(configValues.getOrDefault("spawnRedstoneBlockParticles", "true"));
 			FBP.spawnWhileFrozen = Boolean.parseBoolean(configValues.getOrDefault("spawnWhileFrozen", "true"));
 			FBP.entityCollision = Boolean.parseBoolean(configValues.getOrDefault("entityCollision", "true"));
 			FBP.bounceOffWalls = Boolean.parseBoolean(configValues.getOrDefault("bounceOffWalls", "true"));
@@ -453,7 +452,6 @@ public class ConfigHandler {
 		writer.println("randomRotation: " + FBP.randomRotation);
 		writer.println("randomizedScale: " + FBP.randomizedScale);
 		writer.println("randomFadingSpeed: " + FBP.randomFadingSpeed);
-		writer.println("spawnRedstoneBlockParticles: " + FBP.spawnRedstoneBlockParticles);
 		writer.println("spawnWhileFrozen: " + FBP.spawnWhileFrozen);
 		writer.println("entityCollision: " + FBP.entityCollision);
 		writer.println("bounceOffWalls: " + FBP.bounceOffWalls);
@@ -539,7 +537,6 @@ public class ConfigHandler {
 		FBP.entityCollision = true;
 		FBP.randomizedScale = true;
 		FBP.randomFadingSpeed = true;
-		FBP.spawnRedstoneBlockParticles = true;
 		FBP.spawnWhileFrozen = true;
 		FBP.smartBreaking = true;
 		FBP.fancyPlaceAnim = true;

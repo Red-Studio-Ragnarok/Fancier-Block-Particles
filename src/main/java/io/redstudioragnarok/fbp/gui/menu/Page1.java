@@ -15,8 +15,7 @@ public class Page1 extends BasePage {
 		addButton(2, I18n.format("menu.randomizedScale.title"), FBP.randomizedScale, true);
 		addButton(3, I18n.format("menu.randomFadeSpeed.title"), FBP.randomFadingSpeed, true);
 		addButton(4, I18n.format("menu.spawnPlaceParticles.title"), FBP.spawnPlaceParticles, true);
-		addButton(5, I18n.format("menu.redstoneBlock.title"), FBP.spawnRedstoneBlockParticles, true);
-		addButton(6, I18n.format("menu.spawnFreeze.title"), FBP.spawnWhileFrozen, true);
+		addButton(5, I18n.format("menu.spawnFreeze.title"), FBP.spawnWhileFrozen, true);
 
 		super.updateScreen();
 	}
@@ -41,10 +40,6 @@ public class Page1 extends BasePage {
 				writeConfig = true;
 				break;
 			case 5:
-				FBP.spawnRedstoneBlockParticles = !FBP.spawnRedstoneBlockParticles;
-				writeConfig = true;
-				break;
-			case 6:
 				FBP.spawnWhileFrozen = !FBP.spawnWhileFrozen;
 				writeConfig = true;
 				break;
@@ -64,8 +59,6 @@ public class Page1 extends BasePage {
 					case 4:
 						return I18n.format("menu.spawnPlaceParticles.description");
 					case 5:
-						return I18n.format("menu.redstoneBlock.description");
-					case 6:
 						return I18n.format("menu.spawnFreeze.description");
 				}
 			}

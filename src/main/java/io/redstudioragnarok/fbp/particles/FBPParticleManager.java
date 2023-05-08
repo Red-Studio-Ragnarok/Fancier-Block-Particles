@@ -9,7 +9,6 @@ import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.DestroyBlockProgress;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -48,7 +47,7 @@ public class FBPParticleManager extends ParticleManager {
 			} else if (toAdd instanceof FBPParticleDigging) {
 				blockState = ((ParticleDigging)effect).sourceState;
 
-				if (blockState != null && !(FBP.frozen && !FBP.spawnWhileFrozen) && (FBP.spawnRedstoneBlockParticles || blockState.getBlock() != Blocks.REDSTONE_BLOCK)) {
+				if (blockState != null && !(FBP.frozen && !FBP.spawnWhileFrozen)) {
 					if (blockState.getBlock() instanceof BlockLiquid || ConfigHandler.isBlacklisted(blockState.getBlock(), true)) {
 						effect.setExpired();
 						return;
@@ -57,7 +56,7 @@ public class FBPParticleManager extends ParticleManager {
 			} else if (toAdd instanceof ParticleDigging) {
 				blockState = ((ParticleDigging)effect).sourceState;
 
-				if (blockState != null && !(FBP.frozen && !FBP.spawnWhileFrozen) && (FBP.spawnRedstoneBlockParticles || blockState.getBlock() != Blocks.REDSTONE_BLOCK)) {
+				if (blockState != null && !(FBP.frozen && !FBP.spawnWhileFrozen)) {
 					effect.setExpired();
 
 					if (!(blockState.getBlock() instanceof BlockLiquid) && !ConfigHandler.isBlacklisted(blockState.getBlock(), true)) {
@@ -104,7 +103,7 @@ public class FBPParticleManager extends ParticleManager {
 						double posY = pos.getY() + ((j + 0.5) / FBP.particlesPerAxis);
 						double posZ = pos.getZ() + ((k + 0.5) / FBP.particlesPerAxis);
 
-						if ((!(block instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen)) && (FBP.spawnRedstoneBlockParticles || block != Blocks.REDSTONE_BLOCK) && !ConfigHandler.isBlacklisted(block, true)) {
+						if ((!(block instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen)) && !ConfigHandler.isBlacklisted(block, true)) {
 							double scale = FBP.random.nextDouble(0.75, 1);
 
 							FBPParticleDigging toSpawn = new FBPParticleDigging(world, posX, posY, posZ, posX - pos.getX() - 0.5, -0.001, posZ - pos.getZ() - 0.5, (float) scale, 1, 1, 1, state, null, texture).setBlockPos(pos);
@@ -137,7 +136,7 @@ public class FBPParticleManager extends ParticleManager {
 			if (target == null || target.hitVec == null)
 				target = new RayTraceResult(null, new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
 
-			if (FBP.smartBreaking && (!(iblockstate.getBlock() instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen)) && (FBP.spawnRedstoneBlockParticles || iblockstate.getBlock() != Blocks.REDSTONE_BLOCK)) {
+			if (FBP.smartBreaking && (!(iblockstate.getBlock() instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen))) {
 				hitPosX = target.hitVec.x + FBP.random.nextDouble(-0.21, 0.21) * Math.abs(boundingBox.maxX - boundingBox.minX);
 				hitPosY = target.hitVec.y + FBP.random.nextDouble(-0.21, 0.21) * Math.abs(boundingBox.maxY - boundingBox.minY);
 				hitPosZ = target.hitVec.z + FBP.random.nextDouble(-0.21, 0.21) * Math.abs(boundingBox.maxZ - boundingBox.minZ);
@@ -170,7 +169,7 @@ public class FBPParticleManager extends ParticleManager {
 				break;
 			}
 
-			if ((!(iblockstate.getBlock() instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen)) && (FBP.spawnRedstoneBlockParticles || iblockstate.getBlock() != Blocks.REDSTONE_BLOCK)) {
+			if ((!(iblockstate.getBlock() instanceof BlockLiquid) && !(FBP.frozen && !FBP.spawnWhileFrozen))) {
 
 				int damage = 0;
 
