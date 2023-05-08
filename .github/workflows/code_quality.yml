@@ -6,15 +6,17 @@ on:
     branches:
       - main
       - 0.8-Refractor-&-Cleanup
-
+      - GUI-Rework
+      
 jobs:
   qodana:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: 'Qodana Scan'
-        uses: JetBrains/qodana-action@main
+        uses: JetBrains/qodana-action@v2023.1.0
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
