@@ -11,8 +11,8 @@ menu.bugReport=Found a§c bug§a? Click to report it!
 menu.enable=§cEnable
 menu.disable=§aDisable
 
-menu.on=§aON
-menu.off=§cOFF
+menu.on=ON
+menu.off=OFF
 
 menu.yes=§aYes
 menu.no=§cNo
@@ -28,13 +28,13 @@ menu.confirmation=Are you sure you want to reset your config,§c this cannot be 
 menu.noDescriptionFound=No description available please report this
 
 # Menu Blacklist
-menu.blacklist.title=§LBlacklist a Block
-menu.blacklist.placeAnimation=§f§lPLACE ANIMATION
-menu.blacklist.particles=§f§lPARTICLES
-menu.blacklist.add=§a§lADD
-menu.blacklist.remove=§c§lREMOVE
-menu.blacklist.cantAnimate=§c§lCAN'T BE ANIMATED
-menu.blacklist.cantAdd=§c§lCAN'T BE ADDED
+menu.blacklist.title=§lBlacklist a Block
+menu.blacklist.placeAnimation=§lPLACE ANIMATION
+menu.blacklist.particles=§lPARTICLES
+menu.blacklist.add=§lADD
+menu.blacklist.remove=§lREMOVE
+menu.blacklist.cantAnimate=§lCAN'T BE ANIMATED
+menu.blacklist.cantAdd=§lCAN'T BE ADDED
 
 # Menu Page 0
 menu.destroyParticles.title=Destroy Particle Count

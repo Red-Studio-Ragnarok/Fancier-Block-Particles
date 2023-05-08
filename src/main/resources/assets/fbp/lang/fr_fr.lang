@@ -11,8 +11,8 @@ menu.bugReport=Vous avez trouvé un§c bug§a ? Cliquez pour le signaler !
 menu.enable=§cActivée
 menu.disable=§aDésactivée
 
-menu.on=§aON
-menu.off=§cOFF
+menu.on=ON
+menu.off=OFF
 
 menu.yes=§aOui
 menu.no=§cNon
@@ -28,13 +28,13 @@ menu.confirmation=Êtes-vous sûr de vouloir réinitialiser votre configuration,
 menu.noDescriptionFound=Aucune description disponible s’il vous plaît signaler ceci
 
 # Menu Blacklist
-menu.blacklist.title=§LListe noire d'un bloc
-menu.blacklist.placeAnimation=§f§lANIMATION DE PLACEMENT
-menu.blacklist.particles=§f§lPARTICULES
-menu.blacklist.add=§a§lAJOUTÉ
-menu.blacklist.remove=§c§lRETIRER
-menu.blacklist.cantAnimate=§c§lNE PEUT PAS ÊTRE ANIMÉ
-menu.blacklist.cantAdd=§c§lNE PEUT PAS ÊTRE AJOUTÉ
+menu.blacklist.title=§lListe noire d'un bloc
+menu.blacklist.placeAnimation=§lANIMATION DE PLACEMENT
+menu.blacklist.particles=§lPARTICULES
+menu.blacklist.add=§lAJOUTÉ
+menu.blacklist.remove=§lRETIRER
+menu.blacklist.cantAnimate=§lNE PEUT PAS ÊTRE ANIMÉ
+menu.blacklist.cantAdd=§lNE PEUT PAS ÊTRE AJOUTÉ
 
 # Menu Page 0
 menu.destroyParticles.title=Nombre de Particles a la Destruction

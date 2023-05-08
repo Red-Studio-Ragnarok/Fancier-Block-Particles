@@ -18,6 +18,8 @@ public class Page2 extends BasePage {
 		addButton(4, I18n.format("menu.waterPhysics.title"), FBP.waterPhysics, true);
 		addButton(5, I18n.format("menu.smartBreaking.title"), FBP.smartBreaking, true);
 		addButton(6, I18n.format("menu.fancyPlaceAnimation.title"), FBP.fancyPlaceAnim, true);
+
+		super.updateScreen();
 	}
 
 	@Override
@@ -52,37 +54,26 @@ public class Page2 extends BasePage {
 		}
 	}
 
-	protected String getDescription() {
-		String description = "";
-
-		for (GuiButton button : this.buttonList) {
+	protected String updateDescription() {
+		for (GuiButton button : buttonList) {
 			if (button.isMouseOver()) {
 				switch (button.id) {
 					case 1:
-						description = I18n.format("menu.entityCollide.description");
-						break;
+						return I18n.format("menu.entityCollide.description");
 					case 2:
-						description = I18n.format("menu.bounceOffWalls.description");
-						break;
+						return I18n.format("menu.bounceOffWalls.description");
 					case 3:
-						description = I18n.format("menu.lowTraction.description");
-						break;
+						return I18n.format("menu.lowTraction.description");
 					case 4:
-						description = I18n.format("menu.waterPhysics.description");
-                        break;
+						return I18n.format("menu.waterPhysics.description");
 					case 5:
-						description = I18n.format("menu.smartBreaking.description");
-						break;
+						return I18n.format("menu.smartBreaking.description");
 					case 6:
-						description = I18n.format("menu.fancyPlaceAnimation.description");
-						break;
-					default:
-						description = I18n.format("menu.noDescriptionFound");
-						break;
+						return I18n.format("menu.fancyPlaceAnimation.description");
 				}
 			}
 		}
 
-		return description;
+		return descriptionFallBack;
 	}
 }

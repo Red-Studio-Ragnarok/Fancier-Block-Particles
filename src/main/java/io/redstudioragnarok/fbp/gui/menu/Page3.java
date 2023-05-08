@@ -3,7 +3,6 @@ package io.redstudioragnarok.fbp.gui.menu;
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.BasePage;
 import io.redstudioragnarok.fbp.gui.Slider;
-import io.redstudioragnarok.fbp.utils.MathUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
@@ -22,6 +21,8 @@ public class Page3 extends BasePage {
 
 		weatherParticleDensity = addSlider(5, 0.75F, FBP.weatherParticleDensity, 5);
 		weatherRenderDistance = addSlider(6, 0.75F, FBP.weatherRenderDistance, 2.5F);
+
+		super.updateScreen();
 	}
 
 	@Override
@@ -60,44 +61,33 @@ public class Page3 extends BasePage {
 		FBP.weatherRenderDistance = weatherRenderDistance.value;
 	}
 
-	@Override
-	protected void drawTitle() {
-		weatherParticleDensity.displayString = I18n.format("menu.weatherDensity.title")+" [§6" + (int) (FBP.weatherParticleDensity * 100) + "%§f]";
-
-		weatherRenderDistance.displayString = I18n.format("menu.weatherRenderDistance.title")+" [§6" + (int) (FBP.weatherRenderDistance * 100) + "%§f]";
-	}
-
-	protected String getDescription() {
-		String description = "";
-
-		for (GuiButton button : this.buttonList) {
+	protected String updateDescription() {
+		for (GuiButton button : buttonList) {
 			if (button.isMouseOver()) {
 				switch (button.id) {
 					case 1:
-						description = I18n.format("menu.fancyFlame.description");
-						break;
+						return I18n.format("menu.fancyFlame.description");
 					case 2:
-						description = I18n.format("menu.fancySmoke.description");
-						break;
+						return I18n.format("menu.fancySmoke.description");
 					case 3:
-						description = I18n.format("menu.fancyWeather.description");
-						break;
+						return I18n.format("menu.fancyWeather.description");
 					case 4:
-						description = I18n.format("menu.dynamicWeather.description");
-						break;
+						return I18n.format("menu.dynamicWeather.description");
 					case 5:
-						description = I18n.format("menu.weatherDensity.description") + (int) (FBP.weatherParticleDensity * 100) + "%" + I18n.format("menu.period");
-						break;
+						return I18n.format("menu.weatherDensity.description") + (int) (FBP.weatherParticleDensity * 100) + "%" + I18n.format("menu.period");
 					case 6:
-						description = I18n.format("menu.weatherRenderDistance.description") + (int) (FBP.weatherRenderDistance * 100) + "%" + I18n.format("menu.period");
-                        break;
-					default:
-						description = I18n.format("menu.noDescriptionFound");
-						break;
+						return I18n.format("menu.weatherRenderDistance.description") + (int) (FBP.weatherRenderDistance * 100) + "%" + I18n.format("menu.period");
 				}
 			}
 		}
 
-		return description;
+		return descriptionFallBack;
+	}
+
+	@Override
+	protected void updateTitles() {
+		weatherParticleDensity.displayString = I18n.format("menu.weatherDensity.title")+" [§6" + (int) (FBP.weatherParticleDensity * 100);
+
+		weatherRenderDistance.displayString = I18n.format("menu.weatherRenderDistance.title")+" [§6" + (int) (FBP.weatherRenderDistance * 100);
 	}
 }

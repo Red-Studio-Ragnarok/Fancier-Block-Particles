@@ -1,6 +1,11 @@
 package io.redstudioragnarok.fbp.gui;
 
 import io.redstudioragnarok.fbp.utils.LogUtils;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import org.lwjgl.opengl.GL11;
 
 public class GuiUtils {
 
@@ -58,5 +63,41 @@ public class GuiUtils {
             // Return the decimal value for white
             return 16777215;
         }
+    }
+
+    /**
+     * Draws a rectangle on the screen using the specified coordinates and color.
+     *
+     * @param x The x coordinate of the top left corner of the rectangle.
+     * @param y The y coordinate of the top left corner of the rectangle.
+     * @param x2 The width of the rectangle.
+     * @param y2 The height of the rectangle.
+     * @param red The red component of the rectangle color (0-255).
+     * @param green The green component of the rectangle color (0-255).
+     * @param blue The blue component of the rectangle color (0-255).
+     * @param alpha The alpha component of the rectangle color (0-255).
+     */
+    protected static void drawRectangle(final double x, final double y, final double x2, final double y2, final int red, final int green, final int blue, final int alpha) {
+        final Tessellator tessellator = Tessellator.getInstance();
+        final BufferBuilder buffer = tessellator.getBuffer();
+
+        // Disable textures and enable blending for smooth color transitions
+        GlStateManager.disableTexture2D();
+        GlStateManager.enableBlend();
+
+        // Begin drawing a triangle strip with the specified vertex format
+        buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
+
+        // Add vertices to form a rectangle using the given coordinates and color
+        buffer.pos(x, y, 0).color(red, green, blue, alpha).endVertex();
+        buffer.pos(x, y + y2, 0).color(red, green, blue, alpha).endVertex();
+        buffer.pos(x + x2, y, 0).color(red, green, blue, alpha).endVertex();
+        buffer.pos(x + x2, y + y2, 0).color(red, green, blue, alpha).endVertex();
+
+        tessellator.draw();
+
+        // Disable blending and re-enable textures after drawing
+        GlStateManager.disableBlend();
+        GlStateManager.enableTexture2D();
     }
 }

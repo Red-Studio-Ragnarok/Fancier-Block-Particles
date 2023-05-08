@@ -13,7 +13,7 @@ public class GuiButtonBlacklist extends Button {
 	public boolean isInExceptions;
 
 	public GuiButtonBlacklist(int buttonId, int x, int y, String buttonText, boolean particle, boolean isInExceptions) {
-		super(buttonId, x, y, medium, buttonText,false, false, true);
+		super(buttonId, x, y, medium, buttonText,false, false);
 
 		this.particle = particle;
 		this.isInExceptions = isInExceptions;

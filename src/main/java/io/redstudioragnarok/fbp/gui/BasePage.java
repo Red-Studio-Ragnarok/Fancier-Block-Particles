@@ -1,28 +1,26 @@
 package io.redstudioragnarok.fbp.gui;
 
-import com.google.common.collect.Lists;
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import io.redstudioragnarok.fbp.utils.MathUtil;
 import io.redstudioragnarok.fbp.utils.ModReference;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.Desktop;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 import static io.redstudioragnarok.fbp.gui.Button.ButtonSize.*;
 
 public abstract class BasePage extends GuiScreen {
+
+    protected boolean writeConfig;
+    protected boolean isSettings;
+    private boolean containSliders;
+    private boolean updated;
 
     protected static int mouseX;
     protected static int mouseY;
@@ -34,8 +32,8 @@ public abstract class BasePage extends GuiScreen {
     private float hoverBoxY;
     private float targetHoverBoxY;
 
-    protected boolean writeConfig;
-    protected boolean isSettings;
+    protected static final String descriptionFallBack = I18n.format("menu.noDescriptionFound");
+    protected static String description = "";
 
     protected GuiButtonEnable toggle;
 
@@ -44,13 +42,13 @@ public abstract class BasePage extends GuiScreen {
     private GuiScreen previousPage, nextPage;
 
     public void initPage(GuiScreen previousPage, GuiScreen nextPage) {
-        x = width / 2 - 100;
+        x = width / 2;
         y = height / 5 + 148;
 
-        addButton(0, x, y, medium, I18n.format("menu.defaults"));
-        addButton(-1, x + 102, y, medium, I18n.format("menu.reloadConfig"));
+        addButton(0, x - 100, y, medium, I18n.format("menu.defaults"));
+        addButton(-1, x + 2, y, medium, I18n.format("menu.reloadConfig"));
 
-        addButton(-2, x, y + 22, large, I18n.format("menu.done"));
+        addButton(-2, x - 100, y + 22, large, I18n.format("menu.done"));
 
         if (!isSettings)
             settings = new ButtonBugReport(-3, width - 32, 6);
@@ -64,10 +62,10 @@ public abstract class BasePage extends GuiScreen {
         this.nextPage = nextPage;
 
         if (previousPage!= null)
-            addButton(-6, x - 45, y - 50, small, "§6<<");
+            addButton(-6, x - 145, y - 50, small, "<<");
 
         if (nextPage!= null)
-            addButton(-7, x + 225, y - 50, small, "§6>>");
+            addButton(-7, x + 125, y - 50, small, ">>");
     }
 
     @Override
@@ -125,6 +123,18 @@ public abstract class BasePage extends GuiScreen {
                     writeConfig = true;
             }
         });
+
+        description = updateDescription();
+
+        if (containSliders)
+            updateTitles();
+
+        updated = true;
+    }
+
+    protected abstract String updateDescription();
+
+    protected void updateTitles() {
     }
 
     protected void updateSliderHoverBox() {
@@ -157,17 +167,15 @@ public abstract class BasePage extends GuiScreen {
         mouseY = mouseYIn;
 
         if (FBP.mc.world != null)
-            drawRectangle(0, 0, width, height, 0, 0, 0, 191);
+            GuiUtils.drawRectangle(0, 0, width, height, 0, 0, 0, 191);
         else
             drawBackground(0);
 
         if (!FBP.enabled)
-            drawCenteredString(fontRenderer, "§L= " + I18n.format("menu.disabled") + " =", x + 100, y - 193, fontRenderer.getColorCode('c'));
+            drawCenteredString("§L= " + I18n.format("menu.disabled") + " =", "#FF5555", x, y - 193);
 
-        drawCenteredString(fontRenderer, "§L= " + I18n.format("name") + " =", x + 100, y - 183, fontRenderer.getColorCode('6'));
-        drawCenteredString(fontRenderer, "§L= " + ModReference.version + " =", x + 100, y - 173, fontRenderer.getColorCode('a'));
-
-        drawTitle();
+        drawCenteredString("§L= " + I18n.format("name") + " =", "#FFAA00", x, y - 183);
+        drawCenteredString("§L= " + ModReference.version + " =", "#55FF55", x, y - 173);
 
         if (targetHoverBoxY > 0)
             updateSliderHoverBox();
@@ -176,24 +184,17 @@ public abstract class BasePage extends GuiScreen {
             if (button.id <= 0)
                 continue;
 
-            Slider slider = button instanceof Slider ? (Slider) button : new Slider();
+            if (button.isMouseOver()) {
+                if (button instanceof Slider)
+                    GuiUtils.drawRectangle(x - 102, hoverBoxY + 2, 204, 16, 200, 200, 200, 35);
 
-            if (slider.isMouseOver())
-                drawRectangle(x - 2, hoverBoxY + 2, 204, 16, 200, 200, 200, 35);
-
-            if (button.isMouseOver() || slider.isMouseOver()) {
-                drawCenteredString(fontRenderer, getDescription(), this.width / 2, height / 5 + 131, fontRenderer.getColorCode('f'));
+                drawCenteredString(fontRenderer, description, this.width / 2, height / 5 + 131, fontRenderer.getColorCode('f'));
                 break;
             }
         }
 
         super.drawScreen(mouseXIn, mouseYIn, partialTicks);
     }
-
-    protected void drawTitle() {
-    }
-
-    protected abstract String getDescription();
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
@@ -231,19 +232,21 @@ public abstract class BasePage extends GuiScreen {
     }
 
     protected Button addButton(final int id, final int x, final int y, final Button.ButtonSize size, final String text) {
-        Button button = new Button(id, x, y, size, text, false, false, true);
+        Button button = new Button(id, x, y, size, text, false, false);
         buttonList.add(button);
 
         return button;
     }
 
     protected void addButton(final int id, final String text, final Boolean toggle, final Boolean toggleButton, final Boolean... disabled) {
-        buttonList.add(new Button(id, x, calculatePosition(id), large, text, toggle, toggleButton, disabled.length < 1));
+        buttonList.add(new Button(id, x - 100, calculatePosition(id), large, text, toggleButton, toggle, disabled.length >= 1));
     }
 
     protected Slider addSlider(final int id, final float minValue, final float inputValue, final float maxValue, final Boolean... disabled) {
-        Slider slider = new Slider(id, x, calculatePosition(id), minValue, inputValue, maxValue, disabled.length < 1);
+        Slider slider = new Slider(id, x - 100, calculatePosition(id), minValue, inputValue, maxValue, disabled.length >= 1);
         buttonList.add(slider);
+
+        containSliders = true;
 
         if (hoverBoxY == 0) {
             hoverBoxY = slider.y;
@@ -266,23 +269,7 @@ public abstract class BasePage extends GuiScreen {
         return this.height / 5 - 6 + totalSpacing;
     }
 
-    protected static void drawRectangle(final double x, final double y, final double x2, final double y2, final int red, final int green, final int blue, final int alpha) {
-        final Tessellator tessellator = Tessellator.getInstance();
-        final BufferBuilder buffer = tessellator.getBuffer();
-
-        GlStateManager.disableTexture2D();
-        GlStateManager.enableBlend();
-
-        buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
-
-        buffer.pos(x, y, 0).color(red, green, blue, alpha).endVertex();
-        buffer.pos(x, y + y2, 0).color(red, green, blue, alpha).endVertex();
-        buffer.pos(x + x2, y, 0).color(red, green, blue, alpha).endVertex();
-        buffer.pos(x + x2, y + y2, 0).color(red, green, blue, alpha).endVertex();
-
-        tessellator.draw();
-
-        GlStateManager.disableBlend();
-        GlStateManager.enableTexture2D();
+    public void drawCenteredString(final String text, final String color, final int x, final int y) {
+        fontRenderer.drawStringWithShadow(text, (x - (float) fontRenderer.getStringWidth(text) / 2), y, GuiUtils.hexToDecimalColor(color));
     }
 }

@@ -11,12 +11,14 @@ public class Page1 extends BasePage {
 	public void initGui() {
 		super.initPage(new Page0(), new Page2());
 
-		addButton(1, I18n.format("menu.randomRotation.title"), FBP.randomRotation, true);
+		addButton(1, I18n.format("menu.randomRotation.title"), FBP.randomRotation, true, true);
 		addButton(2, I18n.format("menu.randomizedScale.title"), FBP.randomizedScale, true);
 		addButton(3, I18n.format("menu.randomFadeSpeed.title"), FBP.randomFadingSpeed, true);
 		addButton(4, I18n.format("menu.spawnPlaceParticles.title"), FBP.spawnPlaceParticles, true);
 		addButton(5, I18n.format("menu.redstoneBlock.title"), FBP.spawnRedstoneBlockParticles, true);
 		addButton(6, I18n.format("menu.spawnFreeze.title"), FBP.spawnWhileFrozen, true);
+
+		super.updateScreen();
 	}
 
 	@Override
@@ -49,37 +51,26 @@ public class Page1 extends BasePage {
 		}
 	}
 
-	protected String getDescription() {
-		String description = "";
-
-		for (GuiButton button : this.buttonList) {
+	protected String updateDescription() {
+		for (GuiButton button : buttonList) {
 			if (button.isMouseOver()) {
 				switch (button.id) {
 					case 1:
-						description = I18n.format("menu.randomRotation.description");
-						break;
+						return I18n.format("menu.randomRotation.description");
 					case 2:
-						description = I18n.format("menu.randomizedScale.description");
-						break;
+						return I18n.format("menu.randomizedScale.description");
 					case 3:
-						description = I18n.format("menu.randomFadeSpeed.description");
-						break;
+						return I18n.format("menu.randomFadeSpeed.description");
 					case 4:
-						description = I18n.format("menu.spawnPlaceParticles.description");
-                        break;
+						return I18n.format("menu.spawnPlaceParticles.description");
 					case 5:
-						description = I18n.format("menu.redstoneBlock.description");
-						break;
+						return I18n.format("menu.redstoneBlock.description");
 					case 6:
-						description = I18n.format("menu.spawnFreeze.description");
-						break;
-					default:
-						description = I18n.format("menu.noDescriptionFound");
-						break;
+						return I18n.format("menu.spawnFreeze.description");
 				}
 			}
 		}
 
-		return description;
+		return descriptionFallBack;
 	}
 }

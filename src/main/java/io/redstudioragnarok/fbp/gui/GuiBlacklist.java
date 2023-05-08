@@ -27,7 +27,7 @@ import org.lwjgl.input.Mouse;
 
 import java.util.Arrays;
 
-import static io.redstudioragnarok.fbp.gui.Button.ButtonSize.small;
+import static io.redstudioragnarok.fbp.gui.Button.ButtonSize.large;
 
 public class GuiBlacklist extends GuiScreen {
 
@@ -40,8 +40,9 @@ public class GuiBlacklist extends GuiScreen {
 
 	boolean closing = false;
 
-	public GuiBlacklist(BlockPos selected) {
-		selectedPos = selected;
+	public GuiBlacklist(BlockPos blockPos) {
+		selectedPos = blockPos;
+
 		IBlockState state = FBP.mc.world.getBlockState(selectedPos);
 
 		selectedBlock = state.getBlock() == FBP.dummyBlock ? FBP.dummyBlock.blockNodes.get(selectedPos).state : state;
@@ -60,11 +61,11 @@ public class GuiBlacklist extends GuiScreen {
 		displayItemStack = is.copy();
 	}
 
-	public GuiBlacklist(ItemStack is) {
+	public GuiBlacklist(ItemStack itemStack) {
 		selectedPos = null;
-		selectedBlock = Block.getBlockFromName(is.getItem().getRegistryName().toString()).getStateFromMeta(is.getMetadata());
+		selectedBlock = Block.getBlockFromName(itemStack.getItem().getRegistryName().toString()).getStateFromMeta(itemStack.getMetadata());
 
-		displayItemStack = is.copy();
+		displayItemStack = itemStack.copy();
 	}
 
 	@Override
@@ -74,8 +75,6 @@ public class GuiBlacklist extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		this.buttonList.clear();
-
 		animation = new GuiButtonBlacklist(0, this.width / 2 - 100 - 30, this.height / 2 - 30 + 35, "", false, ConfigHandler.isBlacklisted(selectedBlock.getBlock(), false));
 		particle = new GuiButtonBlacklist(1, this.width / 2 + 100 - 30, this.height / 2 - 30 + 35, "", true, ConfigHandler.isBlacklisted(selectedBlock.getBlock(), true));
 
@@ -85,7 +84,7 @@ public class GuiBlacklist extends GuiScreen {
 		animation.enabled = b != null && !(b instanceof BlockDoublePlant) && ModelHelper.isModelValid(b.getDefaultState());
 		particle.enabled = selectedBlock.getBlock() != Blocks.REDSTONE_BLOCK;
 
-		Button guide = new Button(-1, animation.x + 30, animation.y + 30 - 10, small, (animation.enabled ? "§a<" : "§c<") + "             " + (particle.enabled ? "§a>" : "§c>"), false, false, true);
+		Button guide = new Button(-1, animation.x + 30, animation.y + 30 - 10, large, (animation.enabled ? "§a<" : "§c<") + "             " + (particle.enabled ? "§a>" : "§c>"), false, false);
 		guide.enabled = false;
 
 		this.buttonList.addAll(Arrays.asList(guide, animation, particle));
@@ -156,68 +155,70 @@ public class GuiBlacklist extends GuiScreen {
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		this.drawDefaultBackground();
+		GuiUtils.drawRectangle(0, 0, width, height, 0, 0, 0, 191);
 
-		// LIMIT MOUSE POS
-		int optionRadius = 30;
+		final int optionRadius = 30;
 		mouseX = (int) MathUtil.clampMinFirst(mouseX, animation.x + optionRadius, particle.x + optionRadius);
 		mouseY = height / 2 + 35;
 
-		// RENDER BLOCK
-		int x = width / 2 - 32;
-		int y = height / 2 - 30 - 60;
+		final int x = width / 2 - 32;
+		final int y = height / 2 - 90;
 
-		GlStateManager.enableDepth();
 		GlStateManager.enableLight(0);
 		GlStateManager.translate(x, y, 0);
 		GlStateManager.scale(4, 4, 4);
 		GlStateManager.enableColorMaterial();
-		this.itemRender.renderItemAndEffectIntoGUI(FBP.mc.player, displayItemStack, 0, 0);
 
-		this.itemRender.zLevel = 0.0F;
-		this.zLevel = 0.0F;
+		itemRender.renderItemAndEffectIntoGUI(mc.player, displayItemStack, 0, 0);
 
 		GlStateManager.scale(0.25, 0.25, 0.25);
 		GlStateManager.translate(-x, -y, 0);
 
-		// BLOCK INFO
 		String itemName = (selectedPos == null ? displayItemStack.getItem() : selectedBlock.getBlock()).getRegistryName().toString();
 		itemName = ((itemName.contains(":") ? "§6§l" : "§a§l") + itemName).replaceAll(":", "§c§l:§a§l");
 
-		drawCenteredString(fontRenderer, itemName, width / 2, height / 2 - 19, 0);
+		drawCenteredString(itemName, width / 2, height / 2 - 19);
 
-		// EXCEPTIONS INFO
-		String animationText1 = animation.enabled ? (animation.isMouseOver() ? (animation.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : "") : I18n.format("menu.blacklist.cantAnimate");
-		String particleText1 = particle.enabled ? (particle.isMouseOver() ? (particle.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : "") : I18n.format("menu.blacklist.cantAdd");
+		if (animation.isMouseOver()) {
+			drawCenteredString(I18n.format("menu.blacklist.placeAnimation"), "#FFFCFC", animation.x + 30, animation.y - 12);
 
-		drawCenteredString(fontRenderer, animationText1, animation.x + 30, animation.y + 65, 0);
-		drawCenteredString(fontRenderer, particleText1, particle.x + 30, particle.y + 65, 0);
+			final String text = animation.enabled ? (animation.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : I18n.format("menu.blacklist.cantAnimate");
+			final String color = animation.enabled ? (animation.isInExceptions? "#E44444" : "55FF55") : "#E44444";
 
-		if (animation.isMouseOver())
-			drawCenteredString(fontRenderer, I18n.format("menu.blacklist.placeAnimation"), animation.x + 30, animation.y - 12, 0);
-		if (particle.isMouseOver())
-			drawCenteredString(fontRenderer, I18n.format("menu.blacklist.particles"), particle.x + 30, particle.y - 12, 0);
+			drawCenteredString(text, color, animation.x + 30, animation.y + 65);
+		}
 
-		drawCenteredString(fontRenderer, I18n.format("menu.blacklist.title"), width / 2, 20, fontRenderer.getColorCode('a'));
+		if (particle.isMouseOver()) {
+			drawCenteredString(I18n.format("menu.blacklist.particles"), "#FFFCFC", particle.x + 30, particle.y - 12);
+
+			final String text = particle.enabled ? (particle.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : I18n.format("menu.blacklist.cantAdd");
+			final String color = particle.enabled? (particle.isInExceptions? "#E44444" : "55FF55") : "#E44444";
+
+			drawCenteredString(text, color, particle.x + 30, particle.y + 65);
+		}
+
+		drawCenteredString(I18n.format("menu.blacklist.title"), "#55FF55", width / 2, 20);
 
 		FBP.mc.getTextureManager().bindTexture(FBP.menuTexture);
 
-		// RENDER SCREEN
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
-		// RENDER MOUSE
-		FBP.mc.getTextureManager().bindTexture(FBP.menuTexture);
 		GlStateManager.color(1, 1, 1, 1);
 
 		GlStateManager.enableBlend();
 
-		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-
 		GuiButton mouseOver = animation.isMouseOver() ? animation : (particle.isMouseOver() ? particle : null);
 
-		int imageDiameter = 20;
+		final int imageDiameter = 20;
 
-		this.drawTexturedModalRect(mouseX - imageDiameter / 2, mouseY - imageDiameter / 2, mouseOver != null && !mouseOver.enabled ? 256 - imageDiameter * 2 : 256 - imageDiameter, 256 - imageDiameter, imageDiameter, imageDiameter);
+		drawTexturedModalRect(mouseX - imageDiameter / 2, mouseY - imageDiameter / 2, mouseOver != null && !mouseOver.enabled ? 256 - imageDiameter * 2 : 256 - imageDiameter, 256 - imageDiameter, imageDiameter, imageDiameter);
+	}
+
+	public void drawCenteredString(final String text, final int x, final int y) {
+		fontRenderer.drawStringWithShadow(text, (x - (float) fontRenderer.getStringWidth(text) / 2), y, 0);
+	}
+
+	public void drawCenteredString(final String text, final String color, final int x, final int y) {
+		fontRenderer.drawStringWithShadow(text, (x - (float) fontRenderer.getStringWidth(text) / 2), y, GuiUtils.hexToDecimalColor(color));
 	}
 }

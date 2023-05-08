@@ -1,19 +1,12 @@
 package io.redstudioragnarok.fbp.gui;
 
-import io.redstudioragnarok.fbp.FBP;
-import io.redstudioragnarok.fbp.utils.ModReference;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Button extends InteractiveElement {
-
-	boolean toggleButton;
-	boolean toggle;
-
-	public int offsetX;
 
 	public enum ButtonSize {
 		small,
@@ -21,31 +14,33 @@ public class Button extends InteractiveElement {
 		large
 	}
 
-	public Button(int buttonId, int x, int y, ButtonSize buttonSize, String buttonText, boolean toggle, boolean toggleButton, boolean enabled) {
-		super(buttonId, x, y, buttonText);
+	private static final Map<ButtonSize, Integer> buttonSizeIntegerMap;
 
-		this.enabled = enabled;
+	static {
+		buttonSizeIntegerMap = new HashMap<>();
+		buttonSizeIntegerMap.put(ButtonSize.small, 20);
+		buttonSizeIntegerMap.put(ButtonSize.medium, 98);
+		buttonSizeIntegerMap.put(ButtonSize.large, 200);
+	}
 
-		if (buttonText.equals("§6<<")){
-			offsetX = (this.height - 10) / 2;
-		} else if (buttonText.equals("§6>>")) {
-			offsetX = (this.height - 7) / 2;
-		}
+	private final boolean toggleButton;
+	private boolean toggle;
 
-		switch (buttonSize) {
-			case small:
-                this.width = 20;
-                break;
-            case medium:
-                this.width = 98;
-                break;
-            case large:
-                this.width = 200;
-                break;
-		}
+	private int offsetX;
 
-		if (this.toggleButton = toggleButton)
-			this.toggle = toggle;
+	public Button(final int id, final int x, final int y, final ButtonSize size, final String text, final boolean toggleButton, final boolean toggleState, final boolean... disabled) {
+		super(id, x, y, text, disabled);
+
+		this.toggleButton = toggleButton;
+		this.toggle = toggleState;
+
+		width = buttonSizeIntegerMap.get(size);
+
+
+		if (text.equals(">>") || text.equals("∞"))
+			offsetX = (height - 7) / 2;
+		else if (text.equals("<<"))
+			offsetX = (height - 10) / 2;
 	}
 
 	public void update(final int mouseX, final int mouseY) {
@@ -54,47 +49,27 @@ public class Button extends InteractiveElement {
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseXIn, int mouseYIn, float partialTicks) {
-		mc.getTextureManager().bindTexture(FBP.menuTexture);
-		if (enabled) {
-			GlStateManager.color(1, 1, 1, 1);
-		} else {
-			GlStateManager.color(0.5F, 0.5F, 0.5F, 1.0F);
+		startDrawing(true);
+
+		final int hovering = getHoverState(hovered);
+
+		if (width == 200)
+			drawTexturedModalRect(x, y, 0, hovering * 20, width, height);
+		else {
+			drawTexturedModalRect(x, y, 0, hovering * 20, width / 2, height);
+			drawTexturedModalRect(x + width / 2, y, 200 - width / 2, hovering * 20, width / 2, height);
 		}
 
-		int i = this.getHoverState(hovered);
-
-		GlStateManager.enableBlend();
-
-		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-
-		this.drawTexturedModalRect(this.x, this.y, 0, i * 20, this.width / 2, this.height);
-		this.drawTexturedModalRect(this.x + this.width / 2, this.y, 200 - this.width / 2, i * 20, this.width / 2, this.height);
-
-		this.mouseDragged(mc, mouseXIn, mouseYIn);
-
-		int textColor = 14737632;
-
-		if (hovered) {
-			textColor = 16777120;
-		} else if (packedFGColour != 0) {
-			textColor = packedFGColour;
-		} else if (!enabled) {
-			textColor = 10526880;
-		}
-
-		final FontRenderer fontRenderer = mc.fontRenderer;
+		final String textColor = enabled ? (hovered ? "#FFFFA0" : "#FFFCFC") : (hovered ? "#E7E7B6" : "#C9C9C9");
 
 		if (toggleButton) {
-			this.drawString(fontRenderer, this.displayString, this.x + 8, this.y + (this.height - 8) / 2, textColor);
+			drawString(displayString, textColor, x + 8, y + (height - 8) / 2);
 
-			this.drawString(fontRenderer, toggle ? I18n.format("menu.on") : I18n.format("menu.off"), this.x + this.width - 25, this.y + (this.height - 8) / 2, textColor);
-		} else {
-			if (offsetX == 0)
-				this.drawCenteredString(fontRenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, textColor);
-			else
-				this.drawString(fontRenderer, this.displayString, this.x + offsetX, this.y + (this.height - 8) / 2, textColor);
-		}
+			drawString(toggle ? I18n.format("menu.on") : I18n.format("menu.off"), enabled ? (toggle ? "#55FF55" : "#FF5555") : (toggle ? "#6FE76F" : "#E76F6F"), x + width - 25, y + (height - 8) / 2);
+		} else if (offsetX == 0) {
+			drawCenteredString(displayString, textColor, x + width / 2, y + (height - 8) / 2);
+		} else
+			drawString(displayString, "#FFAA00", x + offsetX, y + (height - 8) / 2);
 	}
 
 	@Override

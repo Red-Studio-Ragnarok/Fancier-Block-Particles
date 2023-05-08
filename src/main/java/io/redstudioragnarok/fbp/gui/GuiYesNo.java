@@ -24,8 +24,8 @@ public class GuiYesNo extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		Yes = new Button(1, this.width / 2 - 75, (int) (this.height / 1.85), medium, I18n.format("menu.yes"), false, false, true);
-		No = new Button(0, this.width / 2 + 26, (int) (this.height / 1.85), medium, I18n.format("menu.no"), false, false, true);
+		Yes = new Button(1, this.width / 2 - 75, (int) (this.height / 1.85), medium, I18n.format("menu.yes"), false, false);
+		No = new Button(0, this.width / 2 + 26, (int) (this.height / 1.85), medium, I18n.format("menu.no"), false, false);
 		Yes.width = No.width = 50;
 
 		this.buttonList.addAll(java.util.Arrays.asList(Yes, No));

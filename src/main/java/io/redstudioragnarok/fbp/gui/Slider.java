@@ -1,6 +1,5 @@
 package io.redstudioragnarok.fbp.gui;
 
-import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.utils.MathUtil;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;
@@ -20,25 +19,13 @@ public class Slider extends InteractiveElement {
 	private final float minX = x + 15;
 	private float sliderPosX;
 
-	public Slider() {
-		super(Integer.MIN_VALUE, 0, 0, "");
-		originalValue = 0;
-
-		this.minValue = 0;
-		this.maxValue = 0;
-	}
-
-	public Slider(final int id, final int x, final int y, final float minValue, final float inputValue, final float maxValue, boolean enabled) {
-		super(id, x, y, "");
-
-		this.enabled = enabled;
+	public Slider(final int id, final int x, final int y, final float minValue, final float inputValue, final float maxValue, final boolean... disabled) {
+		super(id, x, y, "", disabled);
 
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		originalValue = inputValue;
 		value = inputValue;
-
-		width = 200;
 
 		sliderPosX = x + 15 + ((value - minValue) / (maxValue - minValue)) * (width - 30);
 	}
@@ -61,10 +48,7 @@ public class Slider extends InteractiveElement {
 
 	@Override
 	public void drawButton(final Minecraft mc, final int mouseXIn, final int mouseYIn, final float partialTicks) {
-		// Title
-		drawCenteredString(mc.fontRenderer, displayString, x + width / 2, y + 6 - 9, mc.fontRenderer.getColorCode('f'));
-
-		mc.getTextureManager().bindTexture(FBP.menuTexture);
+		startDrawing(false);
 
 		// Bar
 		drawTexturedModalRect(x, y, 0, 60 + boolToInt(enabled) * 20, width / 2, height);
@@ -73,11 +57,15 @@ public class Slider extends InteractiveElement {
 		// Handle
 		drawTexturedModalRect(sliderPosX - 15, y, 0, 100 + handleState * 20, 15, height);
 		drawTexturedModalRect(sliderPosX, y, 185, 100 + handleState * 20, 15, height);
+
+		// Title
+		drawCenteredString(displayString, enabled ? "#FFFCFC" : "#C9C9C9", x + width / 2, y + 6 - 9);
+		drawCenteredString("]", enabled ? "#FFFCFC" : "#C9C9C9", (x + width / 2) + (fontRenderer.getStringWidth(displayString) / 2) + 3, y + 6 - 9);
 	}
 
 	@Override
 	public boolean mousePressed(final Minecraft mc, final int mouseX, final int mouseY) {
-		if (GuiUtils.isMouseInsideStadium(mouseX, mouseY, x, y, width, 15) && enabled)
+		if (hovered && enabled)
 			dragging = true;
 
 		return false;
