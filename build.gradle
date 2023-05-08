@@ -18,13 +18,14 @@ java {
 		languageVersion.set(JavaLanguageVersion.of(8))
 		vendor.set(JvmVendorSpec.ADOPTIUM)
 	}
-	// Generate sources and javadocs jars when building and publishing
+	// Generate sources jar when building and publishing
 	withSourcesJar()
-	withJavadocJar()
 }
 
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = "UTF-8"
+	options.fork = true
+	options.forkOptions.jvmArgs += ["-Xmx4G"]
 }
 
 minecraft {
@@ -43,7 +44,7 @@ tasks.injectTags.configure {
 	outputClassName.set("io.redstudioragnarok.${project.id}.Tags")
 }
 
-// Replace version in `mcmod.info`
+// Replace version and id in `mcmod.info`
 processResources {
 	inputs.property 'id', project.id
 	inputs.property 'version', project.version
