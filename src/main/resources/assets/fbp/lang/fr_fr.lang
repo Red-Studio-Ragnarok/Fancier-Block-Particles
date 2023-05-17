@@ -6,10 +6,13 @@ hud.freeze=§LParticules Gelées
 
 # Menu
 menu.disabled=Désactivée
-menu.bugReport=Vous avez trouvé un§c bug§a ? Cliquez pour le signaler !
+menu.settings=Paramètres
+menu.bugReport=Vous avez trouvé un §cbug§f ? Cliquez pour le signaler !
 
-menu.enable=§cActivée
-menu.disable=§aDésactivée
+menu.experiments=Expériences
+
+menu.enable=§aActivée§f
+menu.disable=§cDésactivée§f
 
 menu.on=ON
 menu.off=OFF
@@ -34,7 +37,16 @@ menu.blacklist.particles=§lPARTICULES
 menu.blacklist.add=§lAJOUTÉ
 menu.blacklist.remove=§lRETIRER
 menu.blacklist.cantAnimate=§lNE PEUT PAS ÊTRE ANIMÉ
+menu.blacklist.animationDisabled=§lANIMATION SOPHISTIQUÉE DE POSE DE BLOC EST DÉSACTIVÉE
 menu.blacklist.cantAdd=§lNE PEUT PAS ÊTRE AJOUTÉ
+
+# Menu Settings
+
+menu.settings.experiments.title=Expériences
+menu.settings.debug.title=Mode Debug
+
+menu.settings.experiments.description=Active les expériences
+menu.settings.debug.description=Active le mode de debug
 
 # Menu Page 0
 menu.destroyParticles.title=Nombre de Particles a la Destruction
@@ -60,51 +72,44 @@ menu.time.description.milliseconds=millisecondes
 
 # Menu Page 1
 menu.randomRotation.title=Rotation Aléatoire
-menu.cartonMode.title=Mode Cartoon
 menu.randomizedScale.title=Taille Aléatoire
 menu.randomFadeSpeed.title=Vitesse de Disparition Aléatoire
+menu.spawnPlaceParticles.title=Apparition de Particules de Pose
 menu.spawnFreeze.title=Apparition de Particules en Mode Gelée
 
 menu.randomRotation.description=Active une rotation aléatoire et simple.
-menu.cartonMode.description=§4DEPRECATION§f/§4SUPPRIMÉ §fDonne un aspect de dessin animé aux particules.
 menu.randomizedScale.description=Rend légèrement aléatoire l'échelle des particules.
 menu.randomFadeSpeed.description=Active une vitesse de disparition aléatoire des particules.
+menu.spawnPlaceParticles.description=Permet l'apparition des particules de pose de blocs.
 menu.spawnFreeze.description=Permet l'apparition des particules en mode gel.
 
 # Menu Page 2
 menu.entityCollide.title=Collision avec les Entités
 menu.bounceOffWalls.title=Rebondir sur les Murs
 menu.lowTraction.title=Faible Adhérence
+menu.waterPhysics.title=Physique de l'Eau
 menu.smartBreaking.title=Casse Intelligente
 menu.fancyPlaceAnimation.title=Animation de Pose Sophistiquée
-menu.spawnPlaceParticles.title=Apparition de Particules de Pose
 
 menu.entityCollide.description=Permet la collision avec les entités.
 menu.bounceOffWalls.description=Permet aux particules de ricocher/rebondir sur les murs.
 menu.lowTraction.description=Abaisse la décélération de traction au sol.
+menu.waterPhysics.description=Fait flotter les particules de bois et les autres coulent plus lentement.
 menu.smartBreaking.description=Motion et mise à l'échelle des particules de frappe de bloc intelligentes.
 menu.fancyPlaceAnimation.description=Ajoute une animation sophistiquée de pose de bloc.
-menu.spawnPlaceParticles.description=Permet l'apparition des particules de pose de blocs.
 
 # Menu Page 3
 menu.fancyFlame.title=Flamme Sophistiquée
 menu.fancySmoke.title=Fumée Sophistiquée
 menu.fancyWeather.title=Météo Sophistiquée
 menu.dynamicWeather.title=Météo Dynamique
-menu.waterPhysics.title=Physique de l'Eau
-menu.restOnFloor.title=Repos sur le Sol
+menu.weatherDensity.title=Densité des Particules de Météo
+menu.weatherRenderDistance.title=Distance d'Affichage des Particules de Météo
 
 menu.fancyFlame.description=Rend les particules de flamme sophistiquées.
 menu.fancySmoke.description=Rend les particules de fumée sophistiquées.
 menu.fancyWeather.description=Rend les particules de pluie et de neige sophistiquées.
 menu.dynamicWeather.description=Rend les particules de pluie et de neige plus denses lors des orages.
-menu.waterPhysics.description=Fait flotter les particules de bois et les autres coulent plus lentement.
-menu.restOnFloor.description=§4DEPRECATION§f/§4SUPPRIMÉ §fFait reposer les particules alignées sur le sol.
-
-# Menu Page 4
-menu.weatherDensity.title=Densité des Particules de Météo
-menu.weatherRenderDistance.title=Distance d'Affichage des Particules de Météo
-
 menu.weatherDensity.description=Définit la densité des particules de météo à §6
 menu.weatherRenderDistance.description=Définit la distance d'affichage des particules de météo à §6
 

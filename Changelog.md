@@ -7,13 +7,19 @@ and this project follows to [Ragnarök Versioning Convention](https://gist.githu
 
 ## [Unreleased] Fancier Block Particles Version 0.8 Changelog
 
-### Highlight
+### Highlights
 
-#### Revamped configs! 
+#### Revamped configs!
 
 The new configs are easier to read understand and use, they are also faster which makes FBP have nearly no impact on loading times.
 
 ***Old Configs will be deleted so please back them up before launching if you have made major changes to them***
+
+#### Revamped GUI
+
+Enjoy easier to use GUI as well as a new beautiful background, this applies to every GUI in FBP.
+
+![image](https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/assets/82710983/800b4d80-ccaa-4759-89d8-57ae04292d9b)
 
 #### Dynamic Weather System
 
@@ -23,9 +29,12 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 
 - Dynamic Weather System (rain & snow)
 - Weather Particles Render Distance option
+- Added settings menu
 
 ### Changed
 
+- Revamped GUI's
+- Changed GUI's background, it will be a transparent background with blur while in a world and be dirt when the main menu.
 - Revamped Main config file
 - Changed default maximum duration from 55 to 64
 - Revamped Floating Materials config file
@@ -35,6 +44,8 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - Smoke particles are now slightly more transparent
 - The config button in Forge's mod options now works
 - Updated `mcmod.info` to feature new description and better credits
+- Blacklist GUI cursor is now darker and become as light as before when hovering a button
+- Changed freeze effect text color from orange to aqua
 
 ### Fixed
 
@@ -47,6 +58,7 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 ### Removed
 
 - Removed Rest On Floor option ([#9])
+- Removed the deprecated Cartoon Mode from the menu
 
 ### Optimization
 
@@ -59,11 +71,13 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 
 ### Internal
 
+- Revamped GUI's they are now extremely easy to use and create, and the pages components are now independent of each others
+- GUI's text colors now never uses decimal colors directly and should use when possible hexadecimal colors when possible
 - Added documentation for Vector2D, Vector3D, and FBPRenderer
-- Switched to [Anatawa] amazing [FG2.3 fork]
-- Updated to Gradle 7.6
+- Switched to [Raven] amazing [RetroFuturaGradle]
+- Updated to Gradle 8.1.1
 - Cleanup build.gradle & gradle.properties
-- Gradle now automatically updates the version in `ModReference.java`
+- RFG now automatically updates the version in `ModReference.java`
 - Cleanup the entire code
 - Vectors redesign
 - Major Refactors
@@ -79,9 +93,9 @@ And having control over them is really nice, so we need to make our own.
 
 Introducing `Vector2D` and `Vector3D` the brand-new vectors for FBP, which are faster easier to work with and come with great documentation!
 
-#### Changes in error handling
+#### Changes in exception handling
 
-Non-critical try-catch blocks should now never throw a runtime exception or print a stack trace except when debug mode is added they should print a stack trace and count towards the issues counter and their respective counters (Rendering Issues, Physics Issues, Performance Issues, etc.)
+To be written
 
 ##### Credits
 
@@ -92,15 +106,15 @@ Non-critical try-catch blocks should now never throw a runtime exception or prin
 [#139]: https://github.com/TominoCZ/FancyBlockParticles/issues/139
 [#9]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/9
 [#10]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/10
-[Anatawa]: https://github.com/anatawa12
-[FG2.3 fork]: https://github.com/anatawa12/ForgeGradle-2.3
+[Raven]: https://github.com/eigenraven
+[RetroFuturaGradle]: https://github.com/GTNewHorizons/RetroFuturaGradle
 [WildMihai]: https://github.com/WildMihai
 
 ---
 
 ## Fancier Block Particles Version 0.7 Changelog - 2022-10-18
 
-### Highlight
+### Highlights
 
 Particles now renders 2.5 times faster (Immense thanks to Rongmario!)
 

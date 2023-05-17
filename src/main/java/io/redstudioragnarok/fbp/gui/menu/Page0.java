@@ -2,11 +2,11 @@ package io.redstudioragnarok.fbp.gui.menu;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.BasePage;
-import io.redstudioragnarok.fbp.gui.Slider;
+import io.redstudioragnarok.fbp.gui.elements.Slider;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
-import static io.redstudioragnarok.fbp.gui.Button.ButtonSize.small;
+import static io.redstudioragnarok.fbp.gui.elements.Button.ButtonSize.small;
 
 public class Page0 extends BasePage {
 
@@ -26,8 +26,8 @@ public class Page0 extends BasePage {
 		gravityMult = addSlider(5, 0.05F, FBP.gravityMult, 3);
 		rotationMult = addSlider(6, 0, FBP.rotationMult, 1.5F);
 
-		infiniteDuration = addButton(7, x + 105, minAge.y + 10, small, (FBP.infiniteDuration ? "§a" : "§c") + "∞");
-		timeUnit = addButton(8, x - 125, minAge.y + 10, small, "§a§L" + (FBP.showInMillis ? "ms" : "ti"));
+		infiniteDuration = addButton(7, middleX + 105, minAge.y + 10, small, (FBP.infiniteDuration ? "§a" : "§c") + "∞");
+		timeUnit = addButton(8, middleX - 125, minAge.y + 10, small, "§a§L" + (FBP.showInMillis ? "ms" : "ti"));
 
 		update();
 

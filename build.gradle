@@ -44,19 +44,6 @@ tasks.injectTags.configure {
 	outputClassName.set("io.redstudioragnarok.${project.id}.Tags")
 }
 
-// Replace version and id in `mcmod.info`
-processResources {
-	inputs.property 'id', project.id
-	inputs.property 'version', project.version
-	filesMatching(['mcmod.info', 'pack.mcmeta']) { fcd ->
-		include 'mcmod.info'
-		fcd.expand (
-				'id': project.id,
-				'version': project.version
-		)
-	}
-}
-
 // Create configuration to include embedded dependencies into FBP jar
 configurations {
 	implementation
@@ -131,6 +118,21 @@ def at = project.files("src/main/resources/META-INF/fbp_at.cfg")
 
 tasks.deobfuscateMergedJarToSrg.accessTransformerFiles.from(at)
 tasks.srgifyBinpatchedJar.accessTransformerFiles.from(at)
+
+// Replace version and id in `mcmod.info`
+processResources {
+	inputs.property 'id', project.id
+	inputs.property 'version', project.version
+	filesMatching(['mcmod.info', 'pack.mcmeta']) { fcd ->
+		include 'mcmod.info'
+		fcd.expand (
+				'id': project.id,
+				'version': project.version
+		)
+	}
+	from refMap
+	dependsOn 'compileJava'
+}
 
 jar {
 	manifest.attributes([

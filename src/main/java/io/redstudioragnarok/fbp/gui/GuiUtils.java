@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.Color;
 
 public class GuiUtils {
 
@@ -58,7 +59,9 @@ public class GuiUtils {
             // Parse the hexadecimal string (excluding the '#' character) to an integer
             return Integer.parseInt(hexColor.substring(1), 16);
         } catch (NumberFormatException numberFormatException) {
-            LogUtils.printFramedError("GUI Rendering", "Hexadecimal to decimal color conversion failed", "Non critical exception falling back to white", numberFormatException.getMessage());
+            // TODO: (Debug Mode) This should count to the problem counter
+
+            LogUtils.printFramedError("GUI Rendering", "Hexadecimal to decimal color conversion failed", "Non critical exception falling back to white", numberFormatException.getMessage(), "At:" + numberFormatException.getStackTrace()[3].toString());
 
             // Return the decimal value for white
             return 16777215;
@@ -72,12 +75,9 @@ public class GuiUtils {
      * @param y The y coordinate of the top left corner of the rectangle.
      * @param x2 The width of the rectangle.
      * @param y2 The height of the rectangle.
-     * @param red The red component of the rectangle color (0-255).
-     * @param green The green component of the rectangle color (0-255).
-     * @param blue The blue component of the rectangle color (0-255).
-     * @param alpha The alpha component of the rectangle color (0-255).
+     * @param rgba The color of the rectangle.
      */
-    protected static void drawRectangle(final double x, final double y, final double x2, final double y2, final int red, final int green, final int blue, final int alpha) {
+    protected static void drawRectangle(final double x, final double y, final double x2, final double y2, final Color rgba) {
         final Tessellator tessellator = Tessellator.getInstance();
         final BufferBuilder buffer = tessellator.getBuffer();
 
@@ -87,6 +87,12 @@ public class GuiUtils {
 
         // Begin drawing a triangle strip with the specified vertex format
         buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
+
+        // Get the red green blue and alpha components of the rgba argument
+        final int red = rgba.getRed();
+        final int green = rgba.getGreen();
+        final int blue = rgba.getBlue();
+        final int alpha = rgba.getAlpha();
 
         // Add vertices to form a rectangle using the given coordinates and color
         buffer.pos(x, y, 0).color(red, green, blue, alpha).endVertex();

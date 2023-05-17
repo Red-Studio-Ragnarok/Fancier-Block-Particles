@@ -3,7 +3,6 @@ package io.redstudioragnarok.fbp.handlers;
 import io.redstudioragnarok.fbp.FBP;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
@@ -247,7 +246,7 @@ public class ConfigHandler {
 			FBP.weatherParticleDensity = Float.parseFloat(configValues.getOrDefault("weatherParticleDensity", "1.0"));
 			FBP.weatherRenderDistance = Float.parseFloat(configValues.getOrDefault("weatherRenderDistance", "1.0"));
 
-			FBP.debugMode = Boolean.parseBoolean(configValues.getOrDefault("debugMode", "false"));
+			FBP.debug = Boolean.parseBoolean(configValues.getOrDefault("debugMode", "false"));
 
 		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
@@ -473,9 +472,12 @@ public class ConfigHandler {
 		writer.println("weatherParticleDensity: " + FBP.weatherParticleDensity);
 		writer.println("weatherRenderDistance: " + FBP.weatherRenderDistance);
 		writer.println();
+		writer.println("# Experiments:");
+		writer.println();
+		writer.println();
 		writer.println("# Debug Config:");
 		writer.println();
-		writer.print("debugMode: " + FBP.debugMode);
+		writer.print("debugMode: " + FBP.debug);
 
 		writer.close();
 	}
@@ -490,7 +492,7 @@ public class ConfigHandler {
 
 		writer.println("# Configuration file for floatings materials.");
 		writer.println("# Anything added here will float, anything else will sink.");
-		writer.println("# List of all possible materials: https://shor.cz/Materials");
+		writer.println("# List of all possible materials: https://shor.cz/1.12Materials");
 		writer.println();
 		writer.println("Carpet");
 		writer.println("Cloth");
@@ -580,22 +582,6 @@ public class ConfigHandler {
 	}
 
 	/**
-	 * Adds a block to either the particle or animation blacklist.
-	 *
-	 * @param block The block to add
-	 * @param particle Whether the block should be added to the particle or animation blacklist
-	 */
-	public static void addToBlacklist(Block block, boolean particle) {
-		if (block == null)
-			return;
-
-		name = block.getRegistryName().toString();
-
-		if (!(particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).contains(name))
-			(particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).add(name);
-	}
-
-	/**
      * Adds a block by name to either the particle or animation blacklist.
      *
      * @param name The name of the block to add
@@ -605,31 +591,36 @@ public class ConfigHandler {
 		if (StringUtils.isEmpty(name))
 			return;
 
-		for (ResourceLocation rl : Block.REGISTRY.getKeys()) {
-			String resourceLocation = rl.toString();
-
-			if (resourceLocation.equals(name)) {
-				Block block = Block.REGISTRY.getObject(rl);
-
-				addToBlacklist(block, particle);
-				break;
-			}
-		}
+		if (!(particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).contains(name))
+			(particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).add(name);
 	}
 
+
 	/**
-     * Removes a block from either the particle or animation blacklist.
-     *
-     * @param block The block to remove
-	 * @param particle Whether the block should be removed from the particle or animation blacklist
-     */
-	public static void removeFromBlacklist(Block block, boolean particle) {
+	 * Add or remove a block from either the particle or animation blacklist.
+	 * <p>
+	 * If the block is not blacklisted, it is added to either the particle or animation blacklist.
+	 * <p>
+	 * If the block is blacklisted, it is removed from either the particle or animation blacklist.
+	 *
+	 * @param block The block to blacklist
+	 * @param particle Whether the block should be blacklisted from the particle or animation blacklist
+	 */
+	public static void blacklist(Block block, boolean particle) {
 		if (block == null)
 			return;
 
 		name = block.getRegistryName().toString();
 
-		(particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).remove(name);
+		if (isBlacklisted(block, particle))
+			(particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).remove(name);
+		else
+			(particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).add(name);
+
+		if (particle)
+			writeParticleBlacklist();
+		else
+			writeAnimBlacklist();
 	}
 
 	/**

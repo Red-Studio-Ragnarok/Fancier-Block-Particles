@@ -2,7 +2,7 @@ package io.redstudioragnarok.fbp.gui.menu;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.BasePage;
-import io.redstudioragnarok.fbp.gui.Slider;
+import io.redstudioragnarok.fbp.gui.elements.Slider;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
@@ -86,8 +86,8 @@ public class Page3 extends BasePage {
 
 	@Override
 	protected void updateTitles() {
-		weatherParticleDensity.displayString = I18n.format("menu.weatherDensity.title")+" [§6" + (int) (FBP.weatherParticleDensity * 100);
+		weatherParticleDensity.displayString = I18n.format("menu.weatherDensity.title")+" [§6" + (int) (FBP.weatherParticleDensity * 100) + "%";
 
-		weatherRenderDistance.displayString = I18n.format("menu.weatherRenderDistance.title")+" [§6" + (int) (FBP.weatherRenderDistance * 100);
+		weatherRenderDistance.displayString = I18n.format("menu.weatherRenderDistance.title")+" [§6" + (int) (FBP.weatherRenderDistance * 100) + "%";
 	}
 }

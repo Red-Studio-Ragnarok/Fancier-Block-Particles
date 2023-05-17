@@ -1,5 +1,8 @@
-package io.redstudioragnarok.fbp.gui;
+package io.redstudioragnarok.fbp.gui.elements;
 
+import io.redstudioragnarok.fbp.FBP;
+import io.redstudioragnarok.fbp.gui.GuiUtils;
+import io.redstudioragnarok.fbp.gui.InteractiveElement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 
@@ -11,7 +14,8 @@ public class Button extends InteractiveElement {
 	public enum ButtonSize {
 		small,
 		medium,
-		large
+		large,
+		guideSize
 	}
 
 	private static final Map<ButtonSize, Integer> buttonSizeIntegerMap;
@@ -21,6 +25,7 @@ public class Button extends InteractiveElement {
 		buttonSizeIntegerMap.put(ButtonSize.small, 20);
 		buttonSizeIntegerMap.put(ButtonSize.medium, 98);
 		buttonSizeIntegerMap.put(ButtonSize.large, 200);
+		buttonSizeIntegerMap.put(ButtonSize.guideSize, 225);
 	}
 
 	private final boolean toggleButton;
@@ -35,7 +40,7 @@ public class Button extends InteractiveElement {
 		this.toggle = toggleState;
 
 		width = buttonSizeIntegerMap.get(size);
-
+		height = 20;
 
 		if (text.equals(">>") || text.equals("∞"))
 			offsetX = (height - 7) / 2;
@@ -49,7 +54,7 @@ public class Button extends InteractiveElement {
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseXIn, int mouseYIn, float partialTicks) {
-		startDrawing(true);
+		startDrawing(FBP.guiTexture, true);
 
 		final int hovering = getHoverState(hovered);
 
@@ -65,7 +70,7 @@ public class Button extends InteractiveElement {
 		if (toggleButton) {
 			drawString(displayString, textColor, x + 8, y + (height - 8) / 2);
 
-			drawString(toggle ? I18n.format("menu.on") : I18n.format("menu.off"), enabled ? (toggle ? "#55FF55" : "#FF5555") : (toggle ? "#6FE76F" : "#E76F6F"), x + width - 25, y + (height - 8) / 2);
+			drawString(toggle ? I18n.format("menu.on") : I18n.format("menu.off"), enabled ? (toggle ? "#55FF55" : "#E44444") : (toggle ? "#6FE76F" : "#E76F6F"), x + width - 25, y + (height - 8) / 2);
 		} else if (offsetX == 0) {
 			drawCenteredString(displayString, textColor, x + width / 2, y + (height - 8) / 2);
 		} else

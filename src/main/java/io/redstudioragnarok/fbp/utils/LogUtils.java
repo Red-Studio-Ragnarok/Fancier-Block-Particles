@@ -42,17 +42,19 @@ public class LogUtils {
         formattedTextLines.addAll(Arrays.asList(additionalInformation));
         formattedTextLines.addAll(Arrays.asList("", whatNow));
 
+        final String header = "Fancier Block Particle had an exception, category:";
+
         // Get a random recomfort message from the list
         final String recomfort = recomfortMessages.get(random.nextInt(recomfortMessages.size()));
 
-        // Calculate the maximum line length for the framed error messa
-        getMaxLineLength(category, formattedTextLines, recomfort);
+        // Calculate the maximum line length for the framed error message
+        getMaxLineLength(header, category, formattedTextLines, recomfort);
 
         // Create a horizontal border for the framed error message
         final String horizontalBorder = createBorder();
 
-        // Format the title, category, and recomfort message to be centered within the frame
-        final String title = centeredText("Fancier Block Particle had an exception, category:");
+        // Format the header, category, and recomfort message to be centered within the frame
+        final String centeredHeader = centeredText(header);
         final String centeredCategory = centeredText(category);
         final String recomfortText = centeredText(recomfort);
 
@@ -64,7 +66,7 @@ public class LogUtils {
         final String reportLink = centeredText(String.valueOf(ModReference.newIssueLink));
 
         // Assemble the framed error message with all the formatted components
-        final String framedText = "\n" + horizontalBorder + "\n" + title + "\n" + centeredCategory + "\n" + horizontalBorder + "\n" + recomfortText + "\n" + horizontalBorder + "\n" + formattedText + "\n" + horizontalBorder + "\n" + reportMessage + "\n" + reportLink + "\n" + horizontalBorder;
+        final String framedText = "\n" + horizontalBorder + "\n" + centeredHeader + "\n" + centeredCategory + "\n" + horizontalBorder + "\n" + recomfortText + "\n" + horizontalBorder + "\n" + formattedText + "\n" + horizontalBorder + "\n" + reportMessage + "\n" + reportLink + "\n" + horizontalBorder;
 
         // Log the framed error message
         ModReference.log.error(framedText);
@@ -73,12 +75,13 @@ public class LogUtils {
     /**
      * Determines the maximum line length for the framed error message, and sets maxLineLength to the result.
      *
+     * @param header The header message.
      * @param category The error category.
      * @param lines The lines of text to be displayed.
      * @param recomfort The recomfort message.
      */
-    private static void getMaxLineLength(final String category, final List<String> lines, final String recomfort) {
-        maxLineLength = Math.max(Math.max(Math.max(lines.stream().mapToInt(String::length).max().orElse(0), category.length()), lines.get(lines.size() - 1).length()), recomfort.length());
+    private static void getMaxLineLength(final String header, final String category, final List<String> lines, final String recomfort) {
+        maxLineLength = Math.max(Math.max(Math.max(Math.max(lines.stream().mapToInt(String::length).max().orElse(0), category.length()), lines.get(lines.size() - 1).length()), recomfort.length()), header.length());
     }
 
     /**

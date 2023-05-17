@@ -1,6 +1,8 @@
 package io.redstudioragnarok.fbp.gui;
 
 import io.redstudioragnarok.fbp.FBP;
+import io.redstudioragnarok.fbp.gui.elements.Button;
+import io.redstudioragnarok.fbp.gui.elements.ButtonBlacklist;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import io.redstudioragnarok.fbp.handlers.KeyInputHandler;
 import io.redstudioragnarok.fbp.keys.KeyBindings;
@@ -10,15 +12,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import org.lwjgl.input.Keyboard;
@@ -26,197 +26,156 @@ import org.lwjgl.input.Mouse;
 
 import java.util.Arrays;
 
-import static io.redstudioragnarok.fbp.gui.Button.ButtonSize.large;
+import static io.redstudioragnarok.fbp.gui.elements.Button.ButtonSize.guideSize;
 
-public class GuiBlacklist extends GuiScreen {
+public class GuiBlacklist extends GuiBase {
 
-	GuiButtonBlacklist animation, particle;
-
-	final BlockPos selectedPos;
-	final IBlockState selectedBlock;
-
-	ItemStack displayItemStack;
-
+	private static boolean hovering;
 	boolean closing = false;
 
-	public GuiBlacklist(BlockPos blockPos) {
-		selectedPos = blockPos;
+	ButtonBlacklist animation, particle;
 
-		IBlockState state = FBP.mc.world.getBlockState(selectedPos);
+	Button guide;
 
-		selectedBlock = state.getBlock() == FBP.dummyBlock ? FBP.dummyBlock.blockNodes.get(selectedPos).state : state;
+	final BlockPos targetBlockPos;
+	final IBlockState targetBlockState;
+	final Block targetBlock;
+	final ItemStack targetItemStack;
 
-		ItemStack is = selectedBlock.getActualState(FBP.mc.world, selectedPos).getBlock().getPickBlock(selectedBlock, FBP.mc.objectMouseOver, FBP.mc.world, selectedPos, FBP.mc.player);
+	public GuiBlacklist(BlockPos target) {
+		mc = FBP.mc;
 
-		TileEntity te = FBP.mc.world.getTileEntity(selectedPos);
-
-		try {
-			if (te != null)
-				FBP.mc.storeTEInStack(is, te);
-		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-		}
-
-		displayItemStack = is.copy();
+		targetBlockPos = target;
+		targetBlockState = mc.world.getBlockState(targetBlockPos);
+		targetBlock = targetBlockState.getBlock();
+		targetItemStack = targetBlock.getPickBlock(targetBlockState, mc.objectMouseOver, mc.world, targetBlockPos, mc.player);
 	}
 
 	public GuiBlacklist(ItemStack itemStack) {
-		selectedPos = null;
-		selectedBlock = Block.getBlockFromName(itemStack.getItem().getRegistryName().toString()).getStateFromMeta(itemStack.getMetadata());
+		mc = FBP.mc;
 
-		displayItemStack = itemStack.copy();
-	}
-
-	@Override
-	public boolean doesGuiPauseGame() {
-		return false;
+		targetBlockPos = null;
+		targetBlockState = Block.getStateById(Item.getIdFromItem(itemStack.getItem()));
+		targetBlock = targetBlockState.getBlock();
+		targetItemStack = itemStack.copy();
 	}
 
 	@Override
 	public void initGui() {
-		animation = new GuiButtonBlacklist(0, this.width / 2 - 100 - 30, this.height / 2 - 30 + 35, "", false, ConfigHandler.isBlacklisted(selectedBlock.getBlock(), false));
-		particle = new GuiButtonBlacklist(1, this.width / 2 + 100 - 30, this.height / 2 - 30 + 35, "", true, ConfigHandler.isBlacklisted(selectedBlock.getBlock(), true));
+		middleX = width / 2;
+		middleY = height / 2;
+		
+		animation = new ButtonBlacklist(middleX - 130, middleY + 5, false, ConfigHandler.isBlacklisted(targetBlock, false));
+		particle = new ButtonBlacklist(middleX + 70, middleY + 5, true, ConfigHandler.isBlacklisted(targetBlock, true));
 
-		Item ib = Item.getItemFromBlock(selectedBlock.getBlock());
-		Block b = ib instanceof ItemBlock ? ((ItemBlock) ib).getBlock() : null;
+		guide = new Button(-1, animation.x + 15, animation.y + 20, guideSize, (animation.enabled ? "§a<" : "§c<") + "             " + (particle.enabled ? "§a>" : "§c>"), false, false, true);
 
-		animation.enabled = b != null && !(b instanceof BlockDoublePlant) && ModelHelper.isModelValid(b.getDefaultState());
+		Item item = Item.getItemFromBlock(targetBlock);
+		Block block = item instanceof ItemBlock ? ((ItemBlock) item).getBlock() : null;
 
-		Button guide = new Button(-1, animation.x + 30, animation.y + 30 - 10, large, (animation.enabled ? "§a<" : "§c<") + "             " + (particle.enabled ? "§a>" : "§c>"), false, false);
-		guide.enabled = false;
+		animation.enabled = FBP.fancyPlaceAnim && block != null && !(block instanceof BlockDoublePlant) && ModelHelper.isModelValid(block.getDefaultState());
 
 		this.buttonList.addAll(Arrays.asList(guide, animation, particle));
 	}
 
 	@Override
 	public void updateScreen() {
+		super.updateScreen();
+
+		hovering = (animation.isMouseOver() && animation.enabled) || (particle.isMouseOver() && particle.enabled);
+
 		Mouse.setGrabbed(true);
 
-		boolean keyUp = false;
+		boolean keyReleased = false;
 
-		if (selectedPos != null && (FBP.mc.objectMouseOver == null || !FBP.mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || FBP.mc.world.getBlockState(FBP.mc.objectMouseOver.getBlockPos()).getBlock() != selectedBlock.getBlock() && FBP.mc.world.getBlockState(FBP.mc.objectMouseOver.getBlockPos()).getBlock() != FBP.dummyBlock)) {
-			keyUp = true;
+		if (targetBlockPos != null && (mc.objectMouseOver == null || !mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != targetBlock)) {
+			keyReleased = true;
 			KeyInputHandler.onInput();
 		}
-		try {
-			if (!Keyboard.isKeyDown(KeyBindings.blacklistGUI.getKeyCode()) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
-				keyUp = true;
-			}
-		} catch (Exception e) {
-			try {
-				if (!Mouse.isButtonDown(KeyBindings.blacklistGUI.getKeyCode() + 100) || (selectedPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))) {
-					keyUp = true;
-				}
-			} catch (Exception e1) {
-				closing = true;
-				// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			}
-		}
 
-		if (closing || keyUp) {
-			Block b = selectedBlock.getBlock();
+		if (!Keyboard.isKeyDown(KeyBindings.blacklistGUI.getKeyCode()) || (targetBlockPos == null && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)))
+			keyReleased = true;
 
-			GuiButton selected = animation.isMouseOver() ? animation : (particle.isMouseOver() ? particle : null);
+		if (closing || keyReleased) {
+			if (hovering) {
+				ConfigHandler.blacklist(targetBlock, particle.isMouseOver());
 
-			if (selected != null) {
-				boolean isParticle = particle.isMouseOver();
-
-				if (selected.enabled) {
-					if (!ConfigHandler.isBlacklisted(b, isParticle))
-						ConfigHandler.addToBlacklist(b, isParticle);
-					else
-						ConfigHandler.removeFromBlacklist(b, isParticle);
-
-					if (isParticle)
-						ConfigHandler.writeParticleBlacklist();
-					else
-						ConfigHandler.writeAnimBlacklist();
-
-					FBP.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-				}
+				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 			}
 
-			if (keyUp)
+			if (keyReleased)
 				KeyInputHandler.onInput();
 
-			FBP.mc.displayGuiScreen(null);
+			mc.displayGuiScreen(null);
 		}
+	}
+
+	@Override
+	public void drawScreen(int mouseXIn, int mouseYIn, float partialTicks) {
+		drawBackground(mouseXIn, mouseYIn);
+
+		final int optionRadius = 30;
+		mouseX = (int) MathUtil.clampMinFirst(mouseXIn, animation.x + optionRadius, particle.x + optionRadius);
+		mouseY = middleY + 35;
+
+		// Draw the title
+		drawCenteredString(I18n.format("menu.blacklist.title"), "#55FF55", middleX, 20);
+
+		drawPreview(middleX - 32, middleY - 90);
+
+		// Draw the block name
+		final ResourceLocation registryName = targetBlock.getRegistryName();
+		drawCenteredString("§6§l" + registryName.getNamespace() + "§c§l:§a§l" + registryName.getPath(), "#000000", middleX, middleY - 19);
+
+		// Draw animation related text
+		if (animation.isMouseOver()) {
+			drawCenteredString(I18n.format("menu.blacklist.placeAnimation"), "#FFFCFC", animation.x + 30, animation.y - 12);
+
+			final String text = animation.enabled ? (animation.isBlacklisted ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : FBP.fancyPlaceAnim ? I18n.format("menu.blacklist.cantAnimate") : I18n.format("menu.blacklist.animationDisabled");
+			final String color = animation.enabled ? (animation.isBlacklisted ? "#E44444" : "#55FF55") : "#E44444";
+
+			drawCenteredString(text, color, animation.x + 30, animation.y + 65);
+		}
+
+		// Draw particle related text
+		if (particle.isMouseOver()) {
+			drawCenteredString(I18n.format("menu.blacklist.particles"), "#FFFCFC", particle.x + 30, particle.y - 12);
+
+			final String text = particle.enabled ? (particle.isBlacklisted ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : I18n.format("menu.blacklist.cantAdd");
+			final String color = particle.enabled? (particle.isBlacklisted ? "#E44444" : "55FF55") : "#E44444";
+
+			drawCenteredString(text, color, particle.x + 30, particle.y + 65);
+		}
+
+		super.drawScreen(mouseX, mouseY, partialTicks);
+
+		// Draw the cursor
+		final int cursorDiameter = 20;
+		drawTexturedModalRect(mouseX - cursorDiameter / 2, mouseY - cursorDiameter / 2, hovering ? 236 : 236 * 2, 236, cursorDiameter, cursorDiameter);
 	}
 
 	@Override
 	public void mouseClicked(int mouseX, int mouseY, int button) {
-		GuiButton clicked = animation.isMouseOver() ? animation : (particle.isMouseOver() ? particle : null);
-
-		if (clicked != null && clicked.enabled)
+		if (animation.isMouseOver() || particle.isMouseOver())
 			closing = true;
 	}
 
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		GuiUtils.drawRectangle(0, 0, width, height, 0, 0, 0, 191);
 
-		final int optionRadius = 30;
-		mouseX = (int) MathUtil.clampMinFirst(mouseX, animation.x + optionRadius, particle.x + optionRadius);
-		mouseY = height / 2 + 35;
-
-		final int x = width / 2 - 32;
-		final int y = height / 2 - 90;
-
+	/**
+	 * Draws a preview of the item on screen at the specified coordinates.
+	 *
+	 * @param x The x coordinate of the top left corner of the preview.
+	 * @param y The y coordinate of the top left corner of the preview.
+	 */
+	private void drawPreview(final int x, final int y) {
 		GlStateManager.enableLight(0);
 		GlStateManager.translate(x, y, 0);
 		GlStateManager.scale(4, 4, 4);
 		GlStateManager.enableColorMaterial();
 
-		itemRender.renderItemAndEffectIntoGUI(mc.player, displayItemStack, 0, 0);
+		itemRender.renderItemAndEffectIntoGUI(mc.player, targetItemStack, 0, 0);
 
 		GlStateManager.scale(0.25, 0.25, 0.25);
 		GlStateManager.translate(-x, -y, 0);
-
-		String itemName = (selectedPos == null ? displayItemStack.getItem() : selectedBlock.getBlock()).getRegistryName().toString();
-		itemName = ((itemName.contains(":") ? "§6§l" : "§a§l") + itemName).replaceAll(":", "§c§l:§a§l");
-
-		drawCenteredString(itemName, width / 2, height / 2 - 19);
-
-		if (animation.isMouseOver()) {
-			drawCenteredString(I18n.format("menu.blacklist.placeAnimation"), "#FFFCFC", animation.x + 30, animation.y - 12);
-
-			final String text = animation.enabled ? (animation.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : I18n.format("menu.blacklist.cantAnimate");
-			final String color = animation.enabled ? (animation.isInExceptions? "#E44444" : "55FF55") : "#E44444";
-
-			drawCenteredString(text, color, animation.x + 30, animation.y + 65);
-		}
-
-		if (particle.isMouseOver()) {
-			drawCenteredString(I18n.format("menu.blacklist.particles"), "#FFFCFC", particle.x + 30, particle.y - 12);
-
-			final String text = particle.enabled ? (particle.isInExceptions ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : I18n.format("menu.blacklist.cantAdd");
-			final String color = particle.enabled? (particle.isInExceptions? "#E44444" : "55FF55") : "#E44444";
-
-			drawCenteredString(text, color, particle.x + 30, particle.y + 65);
-		}
-
-		drawCenteredString(I18n.format("menu.blacklist.title"), "#55FF55", width / 2, 20);
-
-		FBP.mc.getTextureManager().bindTexture(FBP.menuTexture);
-
-		super.drawScreen(mouseX, mouseY, partialTicks);
-
-		GlStateManager.color(1, 1, 1, 1);
-
-		GlStateManager.enableBlend();
-
-		GuiButton mouseOver = animation.isMouseOver() ? animation : (particle.isMouseOver() ? particle : null);
-
-		final int imageDiameter = 20;
-
-		drawTexturedModalRect(mouseX - imageDiameter / 2, mouseY - imageDiameter / 2, mouseOver != null && !mouseOver.enabled ? 256 - imageDiameter * 2 : 256 - imageDiameter, 256 - imageDiameter, imageDiameter, imageDiameter);
-	}
-
-	public void drawCenteredString(final String text, final int x, final int y) {
-		fontRenderer.drawStringWithShadow(text, (x - (float) fontRenderer.getStringWidth(text) / 2), y, 0);
-	}
-
-	public void drawCenteredString(final String text, final String color, final int x, final int y) {
-		fontRenderer.drawStringWithShadow(text, (x - (float) fontRenderer.getStringWidth(text) / 2), y, GuiUtils.hexToDecimalColor(color));
 	}
 }

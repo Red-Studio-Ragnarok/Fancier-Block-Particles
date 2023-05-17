@@ -38,9 +38,11 @@ public class FBP {
 	public static final Minecraft mc = Minecraft.getMinecraft();
 
 	public static final ResourceLocation particlesTexture = new ResourceLocation("textures/particle/particles.png");
-	public static final ResourceLocation menuTexture = new ResourceLocation(ModReference.id + ":textures/gui/widgets.png");
+	public static final ResourceLocation guiTexture = new ResourceLocation(ModReference.id + ":textures/gui/widgets.png");
+	public static final ResourceLocation settings = new ResourceLocation(ModReference.id + ":textures/gui/settings.png");
 	public static final ResourceLocation bugIcon = new ResourceLocation(ModReference.id + ":textures/gui/bug.png");
 	public static final ResourceLocation fbpIcon = new ResourceLocation(ModReference.id + ":textures/gui/fbp.png");
+	public static final ResourceLocation experimentalIcon = new ResourceLocation(ModReference.id + ":textures/gui/experimental.png");
 
 	public static File mainConfigFile, floatingMaterialsFile, animBlacklistFile, particleBlacklistFile;
 
@@ -51,7 +53,10 @@ public class FBP {
 	public static boolean enabled, frozen, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyFlame, fancySmoke, waterPhysics;
 	public static boolean fancyPlaceAnim, spawnPlaceParticles;
 	public static boolean fancyWeather, dynamicWeather;
-	public static boolean debugMode;
+
+	public static boolean experiments;
+
+	public static boolean debug;
 
 	public static int minAge, maxAge, particlesPerAxis;
 
@@ -100,8 +105,8 @@ public class FBP {
 		MinecraftForge.EVENT_BUS.register(new GuiHandler());
 
 		MinecraftForge.EVENT_BUS.register(KeyInputHandler.class);
-		if (debugMode)
-			MinecraftForge.EVENT_BUS.register(DebugHandler.class);
+
+		updateDebugHandler();
 
 		vertexFormat.addElement(DefaultVertexFormats.POSITION_3F);
 		vertexFormat.addElement(DefaultVertexFormats.TEX_2F);
@@ -132,5 +137,12 @@ public class FBP {
 			}
 		}
 		enabled = newState;
+	}
+
+	public static void updateDebugHandler() {
+		if (debug)
+			MinecraftForge.EVENT_BUS.register(DebugHandler.class);
+		else
+			MinecraftForge.EVENT_BUS.unregister(DebugHandler.class);
 	}
 }

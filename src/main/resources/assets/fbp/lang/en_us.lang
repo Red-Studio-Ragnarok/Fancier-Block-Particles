@@ -6,10 +6,13 @@ hud.freeze=§LFrozen Particles
 
 # Menu
 menu.disabled=Disabled
-menu.bugReport=Found a§c bug§a? Click to report it!
+menu.settings=Settings
+menu.bugReport=Found a §cbug§f? Click to report it!
 
-menu.enable=§cEnable
-menu.disable=§aDisable
+menu.experiments=Experiments
+
+menu.enable=§aEnable§f
+menu.disable=§cDisable§f
 
 menu.on=ON
 menu.off=OFF
@@ -34,7 +37,16 @@ menu.blacklist.particles=§lPARTICLES
 menu.blacklist.add=§lADD
 menu.blacklist.remove=§lREMOVE
 menu.blacklist.cantAnimate=§lCAN'T BE ANIMATED
+menu.blacklist.animationDisabled=§lFANCIER BLOCK PLACEMENT IS DISABLED
 menu.blacklist.cantAdd=§lCAN'T BE ADDED
+
+# Menu Settings
+
+menu.settings.experiments.title=Experiments
+menu.settings.debug.title=Debug Mode
+
+menu.settings.experiments.description=Enable experiments
+menu.settings.debug.description=Enable the debug mode
 
 # Menu Page 0
 menu.destroyParticles.title=Destroy Particle Count
@@ -60,51 +72,44 @@ menu.time.description.milliseconds=milliseconds
 
 # Menu Page 1
 menu.randomRotation.title=Random Rotation
-menu.cartonMode.title=Cartoon Mode
 menu.randomizedScale.title=Randomized Scale
 menu.randomFadeSpeed.title=Random Fade Speed
+menu.spawnPlaceParticles.title=Spawn Place Particles
 menu.spawnFreeze.title=Spawn Particles in Freeze Mode
 
 menu.randomRotation.description=Enables random and simple rotation math.
-menu.cartonMode.description=§4DEPRECATED§f/§4REMOVED §fMakes the particles look cartoon-ish.
 menu.randomizedScale.description=Makes the particle scale slightly randomized.
 menu.randomFadeSpeed.description=Enables random particle fade away speed.
+menu.spawnPlaceParticles.description=Enables block place particles.
 menu.spawnFreeze.description=Allows spawning particles in freeze mode.
 
 # Menu Page 2
 menu.entityCollide.title=Collide With Entities
 menu.bounceOffWalls.title=Bounce Off Walls
 menu.lowTraction.title=Low Traction
+menu.waterPhysics.title=Water Physics
 menu.smartBreaking.title=Smart Breaking
 menu.fancyPlaceAnimation.title=Fancy Place Animation
-menu.spawnPlaceParticles.title=Spawn Place Particles
 
 menu.entityCollide.description=Enables entity colliding with the particles.
 menu.bounceOffWalls.description=Makes the particles ricochet/bounce off walls.
 menu.lowTraction.description=Lowers the traction deceleration on the ground.
+menu.waterPhysics.description=Makes wood particles float and others to sink slower.
 menu.smartBreaking.description=Smart block hitting particle motion and scaling.
 menu.fancyPlaceAnimation.description=Adds a fancy block placing animation.
-menu.spawnPlaceParticles.description=Enables block place particles.
 
 # Menu Page 3
 menu.fancyFlame.title=Fancy Flame
 menu.fancySmoke.title=Fancy Smoke
 menu.fancyWeather.title=Fancy Weather
 menu.dynamicWeather.title=Dynamic Weather
-menu.waterPhysics.title=Water Physics
-menu.restOnFloor.title=Rest On Floor
+menu.weatherDensity.title=Weather Particles Density
+menu.weatherRenderDistance.title=Weather Particles Render Distance
 
 menu.fancyFlame.description=Makes flame particles fancy.
 menu.fancySmoke.description=Makes smoke particles fancy.
 menu.fancyWeather.description=Makes rain and snow particles fancy.
 menu.dynamicWeather.description=Makes rain and snow particles more dense while thunderstorms.
-menu.waterPhysics.description=Makes wood particles float and others to sink slower.
-menu.restOnFloor.description=§4DEPRECATED§f/§4REMOVED §fMakes particles rest aligned on the ground.
-
-# Menu Page 4
-menu.weatherDensity.title=Weather Particles Density
-menu.weatherRenderDistance.title=Weather Particles Render Distance
-
 menu.weatherDensity.description=Sets the weather particles density to §6
 menu.weatherRenderDistance.description=Sets the weather particles render distance to §6
 

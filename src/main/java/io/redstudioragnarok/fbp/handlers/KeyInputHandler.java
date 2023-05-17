@@ -40,7 +40,7 @@ public class KeyInputHandler {
 
 			boolean useHeldBlock = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && (block = Block.getBlockFromName((stack = mc.player.getHeldItemMainhand()).getItem().getRegistryName().toString())) != null && block != Blocks.AIR;
 
-			if (!blacklistGUIOpen && (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || useHeldBlock)) {
+			if (!blacklistGUIOpen && (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || useHeldBlock) && mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != FBP.dummyBlock) {
 				mc.displayGuiScreen(useHeldBlock ? (new GuiBlacklist(stack)) : (new GuiBlacklist(mc.objectMouseOver.getBlockPos())));
 
 				Mouse.setGrabbed(true);

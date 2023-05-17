@@ -1,9 +1,9 @@
 package io.redstudioragnarok.fbp.gui;
 
-import io.redstudioragnarok.fbp.FBP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.ResourceLocation;
 
 import static io.redstudioragnarok.fbp.FBP.mc;
 
@@ -14,16 +14,21 @@ public abstract class InteractiveElement extends GuiButton {
     public InteractiveElement(final int id, final int x, final int y, final String text, boolean... disabled) {
         super(id, x, y, text);
 
+        width = 25;
+        height = 25;
+
         if (disabled.length != 0)
             this.enabled = !disabled[0];
     }
 
     protected abstract void update(final int mouseX, final int mouseY);
 
-    public void startDrawing(final boolean lighterOnHover) {
-        mc.getTextureManager().bindTexture(FBP.menuTexture);
+    public void startDrawing(final ResourceLocation texture, final boolean lighterOnHover) {
+        mc.getTextureManager().bindTexture(texture);
 
-        if (enabled)
+        if (enabled && (!lighterOnHover || !hovered))
+            GlStateManager.color(0.9F, 0.9F, 0.9F, 1);
+        else if (enabled)
             GlStateManager.color(1, 1, 1, 1);
         else if (hovered)
             GlStateManager.color(0.6F, 0.6F, 0.6F, 1);
@@ -31,6 +36,13 @@ public abstract class InteractiveElement extends GuiButton {
             GlStateManager.color(0.5F, 0.5F, 0.5F, 1);
 
         GlStateManager.enableBlend();
+    }
+
+    public void drawHoverText(final String hoverText, final int mouseX, final int mouseY, final boolean... rightSided) {
+        final int textWidth = fontRenderer.getStringWidth(hoverText);
+
+        if (hovered)
+            drawString(hoverText, "#FFFCFC", rightSided.length > 0 ? (mouseX + textWidth) - width * 2 : (mouseX - textWidth) - width / 2, mouseY - 3);
     }
 
     public void drawString(final String text, final String color, final int x, final int y) {
