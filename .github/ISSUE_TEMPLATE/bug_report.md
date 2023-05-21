@@ -2,8 +2,8 @@
 name: Bug report
 about: Create a bug report to help us improve
 title: ''
-labels: 'Bug'
-assignees: JustDesoroxxx
+labels: Bug
+assignees: Desoroxxx
 
 ---
 
@@ -42,7 +42,7 @@ Please try to reproduce the issue with as few other mods as possible. Then check
 
 ## Versions
 
-- FBP: [e.g. FBP-0.7] 
+- Fancier Block Particles: [e.g. FBP-0.7] 
 - Forge: [e.g. 1.12.2 - 14.23.5.2860]
 - Java: [e.g. JDK 8 - 352-b08]
 - Java JVM: [e.g. Hotspot]
