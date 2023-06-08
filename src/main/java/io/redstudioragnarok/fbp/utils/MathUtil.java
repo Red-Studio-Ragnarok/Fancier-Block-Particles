@@ -129,4 +129,12 @@ public class MathUtil {
 		floored = (int) input;
 		return input < floored ? floored - 1 : floored;
 	}
+
+	public static float lerp(float x, float y, float t) {
+		return x + (y - x) * t;
+	}
+
+	public static double lerp(double x, double y, double t) {
+		return x + (y - x) * t;
+	}
 }
