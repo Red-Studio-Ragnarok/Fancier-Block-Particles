@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import static io.redstudioragnarok.fbp.utils.ModReference.log;
+import static io.redstudioragnarok.fbp.utils.ModReference.LOG;
 
 /**
  * This class handle everything related to the config system.
@@ -39,51 +39,51 @@ public class ConfigHandler {
 		try {
 			if (!Paths.get(FBP.mainConfigFile.getParent()).toFile().exists())
 				if (Paths.get(FBP.mainConfigFile.getParent()).toFile().mkdirs())
-					log.error("Could not create config directory");
+					LOG.error("Could not create config directory");
 
 			if (!FBP.mainConfigFile.exists()) {
 				if (!FBP.mainConfigFile.createNewFile())
-					log.error("Could not create main config file");
+					LOG.error("Could not create main config file");
 
 				defaults();
 			}
 
 			if (!FBP.floatingMaterialsFile.exists()) {
 				if (!FBP.floatingMaterialsFile.createNewFile())
-                    log.error("Could not create floating materials file");
+                    LOG.error("Could not create floating materials file");
 
                 defaultsFloatingMaterials();
 			}
 
 			if (!FBP.particleBlacklistFile.exists())
 				if (!FBP.particleBlacklistFile.createNewFile())
-					log.error("Could not create particle blacklist file");
+					LOG.error("Could not create particle blacklist file");
 
 			if (!FBP.animBlacklistFile.exists())
 				if (!FBP.animBlacklistFile.createNewFile())
-                    log.error("Could not create anim blacklist file");
+                    LOG.error("Could not create anim blacklist file");
 
 			// Check for pre 0.8 configs and hopefully delete them
 
 			if (FBP.oldMainConfigFile.exists())
 				if (!FBP.oldMainConfigFile.delete())
-					log.error("Could not delete old main config file");
+					LOG.error("Could not delete old main config file");
 
 			if (FBP.oldFloatingMaterialsFile.exists())
 				if (!FBP.oldFloatingMaterialsFile.delete())
-					log.error("Could not delete old floating materials file");
+					LOG.error("Could not delete old floating materials file");
 
 			if (FBP.oldParticleBlacklistFile.exists())
 				if (!FBP.oldParticleBlacklistFile.delete())
-                    log.error("Could not delete old particle blacklist file");
+                    LOG.error("Could not delete old particle blacklist file");
 
             if (FBP.oldAnimBlacklistFile.exists())
 				if (!FBP.oldAnimBlacklistFile.delete())
-					log.error("Could not delete old anim blacklist file");
+					LOG.error("Could not delete old anim blacklist file");
 
 			if (FBP.oldNewMainConfigFile.exists())
 				if (!FBP.oldNewMainConfigFile.delete())
-					log.error("Could not delete old new main config file");
+					LOG.error("Could not delete old new main config file");
 
 			readMainConfig();
 			if (FBP.waterPhysics)
@@ -95,10 +95,10 @@ public class ConfigHandler {
 
 		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			log.error("Cannot init configs, an IOException occurred: " + e.getMessage());
+			LOG.error("Cannot init configs, an IOException occurred: " + e.getMessage());
 		} catch (SecurityException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			log.error("Cannot init configs, an antivirus is probably causing this");
+			LOG.error("Cannot init configs, an antivirus is probably causing this");
 		} finally {
 			closeStreams();
 		}
@@ -125,7 +125,7 @@ public class ConfigHandler {
 			closeStreams();
 		} catch (SecurityException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			log.error("Cannot init streams for " + file + " an antivirus is probably causing this");
+			LOG.error("Cannot init streams for " + file + " an antivirus is probably causing this");
 
 			closeStreams();
 		}
@@ -142,7 +142,7 @@ public class ConfigHandler {
 
 		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			log.error("Cannot close streams, an IOException occurred: " + e.getMessage());
+			LOG.error("Cannot close streams, an IOException occurred: " + e.getMessage());
 		}
 	}
 
@@ -163,10 +163,10 @@ public class ConfigHandler {
 				initWriter(file);
 		} catch (UnsupportedEncodingException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			log.error("Cannot init writer for " + file + " encoding is not supported, details: " + e.getMessage());
+			LOG.error("Cannot init writer for " + file + " encoding is not supported, details: " + e.getMessage());
 		} catch (SecurityException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			log.error("Cannot init streams for " + file + " an antivirus is probably causing this");
+			LOG.error("Cannot init streams for " + file + " an antivirus is probably causing this");
 		}
 	}
 
@@ -182,16 +182,16 @@ public class ConfigHandler {
 	 * @return True if the file was created successfully, false otherwise
 	 */
 	private static boolean handleFileNotFound(String message, String source, File file) {
-		log.error("Cannot init " + source + " for " + file + " as the file does not exist, details: " + message);
-		log.warn("Trying to create file " + file);
+		LOG.error("Cannot init " + source + " for " + file + " as the file does not exist, details: " + message);
+		LOG.warn("Trying to create file " + file);
 
 		try {
 			if (file.createNewFile()) {
-				log.info("Successfully created file " + file);
+				LOG.info("Successfully created file " + file);
 				return true;
 			}
 		} catch (Exception ex) {
-			log.error("Could not create file " + file);
+			LOG.error("Could not create file " + file);
 		}
 
 		return false;
@@ -250,7 +250,7 @@ public class ConfigHandler {
 
 		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			log.error("Cannot read main config, an IOException occurred: " + e.getMessage());
+			LOG.error("Cannot read main config, an IOException occurred: " + e.getMessage());
 		} finally {
 			closeStreams();
 		}
@@ -373,14 +373,14 @@ public class ConfigHandler {
 						break;
 					default:
 						// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-						log.error("Material not recognized: " + line);
+						LOG.error("Material not recognized: " + line);
 						break;
 				}
 			}
 
 		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			log.error("Cannot read floating materials config, an IOException occurred: " + e.getMessage());
+			LOG.error("Cannot read floating materials config, an IOException occurred: " + e.getMessage());
 		} finally {
 			closeStreams();
 		}
@@ -400,7 +400,7 @@ public class ConfigHandler {
 
 		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			log.error("Cannot read animation blacklist, an IOException occurred: " + e.getMessage());
+			LOG.error("Cannot read animation blacklist, an IOException occurred: " + e.getMessage());
 		} finally {
 			closeStreams();
 		}
@@ -421,7 +421,7 @@ public class ConfigHandler {
 
 		} catch (IOException e) {
 			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
-			log.error("Cannot read particle blacklist, an IOException occurred: " + e.getMessage());
+			LOG.error("Cannot read particle blacklist, an IOException occurred: " + e.getMessage());
 		} finally {
 			closeStreams();
 		}
@@ -578,7 +578,7 @@ public class ConfigHandler {
 		if (!FBP.floatingMaterials.contains(material))
 			FBP.floatingMaterials.add(material);
 		else
-			log.warn("Found duplicated material " + material + " in Floating Materials.txt");
+			LOG.warn("Found duplicated material " + material + " in Floating Materials.txt");
 	}
 
 	/**

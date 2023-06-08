@@ -1,6 +1,7 @@
 package io.redstudioragnarok.fbp.utils;
 
 import io.redstudioragnarok.fbp.Tags;
+import io.redstudioragnarok.redcore.logging.RedLogger;
 import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,19 +16,23 @@ import java.net.URISyntaxException;
  */
 public class ModReference {
 
-    public static final String id = Tags.ID;
-    public static final String name = "Fancier Block Particles";
-    public static final String version = Tags.VERSION;
-    public static final Logger log = LogManager.getLogger(id);
-    public static URI newIssueLink;
+    public static final String ID = Tags.ID;
+    public static final String NAME = "Fancier Block Particles";
+    public static final String VERSION = Tags.VERSION;
+    public static final Logger LOG = LogManager.getLogger(ID);
 
-    public static final String mixinBooterVersion = Loader.instance().getIndexedModList().get("mixinbooter").getVersion();
+    public static URI NEW_ISSUE_LINK;
+    public static RedLogger RED_LOG;
 
     static {
         try {
-            newIssueLink = new URI("https://linkify.cz/FancierBugReport");
+            NEW_ISSUE_LINK = new URI("https://linkify.cz/FancierBugReport");
+
+            RED_LOG = new RedLogger(NAME, new URI("https://linkify.cz/ValkyrieBugReport"), LOG,
+                    "Hang in there, just a minor bump on the road to particle greatness!"
+            );
         } catch (URISyntaxException e) {
-            // TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+            // Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
         }
     }
 }

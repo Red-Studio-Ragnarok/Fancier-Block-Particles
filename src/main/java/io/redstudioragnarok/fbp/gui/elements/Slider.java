@@ -3,11 +3,9 @@ package io.redstudioragnarok.fbp.gui.elements;
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.GuiUtils;
 import io.redstudioragnarok.fbp.gui.InteractiveElement;
-import io.redstudioragnarok.fbp.utils.MathUtil;
+import io.redstudioragnarok.redcore.utils.MathUtil;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;
-
-import static io.redstudioragnarok.fbp.utils.MathUtil.boolToInt;
 
 public class Slider extends InteractiveElement {
 
@@ -57,8 +55,8 @@ public class Slider extends InteractiveElement {
 		startDrawing(FBP.guiTexture, true);
 
 		// Draw the bar
-		drawTexturedModalRect(x, y, 0, 60 + boolToInt(enabled) * 20, width / 2, height);
-		drawTexturedModalRect(x + width / 2, y, 200 - width / 2, 60 + boolToInt(enabled) * 20, width / 2, height);
+		drawTexturedModalRect(x, y, 0, 60 + MathUtil.boolToInt(enabled) * 20, width / 2, height);
+		drawTexturedModalRect(x + width / 2, y, 200 - width / 2, 60 + MathUtil.boolToInt(enabled) * 20, width / 2, height);
 
 		// Draw the handle
 		drawTexturedModalRect(sliderPosX - 15, y, 0, 100 + handleState * 20, 15, height);

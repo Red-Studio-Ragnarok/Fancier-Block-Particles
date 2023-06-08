@@ -2,8 +2,8 @@ package io.redstudioragnarok.fbp.particles;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.handlers.EventHandler;
-import io.redstudioragnarok.fbp.vectors.Vector2F;
-import io.redstudioragnarok.fbp.vectors.Vector3F;
+import io.redstudioragnarok.redcore.vectors.Vector2F;
+import io.redstudioragnarok.redcore.vectors.Vector3F;
 import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;

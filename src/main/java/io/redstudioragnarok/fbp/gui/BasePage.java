@@ -5,8 +5,8 @@ import io.redstudioragnarok.fbp.gui.elements.*;
 import io.redstudioragnarok.fbp.gui.menu.PageExperiments;
 import io.redstudioragnarok.fbp.gui.menu.PageSettings;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;
-import io.redstudioragnarok.fbp.utils.MathUtil;
 import io.redstudioragnarok.fbp.utils.ModReference;
+import io.redstudioragnarok.redcore.utils.MathUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -87,7 +87,7 @@ public abstract class BasePage extends GuiBase {
                 break;
             case -4:
                 try {
-                    Desktop.getDesktop().browse(ModReference.newIssueLink);
+                    Desktop.getDesktop().browse(ModReference.NEW_ISSUE_LINK);
                 } catch (Exception exception) {
                     // TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
                 }
@@ -171,7 +171,7 @@ public abstract class BasePage extends GuiBase {
             drawCenteredString("§L= " + I18n.format("menu.disabled") + " =", "#E44444", middleX, y - 193);
 
         drawCenteredString("§L= " + I18n.format("name") + " =", "#FFAA00", middleX, y - 183);
-        drawCenteredString("§L= " + ModReference.version + " =", "#55FF55", middleX, y - 173);
+        drawCenteredString("§L= " + ModReference.VERSION + " =", "#55FF55", middleX, y - 173);
 
         if (targetHoverBoxY > 0)
             updateSliderHoverBox();

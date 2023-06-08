@@ -39,7 +39,7 @@ public class AnimationDummyBlock extends Block {
 	public AnimationDummyBlock() {
 		super(new DummyMaterial());
 
-		this.setRegistryName(new ResourceLocation(ModReference.id, "FBPPlaceholderBlock"));
+		this.setRegistryName(new ResourceLocation(ModReference.ID, "FBPPlaceholderBlock"));
 
 		this.translucent = true;
 	}

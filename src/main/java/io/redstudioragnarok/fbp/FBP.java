@@ -32,17 +32,17 @@ import java.util.SplittableRandom;
 //  | $$   /$$__  $$| $$  | $$| $$      | $$| $$_____/| $$            | $$  \ $$| $$| $$  | $$| $$      | $$_  $$       | $$      /$$__  $$| $$        | $$ /$$| $$| $$      | $$| $$_____/ \____  $$
 //  | $$  |  $$$$$$$| $$  | $$|  $$$$$$$| $$|  $$$$$$$| $$            | $$$$$$$/| $$|  $$$$$$/|  $$$$$$$| $$ \  $$      | $$     |  $$$$$$$| $$        |  $$$$/| $$|  $$$$$$$| $$|  $$$$$$$ /$$$$$$$/
 //  |__/   \_______/|__/  |__/ \_______/|__/ \_______/|__/            |_______/ |__/ \______/  \_______/|__/  \__/      |__/      \_______/|__/         \___/  |__/ \_______/|__/ \_______/|_______/
-@Mod(clientSideOnly = true, modid = ModReference.id, name = ModReference.name, version = ModReference.version, guiFactory = "io.redstudioragnarok.fbp.config.FBPConfigGuiFactory", updateJSON = "https://raw.githubusercontent.com/Red-Studio-Ragnarok/Fancier-Block-Particles/main/update.json")
+@Mod(clientSideOnly = true, modid = ModReference.ID, name = ModReference.NAME, version = ModReference.VERSION, guiFactory = "io.redstudioragnarok.fbp.config.FBPConfigGuiFactory", updateJSON = "https://raw.githubusercontent.com/Red-Studio-Ragnarok/Fancier-Block-Particles/main/update.json")
 public class FBP {
 
 	public static final Minecraft mc = Minecraft.getMinecraft();
 
 	public static final ResourceLocation particlesTexture = new ResourceLocation("textures/particle/particles.png");
-	public static final ResourceLocation guiTexture = new ResourceLocation(ModReference.id + ":textures/gui/widgets.png");
-	public static final ResourceLocation settings = new ResourceLocation(ModReference.id + ":textures/gui/settings.png");
-	public static final ResourceLocation bugIcon = new ResourceLocation(ModReference.id + ":textures/gui/bug.png");
-	public static final ResourceLocation fbpIcon = new ResourceLocation(ModReference.id + ":textures/gui/fbp.png");
-	public static final ResourceLocation experimentalIcon = new ResourceLocation(ModReference.id + ":textures/gui/experimental.png");
+	public static final ResourceLocation guiTexture = new ResourceLocation(ModReference.ID + ":textures/gui/widgets.png");
+	public static final ResourceLocation settings = new ResourceLocation(ModReference.ID + ":textures/gui/settings.png");
+	public static final ResourceLocation bugIcon = new ResourceLocation(ModReference.ID + ":textures/gui/bug.png");
+	public static final ResourceLocation fbpIcon = new ResourceLocation(ModReference.ID + ":textures/gui/fbp.png");
+	public static final ResourceLocation experimentalIcon = new ResourceLocation(ModReference.ID + ":textures/gui/experimental.png");
 
 	public static File mainConfigFile, floatingMaterialsFile, animBlacklistFile, particleBlacklistFile;
 

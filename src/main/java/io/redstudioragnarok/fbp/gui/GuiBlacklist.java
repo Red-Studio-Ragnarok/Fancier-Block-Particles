@@ -7,7 +7,7 @@ import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import io.redstudioragnarok.fbp.handlers.KeyInputHandler;
 import io.redstudioragnarok.fbp.keys.KeyBindings;
 import io.redstudioragnarok.fbp.models.ModelHelper;
-import io.redstudioragnarok.fbp.utils.MathUtil;
+import io.redstudioragnarok.redcore.utils.MathUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
