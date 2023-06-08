@@ -1,6 +1,5 @@
 package io.redstudioragnarok.fbp.gui.elements;
 
-import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.GuiUtils;
 import io.redstudioragnarok.fbp.gui.InteractiveElement;
 import net.minecraft.client.Minecraft;
@@ -54,7 +53,7 @@ public class Button extends InteractiveElement {
 
 	@Override
 	public void drawButton(Minecraft mc, int mouseXIn, int mouseYIn, float partialTicks) {
-		startDrawing(FBP.guiTexture, true);
+		startDrawing(true);
 
 		final int hovering = getHoverState(hovered);
 

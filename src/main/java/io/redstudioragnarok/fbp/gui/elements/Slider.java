@@ -1,6 +1,5 @@
 package io.redstudioragnarok.fbp.gui.elements;
 
-import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.GuiUtils;
 import io.redstudioragnarok.fbp.gui.InteractiveElement;
 import io.redstudioragnarok.redcore.utils.MathUtil;
@@ -52,15 +51,15 @@ public class Slider extends InteractiveElement {
 
 	@Override
 	public void drawButton(final Minecraft mc, final int mouseXIn, final int mouseYIn, final float partialTicks) {
-		startDrawing(FBP.guiTexture, true);
+		startDrawing(true);
 
 		// Draw the bar
-		drawTexturedModalRect(x, y, 0, 60 + MathUtil.boolToInt(enabled) * 20, width / 2, height);
-		drawTexturedModalRect(x + width / 2, y, 200 - width / 2, 60 + MathUtil.boolToInt(enabled) * 20, width / 2, height);
+		drawTexturedModalRect(x, y + 5, 0, 60 + MathUtil.boolToInt(enabled) * 10, width / 2, height / 2);
+		drawTexturedModalRect(x + width / 2, y + 5, 200 - width / 2, 60 + MathUtil.boolToInt(enabled) * 10, width / 2, height / 2);
 
 		// Draw the handle
-		drawTexturedModalRect(sliderPosX - 15, y, 0, 100 + handleState * 20, 15, height);
-		drawTexturedModalRect(sliderPosX, y, 185, 100 + handleState * 20, 15, height);
+		drawTexturedModalRect(sliderPosX - 15, y + 5, 0, 80 + handleState * 10, 15, height / 2);
+		drawTexturedModalRect(sliderPosX, y + 5, 185, 80 + handleState * 10, 15, height / 2);
 
 		// Draw the title
 		drawCenteredString(displayString, enabled ? "#FFFCFC" : "#C9C9C9", x + width / 2, y + 6 - 9);

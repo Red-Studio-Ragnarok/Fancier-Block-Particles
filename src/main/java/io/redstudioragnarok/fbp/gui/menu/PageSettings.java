@@ -10,12 +10,6 @@ import java.io.IOException;
 
 public class PageSettings extends BasePage {
 
-    public GuiBase parent;
-
-    public PageSettings(GuiBase parent) {
-        this.parent = parent;
-    }
-
     @Override
     public void initGui() {
         isSettings = true;
@@ -60,7 +54,7 @@ public class PageSettings extends BasePage {
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         if (keyCode == 1) {
-            mc.displayGuiScreen(parent);
+            mc.displayGuiScreen(new Page0());
             return;
         }
 

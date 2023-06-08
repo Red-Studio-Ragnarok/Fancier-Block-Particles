@@ -8,12 +8,6 @@ import java.io.IOException;
 
 public class PageExperiments extends BasePage {
 
-    public GuiBase parent;
-
-    public PageExperiments(GuiBase parent) {
-        this.parent = parent;
-    }
-
     @Override
     public void initGui() {
         isExperiments = true;
@@ -42,7 +36,7 @@ public class PageExperiments extends BasePage {
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         if (keyCode == 1) {
-            mc.displayGuiScreen(parent);
+            mc.displayGuiScreen(new Page0());
             return;
         }
 

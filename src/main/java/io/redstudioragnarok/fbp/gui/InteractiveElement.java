@@ -1,5 +1,6 @@
 package io.redstudioragnarok.fbp.gui;
 
+import io.redstudioragnarok.fbp.utils.ModReference;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -10,6 +11,8 @@ import static io.redstudioragnarok.fbp.FBP.mc;
 public abstract class InteractiveElement extends GuiButton {
 
     protected static final FontRenderer fontRenderer = mc.fontRenderer;
+
+    private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(ModReference.ID + ":textures/gui/gui.png");
 
     public InteractiveElement(final int id, final int x, final int y, final String text, boolean... disabled) {
         super(id, x, y, text);
@@ -23,8 +26,8 @@ public abstract class InteractiveElement extends GuiButton {
 
     protected abstract void update(final int mouseX, final int mouseY);
 
-    public void startDrawing(final ResourceLocation texture, final boolean lighterOnHover) {
-        mc.getTextureManager().bindTexture(texture);
+    public void startDrawing(final boolean lighterOnHover) {
+        mc.getTextureManager().bindTexture(GUI_TEXTURE);
 
         if (enabled && (!lighterOnHover || !hovered))
             GlStateManager.color(0.9F, 0.9F, 0.9F, 1);

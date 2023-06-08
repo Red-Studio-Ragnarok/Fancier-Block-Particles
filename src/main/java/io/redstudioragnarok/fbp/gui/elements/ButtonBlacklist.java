@@ -1,6 +1,5 @@
 package io.redstudioragnarok.fbp.gui.elements;
 
-import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.GuiUtils;
 import io.redstudioragnarok.fbp.gui.InteractiveElement;
 import net.minecraft.client.Minecraft;
@@ -26,7 +25,7 @@ public class ButtonBlacklist extends InteractiveElement {
 
     @Override
     public void drawButton(final Minecraft mc, final int mouseX, final int mouseY, final float partialTicks) {
-        startDrawing(FBP.guiTexture, true);
+        startDrawing(true);
 
         // Draw the button
         drawTexturedModalRect(x, y, enabled ? (isBlacklisted ? 60 : 0) : 120, 196, width, height);

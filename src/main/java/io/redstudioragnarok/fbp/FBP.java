@@ -37,12 +37,7 @@ public class FBP {
 
 	public static final Minecraft mc = Minecraft.getMinecraft();
 
-	public static final ResourceLocation particlesTexture = new ResourceLocation("textures/particle/particles.png");
-	public static final ResourceLocation guiTexture = new ResourceLocation(ModReference.ID + ":textures/gui/widgets.png");
-	public static final ResourceLocation settings = new ResourceLocation(ModReference.ID + ":textures/gui/settings.png");
-	public static final ResourceLocation bugIcon = new ResourceLocation(ModReference.ID + ":textures/gui/bug.png");
-	public static final ResourceLocation fbpIcon = new ResourceLocation(ModReference.ID + ":textures/gui/fbp.png");
-	public static final ResourceLocation experimentalIcon = new ResourceLocation(ModReference.ID + ":textures/gui/experimental.png");
+	public static final ResourceLocation PARTICLES_TEXTURE = new ResourceLocation("textures/particle/particles.png");
 
 	public static File mainConfigFile, floatingMaterialsFile, animBlacklistFile, particleBlacklistFile;
 

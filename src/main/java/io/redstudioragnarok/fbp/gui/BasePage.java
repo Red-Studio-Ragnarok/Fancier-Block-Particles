@@ -2,6 +2,7 @@ package io.redstudioragnarok.fbp.gui;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.elements.*;
+import io.redstudioragnarok.fbp.gui.menu.Page0;
 import io.redstudioragnarok.fbp.gui.menu.PageExperiments;
 import io.redstudioragnarok.fbp.gui.menu.PageSettings;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;
@@ -53,7 +54,7 @@ public abstract class BasePage extends GuiBase {
         if (!isSettings)
             buttonList.add(new ButtonSettings(-5, width - 32, 6));
 
-        if (!isExperiments)
+        if (!isExperiments && FBP.experiments)
             buttonList.add(new ButtonExperiments(-8, 4, 6));
 
         this.previousPage = previousPage;
@@ -76,10 +77,13 @@ public abstract class BasePage extends GuiBase {
                 ConfigHandler.init();
                 break;
             case -2:
-                if (!isSettings)
+                if (!isSettings && !isExperiments) {
                     mc.displayGuiScreen(null);
-                else
-                    mc.displayGuiScreen(((PageSettings) this).parent);
+
+                    if (FBP.mc.world != null)
+                        FBP.mc.entityRenderer.stopUseShader();
+                } else
+                    mc.displayGuiScreen(new Page0());
                 break;
             case -3:
                 FBP.setEnabled(!FBP.enabled);
@@ -87,13 +91,13 @@ public abstract class BasePage extends GuiBase {
                 break;
             case -4:
                 try {
-                    Desktop.getDesktop().browse(ModReference.NEW_ISSUE_LINK);
+                    Desktop.getDesktop().browse(ModReference.newIssueLink);
                 } catch (Exception exception) {
                     // TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
                 }
                 break;
             case -5:
-                mc.displayGuiScreen(new PageSettings(this));
+                mc.displayGuiScreen(new PageSettings());
                 break;
             case -6:
                 mc.displayGuiScreen(previousPage);
@@ -102,7 +106,7 @@ public abstract class BasePage extends GuiBase {
                 mc.displayGuiScreen(nextPage);
                 break;
             case -8:
-                mc.displayGuiScreen(new PageExperiments(this));
+                mc.displayGuiScreen(new PageExperiments());
                 break;
         }
 
@@ -171,7 +175,13 @@ public abstract class BasePage extends GuiBase {
             drawCenteredString("§L= " + I18n.format("menu.disabled") + " =", "#E44444", middleX, y - 193);
 
         drawCenteredString("§L= " + I18n.format("name") + " =", "#FFAA00", middleX, y - 183);
-        drawCenteredString("§L= " + ModReference.VERSION + " =", "#55FF55", middleX, y - 173);
+
+        if (isSettings)
+            drawCenteredString("§L= " + I18n.format("menu.settings") + " =", "#55FF55", middleX, y - 173);
+        else if (isExperiments)
+            drawCenteredString("§L= " + I18n.format("menu.experiments") + " =", "#55FF55", middleX, y - 173);
+        else
+            drawCenteredString("§L= " + ModReference.VERSION + " =", "#55FF55", middleX, y - 173);
 
         if (targetHoverBoxY > 0)
             updateSliderHoverBox();
@@ -208,6 +218,20 @@ public abstract class BasePage extends GuiBase {
     }
 
     @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if (keyCode == 1) {
+            mc.displayGuiScreen(null);
+
+            if (FBP.mc.world != null)
+                FBP.mc.entityRenderer.stopUseShader();
+
+            return;
+        }
+
+        super.keyTyped(typedChar, keyCode);
+    }
+
+    @Override
     public void handleMouseInput() throws IOException {
         super.handleMouseInput();
 
@@ -224,8 +248,6 @@ public abstract class BasePage extends GuiBase {
 
     @Override
     public void onGuiClosed() {
-        super.onGuiClosed();
-
         if (writeConfig)
             ConfigHandler.writeMainConfig();
     }

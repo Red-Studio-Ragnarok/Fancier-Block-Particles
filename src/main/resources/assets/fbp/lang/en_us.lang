@@ -41,7 +41,6 @@ menu.blacklist.animationDisabled=§lFANCIER BLOCK PLACEMENT IS DISABLED
 menu.blacklist.cantAdd=§lCAN'T BE ADDED
 
 # Menu Settings
-
 menu.settings.experiments.title=Experiments
 menu.settings.debug.title=Debug Mode
 

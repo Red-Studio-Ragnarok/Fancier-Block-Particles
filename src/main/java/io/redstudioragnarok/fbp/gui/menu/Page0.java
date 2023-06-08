@@ -21,7 +21,7 @@ public class Page0 extends BasePage {
 		minAge = addSlider(1, 10, FBP.minAge, 100);
 		maxAge = addSlider(2, 10, FBP.maxAge, 100);
 
-		particlesPerAxis = addSlider(3, 2, FBP.particlesPerAxis, 5, true);
+		particlesPerAxis = addSlider(3, 2, FBP.particlesPerAxis, 5);
 		scaleMult = addSlider(4, 0.75F, FBP.scaleMult, 1.25F);
 		gravityMult = addSlider(5, 0.05F, FBP.gravityMult, 3);
 		rotationMult = addSlider(6, 0, FBP.rotationMult, 1.5F);

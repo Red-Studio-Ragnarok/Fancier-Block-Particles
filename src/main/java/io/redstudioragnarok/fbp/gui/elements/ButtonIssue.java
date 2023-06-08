@@ -1,6 +1,5 @@
 package io.redstudioragnarok.fbp.gui.elements;
 
-import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.GuiUtils;
 import io.redstudioragnarok.fbp.gui.InteractiveElement;
 import net.minecraft.client.Minecraft;
@@ -20,9 +19,9 @@ public class ButtonIssue extends InteractiveElement {
 
     @Override
     public void drawButton(final Minecraft mc, final int mouseX, final int mouseY, final float partialTicks) {
-        startDrawing(FBP.bugIcon, true);
+        startDrawing(true);
 
-        drawModalRectWithCustomSizedTexture(x, y, 0, hovered ? height : 0, width, height, width, height * 2);
+        drawTexturedModalRect(x, y, 50, 110 + (hovered ? height : 0), width, height);
 
         drawHoverText(hoverText, mouseX, mouseY);
     }

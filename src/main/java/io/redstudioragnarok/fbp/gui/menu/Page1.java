@@ -11,7 +11,7 @@ public class Page1 extends BasePage {
 	public void initGui() {
 		super.initPage(new Page0(), new Page2());
 
-		addButton(1, I18n.format("menu.randomRotation.title"), FBP.randomRotation, true, true);
+		addButton(1, I18n.format("menu.randomRotation.title"), FBP.randomRotation, true);
 		addButton(2, I18n.format("menu.randomizedScale.title"), FBP.randomizedScale, true);
 		addButton(3, I18n.format("menu.randomFadeSpeed.title"), FBP.randomFadingSpeed, true);
 		addButton(4, I18n.format("menu.spawnPlaceParticles.title"), FBP.spawnPlaceParticles, true);

@@ -2,7 +2,6 @@ package io.redstudioragnarok.fbp.utils;
 
 import io.redstudioragnarok.fbp.Tags;
 import io.redstudioragnarok.redcore.logging.RedLogger;
-import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,14 +20,14 @@ public class ModReference {
     public static final String VERSION = Tags.VERSION;
     public static final Logger LOG = LogManager.getLogger(ID);
 
-    public static URI NEW_ISSUE_LINK;
-    public static RedLogger RED_LOG;
+    public static URI newIssueLink;
+    public static RedLogger redLog;
 
     static {
         try {
-            NEW_ISSUE_LINK = new URI("https://linkify.cz/FancierBugReport");
+            newIssueLink = new URI("https://linkify.cz/FancierBugReport");
 
-            RED_LOG = new RedLogger(NAME, new URI("https://linkify.cz/ValkyrieBugReport"), LOG,
+            redLog = new RedLogger(NAME, new URI("https://linkify.cz/ValkyrieBugReport"), LOG,
                     "Hang in there, just a minor bump on the road to particle greatness!"
             );
         } catch (URISyntaxException e) {

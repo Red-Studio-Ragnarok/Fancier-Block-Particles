@@ -292,7 +292,7 @@ public class FBPParticleBlock extends Particle {
 		Tessellator.getInstance().draw();
 		GlStateManager.popMatrix();
 
-		mc.getTextureManager().bindTexture(FBP.particlesTexture);
+		mc.getTextureManager().bindTexture(FBP.PARTICLES_TEXTURE);
 		buff.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 	}
 

@@ -41,7 +41,6 @@ menu.blacklist.animationDisabled=§lANIMATION SOPHISTIQUÉE DE POSE DE BLOC EST 
 menu.blacklist.cantAdd=§lNE PEUT PAS ÊTRE AJOUTÉ
 
 # Menu Settings
-
 menu.settings.experiments.title=Expériences
 menu.settings.debug.title=Mode Debug
 

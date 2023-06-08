@@ -21,14 +21,14 @@ public class ButtonGlobalToggle extends InteractiveElement {
 
     @Override
     public void drawButton(final Minecraft mc, final int mouseX, final int mouseY, final float partialTicks) {
-        startDrawing(FBP.fbpIcon, true);
+        startDrawing(true);
 
-        int v = FBP.enabled ? 0 : height * 2;
+        int v = FBP.enabled ? 156 : 156 + height * 2;
 
         if (hovered)
             v += height;
 
-        drawModalRectWithCustomSizedTexture(x, y, 0, v, width, height, width, height * 4);
+        drawTexturedModalRect(x, y, 186, v, width, height);
 
         drawHoverText(FBP.enabled ? hoverTextEnable : hoverTextDisable, mouseX, mouseY);
     }
