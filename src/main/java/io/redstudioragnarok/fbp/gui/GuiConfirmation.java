@@ -83,4 +83,8 @@ public class GuiConfirmation extends GuiBase {
 
 		super.drawScreen(mouseXIn, mouseYIn, partialTicks);
 	}
+
+	@Override
+	public void onGuiClosed() {
+	}
 }

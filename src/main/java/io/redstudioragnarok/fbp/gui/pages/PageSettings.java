@@ -1,8 +1,7 @@
-package io.redstudioragnarok.fbp.gui.menu;
+package io.redstudioragnarok.fbp.gui.pages;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.BasePage;
-import io.redstudioragnarok.fbp.gui.GuiBase;
 import io.redstudioragnarok.fbp.gui.GuiConfirmation;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;

@@ -2,9 +2,9 @@ package io.redstudioragnarok.fbp.gui;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.elements.*;
-import io.redstudioragnarok.fbp.gui.menu.Page0;
-import io.redstudioragnarok.fbp.gui.menu.PageExperiments;
-import io.redstudioragnarok.fbp.gui.menu.PageSettings;
+import io.redstudioragnarok.fbp.gui.pages.Page0;
+import io.redstudioragnarok.fbp.gui.pages.PageExperiments;
+import io.redstudioragnarok.fbp.gui.pages.PageSettings;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import io.redstudioragnarok.fbp.utils.ModReference;
 import io.redstudioragnarok.redcore.utils.MathUtil;

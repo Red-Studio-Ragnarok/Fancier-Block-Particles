@@ -436,7 +436,7 @@ public class ConfigHandler {
 		initWriter(FBP.mainConfigFile);
 
 		writer.println("# Main configuration file for Fancier Block Particles");
-		writer.println("# I advise to use the in game configuration menu instead of manually editing this file");
+		writer.println("# I advise to use the in game configuration pages instead of manually editing this file");
 		writer.println();
 		writer.println("enabled: " + FBP.enabled);
 		writer.println();

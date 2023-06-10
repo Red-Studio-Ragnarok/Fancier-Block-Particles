@@ -1,4 +1,4 @@
-package io.redstudioragnarok.fbp.gui.menu;
+package io.redstudioragnarok.fbp.gui.pages;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.BasePage;

@@ -2,7 +2,7 @@ package io.redstudioragnarok.fbp.handlers;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.GuiBlacklist;
-import io.redstudioragnarok.fbp.gui.menu.Page0;
+import io.redstudioragnarok.fbp.gui.pages.Page0;
 import io.redstudioragnarok.fbp.keys.KeyBindings;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
