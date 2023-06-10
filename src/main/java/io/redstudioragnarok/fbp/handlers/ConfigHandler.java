@@ -246,6 +246,8 @@ public class ConfigHandler {
 			FBP.weatherParticleDensity = Float.parseFloat(configValues.getOrDefault("weatherParticleDensity", "1.0"));
 			FBP.weatherRenderDistance = Float.parseFloat(configValues.getOrDefault("weatherRenderDistance", "1.0"));
 
+			FBP.experiments = Boolean.parseBoolean(configValues.getOrDefault("experiments", "false"));
+
 			FBP.debug = Boolean.parseBoolean(configValues.getOrDefault("debugMode", "false"));
 
 		} catch (IOException e) {
@@ -474,6 +476,7 @@ public class ConfigHandler {
 		writer.println();
 		writer.println("# Experiments:");
 		writer.println();
+		writer.println("experiments: " + FBP.experiments);
 		writer.println();
 		writer.println("# Debug Config:");
 		writer.println();

@@ -17,7 +17,7 @@ public class PageExperiments extends BasePage {
     }
 
     @Override
-    protected void onActionPerformed(GuiButton button) {
+    protected void onActionPerformed(final GuiButton button) {
         switch (button.id) {
         }
     }
@@ -34,7 +34,7 @@ public class PageExperiments extends BasePage {
     }
 
     @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    protected void keyTyped(final char typedChar, final int keyCode) throws IOException {
         if (keyCode == 1) {
             mc.displayGuiScreen(new Page0());
             return;

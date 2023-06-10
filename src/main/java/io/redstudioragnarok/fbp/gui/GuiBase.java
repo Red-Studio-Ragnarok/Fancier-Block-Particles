@@ -27,7 +27,7 @@ public class GuiBase extends GuiScreen {
             FBP.mc.entityRenderer.stopUseShader();
     }
 
-    protected void drawBackground(int mouseXIn, int mouseYIn) {
+    protected void drawBackground(final int mouseXIn, final int mouseYIn) {
         mouseX = mouseXIn;
         mouseY = mouseYIn;
 

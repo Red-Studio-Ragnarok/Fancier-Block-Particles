@@ -25,7 +25,7 @@ public class PageSettings extends BasePage {
     }
 
     @Override
-    protected void onActionPerformed(GuiButton button) {
+    protected void onActionPerformed(final GuiButton button) {
         switch (button.id) {
             case 1:
                 if (FBP.experiments)

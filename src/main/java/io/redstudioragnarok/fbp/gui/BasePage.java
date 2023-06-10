@@ -68,7 +68,7 @@ public abstract class BasePage extends GuiBase {
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) {
+    protected void actionPerformed(final GuiButton button) {
         switch (button.id) {
             case 0:
                 mc.displayGuiScreen(new GuiConfirmation(this, DefaultConfig, I18n.format("menu.defaultConfig.confirmation")));
@@ -113,7 +113,7 @@ public abstract class BasePage extends GuiBase {
         onActionPerformed(button);
     }
 
-    protected void onActionPerformed(GuiButton button) {
+    protected void onActionPerformed(final GuiButton button) {
     }
 
     @Override
@@ -168,20 +168,20 @@ public abstract class BasePage extends GuiBase {
     }
 
     @Override
-    public void drawScreen(int mouseXIn, int mouseYIn, float partialTicks) {
+    public void drawScreen(final int mouseXIn, final int mouseYIn, final float partialTicks) {
         drawBackground(mouseXIn, mouseYIn);
 
         if (!FBP.enabled)
-            drawCenteredString("§L= " + I18n.format("menu.disabled") + " =", "#E44444", middleX, y - 193);
+            drawCenteredString("§L= " + I18n.format("menu.disabled") + " =", GuiUtils.RED, middleX, y - 193);
 
         drawCenteredString("§L= " + I18n.format("name") + " =", "#FFAA00", middleX, y - 183);
 
         if (isSettings)
-            drawCenteredString("§L= " + I18n.format("menu.settings") + " =", "#55FF55", middleX, y - 173);
+            drawCenteredString("§L= " + I18n.format("menu.settings") + " =", GuiUtils.GREEN, middleX, y - 173);
         else if (isExperiments)
-            drawCenteredString("§L= " + I18n.format("menu.experiments") + " =", "#55FF55", middleX, y - 173);
+            drawCenteredString("§L= " + I18n.format("menu.experiments") + " =", GuiUtils.GREEN, middleX, y - 173);
         else
-            drawCenteredString("§L= " + ModReference.VERSION + " =", "#55FF55", middleX, y - 173);
+            drawCenteredString("§L= " + ModReference.VERSION + " =", GuiUtils.GREEN, middleX, y - 173);
 
         if (targetHoverBoxY > 0)
             updateSliderHoverBox();
@@ -194,7 +194,7 @@ public abstract class BasePage extends GuiBase {
                 if (button instanceof Slider)
                     GuiUtils.drawRectangle(middleX - 102, hoverBoxY + 2, 204, 16, new Color(200, 200, 200, 35));
 
-                drawCenteredString(description, button.enabled ? "#FFFCFC" : "#C9C9C9", this.width / 2, height / 5 + 131);
+                drawCenteredString(description, button.enabled ? GuiUtils.WHITE : GuiUtils.GREY, this.width / 2, height / 5 + 131);
                 
                 break;
             }
@@ -204,7 +204,7 @@ public abstract class BasePage extends GuiBase {
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+    protected void mouseClicked(final int mouseX, final int mouseY, final int mouseButton) {
         if (mouseButton == 0) {
             for (GuiButton guibutton : super.buttonList) {
                 if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
@@ -218,7 +218,7 @@ public abstract class BasePage extends GuiBase {
     }
 
     @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    protected void keyTyped(final char typedChar, final int keyCode) throws IOException {
         if (keyCode == 1) {
             mc.displayGuiScreen(null);
 

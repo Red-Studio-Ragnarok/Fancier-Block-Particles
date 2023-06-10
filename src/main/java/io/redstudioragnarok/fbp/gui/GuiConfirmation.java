@@ -26,7 +26,7 @@ public class GuiConfirmation extends GuiBase {
 
 	private final String text;
 
-	public GuiConfirmation(GuiBase parent, Action action,String text) {
+	public GuiConfirmation(final GuiBase parent, final Action action, final String text) {
 		this.parent = parent;
 		this.action = action;
 		this.text = text;
@@ -46,7 +46,7 @@ public class GuiConfirmation extends GuiBase {
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) {
+	protected void actionPerformed(final GuiButton button) {
 		if (button.id == 0) {
 			switch (action) {
 				case DefaultConfig:
@@ -66,7 +66,7 @@ public class GuiConfirmation extends GuiBase {
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+	protected void keyTyped(final char typedChar, final int keyCode) throws IOException {
 		if (keyCode == 1) {
 			mc.displayGuiScreen(parent);
 			return;
@@ -76,11 +76,10 @@ public class GuiConfirmation extends GuiBase {
 	}
 
 	@Override
-	public void drawScreen(int mouseXIn, int mouseYIn, float partialTicks) {
+	public void drawScreen(final int mouseXIn, final int mouseYIn, final float partialTicks) {
 		drawBackground(mouseXIn, mouseYIn);
 
-		// Draw the text
-		drawCenteredString(text, "#FFFFFF", middleX, Yes.y - 30);
+		drawCenteredString(text, GuiUtils.WHITE, middleX, Yes.y - 30);
 
 		super.drawScreen(mouseXIn, mouseYIn, partialTicks);
 	}

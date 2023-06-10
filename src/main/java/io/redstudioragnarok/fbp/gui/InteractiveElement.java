@@ -45,7 +45,7 @@ public abstract class InteractiveElement extends GuiButton {
         final int textWidth = fontRenderer.getStringWidth(hoverText);
 
         if (hovered)
-            drawString(hoverText, "#FFFCFC", rightSided.length > 0 ? (mouseX + textWidth) - width * 2 : (mouseX - textWidth) - width / 2, mouseY - 3);
+            drawString(hoverText, GuiUtils.WHITE, rightSided.length > 0 ? (mouseX + textWidth) - width * 2 : (mouseX - textWidth) - width / 2, mouseY - 3);
     }
 
     public void drawString(final String text, final String color, final int x, final int y) {

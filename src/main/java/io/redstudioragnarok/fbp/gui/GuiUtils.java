@@ -11,6 +11,11 @@ import static io.redstudioragnarok.fbp.utils.ModReference.redLog;
 
 public class GuiUtils {
 
+    public static final String WHITE = "#FFFCFC";
+    public static final String GREY = "#C9C9C9";
+    public static final String RED = "#E44444";
+    public static final String GREEN = "#55FF55";
+
     /**
      * Determines if the mouse cursor is inside a stadium defined by its bounding rectangle.
      *
@@ -55,7 +60,7 @@ public class GuiUtils {
      * @param hexColor The hexadecimal color string to convert.
      * @return The decimal equivalent of the hexadecimal color or the decimal value for white if the input is invalid.
      */
-    public static int hexToDecimalColor(String hexColor) {
+    public static int hexToDecimalColor(final String hexColor) {
         try {
             // Parse the hexadecimal string (excluding the '#' character) to an integer
             return Integer.parseInt(hexColor.substring(1), 16);

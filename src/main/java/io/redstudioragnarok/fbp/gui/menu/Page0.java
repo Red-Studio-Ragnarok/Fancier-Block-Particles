@@ -35,7 +35,7 @@ public class Page0 extends BasePage {
 	}
 
 	@Override
-	protected void onActionPerformed(GuiButton button) {
+	protected void onActionPerformed(final GuiButton button) {
 		switch (button.id) {
 			case 7:
 				infiniteDuration.displayString = ((FBP.infiniteDuration = !FBP.infiniteDuration) ? "§a" : "§c") + "∞";

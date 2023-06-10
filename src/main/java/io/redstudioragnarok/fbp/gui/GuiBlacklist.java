@@ -31,18 +31,16 @@ import static io.redstudioragnarok.fbp.gui.elements.Button.ButtonSize.guideSize;
 public class GuiBlacklist extends GuiBase {
 
 	private static boolean hovering;
-	boolean closing = false;
+	private boolean closing;
 
-	ButtonBlacklist animation, particle;
+	private ButtonBlacklist animation, particle;
 
-	Button guide;
+	private final BlockPos targetBlockPos;
+	private final IBlockState targetBlockState;
+	private final Block targetBlock;
+	private final ItemStack targetItemStack;
 
-	final BlockPos targetBlockPos;
-	final IBlockState targetBlockState;
-	final Block targetBlock;
-	final ItemStack targetItemStack;
-
-	public GuiBlacklist(BlockPos target) {
+	public GuiBlacklist(final BlockPos target) {
 		mc = FBP.mc;
 
 		targetBlockPos = target;
@@ -51,7 +49,7 @@ public class GuiBlacklist extends GuiBase {
 		targetItemStack = targetBlock.getPickBlock(targetBlockState, mc.objectMouseOver, mc.world, targetBlockPos, mc.player);
 	}
 
-	public GuiBlacklist(ItemStack itemStack) {
+	public GuiBlacklist(final ItemStack itemStack) {
 		mc = FBP.mc;
 
 		targetBlockPos = null;
@@ -68,10 +66,10 @@ public class GuiBlacklist extends GuiBase {
 		animation = new ButtonBlacklist(middleX - 130, middleY + 5, false, ConfigHandler.isBlacklisted(targetBlock, false));
 		particle = new ButtonBlacklist(middleX + 70, middleY + 5, true, ConfigHandler.isBlacklisted(targetBlock, true));
 
-		guide = new Button(-1, animation.x + 15, animation.y + 20, guideSize, (animation.enabled ? "§a<" : "§c<") + "             " + (particle.enabled ? "§a>" : "§c>"), false, false, true);
+		final Button guide = new Button(-1, animation.x + 15, animation.y + 20, guideSize, (animation.enabled ? "§a<" : "§c<") + "             " + (particle.enabled ? "§a>" : "§c>"), false, false, true);
 
-		Item item = Item.getItemFromBlock(targetBlock);
-		Block block = item instanceof ItemBlock ? ((ItemBlock) item).getBlock() : null;
+		final Item item = Item.getItemFromBlock(targetBlock);
+		final Block block = item instanceof ItemBlock ? ((ItemBlock) item).getBlock() : null;
 
 		animation.enabled = FBP.fancyPlaceAnim && block != null && !(block instanceof BlockDoublePlant) && ModelHelper.isModelValid(block.getDefaultState());
 
@@ -111,7 +109,7 @@ public class GuiBlacklist extends GuiBase {
 	}
 
 	@Override
-	public void drawScreen(int mouseXIn, int mouseYIn, float partialTicks) {
+	public void drawScreen(final int mouseXIn, final int mouseYIn, final float partialTicks) {
 		drawBackground(mouseXIn, mouseYIn);
 
 		final int optionRadius = 30;
@@ -119,7 +117,7 @@ public class GuiBlacklist extends GuiBase {
 		mouseY = middleY + 35;
 
 		// Draw the title
-		drawCenteredString(I18n.format("menu.blacklist.title"), "#55FF55", middleX, 20);
+		drawCenteredString(I18n.format("menu.blacklist.title"), GuiUtils.GREEN, middleX, 20);
 
 		drawPreview(middleX - 32, middleY - 90);
 
@@ -129,20 +127,20 @@ public class GuiBlacklist extends GuiBase {
 
 		// Draw animation related text
 		if (animation.isMouseOver()) {
-			drawCenteredString(I18n.format("menu.blacklist.placeAnimation"), "#FFFCFC", animation.x + 30, animation.y - 12);
+			drawCenteredString(I18n.format("menu.blacklist.placeAnimation"), GuiUtils.WHITE, animation.x + 30, animation.y - 12);
 
 			final String text = animation.enabled ? (animation.isBlacklisted ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : FBP.fancyPlaceAnim ? I18n.format("menu.blacklist.cantAnimate") : I18n.format("menu.blacklist.animationDisabled");
-			final String color = animation.enabled ? (animation.isBlacklisted ? "#E44444" : "#55FF55") : "#E44444";
+			final String color = animation.enabled ? (animation.isBlacklisted ? GuiUtils.RED : GuiUtils.GREEN) : GuiUtils.RED;
 
 			drawCenteredString(text, color, animation.x + 30, animation.y + 65);
 		}
 
 		// Draw particle related text
 		if (particle.isMouseOver()) {
-			drawCenteredString(I18n.format("menu.blacklist.particles"), "#FFFCFC", particle.x + 30, particle.y - 12);
+			drawCenteredString(I18n.format("menu.blacklist.particles"), GuiUtils.WHITE, particle.x + 30, particle.y - 12);
 
 			final String text = particle.enabled ? (particle.isBlacklisted ? I18n.format("menu.blacklist.remove") : I18n.format("menu.blacklist.add")) : I18n.format("menu.blacklist.cantAdd");
-			final String color = particle.enabled? (particle.isBlacklisted ? "#E44444" : "55FF55") : "#E44444";
+			final String color = particle.enabled? (particle.isBlacklisted ? GuiUtils.RED : "55FF55") : GuiUtils.RED;
 
 			drawCenteredString(text, color, particle.x + 30, particle.y + 65);
 		}
@@ -155,11 +153,10 @@ public class GuiBlacklist extends GuiBase {
 	}
 
 	@Override
-	public void mouseClicked(int mouseX, int mouseY, int button) {
+	public void mouseClicked(final int mouseX, final int mouseY, final int button) {
 		if (animation.isMouseOver() || particle.isMouseOver())
 			closing = true;
 	}
-
 
 	/**
 	 * Draws a preview of the item on screen at the specified coordinates.

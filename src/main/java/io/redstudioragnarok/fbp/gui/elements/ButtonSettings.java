@@ -9,7 +9,7 @@ public class ButtonSettings extends InteractiveElement {
 
     private static final String hoverText = I18n.format("menu.settings");
 
-    public ButtonSettings(int id, int x, int y) {
+    public ButtonSettings(final int id, final int x, final int y) {
         super(id, x, y, "");
     }
 

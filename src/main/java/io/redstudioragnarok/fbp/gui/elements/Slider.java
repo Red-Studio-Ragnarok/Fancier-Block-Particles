@@ -62,8 +62,8 @@ public class Slider extends InteractiveElement {
 		drawTexturedModalRect(sliderPosX, y + 5, 185, 80 + handleState * 10, 15, height / 2);
 
 		// Draw the title
-		drawCenteredString(displayString, enabled ? "#FFFCFC" : "#C9C9C9", x + width / 2, y + 6 - 9);
-		drawCenteredString("]", enabled ? "#FFFCFC" : "#C9C9C9", (x + width / 2) + (fontRenderer.getStringWidth(displayString) / 2) + 3, y + 6 - 9);
+		drawCenteredString(displayString, enabled ? GuiUtils.WHITE : GuiUtils.GREY, x + width / 2, y + 6 - 9);
+		drawCenteredString("]", enabled ? GuiUtils.WHITE : GuiUtils.GREY, (x + width / 2) + (fontRenderer.getStringWidth(displayString) / 2) + 3, y + 6 - 9);
 	}
 
 	@Override
