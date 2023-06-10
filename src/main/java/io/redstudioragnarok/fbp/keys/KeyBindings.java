@@ -19,7 +19,7 @@ import static io.redstudioragnarok.fbp.FBP.mc;
  */
 public class KeyBindings {
 
-	public static final String categoryName = I18n.format("name");
+	public static final String categoryName = I18n.format("fbp.name");
 
 	public static final KeyBinding menu = new KeyBinding(I18n.format("keyBinding.menu"), Keyboard.KEY_P, categoryName);
 	public static final KeyBinding toggle = new KeyBinding(I18n.format("keyBinding.toggle"), Keyboard.KEY_NONE, categoryName);

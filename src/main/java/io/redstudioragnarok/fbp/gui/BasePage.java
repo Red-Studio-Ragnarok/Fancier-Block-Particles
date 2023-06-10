@@ -174,7 +174,7 @@ public abstract class BasePage extends GuiBase {
         if (!FBP.enabled)
             drawCenteredString("§L= " + I18n.format("menu.disabled") + " =", GuiUtils.RED, middleX, y - 193);
 
-        drawCenteredString("§L= " + I18n.format("name") + " =", "#FFAA00", middleX, y - 183);
+        drawCenteredString("§L= " + I18n.format("fbp.name") + " =", "#FFAA00", middleX, y - 183);
 
         if (isSettings)
             drawCenteredString("§L= " + I18n.format("menu.settings") + " =", GuiUtils.GREEN, middleX, y - 173);
