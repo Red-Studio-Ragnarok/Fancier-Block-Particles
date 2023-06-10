@@ -41,13 +41,14 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - Changed default maximum duration from 55 to 64
 - Revamped Floating Materials config file
 - Fancy Rain and Fancy Snow config options have been replaced by Fancy Weather option
-- Changed behavior of Fancy Block Placement with slabs placing slabs one on top of another should be a better experience
+- Changed behavior of Fancy Block Placement with slabs placing one on top of another should be a better experience
 - Changed floating materials config format to be more user-friendly and faster (Old config will be detected and replaced by the new defaults)
 - Smoke particles are now slightly more transparent
 - The config button in Forge's mod options now works
 - Updated `mcmod.info` to feature new description and better credits
-- Blacklist GUI cursor is now darker and become as light as before when hovering a button
+- Blacklist GUI cursor is now darker and becomes as light as before when hovering a button
 - Changed freeze effect text color from orange to aqua
+- You can navigate pages with the scroll wheel
 
 ### Fixed
 
