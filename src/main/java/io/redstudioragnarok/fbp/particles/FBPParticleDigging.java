@@ -8,8 +8,8 @@ import io.redstudioragnarok.fbp.renderer.RenderType;
 import io.redstudioragnarok.fbp.renderer.color.ColorUtil;
 import io.redstudioragnarok.fbp.renderer.light.LightUtil;
 import io.redstudioragnarok.fbp.renderer.texture.TextureUtil;
-import io.redstudioragnarok.fbp.utils.MathUtil;
-import io.redstudioragnarok.fbp.vectors.Vector3F;
+import io.redstudioragnarok.redcore.utils.MathUtil;
+import io.redstudioragnarok.redcore.vectors.Vector3F;
 import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -135,7 +135,7 @@ public class FBPParticleDigging extends ParticleDigging {
 					if (!quads.isEmpty())
 						this.particleTexture = quads.get(0).getSprite();
 				} catch (Exception e) {
-					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+					// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 				}
 			}
 

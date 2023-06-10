@@ -1,118 +1,122 @@
 # General
-name=Fancier Block Particles
+fbp.name=Fancier Block Particles
 
 # HUD
 hud.freeze=§LFrozen Particles
 
 # Menu
 menu.disabled=Disabled
-menu.bugreport=Found a §cbug§a? Click to report it!
+menu.settings=Settings
+menu.bugReport=Found a §cbug§f? Click to report it!
 
-menu.enable=§cEnable
-menu.disable=§aDisable
+menu.experiments=Experiments
 
-menu.on=§aON
-menu.off=§cOFF
+menu.enable=§aEnable§f
+menu.disable=§cDisable§f
+
+menu.on=ON
+menu.off=OFF
 
 menu.yes=§aYes
 menu.no=§cNo
 
 menu.defaults=Defaults
 menu.done=Done
-menu.reloadconfig=Reload Config
+menu.reloadConfig=Reload Config
 
 menu.period=§f.
 
-menu.confirmation=Are you sure you want to reset your config, §cthis cannot be undone§f?
+menu.defaultConfig.confirmation=Are you sure you want to reset your config,§c this cannot be undone§f?
+menu.debug.confirmation=Are you sure you want to enable debug mode,§c having this enabled will reduce performance§f, but is useful to diagnose issues?
+menu.experiments.confirmation=Are you sure you want to enable experiments,§c theses are features that are not finished and may be unstable§f?
 
 menu.noDescriptionFound=No description available please report this
 
 # Menu Blacklist
-menu.blacklist.title=§LBlacklist a Block
-menu.blacklist.placeanimation=§f§lPLACE ANIMATION
-menu.blacklist.particles=§f§lPARTICLES
-menu.blacklist.add=§a§lADD
-menu.blacklist.remove=§c§lREMOVE
-menu.blacklist.cantanimate=§c§lCAN'T BE ANIMATED
-menu.blacklist.cantadd=§c§lCAN'T BE ADDED
+menu.blacklist.title=§lBlacklist a Block
+menu.blacklist.placeAnimation=§lPLACE ANIMATION
+menu.blacklist.particles=§lPARTICLES
+menu.blacklist.add=§lADD
+menu.blacklist.remove=§lREMOVE
+menu.blacklist.cantAnimate=§lCAN'T BE ANIMATED
+menu.blacklist.animationDisabled=§lFANCIER BLOCK PLACEMENT IS DISABLED
+menu.blacklist.cantAdd=§lCAN'T BE ADDED
+
+# Menu Settings
+menu.settings.experiments.title=Experiments
+menu.settings.debug.title=Debug Mode
+
+menu.settings.experiments.description=Enable experiments
+menu.settings.debug.description=Enable the debug mode
 
 # Menu Page 0
-menu.destroyparticles.info=Destroy Particle Count
-menu.minduration.info=Min. Duration
-menu.maxduration.info=Max. Duration
-menu.scalemult.info=Scale Mult.
-menu.gravityscale.info=Gravity Force Mult.
-menu.rotationspeed.info=Rotation Speed Mult.
+menu.destroyParticles.title=Destroy Particle Count
+menu.minDuration.title=Min. Duration
+menu.maxDuration.title=Max. Duration
+menu.scaleMult.title=Scale Mult.
+menu.gravityScale.title=Gravity Force Mult.
+menu.rotationSpeed.title=Rotation Speed Mult.
 
-menu.particlelife.description.duration=Sets particle life duration
-menu.particlelife.description.duration.range= range to between §6
-menu.particlelife.description.duration.and= §fand §6
-menu.particlelife.description.duration.to= to §6
-menu.particlelife.description.infinity=Sets particle life duration to §6infinity§f.
-menu.destroyparticles.description=Sets the block destroy particle count to §6
-menu.particlescale.description=Sets particle scale multiplier to §6
-menu.particlegravity.description=Multiplies default particle gravity force by §6
-menu.particlerotation.description=Multiplies particle rotation by §6
-menu.infiniteduration.description= §finfinite particle life duration.
+menu.particleLife.description.duration=Sets particle life duration
+menu.particleLife.description.duration.range= range to between §6
+menu.particleLife.description.duration.and=§f and §6
+menu.particleLife.description.duration.to= to §6
+menu.particleLife.description.infinity=Sets particle life duration to §6infinity§f.
+menu.destroyParticles.description=Sets the block destroy particle count to §6
+menu.particleScale.description=Sets particle scale multiplier to §6
+menu.particleGravity.description=Multiplies particle gravity force by §6
+menu.particleRotation.description=Multiplies particle rotation by §6
+menu.infiniteDuration.description=§f infinite particle life duration.
 menu.time.description=Show the time in §6
-menu.timems.description=milliseconds
+menu.time.description.ticks=ticks
+menu.time.description.milliseconds=milliseconds
 
 # Menu Page 1
-menu.randomrotation.info=Random Rotation
-menu.cartonmode.info=Cartoon Mode
-menu.randomizedscale.info=Randomized Scale
-menu.randomfadespeed.info=Random Fade Speed
-menu.redstoneblock.info=Spawn Redstone Block Particles
-menu.spawnfreeze.info=Spawn Particles in Freeze Mode
+menu.randomRotation.title=Random Rotation
+menu.randomizedScale.title=Randomized Scale
+menu.randomFadeSpeed.title=Random Fade Speed
+menu.spawnPlaceParticles.title=Spawn Place Particles
+menu.spawnFreeze.title=Spawn Particles in Freeze Mode
 
-menu.randomrotation.description=Enables random and simple rotation math.
-menu.cartonmode.description=§4DEPRECATED§f/§4REMOVED §fMakes the particles look cartoon-ish.
-menu.randomizedscale.description=Makes the particle scale slightly randomized.
-menu.randomfadespeed.description=Enables random particle fade away speed.
-menu.redstoneblock.description=Allows spawning redstone block particles.
-menu.spawnfreeze.description=Allows spawning particles in freeze mode.
+menu.randomRotation.description=Enables random and simple rotation math.
+menu.randomizedScale.description=Makes the particle scale slightly randomized.
+menu.randomFadeSpeed.description=Enables random particle fade away speed.
+menu.spawnPlaceParticles.description=Enables block place particles.
+menu.spawnFreeze.description=Allows spawning particles in freeze mode.
 
 # Menu Page 2
-menu.entitycollide.info=Collide With Entities
-menu.bounceoffwalls.info=Bounce Off Walls
-menu.lowtraction.info=Low Traction
-menu.smartbreaking.info=Smart Breaking
-menu.fancyplaceanimation.info=Fancy Place Animation
-menu.spawnplaceparticles.info=Spawn Place Particles
+menu.entityCollide.title=Collide With Entities
+menu.bounceOffWalls.title=Bounce Off Walls
+menu.lowTraction.title=Low Traction
+menu.waterPhysics.title=Water Physics
+menu.smartBreaking.title=Smart Breaking
+menu.fancyPlaceAnimation.title=Fancy Place Animation
 
-menu.entitycollide.description=Enables entity colliding with the particles.
-menu.bounceoffwalls.description=Makes the particles ricochet/bounce off walls.
-menu.lowtraction.description=Lowers the traction deceleration on the ground.
-menu.smartbreaking.description=Smart block hitting particle motion and scaling.
-menu.fancyplaceanimation.description=Adds a fancy block placing animation.
-menu.spawnplaceparticles.description=Enables block place particles.
+menu.entityCollide.description=Enables entity colliding with the particles.
+menu.bounceOffWalls.description=Makes the particles ricochet/bounce off walls.
+menu.lowTraction.description=Lowers the traction deceleration on the ground.
+menu.waterPhysics.description=Makes wood particles float and others to sink slower.
+menu.smartBreaking.description=Smart block hitting particle motion and scaling.
+menu.fancyPlaceAnimation.description=Adds a fancy block placing animation.
 
 # Menu Page 3
-menu.fancyflame.info=Fancy Flame
-menu.fancysmoke.info=Fancy Smoke
-menu.fancyweather.info=Fancy Weather
+menu.fancyFlame.title=Fancy Flame
+menu.fancySmoke.title=Fancy Smoke
+menu.fancyWeather.title=Fancy Weather
 menu.dynamicWeather.title=Dynamic Weather
-menu.waterphysics.info=Water Physics
-menu.restonfloor.info=Rest On Floor
-
-menu.fancyflame.description=Makes flame particles fancy.
-menu.fancysmoke.description=Makes smoke particles fancy.
-menu.fancyweather.description=Makes rain and snow particles fancy.
-menu.dynamicWeather.description=Makes rain and snow particles more dense while thunderstorms.
-menu.waterphysics.description=Makes wood particles float and others to sink slower.
-menu.restonfloor.description=§4DEPRECATED§f/§4REMOVED §fMakes particles rest aligned on the ground.
-
-# Menu Page 4
-menu.weatherdensity.info=Weather Particles Density
+menu.weatherDensity.title=Weather Particles Density
 menu.weatherRenderDistance.title=Weather Particles Render Distance
 
-menu.weatherdensity.description=Sets the weather particles density to §6
+menu.fancyFlame.description=Makes flame particles fancy.
+menu.fancySmoke.description=Makes smoke particles fancy.
+menu.fancyWeather.description=Makes rain and snow particles fancy.
+menu.dynamicWeather.description=Makes rain and snow particles more dense while thunderstorms.
+menu.weatherDensity.description=Sets the weather particles density to §6
 menu.weatherRenderDistance.description=Sets the weather particles render distance to §6
 
 # Keybindings
-
-keybind.menu=Open Menu
-keybind.toggle=Enable/Disable
-keybind.freeze=Toggle Freeze Effect
-keybind.kill=Kill Particles
-keybind.blacklistGUI=Blacklist Menu
+keyBinding.menu=Open Menu
+keyBinding.toggle=Enable/Disable
+keyBinding.freeze=Toggle Freeze Effect
+keyBinding.kill=Kill Particles
+keyBinding.blacklistGUI=Blacklist Menu

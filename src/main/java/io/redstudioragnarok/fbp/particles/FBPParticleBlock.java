@@ -2,8 +2,8 @@ package io.redstudioragnarok.fbp.particles;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.handlers.EventHandler;
-import io.redstudioragnarok.fbp.vectors.Vector2F;
-import io.redstudioragnarok.fbp.vectors.Vector3F;
+import io.redstudioragnarok.redcore.vectors.Vector2F;
+import io.redstudioragnarok.redcore.vectors.Vector3F;
 import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
@@ -262,7 +262,7 @@ public class FBPParticleBlock extends Particle {
 		}
 
 		if (tick == 0) {
-			if ((!(FBP.frozen && !FBP.spawnWhileFrozen) && (FBP.spawnRedstoneBlockParticles || block != Blocks.REDSTONE_BLOCK)) && mc.gameSettings.particleSetting < 2) {
+			if (!(FBP.frozen && !FBP.spawnWhileFrozen) && mc.gameSettings.particleSetting < 2) {
 				spawnParticles();
 			}
 		}
@@ -292,7 +292,7 @@ public class FBPParticleBlock extends Particle {
 		Tessellator.getInstance().draw();
 		GlStateManager.popMatrix();
 
-		mc.getTextureManager().bindTexture(FBP.particlesTexture);
+		mc.getTextureManager().bindTexture(FBP.PARTICLES_TEXTURE);
 		buff.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 	}
 

@@ -6,7 +6,7 @@ import io.redstudioragnarok.fbp.renderer.RenderType;
 import io.redstudioragnarok.fbp.renderer.color.ColorUtil;
 import io.redstudioragnarok.fbp.renderer.light.LightUtil;
 import io.redstudioragnarok.fbp.renderer.texture.TextureUtil;
-import io.redstudioragnarok.fbp.vectors.Vector3F;
+import io.redstudioragnarok.redcore.vectors.Vector3F;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFlame;

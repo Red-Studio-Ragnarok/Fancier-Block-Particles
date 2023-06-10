@@ -4,6 +4,7 @@ import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.utils.ModReference;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ import static io.redstudioragnarok.fbp.FBP.*;
 
 public class DebugHandler {
 
-    private static final String latestMixinBooter = "7.0";
+    public static final String MIXIN_BOOTER_VERSION = Loader.instance().getIndexedModList().get("mixinbooter").getVersion();
+    private static final String LATEST_MIXIN_BOOTER = "8.2";
 
     @SubscribeEvent
     public static void onDebugList(RenderGameOverlayEvent.Text event) {
@@ -26,7 +28,7 @@ public class DebugHandler {
                 list.add("");
             }
 
-            list.add(String.format("%s<FBP>%s Fancier Block Particles version is %s, Mixin Booter is %sup to date (%s).", TextFormatting.RED, TextFormatting.RESET, ModReference.version, ModReference.mixinBooterVersion.equals(latestMixinBooter) ? "" : "not ", ModReference.mixinBooterVersion));
+            list.add(String.format("%s<FBP>%s Fancier Block Particles version is %s, Mixin Booter is %sup to date (%s).", TextFormatting.RED, TextFormatting.RESET, ModReference.VERSION, MIXIN_BOOTER_VERSION.equals(LATEST_MIXIN_BOOTER) ? "" : "not ", MIXIN_BOOTER_VERSION));
             list.add(String.format("%s<FBP>%s Running on %s", TextFormatting.RED, TextFormatting.RESET, System.getProperty("java.vm.name")));
             list.add(String.format("%s<FBP>%s Running on %s, version %s", TextFormatting.RED, TextFormatting.RESET, System.getProperty("os.name"), System.getProperty("os.version")));
             list.add("");
