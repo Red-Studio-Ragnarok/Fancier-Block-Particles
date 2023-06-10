@@ -2,7 +2,7 @@ package io.redstudioragnarok.fbp.handlers;
 
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.GuiBlacklist;
-import io.redstudioragnarok.fbp.gui.menu.Page0;
+import io.redstudioragnarok.fbp.gui.pages.Page0;
 import io.redstudioragnarok.fbp.keys.KeyBindings;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -40,7 +40,7 @@ public class KeyInputHandler {
 
 			boolean useHeldBlock = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && (block = Block.getBlockFromName((stack = mc.player.getHeldItemMainhand()).getItem().getRegistryName().toString())) != null && block != Blocks.AIR;
 
-			if (!blacklistGUIOpen && (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || useHeldBlock)) {
+			if (!blacklistGUIOpen && (mc.objectMouseOver != null && mc.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || useHeldBlock) && mc.world.getBlockState(mc.objectMouseOver.getBlockPos()).getBlock() != FBP.dummyBlock) {
 				mc.displayGuiScreen(useHeldBlock ? (new GuiBlacklist(stack)) : (new GuiBlacklist(mc.objectMouseOver.getBlockPos())));
 
 				Mouse.setGrabbed(true);

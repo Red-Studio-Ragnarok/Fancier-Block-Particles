@@ -3,6 +3,3 @@ linter: jetbrains/qodana-jvm-community:2022.3
 exclude:
   - name: IgnoreResultOfCall
   - name: JavaAnnotator
-  - name: All
-    paths:
-      - src/main/java/io/redstudioragnarok/FBP/gui/menu

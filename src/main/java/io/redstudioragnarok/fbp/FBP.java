@@ -32,15 +32,12 @@ import java.util.SplittableRandom;
 //  | $$   /$$__  $$| $$  | $$| $$      | $$| $$_____/| $$            | $$  \ $$| $$| $$  | $$| $$      | $$_  $$       | $$      /$$__  $$| $$        | $$ /$$| $$| $$      | $$| $$_____/ \____  $$
 //  | $$  |  $$$$$$$| $$  | $$|  $$$$$$$| $$|  $$$$$$$| $$            | $$$$$$$/| $$|  $$$$$$/|  $$$$$$$| $$ \  $$      | $$     |  $$$$$$$| $$        |  $$$$/| $$|  $$$$$$$| $$|  $$$$$$$ /$$$$$$$/
 //  |__/   \_______/|__/  |__/ \_______/|__/ \_______/|__/            |_______/ |__/ \______/  \_______/|__/  \__/      |__/      \_______/|__/         \___/  |__/ \_______/|__/ \_______/|_______/
-@Mod(clientSideOnly = true, modid = ModReference.id, name = ModReference.name, version = ModReference.version, guiFactory = "io.redstudioragnarok.fbp.config.FBPConfigGuiFactory", updateJSON = "https://raw.githubusercontent.com/Red-Studio-Ragnarok/Fancier-Block-Particles/main/update.json")
+@Mod(clientSideOnly = true, modid = ModReference.ID, name = ModReference.NAME, version = ModReference.VERSION, guiFactory = "io.redstudioragnarok.fbp.config.FBPConfigGuiFactory", updateJSON = "https://raw.githubusercontent.com/Red-Studio-Ragnarok/Fancier-Block-Particles/main/update.json")
 public class FBP {
 
 	public static final Minecraft mc = Minecraft.getMinecraft();
 
-	public static final ResourceLocation particlesTexture = new ResourceLocation("textures/particle/particles.png");
-	public static final ResourceLocation menuTexture = new ResourceLocation(ModReference.id + ":textures/gui/widgets.png");
-	public static final ResourceLocation bugIcon = new ResourceLocation(ModReference.id + ":textures/gui/bug.png");
-	public static final ResourceLocation fbpIcon = new ResourceLocation(ModReference.id + ":textures/gui/fbp.png");
+	public static final ResourceLocation PARTICLES_TEXTURE = new ResourceLocation("textures/particle/particles.png");
 
 	public static File mainConfigFile, floatingMaterialsFile, animBlacklistFile, particleBlacklistFile;
 
@@ -48,10 +45,13 @@ public class FBP {
 
 	public static File oldNewMainConfigFile;
 
-	public static boolean enabled, frozen, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, spawnRedstoneBlockParticles, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyFlame, fancySmoke, waterPhysics;
+	public static boolean enabled, frozen, showInMillis, infiniteDuration, randomRotation, spawnWhileFrozen, randomizedScale, randomFadingSpeed, entityCollision, bounceOffWalls, lowTraction, smartBreaking, fancyFlame, fancySmoke, waterPhysics;
 	public static boolean fancyPlaceAnim, spawnPlaceParticles;
 	public static boolean fancyWeather, dynamicWeather;
-	public static boolean debugMode;
+
+	public static boolean experiments;
+
+	public static boolean debug;
 
 	public static int minAge, maxAge, particlesPerAxis;
 
@@ -100,8 +100,8 @@ public class FBP {
 		MinecraftForge.EVENT_BUS.register(new GuiHandler());
 
 		MinecraftForge.EVENT_BUS.register(KeyInputHandler.class);
-		if (debugMode)
-			MinecraftForge.EVENT_BUS.register(DebugHandler.class);
+
+		updateDebugHandler();
 
 		vertexFormat.addElement(DefaultVertexFormats.POSITION_3F);
 		vertexFormat.addElement(DefaultVertexFormats.TEX_2F);
@@ -132,5 +132,12 @@ public class FBP {
 			}
 		}
 		enabled = newState;
+	}
+
+	public static void updateDebugHandler() {
+		if (debug)
+			MinecraftForge.EVENT_BUS.register(DebugHandler.class);
+		else
+			MinecraftForge.EVENT_BUS.unregister(DebugHandler.class);
 	}
 }

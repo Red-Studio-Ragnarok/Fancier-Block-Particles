@@ -1,6 +1,6 @@
 package io.redstudioragnarok.fbp.config;
 
-import io.redstudioragnarok.fbp.gui.menu.Page0;
+import io.redstudioragnarok.fbp.gui.pages.Page0;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.client.IModGuiFactory;
