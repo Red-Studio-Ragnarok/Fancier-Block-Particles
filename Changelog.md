@@ -18,8 +18,9 @@ The new configs are easier to read understand and use, they are also faster whic
 #### Revamped GUI
 
 Enjoy easier to use GUI as well as a new beautiful background, this applies to every GUI in FBP.
+Also take a look into the new settings page, which allows you to turn on things like debug mode and experiments, which is a new menu for experimental features.
 
-![image](https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/assets/82710983/800b4d80-ccaa-4759-89d8-57ae04292d9b)
+![New gui](https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/assets/82710983/612b4e65-ddaf-4a67-8620-d2351f9c52c3)
 
 #### Dynamic Weather System
 
@@ -30,6 +31,7 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - Dynamic Weather System (rain & snow)
 - Weather Particles Render Distance option
 - Added settings menu
+- Added experiments menu
 
 ### Changed
 
