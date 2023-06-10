@@ -93,7 +93,7 @@ public abstract class BasePage extends GuiBase {
                 try {
                     Desktop.getDesktop().browse(ModReference.newIssueLink);
                 } catch (Exception exception) {
-                    // TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+                    // Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
                 }
                 break;
             case -5:

@@ -135,7 +135,7 @@ public class FBPParticleDigging extends ParticleDigging {
 					if (!quads.isEmpty())
 						this.particleTexture = quads.get(0).getSprite();
 				} catch (Exception e) {
-					// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+					// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 				}
 			}
 

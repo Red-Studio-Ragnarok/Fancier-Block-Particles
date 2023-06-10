@@ -75,7 +75,7 @@ public class AnimationDummyBlock extends Block {
 				return n.state.isNormalCube();
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isNormalCube(state, world, pos);
@@ -89,7 +89,7 @@ public class AnimationDummyBlock extends Block {
 				return n.state.getBlock().isAir(state, world, pos);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isAir(state, world, pos);
@@ -103,7 +103,7 @@ public class AnimationDummyBlock extends Block {
 				return n.state.getBlock().isBed(state, world, pos, player);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isBed(state, world, pos, player);
@@ -117,7 +117,7 @@ public class AnimationDummyBlock extends Block {
 				return n.state.getBlock().isBedFoot(world, pos);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isBedFoot(world, pos);
@@ -131,7 +131,7 @@ public class AnimationDummyBlock extends Block {
 				return n.state.getBlock().isBurning(world, pos);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isBurning(world, pos);
@@ -145,7 +145,7 @@ public class AnimationDummyBlock extends Block {
 				return n.state.getBlock().isFlammable(world, pos, face);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isFlammable(world, pos, face);
@@ -159,7 +159,7 @@ public class AnimationDummyBlock extends Block {
 				return n.state.getBlock().isLadder(state, world, pos, entity);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return super.isLadder(state, world, pos, entity);
@@ -174,7 +174,7 @@ public class AnimationDummyBlock extends Block {
 				return n.state.getMaterial().isReplaceable();
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return this.material.isReplaceable();
@@ -189,7 +189,7 @@ public class AnimationDummyBlock extends Block {
 				return n.originalBlock.isPassable(worldIn, pos);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 		return !this.material.blocksMovement();
 	}
@@ -203,7 +203,7 @@ public class AnimationDummyBlock extends Block {
 				n.originalBlock.onEntityCollision(worldIn, pos, state, entityIn);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 	}
 
@@ -217,7 +217,7 @@ public class AnimationDummyBlock extends Block {
 				return n.state.getCollisionBoundingBox(worldIn, pos);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return Block.FULL_BLOCK_AABB.offset(pos);
@@ -232,7 +232,7 @@ public class AnimationDummyBlock extends Block {
 				return n.state.getBoundingBox(worldIn, pos);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return Block.FULL_BLOCK_AABB.offset(pos);
@@ -252,7 +252,7 @@ public class AnimationDummyBlock extends Block {
 				return n.state.getBlockHardness(w, pos);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return blockState.getBlockHardness(w, pos);
@@ -275,7 +275,7 @@ public class AnimationDummyBlock extends Block {
 			// cleanup just to make sure it gets removed
 			EventHandler.removePosEntry(pos);
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 	}
 
@@ -347,7 +347,7 @@ public class AnimationDummyBlock extends Block {
 					return blockNodes.get(pos).originalBlock.getPickBlock(node.state, target, world, pos, player);
 			}
 		} catch (Throwable t) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 		}
 
 		return new ItemStack(Blocks.AIR);

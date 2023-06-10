@@ -60,7 +60,7 @@ public class GuiUtils {
             // Parse the hexadecimal string (excluding the '#' character) to an integer
             return Integer.parseInt(hexColor.substring(1), 16);
         } catch (NumberFormatException numberFormatException) {
-            // TODO: (Debug Mode) This should count to the problem counter
+            // Todo: (Debug Mode) This should count to the problem counter
 
             redLog.printFramedError("GUI Rendering", "Hexadecimal to decimal color conversion failed", "Non critical exception falling back to white", numberFormatException.getMessage(), "At:" + numberFormatException.getStackTrace()[3].toString());
 

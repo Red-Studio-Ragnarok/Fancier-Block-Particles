@@ -94,10 +94,10 @@ public class ConfigHandler {
 				readAnimBlacklist();
 
 		} catch (IOException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			LOG.error("Cannot init configs, an IOException occurred: " + e.getMessage());
 		} catch (SecurityException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			LOG.error("Cannot init configs, an antivirus is probably causing this");
 		} finally {
 			closeStreams();
@@ -118,13 +118,13 @@ public class ConfigHandler {
 			bufferedReader = new BufferedReader(inputStreamReader);
 
 		} catch (FileNotFoundException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			if (handleFileNotFound(e.getMessage(), "streams", file))
 				initStreams(file);
 
 			closeStreams();
 		} catch (SecurityException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			LOG.error("Cannot init streams for " + file + " an antivirus is probably causing this");
 
 			closeStreams();
@@ -141,7 +141,7 @@ public class ConfigHandler {
 			fileInputStream.close();
 
 		} catch (IOException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			LOG.error("Cannot close streams, an IOException occurred: " + e.getMessage());
 		}
 	}
@@ -158,14 +158,14 @@ public class ConfigHandler {
 			writer = new PrintWriter(file.getPath(), "UTF-8");
 
 		} catch (FileNotFoundException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			if (handleFileNotFound(e.getMessage(), "writer", file))
 				initWriter(file);
 		} catch (UnsupportedEncodingException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			LOG.error("Cannot init writer for " + file + " encoding is not supported, details: " + e.getMessage());
 		} catch (SecurityException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			LOG.error("Cannot init streams for " + file + " an antivirus is probably causing this");
 		}
 	}
@@ -249,7 +249,7 @@ public class ConfigHandler {
 			FBP.debug = Boolean.parseBoolean(configValues.getOrDefault("debugMode", "false"));
 
 		} catch (IOException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			LOG.error("Cannot read main config, an IOException occurred: " + e.getMessage());
 		} finally {
 			closeStreams();
@@ -372,14 +372,14 @@ public class ConfigHandler {
 						addMaterial(Material.WOOD);
 						break;
 					default:
-						// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+						// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 						LOG.error("Material not recognized: " + line);
 						break;
 				}
 			}
 
 		} catch (IOException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			LOG.error("Cannot read floating materials config, an IOException occurred: " + e.getMessage());
 		} finally {
 			closeStreams();
@@ -399,7 +399,7 @@ public class ConfigHandler {
 				addToBlacklist(line, false);
 
 		} catch (IOException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			LOG.error("Cannot read animation blacklist, an IOException occurred: " + e.getMessage());
 		} finally {
 			closeStreams();
@@ -420,7 +420,7 @@ public class ConfigHandler {
 				addToBlacklist(line, true);
 
 		} catch (IOException e) {
-			// TODO: (Debug Mode) This should count to the problem counter and should output a stack trace
+			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
 			LOG.error("Cannot read particle blacklist, an IOException occurred: " + e.getMessage());
 		} finally {
 			closeStreams();
