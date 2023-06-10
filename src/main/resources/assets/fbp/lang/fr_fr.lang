@@ -9,7 +9,7 @@ menu.disabled=Désactivée
 menu.settings=Paramètres
 menu.bugReport=Vous avez trouvé un §cbug§f ? Cliquez pour le signaler !
 
-menu.experiments=Expériences
+menu.experiments=Expérimentations
 
 menu.enable=§aActivée§f
 menu.disable=§cDésactivée§f
@@ -26,7 +26,10 @@ menu.reloadConfig=Rafraichir la configuration
 
 menu.period=§f.
 
-menu.confirmation=Êtes-vous sûr de vouloir réinitialiser votre configuration,§c cela ne peut pas être annulé§f ?
+menu.defaultConfig.confirmation=Êtes-vous sûr de vouloir réinitialiser votre configuration,§c cela ne peut pas être annulé§f ?
+menu.debug.confirmation=Êtes-vous sûr de vouloir activer le mode de débogage,§c avoir ce mode activé réduira les performances§f, mais est utile pour diagnostiquer les problèmes ?
+menu.experiments.confirmation=Êtes-vous sûr de vouloir activer les expérimentations,§c ce sont des fonctionnalités qui ne sont pas terminées et peuvent être instables§f ?
+
 
 menu.noDescriptionFound=Aucune description disponible s’il vous plaît signaler ceci
 
@@ -41,10 +44,10 @@ menu.blacklist.animationDisabled=§lANIMATION SOPHISTIQUÉE DE POSE DE BLOC EST 
 menu.blacklist.cantAdd=§lNE PEUT PAS ÊTRE AJOUTÉ
 
 # Menu Settings
-menu.settings.experiments.title=Expériences
+menu.settings.experiments.title=Expérimentations
 menu.settings.debug.title=Mode Debug
 
-menu.settings.experiments.description=Active les expériences
+menu.settings.experiments.description=Active les expérimentations
 menu.settings.debug.description=Active le mode de debug
 
 # Menu Page 0

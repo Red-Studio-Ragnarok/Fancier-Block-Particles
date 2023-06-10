@@ -71,7 +71,7 @@ public abstract class BasePage extends GuiBase {
     protected void actionPerformed(GuiButton button) {
         switch (button.id) {
             case 0:
-                mc.displayGuiScreen(new GuiConfirmation(this, DefaultConfig, I18n.format("menu.confirmation")));
+                mc.displayGuiScreen(new GuiConfirmation(this, DefaultConfig, I18n.format("menu.defaultConfig.confirmation")));
                 break;
             case -1:
                 ConfigHandler.init();

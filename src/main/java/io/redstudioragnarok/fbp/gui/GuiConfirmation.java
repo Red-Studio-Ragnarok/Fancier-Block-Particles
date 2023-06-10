@@ -1,5 +1,6 @@
 package io.redstudioragnarok.fbp.gui;
 
+import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.elements.Button;
 import io.redstudioragnarok.fbp.handlers.ConfigHandler;
 import net.minecraft.client.gui.GuiButton;
@@ -12,7 +13,9 @@ import static io.redstudioragnarok.fbp.gui.elements.Button.ButtonSize.medium;
 public class GuiConfirmation extends GuiBase {
 
 	public enum Action {
-		DefaultConfig
+		DefaultConfig,
+		EnableDebug,
+		EnableExperiments
 	}
 
 	Button Yes, No;
@@ -49,6 +52,12 @@ public class GuiConfirmation extends GuiBase {
 				case DefaultConfig:
 					ConfigHandler.defaults();
 					ConfigHandler.writeMainConfig();
+					break;
+				case EnableDebug:
+					FBP.debug = true;
+					break;
+				case EnableExperiments:
+					FBP.experiments = true;
 					break;
 			}
 		}

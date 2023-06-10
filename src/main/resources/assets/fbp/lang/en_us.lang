@@ -26,7 +26,9 @@ menu.reloadConfig=Reload Config
 
 menu.period=§f.
 
-menu.confirmation=Are you sure you want to reset your config,§c this cannot be undone§f?
+menu.defaultConfig.confirmation=Are you sure you want to reset your config,§c this cannot be undone§f?
+menu.debug.confirmation=Are you sure you want to enable debug mode,§c having this enabled will reduce performance§f, but is useful to diagnose issues?
+menu.experiments.confirmation=Are you sure you want to enable experiments,§c theses are features that are not finished and may be unstable§f?
 
 menu.noDescriptionFound=No description available please report this
 

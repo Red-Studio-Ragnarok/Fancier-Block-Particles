@@ -3,10 +3,13 @@ package io.redstudioragnarok.fbp.gui.menu;
 import io.redstudioragnarok.fbp.FBP;
 import io.redstudioragnarok.fbp.gui.BasePage;
 import io.redstudioragnarok.fbp.gui.GuiBase;
+import io.redstudioragnarok.fbp.gui.GuiConfirmation;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
 import java.io.IOException;
+
+import static io.redstudioragnarok.fbp.gui.GuiConfirmation.Action.*;
 
 public class PageSettings extends BasePage {
 
@@ -25,11 +28,19 @@ public class PageSettings extends BasePage {
     protected void onActionPerformed(GuiButton button) {
         switch (button.id) {
             case 1:
-                FBP.experiments =!FBP.experiments;
+                if (FBP.experiments)
+                    FBP.experiments = false;
+                else
+                    mc.displayGuiScreen(new GuiConfirmation(this, EnableExperiments, I18n.format("menu.experiments.confirmation")));
+
                 writeConfig = true;
                 break;
             case 2:
-                FBP.debug = !FBP.debug;
+                if (FBP.debug)
+                    FBP.debug = false;
+                else
+                    mc.displayGuiScreen(new GuiConfirmation(this, EnableDebug, I18n.format("menu.debug.confirmation")));
+
                 FBP.updateDebugHandler();
                 writeConfig = true;
                 break;
