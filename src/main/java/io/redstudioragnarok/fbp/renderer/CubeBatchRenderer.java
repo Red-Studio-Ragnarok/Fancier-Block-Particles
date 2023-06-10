@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.WorldVertexBufferUploader;
 import org.lwjgl.opengl.GL11;
 
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -17,7 +18,9 @@ public class CubeBatchRenderer {
 
 	private static final WorldVertexBufferUploader VBO_UPLOADER = new WorldVertexBufferUploader();
 	private static final Map<RenderType, BufferBuilder> BUFFER_BUILDERS = Stream.of(RenderType.values())
-			.collect(Collectors.toMap(Function.identity(), renderType -> new BufferBuilder(1 << 20)));
+			.collect(Collectors.toMap(Function.identity(), renderType -> new BufferBuilder(1 << 20), (u, v) -> {
+				throw new IllegalStateException(String.format("Duplicate key %s", u));
+			}, () -> new EnumMap<>(RenderType.class)));
 
 	public static void renderCube(RenderType renderType, float x, float y, float z, float rotX, float rotY, float rotZ,
 			float scaleX, float scaleY, float scaleZ, ITexCoordProvider texCoordProvider, IColorProvider colorProvider,
@@ -26,7 +29,7 @@ public class CubeBatchRenderer {
 				texCoordProvider, colorProvider, lightCoordProvider);
 	}
 
-	private static BufferBuilder getBuffer(RenderType renderType) {
+	public static BufferBuilder getBuffer(RenderType renderType) {
 		BufferBuilder buffer = BUFFER_BUILDERS.get(renderType);
 		if (!buffer.isDrawing) {
 			buffer.begin(GL11.GL_QUADS, FBP.vertexFormat);

@@ -82,8 +82,8 @@ repositories {
 dependencies {
 	implementation 'Red-Studio-Ragnarok:Red-Core:0.2-Dev-3@jar'
 
-	implementation 'meldexun:MatrixUtil:1.2.0@jar'
-	embed 'meldexun:MatrixUtil:1.2.0@jar'
+	implementation 'meldexun:MatrixUtil:1.2.2@jar'
+	embed 'meldexun:MatrixUtil:1.2.2@jar'
 
 	String mixin = modUtils.enableMixins('zone.rong:mixinbooter:8.2', "mixins.${project.id}.refmap.json")
 	api (mixin) { transitive = false }
