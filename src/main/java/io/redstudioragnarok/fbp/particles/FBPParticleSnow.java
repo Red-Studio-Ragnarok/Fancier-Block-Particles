@@ -229,7 +229,7 @@ public class FBPParticleSnow extends ParticleDigging {
 			// SMOOTH ROTATION
 			if (!FBP.frozen) {
 				Vector3F vector = new Vector3F();
-				rot.partialVector(prevRot, partialTicks, vector);
+				vector.lerp(prevRot, partialTicks, rot);
 
 				if (FBP.randomRotation) {
 					smoothRot.y = vector.y;

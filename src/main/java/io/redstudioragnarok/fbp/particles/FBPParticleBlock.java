@@ -203,7 +203,7 @@ public class FBPParticleBlock extends Particle {
 
 		smoothStep = ((float) (prevHeight + (height - prevHeight) * (double) partialTicks));
 
-		rot.partialVector(prevRotation, partialTicks, smoothRot);
+		smoothRot.lerp(prevRotation, partialTicks, rot);
 
 		if (smoothStep <= 0)
 			smoothStep = 0;
