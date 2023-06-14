@@ -39,10 +39,12 @@ public class Page3 extends BasePage {
 			case 3:
 				FBP.fancyWeather = !FBP.fancyWeather;
 
-				if (FBP.fancyWeather && FBP.enabled)
-					mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
-				else
-					mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
+				if (mc.world != null) {
+					if (FBP.fancyWeather && FBP.enabled)
+						mc.world.provider.setWeatherRenderer(FBP.fancyWeatherRenderer);
+					else
+						mc.world.provider.setWeatherRenderer(FBP.originalWeatherRenderer);
+				}
 
 				writeConfig = true;
 				break;

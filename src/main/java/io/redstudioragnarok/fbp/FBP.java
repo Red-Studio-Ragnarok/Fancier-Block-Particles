@@ -121,16 +121,19 @@ public class FBP {
 				fancyEffectRenderer.carryOver();
 
 				mc.effectRenderer = fancyEffectRenderer;
-				if (fancyWeather) {
+
+				if (mc.world != null && fancyWeather)
 					mc.world.provider.setWeatherRenderer(fancyWeatherRenderer);
-				}
 			} else {
 				mc.effectRenderer = originalEffectRenderer;
-				mc.world.provider.setWeatherRenderer(originalWeatherRenderer);
+
+				if (mc.world != null)
+					mc.world.provider.setWeatherRenderer(originalWeatherRenderer);
 
 				frozen = false;
 			}
 		}
+
 		enabled = newState;
 	}
 
