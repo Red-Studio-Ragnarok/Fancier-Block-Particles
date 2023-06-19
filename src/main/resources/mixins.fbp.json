@@ -4,7 +4,9 @@
   "package": "io.redstudioragnarok.fbp.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "mixins.fbp.refmap.json",
-  "client": ["MixinEntityRenderer"],
+  "client": [
+    "EntityRendererMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
