@@ -32,7 +32,7 @@ minecraft {
 
 	username = 'Desoroxxx'
 
-	extraRunJvmArguments.addAll('-Xmx6G', '-Xms4G', '-Dforge.logging.console.level=debug', '-Dmixin.hotSwap=true', '-Dmixin.checks.interfaces=true', '-Dmixin.debug.export=true')
+	extraRunJvmArguments.addAll('-Xmx6G', '-Xms4G', '-Dforge.logging.console.level=debug', '-Dmixin.hotSwap=true', '-Dmixin.checks.interfaces=true', '-Dmixin.debug.export=true', "-Dfml.coreMods.load=io.redstudioragnarok.${project.id}.asm.FBPPlugin")
 
 	injectedTags.put('ID', project.id)
 	injectedTags.put('VERSION', project.version)
@@ -84,13 +84,13 @@ repositories {
 }
 
 dependencies {
-	implementation 'Red-Studio-Ragnarok:Red-Core:0.2'
-	sources 'Red-Studio-Ragnarok:Red-Core:0.2:sources@jar'
+	implementation 'Red-Studio-Ragnarok:Red-Core:0.4-Dev-1'
+	sources 'Red-Studio-Ragnarok:Red-Core:0.4-Dev-1:sources@jar'
 
 	implementation 'meldexun:MatrixUtil:1.2.2@jar'
 	embed 'meldexun:MatrixUtil:1.2.2@jar'
 
-	String mixin = modUtils.enableMixins('zone.rong:mixinbooter:8.2', "mixins.${project.id}.refmap.json")
+	String mixin = modUtils.enableMixins('zone.rong:mixinbooter:8.3', "mixins.${project.id}.refmap.json")
 	api (mixin) { transitive = false }
 	annotationProcessor 'org.ow2.asm:asm-debug-all:5.2'
 	annotationProcessor 'com.google.guava:guava:24.1.1-jre'
@@ -120,7 +120,7 @@ jar {
 	manifest.attributes([
 			'ModSide': 'CLIENT',
 			'FMLAT': "${project.id}_at.cfg",
-			'FMLCorePlugin': "io.redstudioragnarok.${project.id}.asm.FMLPlugin",
+			'FMLCorePlugin': "io.redstudioragnarok.${project.id}.asm.FBPPlugin",
 			'FMLCorePluginContainsFMLMod': 'true',
 			'ForceLoadAsMod': 'true'
 	])

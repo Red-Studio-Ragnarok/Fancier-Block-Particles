@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 
-import static io.redstudioragnarok.fbp.utils.ModReference.redLog;
+import static io.redstudioragnarok.fbp.utils.ModReference.RED_LOG;
 
 public class GuiUtils {
 
@@ -67,7 +67,7 @@ public class GuiUtils {
         } catch (NumberFormatException numberFormatException) {
             // Todo: (Debug Mode) This should count to the problem counter
 
-            redLog.printFramedError("GUI Rendering", "Hexadecimal to decimal color conversion failed", "Non critical exception falling back to white", numberFormatException.getMessage(), "At:" + numberFormatException.getStackTrace()[3].toString());
+            RED_LOG.printFramedError("GUI Rendering", "Hexadecimal to decimal color conversion failed", "Non critical exception falling back to white", numberFormatException.getMessage(), "At:" + numberFormatException.getStackTrace()[3].toString());
 
             // Return the decimal value for white
             return 16777215;

@@ -4,11 +4,12 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import zone.rong.mixinbooter.IEarlyMixinLoader;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 @IFMLLoadingPlugin.TransformerExclusions("io.redstudioragnarok.fbp.asm")
-public class FMLPlugin implements IFMLLoadingPlugin, IEarlyMixinLoader {
+public class FBPPlugin implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
 	@Override
 	public String[] getASMTransformerClass() {
@@ -37,7 +38,7 @@ public class FMLPlugin implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
 	@Override
 	public List<String> getMixinConfigs() {
-		return Arrays.asList("mixins.fbp.json");
+		return Collections.singletonList("mixins.fbp.json");
 	}
 
 }

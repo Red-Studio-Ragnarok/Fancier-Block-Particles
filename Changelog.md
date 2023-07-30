@@ -75,6 +75,7 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 ### Internal
 
 - Revamped GUI's they are now extremely easy to use and create, and the pages components are now independent of each others
+- FBP now use Red Core
 - GUI's text colors now never uses decimal colors directly and should use when possible hexadecimal colors when possible
 - Added documentation for Vector2D, Vector3D, and FBPRenderer
 - Switched to [Raven] amazing [RetroFuturaGradle]
@@ -87,14 +88,7 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - Renamed most of the variables from unreadable names to readable names
 - Finished removing useless `@SideOnly`
 - Removed useless `isRemote` checks
-
-#### Vectors Redesign
-
-In 0.7 and before FBP was using Minecraft `Vec2f` and `Vec3d` but they have a few problems, by example `Vec3d` lack features like `set`, `copy` or even `scale` plus some of its features are written in a complex and slow manner.
-Also, they have a `ZERO` variable which is useless and takes resource's for nothing this is even worst for `Vec2f` since it has tons of useless variables.
-And having control over them is really nice, so we need to make our own.
-
-Introducing `Vector2D` and `Vector3D` the brand-new vectors for FBP, which are faster easier to work with and come with great documentation!
+- Renamed the plugin from `FMLPlugin` to `FBPPlugin`
 
 #### Changes in exception handling
 

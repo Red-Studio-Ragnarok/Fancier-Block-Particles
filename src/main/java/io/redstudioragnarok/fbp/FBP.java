@@ -32,7 +32,7 @@ import java.util.SplittableRandom;
 //  | $$   /$$__  $$| $$  | $$| $$      | $$| $$_____/| $$            | $$  \ $$| $$| $$  | $$| $$      | $$_  $$       | $$      /$$__  $$| $$        | $$ /$$| $$| $$      | $$| $$_____/ \____  $$
 //  | $$  |  $$$$$$$| $$  | $$|  $$$$$$$| $$|  $$$$$$$| $$            | $$$$$$$/| $$|  $$$$$$/|  $$$$$$$| $$ \  $$      | $$     |  $$$$$$$| $$        |  $$$$/| $$|  $$$$$$$| $$|  $$$$$$$ /$$$$$$$/
 //  |__/   \_______/|__/  |__/ \_______/|__/ \_______/|__/            |_______/ |__/ \______/  \_______/|__/  \__/      |__/      \_______/|__/         \___/  |__/ \_______/|__/ \_______/|_______/
-@Mod(clientSideOnly = true, modid = ModReference.ID, name = ModReference.NAME, version = ModReference.VERSION, guiFactory = "io.redstudioragnarok.fbp.config.FBPConfigGuiFactory", updateJSON = "https://raw.githubusercontent.com/Red-Studio-Ragnarok/Fancier-Block-Particles/main/update.json")
+@Mod(clientSideOnly = true, modid = ModReference.ID, name = ModReference.NAME, version = ModReference.VERSION, dependencies = "required-after:redcore@[0.4-Dev-1,)", guiFactory = "io.redstudioragnarok.fbp.config.FBPConfigGuiFactory", updateJSON = "https://raw.githubusercontent.com/Red-Studio-Ragnarok/Fancier-Block-Particles/main/update.json")
 public class FBP {
 
 	public static final Minecraft mc = Minecraft.getMinecraft();

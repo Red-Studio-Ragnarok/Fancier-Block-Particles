@@ -16,6 +16,7 @@ import org.lwjgl.util.Color;
 
 import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Arrays;
 
 import static io.redstudioragnarok.fbp.gui.GuiConfirmation.Action.DefaultConfig;
@@ -91,7 +92,7 @@ public abstract class BasePage extends GuiBase {
                 break;
             case -4:
                 try {
-                    Desktop.getDesktop().browse(ModReference.newIssueLink);
+                    Desktop.getDesktop().browse(new URI("https://linkify.cz/FancierBugReport"));
                 } catch (Exception exception) {
                     // Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
                 }
