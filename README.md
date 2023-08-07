@@ -38,6 +38,10 @@ This mod replace the Minecraft 2D particles with fancier 3D particles, it also a
 ### Configuration Menu
 ![Example](https://user-images.githubusercontent.com/82710983/188453582-29bca653-6942-4f33-a670-ce89fbe42942.gif)
 
+---
+
+[![BisectHostingPromoBanner](https://www.bisecthosting.com/partners/custom-banners/d410513a-9aee-467a-96eb-88eb0976af9d.webp)](https://bisecthosting.com/Desoroxxx)
+
 ## Want to have your own mod or support me?
 
 If you are looking for a mod but do not have the development skills or time, consider commissioning me!
