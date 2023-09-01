@@ -40,7 +40,7 @@ This mod replace the Minecraft 2D particles with fancier 3D particles, it also a
 
 ---
 
-[![BisectHostingPromoBanner](https://www.bisecthosting.com/partners/custom-banners/d410513a-9aee-467a-96eb-88eb0976af9d.webp)](https://bisecthosting.com/Desoroxxx)
+[![BisectHostingPromoBanner](https://www.bisecthosting.com/partners/custom-banners/d410513a-9aee-467a-96eb-88eb0976af9d.webp)](https://bisecthosting.com/Desoroxxx?r=Fancier+Block+Particles+GitHub)
 
 ## Want to have your own mod or support me?
 
