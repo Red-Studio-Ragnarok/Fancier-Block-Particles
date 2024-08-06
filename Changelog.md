@@ -2,8 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project follows to [Ragnarök Versioning Convention](https://gist.github.com/Desoroxxx/5d4a45785ce19a6653ba99f72325c703).
+The format is based on [Keep a Changelog](https://keepachangelog.com),
+and this project follows the [Ragnarök Versioning Convention](https://github.com/Red-Studio-Ragnarok/Commons/blob/main/Ragnar%C3%B6k%20Versioning%20Convention.md).
 
 ## [Unreleased] Fancier Block Particles Version 0.8 Changelog
 
@@ -32,6 +32,8 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - Weather Particles Render Distance option
 - Added settings menu
 - Added experiments menu
+- Added error handling
+- Added logging
 
 ### Changed
 
@@ -57,16 +59,17 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - Fixed Memory leak with `FBP##originalEffectRenderer` ([#139])
 - Fixed Fancy Block Placement speed being broken because of an accidental change in 0.7
 - Fixed new config having no default value
+- Fixed particles being rendered on top of the water
 
 ### Removed
 
-- Removed Rest On Floor option ([#9])
+- Removed Rest On Floor option
 - Removed the deprecated Cartoon Mode from the menu
 
 ### Optimization
 
 - Vectors got a redesign as a result FBP should now be faster and use less VRAM
-- Hex colors are now used instead of 4 separate R,G,B and A variables which makes rendering faster ([#10])
+- Hex colors are now used instead of 4 separate R,G,B and A variables which makes rendering faster
 - As the result of a big code cleanup FBP as a whole should now be faster, load faster and use slightly less resources
 - Optimized Rendering of Fancy Block Placement and all particles as a result, they should be faster and use slightly less GPU, RAM & VRAM
 - FBP now uses its own math utilities and Jafama fast math library which should result in better performance
@@ -78,10 +81,10 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - FBP now use Red Core
 - GUI's text colors now never uses decimal colors directly and should use when possible hexadecimal colors when possible
 - Added documentation for Vector2D, Vector3D, and FBPRenderer
-- Switched to [Raven] amazing [RetroFuturaGradle]
-- Updated to Gradle 8.1.1
+- Switched to [RetroFuturaGradle](https://github.com/GTNewHorizons/RetroFuturaGradle) 1.4.0
+- Updated to [Gradle](https://gradle.org) 8.9
+- Set a minimum Gradle Daemon JVM version requirement
 - Cleanup build.gradle & gradle.properties
-- RFG now automatically updates the version in `ModReference.java`
 - Cleanup the entire code
 - Vectors redesign
 - Major Refactors
@@ -89,23 +92,21 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - Finished removing useless `@SideOnly`
 - Removed useless `isRemote` checks
 - Renamed the plugin from `FMLPlugin` to `FBPPlugin`
-
-#### Changes in exception handling
-
-To be written
+- Switched to [CurseUpdate](https://forge.curseupdate.com/) for update checking
+- Project constants are now handled automatically by [gradle-buildconfig-plugin](https://github.com/gmazzo/gradle-buildconfig-plugin)
+- Switched to [Gradle](https://gradle.org) Kotlin DSL
+- Switched to the new Group ID
+- Switched to the new standard `gradle.properties`
 
 ##### Credits
 
-- [WildMihai] for optimizations in `FBPRenderer`, `FBPConfigHandler` and deprecating Rest On Floor ([#9], [#10]) 
+- [Meldexun](https://github.com/Meldexun) 
+- [WildMihai](https://github.com/WildMihai) for optimizations in `FBPConfigHandler` and deprecating Rest On Floor ([#9]) 
 
 [#7]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/7
+[#9]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/9
 [#13]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/issues/13
 [#139]: https://github.com/TominoCZ/FancyBlockParticles/issues/139
-[#9]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/9
-[#10]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/10
-[Raven]: https://github.com/eigenraven
-[RetroFuturaGradle]: https://github.com/GTNewHorizons/RetroFuturaGradle
-[WildMihai]: https://github.com/WildMihai
 
 ---
 
@@ -131,7 +132,7 @@ Particles now renders 2.5 times faster (Immense thanks to Rongmario!)
 ### Optimization
 
 - Optimized main class as a result, it should be slightly faster and use slightly less RAM
-- Draw calls are now batched which improve rendering performance by 2.5 times ([#5])
+- Draw calls are now batched which improve rendering performance by 2.5 times
 - Thanks to an immense code cleanup the FBP as a whole should be slightly faster and use slightly less RAM
 
 ### Internal
@@ -140,9 +141,8 @@ Particles now renders 2.5 times faster (Immense thanks to Rongmario!)
 
 ##### Credits
 
-- [Rongmario] for batching draw calls ([#5])
+- [Rongmario](https://github.com/Rongmario) for batching draw calls ([#5])
 
-[Rongmario]: https://github.com/Rongmario
 [#5]: https://github.com/Red-Studio-Ragnarok/Fancier-Block-Particles/pull/5
 
 ---

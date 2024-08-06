@@ -4,11 +4,9 @@
     "name": "Fancier Block Particles",
     "description": "Fancier Block Particles is a fork of the popular Fancy Block Particles by MorphoxL which is more optimized and less buggy than the original mod.",
     "version": "${version}",
-    "mcversion": "1.12.2",
     "url": "https://www.curseforge.com/minecraft/mc-mods/fbp",
     "authorList": ["Red Studio"],
-    "credits": "Desoroxxx, Rongmario, WildMihai, TominoCZ",
-    "logoFile": "assets/fbp/textures/gui/logo.png",
-    "screenshots": []
+    "credits": "Desoroxxx, Meldexun, Rongmario, WildMihai, TominoCZ",
+    "logoFile": "assets/fbp/textures/gui/logo.png"
   }
 ]
