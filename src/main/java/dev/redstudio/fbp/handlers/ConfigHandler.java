@@ -144,11 +144,11 @@ public class ConfigHandler {
      */
     private static void closeStreams() {
         try {
-            if (bufferedReader!= null)
+            if (bufferedReader != null)
                 bufferedReader.close();
-            if (inputStreamReader!= null)
+            if (inputStreamReader != null)
                 inputStreamReader.close();
-            if (fileInputStream!= null)
+            if (fileInputStream != null)
                 fileInputStream.close();
 
         } catch (final IOException ioException) {
@@ -188,8 +188,9 @@ public class ConfigHandler {
      * And then attempt to create a new file, if it fails, it will output an error message to the console.
      *
      * @param message The error message associated with the exception
-     * @param source  A string indicating the source of the error
-     * @param file    The file object that could not be found
+     * @param source A string indicating the source of the error
+     * @param file The file object that could not be found
+     *
      * @return True if the file was created successfully, false otherwise
      */
     private static boolean handleFileNotFound(final String message, final String source, final File file) {
@@ -600,7 +601,7 @@ public class ConfigHandler {
     /**
      * Adds a block by name to either the particle or animation blacklist.
      *
-     * @param name     The name of the block to add
+     * @param name The name of the block to add
      * @param particle Whether the block should be added to the particle or animation blacklist
      */
     public static void addToBlacklist(final String name, final boolean particle) {
@@ -619,7 +620,7 @@ public class ConfigHandler {
      * <p>
      * If the block is blacklisted, it is removed from either the particle or animation blacklist.
      *
-     * @param block    The block to blacklist
+     * @param block The block to blacklist
      * @param particle Whether the block should be blacklisted from the particle or animation blacklist
      */
     public static void blacklist(final Block block, final boolean particle) {
@@ -642,7 +643,7 @@ public class ConfigHandler {
     /**
      * Checks if a block is blacklisted.
      *
-     * @param block    The block to check
+     * @param block The block to check
      * @param particle Whether to check if the block is blacklisted in the particle or animation blacklist
      */
     public static boolean isBlacklisted(final Block block, final boolean particle) {

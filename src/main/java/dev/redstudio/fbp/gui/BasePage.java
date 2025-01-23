@@ -1,6 +1,7 @@
 package dev.redstudio.fbp.gui;
 
 import dev.redstudio.fbp.FBP;
+import dev.redstudio.fbp.gui.elements.Button;
 import dev.redstudio.fbp.gui.elements.*;
 import dev.redstudio.fbp.gui.pages.Page0;
 import dev.redstudio.fbp.gui.pages.PageExperiments;
@@ -13,7 +14,7 @@ import net.minecraft.client.resources.I18n;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.Color;
 
-import java.awt.Desktop;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
@@ -21,7 +22,9 @@ import java.util.Arrays;
 import static dev.redstudio.fbp.ProjectConstants.NAME;
 import static dev.redstudio.fbp.ProjectConstants.VERSION;
 import static dev.redstudio.fbp.gui.GuiConfirmation.Action.DefaultConfig;
-import static dev.redstudio.fbp.gui.elements.Button.ButtonSize.*;
+import static dev.redstudio.fbp.gui.elements.Button.ButtonSize.large;
+import static dev.redstudio.fbp.gui.elements.Button.ButtonSize.medium;
+import static dev.redstudio.fbp.gui.elements.Button.ButtonSize.small;
 
 public abstract class BasePage extends GuiBase {
 
@@ -62,10 +65,10 @@ public abstract class BasePage extends GuiBase {
         this.previousPage = previousPage;
         this.nextPage = nextPage;
 
-        if (previousPage!= null)
+        if (previousPage != null)
             addButton(-6, middleX - 145, y - 50, small, "<<");
 
-        if (nextPage!= null)
+        if (nextPage != null)
             addButton(-7, middleX + 125, y - 50, small, ">>");
     }
 
@@ -129,7 +132,7 @@ public abstract class BasePage extends GuiBase {
                 if (slider.isMouseOver())
                     targetHoverBoxY = slider.y;
 
-                if (!((MathUtil.round(slider.originalValue, 2))  == (MathUtil.round(slider.value, 2))))
+                if (!((MathUtil.round(slider.originalValue, 2)) == (MathUtil.round(slider.value, 2))))
                     writeConfig = true;
             }
         });
@@ -196,8 +199,8 @@ public abstract class BasePage extends GuiBase {
                 if (button instanceof Slider)
                     GuiUtils.drawRectangle(middleX - 102, hoverBoxY + 2, 204, 16, new Color(200, 200, 200, 35));
 
-                drawCenteredString(description, button.enabled ? GuiUtils.WHITE : GuiUtils.GREY, this.width / 2, height / 5 + 131);
-                
+                drawCenteredString(description, button.enabled ? GuiUtils.WHITE : GuiUtils.GREY, width / 2, height / 5 + 131);
+
                 break;
             }
         }
@@ -209,7 +212,7 @@ public abstract class BasePage extends GuiBase {
     protected void mouseClicked(final int mouseX, final int mouseY, final int mouseButton) {
         if (mouseButton == 0) {
             for (GuiButton guibutton : super.buttonList) {
-                if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
+                if (guibutton.mousePressed(mc, mouseX, mouseY)) {
                     if (!guibutton.isMouseOver())
                         return;
 
@@ -289,6 +292,6 @@ public abstract class BasePage extends GuiBase {
             totalSpacing += (i % 2 == 0) ? evenButtonSpacing : oddButtonSpacing;
         }
 
-        return this.height / 5 - 6 + totalSpacing;
+        return height / 5 - 6 + totalSpacing;
     }
 }

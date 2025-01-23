@@ -9,17 +9,17 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class GuiHandler {
 
-	@SubscribeEvent
-	public void onRenderGui(RenderGameOverlayEvent.Post overlay) {
-		if (overlay.getType() != ElementType.EXPERIENCE)
-			return;
+    @SubscribeEvent
+    public void onRenderGui(RenderGameOverlayEvent.Post overlay) {
+        if (overlay.getType() != ElementType.EXPERIENCE)
+            return;
 
-		if (FBP.enabled) {
-			if (FBP.frozen)
-				new GuiHud(I18n.format("hud.freeze"), "#44FFFF");
+        if (FBP.enabled) {
+            if (FBP.frozen)
+                new GuiHud(I18n.format("hud.freeze"), "#44FFFF");
 
-			// TODO Display Important Issues here when debug is enabled
-		}
+            // TODO Display Important Issues here when debug is enabled
+        }
 
-	}
+    }
 }

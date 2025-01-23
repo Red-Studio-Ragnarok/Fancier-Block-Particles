@@ -4,6 +4,6 @@ import net.minecraft.util.EnumFacing;
 
 public interface IColorProvider {
 
-	int getColor(EnumFacing facing);
+    int getColor(EnumFacing facing);
 
 }

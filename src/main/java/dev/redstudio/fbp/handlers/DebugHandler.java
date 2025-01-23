@@ -8,7 +8,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 
-import static dev.redstudio.fbp.FBP.*;
+import static dev.redstudio.fbp.FBP.MC;
+import static dev.redstudio.fbp.FBP.fancyEffectRenderer;
+import static dev.redstudio.fbp.FBP.originalEffectRenderer;
 import static dev.redstudio.fbp.ProjectConstants.VERSION;
 
 public class DebugHandler {
@@ -40,9 +42,9 @@ public class DebugHandler {
     }
 
     // From https://github.com/criscky/OldJavaWarning/blob/1.12.2/src/main/java/net/darkhax/oldjava/OldJavaWarning.java#L116-L132
-    private static boolean isJvm64bit () {
+    private static boolean isJvm64bit() {
 
-        final String[] propertyStrings = new String[] { "sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch" };
+        final String[] propertyStrings = new String[]{"sun.arch.data.model", "com.ibm.vm.bitmode", "os.arch"};
 
         for (final String property : propertyStrings) {
 

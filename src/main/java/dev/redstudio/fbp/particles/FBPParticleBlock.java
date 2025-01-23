@@ -32,300 +32,300 @@ import static dev.redstudio.fbp.FBP.MC;
 
 public class FBPParticleBlock extends Particle {
 
-	public BlockPos blockPos;
+    public BlockPos blockPos;
 
-	Block block;
-	IBlockState blockState;
+    Block block;
+    IBlockState blockState;
 
-	BlockModelRenderer blockModelRenderer;
+    BlockModelRenderer blockModelRenderer;
 
-	IBakedModel bakedModel;
+    IBakedModel bakedModel;
 
-	EnumFacing facing;
+    EnumFacing facing;
 
-	Vector3F prevRotation;
-	Vector3F smoothRot = new Vector3F();
-	Vector3F rot;
+    Vector3F prevRotation;
+    Vector3F smoothRot = new Vector3F();
+    Vector3F rot;
 
-	long textureSeed;
+    long textureSeed;
 
-	float startingAngle;
-	float step = 0.00275f;
+    float startingAngle;
+    float step = 0.00275f;
 
-	float height;
-	float prevHeight;
+    float height;
+    float prevHeight;
 
-	float smoothStep;
+    float smoothStep;
 
-	boolean spawned = false;
-	long tick = -1;
+    boolean spawned = false;
+    long tick = -1;
 
-	boolean blockSet = false;
+    boolean blockSet = false;
 
-	TileEntity tileEntity;
+    TileEntity tileEntity;
 
-	public FBPParticleBlock(World worldIn, double posXIn, double posYIn, double posZIn, IBlockState state, long inputSeed) {
-		super(worldIn, posXIn, posYIn, posZIn);
+    public FBPParticleBlock(World worldIn, double posXIn, double posYIn, double posZIn, IBlockState state, long inputSeed) {
+        super(worldIn, posXIn, posYIn, posZIn);
 
-		blockPos = new BlockPos(posXIn, posYIn, posZIn);
+        blockPos = new BlockPos(posXIn, posYIn, posZIn);
 
-		facing = MC.player.getHorizontalFacing();
+        facing = MC.player.getHorizontalFacing();
 
-		startingAngle = (float) FBP.RANDOM.nextDouble(0.03125, 0.0635);
+        startingAngle = (float) FBP.RANDOM.nextDouble(0.03125, 0.0635);
 
-		prevRotation = new Vector3F();
-		rot = new Vector3F();
+        prevRotation = new Vector3F();
+        rot = new Vector3F();
 
-		switch (facing) {
-		case EAST:
-			rot.z = -startingAngle;
-			rot.x = -startingAngle;
-			break;
-		case NORTH:
-			rot.x = -startingAngle;
-			rot.z = startingAngle;
-			break;
-		case SOUTH:
-			rot.x = startingAngle;
-			rot.z = -startingAngle;
-			break;
-		case WEST:
-			rot.z = startingAngle;
-			rot.x = startingAngle;
-			break;
-		}
+        switch (facing) {
+            case EAST:
+                rot.z = -startingAngle;
+                rot.x = -startingAngle;
+                break;
+            case NORTH:
+                rot.x = -startingAngle;
+                rot.z = startingAngle;
+                break;
+            case SOUTH:
+                rot.x = startingAngle;
+                rot.z = -startingAngle;
+                break;
+            case WEST:
+                rot.z = startingAngle;
+                rot.x = startingAngle;
+                break;
+        }
 
-		textureSeed = inputSeed;
+        textureSeed = inputSeed;
 
-		block = (blockState = state).getBlock();
+        block = (blockState = state).getBlock();
 
-		blockModelRenderer = MC.getBlockRendererDispatcher().getBlockModelRenderer();
+        blockModelRenderer = MC.getBlockRendererDispatcher().getBlockModelRenderer();
 
-		this.canCollide = false;
+        canCollide = false;
 
-		bakedModel = MC.getBlockRendererDispatcher().getBlockModelShapes().getModelForState(state);
+        bakedModel = MC.getBlockRendererDispatcher().getBlockModelShapes().getModelForState(state);
 
-		tileEntity = worldIn.getTileEntity(blockPos);
-	}
+        tileEntity = worldIn.getTileEntity(blockPos);
+    }
 
-	@Override
-	public void onUpdate() {
+    @Override
+    public void onUpdate() {
 
-		if (!canCollide) {
-			IBlockState state = MC.world.getBlockState(blockPos);
+        if (!canCollide) {
+            IBlockState state = MC.world.getBlockState(blockPos);
 
-			if (state.getBlock() != FBP.DUMMY_BLOCK || state.getBlock() == block) {
-				if (blockSet && state.getBlock() == Blocks.AIR) {
-					// the block was destroyed during the animation
-					killParticle();
+            if (state.getBlock() != FBP.DUMMY_BLOCK || state.getBlock() == block) {
+                if (blockSet && state.getBlock() == Blocks.AIR) {
+                    // the block was destroyed during the animation
+                    killParticle();
 
-					FBP.DUMMY_BLOCK.onBlockHarvested(MC.world, blockPos, state, null);
-					MC.world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
-					return;
-				}
+                    FBP.DUMMY_BLOCK.onBlockHarvested(MC.world, blockPos, state, null);
+                    MC.world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
+                    return;
+                }
 
-				FBP.DUMMY_BLOCK.copyState(blockPos, blockState, this);
-				MC.world.setBlockState(blockPos, FBP.DUMMY_BLOCK.getDefaultState(), 2);
+                FBP.DUMMY_BLOCK.copyState(blockPos, blockState, this);
+                MC.world.setBlockState(blockPos, FBP.DUMMY_BLOCK.getDefaultState(), 2);
 
-				Chunk chunk = MC.world.getChunk(blockPos);
-				chunk.resetRelightChecks();
-				chunk.setLightPopulated(true);
+                Chunk chunk = MC.world.getChunk(blockPos);
+                chunk.resetRelightChecks();
+                chunk.setLightPopulated(true);
 
 
-				blockSet = true;
-			}
-
-			spawned = true;
-		}
-
-		if (this.isExpired || MC.isGamePaused())
-			return;
-
-		prevHeight = height;
-
-		prevRotation.copy(rot);
-
-		switch (facing) {
-		case EAST:
-			rot.z += step;
-			rot.x += step;
-			break;
-		case NORTH:
-			rot.x += step;
-			rot.z -= step;
-			break;
-		case SOUTH:
-			rot.x -= step;
-			rot.z += step;
-			break;
-		case WEST:
-			rot.z -= step;
-			rot.x -= step;
-			break;
-		}
-
-		height -= step * 5;
-
-		step *= 1.5;
-	}
-
-	@Override
-	public void renderParticle(BufferBuilder buff, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
-		if (this.isExpired)
-			return;
-
-		if (canCollide) {
-			Block b = MC.world.getBlockState(blockPos).getBlock();
-			if (block != b && b != Blocks.AIR && MC.world.getBlockState(blockPos).getBlock() != blockState.getBlock()) {
-				MC.world.setBlockState(blockPos, blockState, 2);
-
-				if (tileEntity != null)
-					MC.world.setTileEntity(blockPos, tileEntity);
-
-				MC.world.sendPacketToServer(new CPacketPlayerDigging(Action.ABORT_DESTROY_BLOCK, blockPos, facing));
-
-				// cleanup just to make sure it gets removed
-				EventHandler.removePosEntry(blockPos);
-			}
-			if (tick >= 1) {
-				killParticle();
-				return;
-			}
-
-			tick++;
-		}
-		if (!spawned)
-			return;
-
-		float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX) - 0.5f;
-		float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY) - 0.5f;
-		float z = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ) - 0.5f;
-
-		smoothStep = ((float) (prevHeight + (height - prevHeight) * (double) partialTicks));
-
-		smoothRot.lerp(prevRotation, partialTicks, rot);
-
-		if (smoothStep <= 0)
-			smoothStep = 0;
-
-		Vector3F t = new Vector3F(0, smoothStep, 0);
-		Vector3F tRot = new Vector3F(0, smoothStep, 0);
-
-		switch (facing) {
-		case EAST:
-			if (smoothRot.z > 0) {
-				this.canCollide = true;
-				smoothRot.z = 0;
-				smoothRot.x = 0;
-			}
-
-			t.x = -smoothStep;
-			t.z = smoothStep;
-
-			tRot.x = 1;
-			break;
-		case NORTH:
-			if (smoothRot.z < 0) {
-				this.canCollide = true;
-				smoothRot.x = 0;
-				smoothRot.z = 0;
-			}
-
-			t.x = smoothStep;
-			t.z = smoothStep;
-			break;
-		case SOUTH:
-			if (smoothRot.x < 0) {
-				this.canCollide = true;
-				smoothRot.x = 0;
-				smoothRot.z = 0;
-			}
-
-			t.x = -smoothStep;
-			t.z = -smoothStep;
-
-			tRot.x = 1;
-			tRot.z = 1;
-			break;
-		case WEST:
-			if (smoothRot.z < 0) {
-				this.canCollide = true;
-				smoothRot.z = 0;
-				smoothRot.x = 0;
-			}
-
-			t.x = smoothStep;
-			t.z = -smoothStep;
-
-			tRot.z = 1;
-			break;
-		}
-
-		if (tick == 0) {
-			if (!(FBP.frozen && !FBP.spawnWhileFrozen) && MC.gameSettings.particleSetting < 2) {
-				spawnParticles();
-			}
-		}
-		buff.setTranslation(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ());
-
-		Tessellator.getInstance().draw();
-		MC.getRenderManager().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		buff.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-
-		GlStateManager.pushMatrix();
-
-		GlStateManager.enableCull();
-		GlStateManager.translate(x, y, z);
-
-		GlStateManager.translate(tRot.x, tRot.y, tRot.z);
-
-		GlStateManager.rotate((float) FastMath.toDegrees(smoothRot.x), 1, 0, 0);
-		GlStateManager.rotate((float) FastMath.toDegrees(smoothRot.z), 0, 0, 1);
-
-		GlStateManager.translate(-tRot.x, -tRot.y, -tRot.z);
-		GlStateManager.translate(t.x, t.y, t.z);
-
-		blockModelRenderer.renderModelSmooth(MC.world, bakedModel, blockState, blockPos, buff, false, textureSeed);
-
-		buff.setTranslation(0, 0, 0);
-
-		Tessellator.getInstance().draw();
-		GlStateManager.popMatrix();
-
-		MC.getTextureManager().bindTexture(FBP.PARTICLES_TEXTURE);
-		buff.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-	}
-
-	private void spawnParticles() {
-		if (MC.world.getBlockState(blockPos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockAir)
-			return;
-
-		AxisAlignedBB aabb = block.getSelectedBoundingBox(blockState, MC.world, blockPos);
-
-		Vector2F[] corners = new Vector2F[] { new Vector2F((float) aabb.minX, (float) aabb.minZ), new Vector2F((float) aabb.maxX, (float) aabb.maxZ), new Vector2F((float) aabb.minX, (float) aabb.maxZ), new Vector2F((float) aabb.maxX, (float) aabb.minZ) };
-
-		Vector2F middle = new Vector2F((float) (blockPos.getX() + 0.5), (float) (blockPos.getZ() + 0.5));
-
-		for (Vector2F corner : corners) {
-			double mX = middle.x - corner.x;
-			double mZ = middle.y - corner.y;
-
-			mX /= -0.5;
-			mZ /= -0.5;
-
-			MC.effectRenderer.addEffect(new FBPParticleDigging(MC.world, corner.x, blockPos.getY() + 0.1, corner.y, mX, 0, mZ, 0.6f, 1, 1, 1, block.getActualState(blockState, MC.world, blockPos), null, this.particleTexture).multipleParticleScaleBy(0.5f).multiplyVelocity(0.5f));
-		}
-	}
-
-	public void killParticle() {
-		this.isExpired = true;
-
-		FBP.DUMMY_BLOCK.blockNodes.remove(blockPos);
-		EventHandler.removePosEntry(blockPos);
-	}
-
-	@Override
-	public void setExpired() {
-		EventHandler.removePosEntry(blockPos);
-	}
+                blockSet = true;
+            }
+
+            spawned = true;
+        }
+
+        if (isExpired || MC.isGamePaused())
+            return;
+
+        prevHeight = height;
+
+        prevRotation.copy(rot);
+
+        switch (facing) {
+            case EAST:
+                rot.z += step;
+                rot.x += step;
+                break;
+            case NORTH:
+                rot.x += step;
+                rot.z -= step;
+                break;
+            case SOUTH:
+                rot.x -= step;
+                rot.z += step;
+                break;
+            case WEST:
+                rot.z -= step;
+                rot.x -= step;
+                break;
+        }
+
+        height -= step * 5;
+
+        step *= 1.5;
+    }
+
+    @Override
+    public void renderParticle(BufferBuilder buff, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+        if (isExpired)
+            return;
+
+        if (canCollide) {
+            Block b = MC.world.getBlockState(blockPos).getBlock();
+            if (block != b && b != Blocks.AIR && MC.world.getBlockState(blockPos).getBlock() != blockState.getBlock()) {
+                MC.world.setBlockState(blockPos, blockState, 2);
+
+                if (tileEntity != null)
+                    MC.world.setTileEntity(blockPos, tileEntity);
+
+                MC.world.sendPacketToServer(new CPacketPlayerDigging(Action.ABORT_DESTROY_BLOCK, blockPos, facing));
+
+                // cleanup just to make sure it gets removed
+                EventHandler.removePosEntry(blockPos);
+            }
+            if (tick >= 1) {
+                killParticle();
+                return;
+            }
+
+            tick++;
+        }
+        if (!spawned)
+            return;
+
+        float x = (float) (prevPosX + (posX - prevPosX) * partialTicks - interpPosX) - 0.5f;
+        float y = (float) (prevPosY + (posY - prevPosY) * partialTicks - interpPosY) - 0.5f;
+        float z = (float) (prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ) - 0.5f;
+
+        smoothStep = ((float) (prevHeight + (height - prevHeight) * (double) partialTicks));
+
+        smoothRot.lerp(prevRotation, partialTicks, rot);
+
+        if (smoothStep <= 0)
+            smoothStep = 0;
+
+        Vector3F t = new Vector3F(0, smoothStep, 0);
+        Vector3F tRot = new Vector3F(0, smoothStep, 0);
+
+        switch (facing) {
+            case EAST:
+                if (smoothRot.z > 0) {
+                    canCollide = true;
+                    smoothRot.z = 0;
+                    smoothRot.x = 0;
+                }
+
+                t.x = -smoothStep;
+                t.z = smoothStep;
+
+                tRot.x = 1;
+                break;
+            case NORTH:
+                if (smoothRot.z < 0) {
+                    canCollide = true;
+                    smoothRot.x = 0;
+                    smoothRot.z = 0;
+                }
+
+                t.x = smoothStep;
+                t.z = smoothStep;
+                break;
+            case SOUTH:
+                if (smoothRot.x < 0) {
+                    canCollide = true;
+                    smoothRot.x = 0;
+                    smoothRot.z = 0;
+                }
+
+                t.x = -smoothStep;
+                t.z = -smoothStep;
+
+                tRot.x = 1;
+                tRot.z = 1;
+                break;
+            case WEST:
+                if (smoothRot.z < 0) {
+                    canCollide = true;
+                    smoothRot.z = 0;
+                    smoothRot.x = 0;
+                }
+
+                t.x = smoothStep;
+                t.z = -smoothStep;
+
+                tRot.z = 1;
+                break;
+        }
+
+        if (tick == 0) {
+            if (!(FBP.frozen && !FBP.spawnWhileFrozen) && MC.gameSettings.particleSetting < 2) {
+                spawnParticles();
+            }
+        }
+        buff.setTranslation(-blockPos.getX(), -blockPos.getY(), -blockPos.getZ());
+
+        Tessellator.getInstance().draw();
+        MC.getRenderManager().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        buff.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+
+        GlStateManager.pushMatrix();
+
+        GlStateManager.enableCull();
+        GlStateManager.translate(x, y, z);
+
+        GlStateManager.translate(tRot.x, tRot.y, tRot.z);
+
+        GlStateManager.rotate((float) FastMath.toDegrees(smoothRot.x), 1, 0, 0);
+        GlStateManager.rotate((float) FastMath.toDegrees(smoothRot.z), 0, 0, 1);
+
+        GlStateManager.translate(-tRot.x, -tRot.y, -tRot.z);
+        GlStateManager.translate(t.x, t.y, t.z);
+
+        blockModelRenderer.renderModelSmooth(MC.world, bakedModel, blockState, blockPos, buff, false, textureSeed);
+
+        buff.setTranslation(0, 0, 0);
+
+        Tessellator.getInstance().draw();
+        GlStateManager.popMatrix();
+
+        MC.getTextureManager().bindTexture(FBP.PARTICLES_TEXTURE);
+        buff.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+    }
+
+    private void spawnParticles() {
+        if (MC.world.getBlockState(blockPos.offset(EnumFacing.DOWN)).getBlock() instanceof BlockAir)
+            return;
+
+        AxisAlignedBB aabb = block.getSelectedBoundingBox(blockState, MC.world, blockPos);
+
+        Vector2F[] corners = new Vector2F[]{new Vector2F((float) aabb.minX, (float) aabb.minZ), new Vector2F((float) aabb.maxX, (float) aabb.maxZ), new Vector2F((float) aabb.minX, (float) aabb.maxZ), new Vector2F((float) aabb.maxX, (float) aabb.minZ)};
+
+        Vector2F middle = new Vector2F((float) (blockPos.getX() + 0.5), (float) (blockPos.getZ() + 0.5));
+
+        for (Vector2F corner : corners) {
+            double mX = middle.x - corner.x;
+            double mZ = middle.y - corner.y;
+
+            mX /= -0.5;
+            mZ /= -0.5;
+
+            MC.effectRenderer.addEffect(new FBPParticleDigging(MC.world, corner.x, blockPos.getY() + 0.1, corner.y, mX, 0, mZ, 0.6f, 1, 1, 1, block.getActualState(blockState, MC.world, blockPos), null, particleTexture).multipleParticleScaleBy(0.5f).multiplyVelocity(0.5f));
+        }
+    }
+
+    public void killParticle() {
+        isExpired = true;
+
+        FBP.DUMMY_BLOCK.blockNodes.remove(blockPos);
+        EventHandler.removePosEntry(blockPos);
+    }
+
+    @Override
+    public void setExpired() {
+        EventHandler.removePosEntry(blockPos);
+    }
 }

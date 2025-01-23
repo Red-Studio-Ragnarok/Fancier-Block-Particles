@@ -12,7 +12,7 @@ public class ButtonBlacklist extends InteractiveElement {
     public ButtonBlacklist(final int x, final int y, final boolean particle, final boolean isBlacklisted) {
         super(Integer.MIN_VALUE, x, y, "");
 
-        this.isParticle = particle;
+        isParticle = particle;
         this.isBlacklisted = isBlacklisted;
 
         width = 60;

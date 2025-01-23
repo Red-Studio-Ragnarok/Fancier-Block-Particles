@@ -4,6 +4,6 @@ import net.minecraft.util.EnumFacing;
 
 public interface ILightCoordProvider {
 
-	int getLightCoord(EnumFacing facing);
+    int getLightCoord(EnumFacing facing);
 
 }

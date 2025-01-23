@@ -5,15 +5,15 @@ import net.minecraft.util.math.BlockPos;
 
 public class BlockPosNode {
 
-	ConcurrentSet<BlockPos> possible = new ConcurrentSet<>();
+    ConcurrentSet<BlockPos> possible = new ConcurrentSet<>();
 
-	public boolean checked = false;
+    public boolean checked = false;
 
-	public void add(BlockPos pos) {
-		possible.add(pos);
-	}
+    public void add(BlockPos pos) {
+        possible.add(pos);
+    }
 
-	public boolean hasPos(BlockPos p1) {
-		return possible.contains(p1);
-	}
+    public boolean hasPos(BlockPos p1) {
+        return possible.contains(p1);
+    }
 }

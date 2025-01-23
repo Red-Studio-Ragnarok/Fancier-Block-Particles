@@ -8,7 +8,8 @@ import net.minecraft.client.resources.I18n;
 
 import java.io.IOException;
 
-import static dev.redstudio.fbp.gui.GuiConfirmation.Action.*;
+import static dev.redstudio.fbp.gui.GuiConfirmation.Action.EnableDebug;
+import static dev.redstudio.fbp.gui.GuiConfirmation.Action.EnableExperiments;
 
 public class PageSettings extends BasePage {
 

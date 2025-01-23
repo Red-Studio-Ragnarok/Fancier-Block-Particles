@@ -21,7 +21,7 @@ public abstract class InteractiveElement extends GuiButton {
         height = 25;
 
         if (disabled.length != 0)
-            this.enabled = !disabled[0];
+            enabled = !disabled[0];
     }
 
     protected abstract void update(final int mouseX, final int mouseY);
