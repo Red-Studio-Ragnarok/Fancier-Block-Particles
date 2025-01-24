@@ -66,7 +66,7 @@ repositories {
 dependencies {
 
 	if (project.use_assetmover.toBoolean()) {
-		deobfCompile 'com.cleanroommc:assetmover:0.2'
+		deobfCompile 'com.cleanroommc:assetmover:2.5'
 	}
 	if (project.use_mixins.toBoolean()) {
 		deobfCompile 'zone.rong:mixinbooter:10.2'
