@@ -1,5 +1,9 @@
 version: "1.0"
-linter: jetbrains/qodana-jvm-community:2022.3
+linter: jetbrains/qodana-jvm-community:2024.3
 exclude:
   - name: IgnoreResultOfCall
   - name: JavaAnnotator
+bootstrap: |+
+  set -eu
+  bash gradlew setupDecompWorkspace
+  bash gradlew generateBuildConfig
