@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.redstudio.fbp.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "mixins.fbp.refmap.json",
+  "client": [
+    "EntityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
