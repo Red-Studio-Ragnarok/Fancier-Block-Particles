@@ -1,9 +1,9 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a bug report to help us improve
 title: ''
-labels: ''
-assignees: 'JustDesoroxxx'
+labels: Bug
+assignees: Desoroxxx
 
 ---
 
@@ -12,6 +12,12 @@ assignees: 'JustDesoroxxx'
 ***A clear and concise description of what the bug is.***
 
 > Remember that a great explanation leads to a greater understanding
+
+## Reproducibility
+Please try to reproduce the issue with as few other mods as possible. Then check one of the following checkboxes according to your results. To check a checkbox, replace the space between the square brackets with an x (like this [x]) or create the issue and check the checkbox by clicking on it.
+
+- [ ] I reproduced this issue with as few other mods as possible installed.
+- [ ] I am unable to reproduce this issue consistently.
 
 ## To Reproduce
 
@@ -30,6 +36,17 @@ assignees: 'JustDesoroxxx'
 
 ***If applicable, add screenshots and/or videos to help explain your problem.***
 
+## Logs or/and crash reports
+
+***Please use https://mclo.gs/ to upload your logs and crash reports***
+
+## Versions
+
+- Fancier Block Particles: [e.g. FBP-0.7] 
+- Forge: [e.g. 1.12.2 - 14.23.5.2860]
+- Java: [e.g. JDK 8 - 352-b08]
+- Java JVM: [e.g. Hotspot]
+
 ## Specification:
 
 - OS: [e.g. Windows 10]
@@ -44,7 +61,7 @@ assignees: 'JustDesoroxxx'
 - CPU Threads: [e.g. 16 (Named Logical processors in task manager)]
 - RAM Size: [e.g. 32GB]
 - RAM Speed: [e.g. 2666MHz]
-- Storage: [Hard Drive or SSD]
+- Storage Type: [HDD or SSD]
 - GPU VRAM: [e.g. 2GB]
 
 > Most of these information can be found in the task manager
