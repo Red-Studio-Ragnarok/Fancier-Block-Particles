@@ -117,7 +117,8 @@ public class FBP {
     public static void setEnabled(boolean newState) {
         if (enabled != newState) {
             if (newState) {
-                fancyEffectRenderer.carryOver();
+                if (fancyEffectRenderer != null)
+                    fancyEffectRenderer.carryOver();
 
                 MC.effectRenderer = fancyEffectRenderer;
 
