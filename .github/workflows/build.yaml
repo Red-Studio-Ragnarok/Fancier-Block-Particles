@@ -1,0 +1,73 @@
+name: Gradle Build
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+
+    - name: Set up JDK 25
+      uses: actions/setup-java@v5
+      with:
+        java-version: 25
+        distribution: graalvm
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Run setupDecompWorkspace
+      run: ./gradlew setupDecompWorkspace
+      continue-on-error: true
+
+    - name: Run generateBuildConfigClasses
+      run: ./gradlew generateBuildConfigClasses
+      continue-on-error: true
+
+    - name: Build with Gradle
+      run: ./gradlew build
+      
+    - name: Find and export JAR filenames
+      id: find-jars
+      run: |
+        # Find and export main JAR
+        MAIN_JAR_PATH=$(find ./build/libs -name "Fancier-Block-Particles-*.jar" ! -name "*-dev.jar" | head -n 1)
+        if [ -z "$MAIN_JAR_PATH" ]; then echo "Main JAR not found"; exit 1; fi
+        MAIN_JAR_NAME=$(basename "$MAIN_JAR_PATH")
+        echo "main-path=$MAIN_JAR_PATH" >> $GITHUB_OUTPUT
+        echo "main-name=$MAIN_JAR_NAME" >> $GITHUB_OUTPUT
+
+        # Find and export dev JAR
+        DEV_JAR_PATH=$(find ./build/libs -name "Fancier-Block-Particles-*-dev.jar" | head -n 1)
+        if [ -z "$DEV_JAR_PATH" ]; then echo "Dev JAR not found"; exit 1; fi
+        DEV_JAR_NAME=$(basename "$DEV_JAR_PATH")
+        echo "dev-path=$DEV_JAR_PATH" >> $GITHUB_OUTPUT
+        echo "dev-name=$DEV_JAR_NAME" >> $GITHUB_OUTPUT
+
+    - name: Upload Main JAR
+      uses: actions/upload-artifact@v5
+      with:
+        name: ${{ steps.find-jars.outputs.main-name }}
+        path: ${{ steps.find-jars.outputs.main-path }}
+
+    - name: Upload Dev JAR
+      uses: actions/upload-artifact@v5
+      with:
+        name: ${{ steps.find-jars.outputs.dev-name }}
+        path: ${{ steps.find-jars.outputs.dev-path }}
