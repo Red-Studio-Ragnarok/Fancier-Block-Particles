@@ -19,13 +19,9 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SplittableRandom;
+import java.util.*;
 
-import static dev.redstudio.fbp.ProjectConstants.ID;
-import static dev.redstudio.fbp.ProjectConstants.NAME;
-import static dev.redstudio.fbp.ProjectConstants.VERSION;
+import static dev.redstudio.fbp.ProjectConstants.*;
 
 //   /$$$$$$$$                           /$$                           /$$$$$$$  /$$                     /$$             /$$$$$$$                       /$$     /$$           /$$
 //  | $$_____/                          |__/                          | $$__  $$| $$                    | $$            | $$__  $$                     | $$    |__/          | $$

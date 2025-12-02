@@ -1,13 +1,11 @@
 package dev.redstudio.fbp.gui;
 
 import dev.redstudio.fbp.FBP;
-import dev.redstudio.fbp.gui.elements.Button;
 import dev.redstudio.fbp.gui.elements.*;
-import dev.redstudio.fbp.gui.pages.Page0;
-import dev.redstudio.fbp.gui.pages.PageExperiments;
-import dev.redstudio.fbp.gui.pages.PageSettings;
+import dev.redstudio.fbp.gui.elements.Button;
+import dev.redstudio.fbp.gui.pages.*;
 import dev.redstudio.fbp.handlers.ConfigHandler;
-import io.redstudioragnarok.redcore.utils.MathUtil;
+import dev.redstudio.redcore.math.MathUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -22,9 +20,7 @@ import java.util.Arrays;
 import static dev.redstudio.fbp.ProjectConstants.NAME;
 import static dev.redstudio.fbp.ProjectConstants.VERSION;
 import static dev.redstudio.fbp.gui.GuiConfirmation.Action.DefaultConfig;
-import static dev.redstudio.fbp.gui.elements.Button.ButtonSize.large;
-import static dev.redstudio.fbp.gui.elements.Button.ButtonSize.medium;
-import static dev.redstudio.fbp.gui.elements.Button.ButtonSize.small;
+import static dev.redstudio.fbp.gui.elements.Button.ButtonSize.*;
 
 public abstract class BasePage extends GuiBase {
 

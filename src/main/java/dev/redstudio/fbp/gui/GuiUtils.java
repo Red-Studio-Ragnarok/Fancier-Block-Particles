@@ -1,8 +1,6 @@
 package dev.redstudio.fbp.gui;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
@@ -69,7 +67,7 @@ public class GuiUtils {
         } catch (NumberFormatException numberFormatException) {
             // Todo: (Debug Mode) This should count to the problem counter
 
-            RED_LOGGER.printFramedError("GUI Rendering", "Hexadecimal to decimal color conversion failed", "Non critical exception falling back to white", numberFormatException.getMessage(), "At:" + numberFormatException.getStackTrace()[3].toString());
+            RED_LOGGER.framedError("GUI Rendering", "Hexadecimal to decimal color conversion failed", "Non critical exception falling back to white", numberFormatException.getMessage(), "At:" + numberFormatException.getStackTrace()[3].toString());
 
             // Return the decimal value for white
             return 16777215;

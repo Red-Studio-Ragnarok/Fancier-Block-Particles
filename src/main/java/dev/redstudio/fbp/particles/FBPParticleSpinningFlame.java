@@ -1,12 +1,10 @@
 package dev.redstudio.fbp.particles;
 
-import dev.redstudio.fbp.renderer.CubeBatchRenderer;
-import dev.redstudio.fbp.renderer.FastQuadUploader;
-import dev.redstudio.fbp.renderer.RenderType;
+import dev.redstudio.fbp.renderer.*;
 import dev.redstudio.fbp.renderer.color.ColorUtil;
 import dev.redstudio.fbp.renderer.light.LightUtil;
 import dev.redstudio.fbp.renderer.texture.TextureUtil;
-import io.redstudioragnarok.redcore.utils.MathUtil;
+import dev.redstudio.redcore.math.MathUtil;
 import meldexun.matrixutil.MatrixStack;
 import meldexun.matrixutil.Quaternion;
 import net.minecraft.client.Minecraft;

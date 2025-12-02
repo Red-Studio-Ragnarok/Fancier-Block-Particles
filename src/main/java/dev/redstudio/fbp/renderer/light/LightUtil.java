@@ -1,6 +1,6 @@
 package dev.redstudio.fbp.renderer.light;
 
-import io.redstudioragnarok.redcore.utils.MathUtil;
+import dev.redstudio.redcore.math.MathUtil;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;

@@ -6,7 +6,8 @@ import dev.redstudio.fbp.renderer.RenderType;
 import dev.redstudio.fbp.renderer.color.ColorUtil;
 import dev.redstudio.fbp.renderer.light.LightUtil;
 import dev.redstudio.fbp.renderer.texture.TextureUtil;
-import io.redstudioragnarok.redcore.vectors.Vector3F;
+import dev.redstudio.redcore.math.MathUtil;
+import dev.redstudio.redcore.math.vectors.Vector3F;
 import net.jafama.FastMath;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.ParticleDigging;
@@ -91,7 +92,7 @@ public class FBPParticleSnow extends ParticleDigging {
                 setExpired();
 
             tempRot.copy(rotStep);
-            tempRot.scale((FBP.rotationMult * 5));
+            tempRot.multiply((FBP.rotationMult * 5));
             rot.add(tempRot);
 
             if (particleAge >= particleMaxAge) {
@@ -154,7 +155,7 @@ public class FBPParticleSnow extends ParticleDigging {
                 motionX *= 0.68;
                 motionZ *= 0.68;
 
-                rotStep.scale(0.85F);
+                rotStep.multiply(0.85F);
 
                 particleAge += 2;
             }
@@ -229,7 +230,10 @@ public class FBPParticleSnow extends ParticleDigging {
             // SMOOTH ROTATION
             if (!FBP.frozen) {
                 Vector3F vector = new Vector3F();
-                vector.lerp(prevRot, partialTicks, rot);
+
+                vector.x = MathUtil.lerp(prevRot.x, partialTicks, rot.x);
+                vector.y = MathUtil.lerp(prevRot.y, partialTicks, rot.y);
+                vector.z = MathUtil.lerp(prevRot.z, partialTicks, rot.z);
 
                 if (FBP.randomRotation) {
                     smoothRot.y = vector.y;

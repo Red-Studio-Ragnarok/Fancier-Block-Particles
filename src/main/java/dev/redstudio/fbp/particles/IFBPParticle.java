@@ -1,6 +1,6 @@
 package dev.redstudio.fbp.particles;
 
-import io.redstudioragnarok.redcore.utils.MathUtil;
+import dev.redstudio.redcore.math.MathUtil;
 import meldexun.matrixutil.MatrixStack;
 import net.minecraft.client.particle.Particle;
 

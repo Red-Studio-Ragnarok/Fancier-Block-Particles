@@ -6,7 +6,7 @@ import dev.redstudio.fbp.renderer.RenderType;
 import dev.redstudio.fbp.renderer.color.ColorUtil;
 import dev.redstudio.fbp.renderer.light.LightUtil;
 import dev.redstudio.fbp.renderer.texture.TextureUtil;
-import io.redstudioragnarok.redcore.utils.MathUtil;
+import dev.redstudio.redcore.math.ClampUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleSmokeNormal;
@@ -84,7 +84,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
         particleAlpha = 0.9f;
 
         if (FBP.randomFadingSpeed)
-            endMult = MathUtil.clampMaxFirst((float) FBP.RANDOM.nextDouble(0.425, 1.15), 0.5432F, 1);
+            endMult = ClampUtil.clampMaxFirst((float) FBP.RANDOM.nextDouble(0.425, 1.15), 0.5432F, 1);
 
         multipleParticleScaleBy(1);
     }

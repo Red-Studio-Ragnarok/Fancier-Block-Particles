@@ -2,17 +2,15 @@ package dev.redstudio.fbp.particles;
 
 import dev.redstudio.fbp.FBP;
 import dev.redstudio.fbp.handlers.EventHandler;
-import io.redstudioragnarok.redcore.vectors.Vector2F;
-import io.redstudioragnarok.redcore.vectors.Vector3F;
+import dev.redstudio.redcore.math.MathUtil;
+import dev.redstudio.redcore.math.vectors.Vector2F;
+import dev.redstudio.redcore.math.vectors.Vector3F;
 import net.jafama.FastMath;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BlockModelRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -203,7 +201,9 @@ public class FBPParticleBlock extends Particle {
 
         smoothStep = ((float) (prevHeight + (height - prevHeight) * (double) partialTicks));
 
-        smoothRot.lerp(prevRotation, partialTicks, rot);
+        smoothRot.x = MathUtil.lerp(prevRotation.x, partialTicks, rot.x);
+        smoothRot.y = MathUtil.lerp(prevRotation.y, partialTicks, rot.y);
+        smoothRot.z = MathUtil.lerp(prevRotation.z, partialTicks, rot.z);
 
         if (smoothStep <= 0)
             smoothStep = 0;

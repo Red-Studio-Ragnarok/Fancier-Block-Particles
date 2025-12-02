@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "dev.redstudio"
-version = "0.8-Dev-17" // Versioning must follow Ragnarök versioning convention: https://github.com/Red-Studio-Ragnarok/Commons/blob/main/Ragnar%C3%B6k%20Versioning%20Convention.md
+version = "0.8-Dev-18" // Versioning must follow Ragnarök versioning convention: https://github.com/Red-Studio-Ragnarok/Commons/blob/main/Ragnar%C3%B6k%20Versioning%20Convention.md
 
 val id = "fbp"
 val plugin = "${project.group}.${id}.asm.FBPPlugin"
@@ -145,6 +145,10 @@ tasks {
 		}
 
 		archiveBaseName.set(archiveBaseName.get().replace(" ", "-"))
+
+        from({
+            configurations.runtimeClasspath.get().filter { it.name.contains("MatrixUtil") || it.name.contains("MemoryUtil") }.map { if (it.isDirectory) it else zipTree(it) }
+        })
 	}
 
 	withType<JavaCompile>{

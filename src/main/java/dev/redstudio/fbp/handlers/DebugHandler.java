@@ -8,9 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 
-import static dev.redstudio.fbp.FBP.MC;
-import static dev.redstudio.fbp.FBP.fancyEffectRenderer;
-import static dev.redstudio.fbp.FBP.originalEffectRenderer;
+import static dev.redstudio.fbp.FBP.*;
 import static dev.redstudio.fbp.ProjectConstants.VERSION;
 
 public class DebugHandler {

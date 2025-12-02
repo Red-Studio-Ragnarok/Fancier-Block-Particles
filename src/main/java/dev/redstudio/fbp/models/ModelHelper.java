@@ -14,7 +14,7 @@ public class ModelHelper {
     public static boolean isModelValid(IBlockState state) {
         IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(state);
 
-        if (model.getParticleTexture().getIconName().equals("missingno"))
+        if (model.getParticleTexture() == null || model.getParticleTexture().getIconName().equals("missingno"))
             return false;
 
         vertexes = 0;

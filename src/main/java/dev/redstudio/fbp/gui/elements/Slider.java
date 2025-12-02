@@ -2,7 +2,8 @@ package dev.redstudio.fbp.gui.elements;
 
 import dev.redstudio.fbp.gui.GuiUtils;
 import dev.redstudio.fbp.gui.InteractiveElement;
-import io.redstudioragnarok.redcore.utils.MathUtil;
+import dev.redstudio.redcore.math.ClampUtil;
+import dev.redstudio.redcore.math.MathUtil;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Mouse;
 
@@ -43,7 +44,7 @@ public class Slider extends InteractiveElement {
             dragging = false;
 
         if (dragging) {
-            sliderPosX = MathUtil.clampMinFirst((float) mouseX, minX, (float) x + width - 15);
+            sliderPosX = ClampUtil.clampMinFirst((float) mouseX, minX, (float) x + width - 15);
 
             value = MathUtil.round(minValue + ((sliderPosX - minX) / (width - 30)) * (maxValue - minValue), 2);
         }

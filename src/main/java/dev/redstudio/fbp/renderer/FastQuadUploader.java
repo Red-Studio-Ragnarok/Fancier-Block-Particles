@@ -4,7 +4,6 @@ import dev.redstudio.fbp.renderer.color.IColorProvider;
 import dev.redstudio.fbp.renderer.light.ILightCoordProvider;
 import dev.redstudio.fbp.renderer.texture.ITexCoordProvider;
 import meldexun.matrixutil.*;
-import meldexun.memoryutil.NIOBufferUtil;
 import meldexun.memoryutil.UnsafeUtil;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.EnumFacing;

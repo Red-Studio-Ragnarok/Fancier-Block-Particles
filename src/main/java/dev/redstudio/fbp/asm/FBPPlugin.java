@@ -3,9 +3,7 @@ package dev.redstudio.fbp.asm;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import zone.rong.mixinbooter.IEarlyMixinLoader;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @IFMLLoadingPlugin.TransformerExclusions("io.redstudioragnarok.fbp.asm")
 public class FBPPlugin implements IFMLLoadingPlugin, IEarlyMixinLoader {

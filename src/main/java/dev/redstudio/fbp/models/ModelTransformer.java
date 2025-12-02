@@ -7,9 +7,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.client.model.pipeline.IVertexConsumer;
-import net.minecraftforge.client.model.pipeline.LightUtil;
-import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
+import net.minecraftforge.client.model.pipeline.*;
 
 public final class ModelTransformer {
 

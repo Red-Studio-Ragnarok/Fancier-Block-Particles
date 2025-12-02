@@ -6,7 +6,7 @@ import dev.redstudio.fbp.renderer.RenderType;
 import dev.redstudio.fbp.renderer.color.ColorUtil;
 import dev.redstudio.fbp.renderer.light.LightUtil;
 import dev.redstudio.fbp.renderer.texture.TextureUtil;
-import io.redstudioragnarok.redcore.utils.MathUtil;
+import dev.redstudio.redcore.math.ClampUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.ParticleDigging;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -140,8 +140,8 @@ public class FBPParticleRain extends ParticleDigging {
         }
 
         particleRed = (float) MC.world.getSkyColor(MC.player, 0).x;
-        particleGreen = MathUtil.clampMaxFirst((float) (MC.world.getSkyColor(MC.player, 0).y + 0.25F), 0.25F, 1);
-        particleBlue = MathUtil.clampMaxFirst((float) (MC.world.getSkyColor(MC.player, 0).z + 0.5F), 0.5F, 1);
+        particleGreen = ClampUtil.clampMaxFirst((float) (MC.world.getSkyColor(MC.player, 0).y + 0.25F), 0.25F, 1);
+        particleBlue = ClampUtil.clampMaxFirst((float) (MC.world.getSkyColor(MC.player, 0).z + 0.5F), 0.5F, 1);
 
         if (particleGreen > 1)
             particleGreen = 1;

@@ -7,7 +7,7 @@ import dev.redstudio.fbp.handlers.ConfigHandler;
 import dev.redstudio.fbp.handlers.KeyInputHandler;
 import dev.redstudio.fbp.keys.KeyBindings;
 import dev.redstudio.fbp.models.ModelHelper;
-import io.redstudioragnarok.redcore.utils.MathUtil;
+import dev.redstudio.redcore.math.ClampUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
@@ -15,9 +15,7 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -113,7 +111,7 @@ public class GuiBlacklist extends GuiBase {
         drawBackground(mouseXIn, mouseYIn);
 
         final int optionRadius = 30;
-        mouseX = (int) MathUtil.clampMinFirst(mouseXIn, animation.x + optionRadius, particle.x + optionRadius);
+        mouseX = ClampUtil.clampMinFirst(mouseXIn, animation.x + optionRadius, particle.x + optionRadius);
         mouseY = middleY + 35;
 
         // Draw the title
