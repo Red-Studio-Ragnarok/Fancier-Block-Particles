@@ -100,8 +100,6 @@ public class FBP {
 
         MinecraftForge.EVENT_BUS.register(KeyInputHandler.class);
 
-        updateDebugHandler();
-
         VERTEX_FORMAT.addElement(DefaultVertexFormats.POSITION_3F);
         VERTEX_FORMAT.addElement(DefaultVertexFormats.TEX_2F);
         VERTEX_FORMAT.addElement(DefaultVertexFormats.COLOR_4UB);
