@@ -74,7 +74,7 @@ dependencies {
 	implementation("meldexun:MemoryUtil:$memoryUtilVersion")
 
 	annotationProcessor("org.ow2.asm:asm-debug-all:5.2")
-	annotationProcessor("com.google.guava:guava:32.1.2-jre")
+	annotationProcessor("com.google.guava:guava:33.5.0-jre")
 	annotationProcessor("com.google.code.gson:gson:2.8.9")
 
 	val mixinBooter: String = modUtils.enableMixins("zone.rong:mixinbooter:$mixinBooterVersion", "mixins.${id}.refmap.json") as String
