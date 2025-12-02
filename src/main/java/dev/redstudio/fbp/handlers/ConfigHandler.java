@@ -178,21 +178,19 @@ public final class ConfigHandler {
 	///
 	/// @return True if the file was created successfully, false otherwise
 	private static boolean handleFileNotFound(final String message, final String source, final File file) {
-		LOGGER.error("Cannot init " + source + " for " + file + " as the file does not exist, details: " + message);
-		LOGGER.warn("Trying to create file " + file);
+		LOGGER.error("Cannot init {} for {} as the file does not exist, details: {}", source, file, message);
+		LOGGER.warn("Trying to create file {}", file);
 
 		try {
 			if (file.createNewFile()) {
-				LOGGER.info("Successfully created file " + file);
+				LOGGER.info("Successfully created file {}", file);
 				return true;
 			}
 
 		} catch (final IOException ioException) {
-			// Todo: (Red Issue Tracker) This should count to the problem counter
-			RED_LOGGER.printFramedError("Configuration", "Cannot initialize configs", "", ioException.getMessage());
+			RED_LOGGER.framedError("Configuration", "Cannot initialize configs", "", ioException.getMessage());
 		} catch (final SecurityException securityException) {
-			// Todo: (Red Issue Tracker) This should count to the problem counter
-			RED_LOGGER.printFramedError("Configuration", "Cannot initialize configs", "", "An antivirus is probably causing this", securityException.getMessage());
+			RED_LOGGER.framedError("Configuration", "Cannot initialize configs", "", "An antivirus is probably causing this", securityException.getMessage());
 		}
 
 		return false;
@@ -369,15 +367,13 @@ public final class ConfigHandler {
 						addMaterial(Material.WOOD);
 						break;
 					default:
-						// Todo: (Red Issue Tracker) This should count to the problem counter
-						LOGGER.warn("Material not recognized: " + line + " in Floating Materials.txt, it will be ignored but should be removed.");
+						LOGGER.warn("Material not recognized: {} in Floating Materials.txt, it will be ignored but should be removed.", line);
 						break;
 				}
 			}
 
 		} catch (final IOException ioException) {
-			// Todo: (Red Issue Tracker) This should count to the problem counter
-			RED_LOGGER.printFramedError("Configuration", "Cannot read floating materials file", "", ioException.getMessage());
+			RED_LOGGER.framedError("Configuration", "Cannot read floating materials file", "", ioException.getMessage());
 		} finally {
 			closeStreams();
 		}
@@ -557,7 +553,7 @@ public final class ConfigHandler {
 			FBP.floatingMaterials.add(material);
 		else
 			// Todo: (Red Issue Tracker) This should count to the problem counter
-			LOGGER.warn("Found duplicated material: " + material + " in Floating Materials.txt, it will be ignored but should be removed.");
+			LOGGER.warn("Found duplicated material: {} in Floating Materials.txt, it will be ignored but should be removed.", material);
 	}
 
 	/// Adds a block by name to either the particle or animation blacklist.

@@ -78,9 +78,9 @@ public class FBPParticleRain extends ParticleDigging {
 
 					if (particleScale < max) {
 						if (FBP.randomFadingSpeed)
-							particleScale += 0.05 * endMult;
+							particleScale += (float) (0.05 * endMult);
 						else
-							particleScale += 0.05;
+							particleScale += 0.05F;
 
 						if (particleScale > max)
 							particleScale = (float) max;
@@ -90,9 +90,9 @@ public class FBPParticleRain extends ParticleDigging {
 
 					if (particleAlpha < 0.65) {
 						if (FBP.randomFadingSpeed)
-							particleAlpha += 0.085 * endMult;
+							particleAlpha += (float) (0.085 * endMult);
 						else
-							particleAlpha += 0.085;
+							particleAlpha += 0.085F;
 
 						if (particleAlpha > 0.65)
 							particleAlpha = 0.65F;
@@ -129,9 +129,9 @@ public class FBPParticleRain extends ParticleDigging {
 
 				if (particleScale >= max / 2) {
 					if (FBP.randomFadingSpeed)
-						particleAlpha *= 0.75 * endMult;
+						particleAlpha *= (float) (0.75 * endMult);
 					else
-						particleAlpha *= 0.75;
+						particleAlpha *= 0.75F;
 
 					if (particleAlpha <= 0.001)
 						setExpired();

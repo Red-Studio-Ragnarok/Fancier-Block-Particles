@@ -117,7 +117,7 @@ public class FBPParticleBlock extends Particle {
 					// the block was destroyed during the animation
 					killParticle();
 
-					FBP.DUMMY_BLOCK.onBlockHarvested(MC.world, blockPos, state, null);
+					FBP.DUMMY_BLOCK.onBlockHarvested(MC.world, blockPos, state, MC.player);
 					MC.world.setBlockState(blockPos, Blocks.AIR.getDefaultState(), 2);
 					return;
 				}
@@ -164,7 +164,7 @@ public class FBPParticleBlock extends Particle {
 
 		height -= step * 5;
 
-		step *= 1.5;
+		step *= 1.5F;
 	}
 
 	@Override

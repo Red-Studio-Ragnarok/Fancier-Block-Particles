@@ -44,7 +44,7 @@ public class FBPParticleSnow extends ParticleDigging {
 		motionZ = zSpeedIn;
 		particleGravity = 1;
 
-		particleScale *= FBP.RANDOM.nextDouble(FBP.scaleMult - 0.25, FBP.scaleMult + 0.25);
+		particleScale *= (float) FBP.RANDOM.nextDouble(FBP.scaleMult - 0.25, FBP.scaleMult + 0.25);
 		particleMaxAge = (int) FBP.RANDOM.nextDouble(250, 300);
 		particleRed = particleGreen = particleBlue = 1;
 
@@ -97,15 +97,15 @@ public class FBPParticleSnow extends ParticleDigging {
 
 			if (particleAge >= particleMaxAge) {
 				if (FBP.randomFadingSpeed)
-					particleScale *= 0.75 * endMult;
+					particleScale *= (float) (0.75 * endMult);
 				else
-					particleScale *= 0.75;
+					particleScale *= 0.75F;
 
 				if (particleAlpha > 0.01 && particleScale <= scaleAlpha) {
 					if (FBP.randomFadingSpeed)
-						particleAlpha *= 0.65 * endMult;
+						particleAlpha *= (float) (0.65 * endMult);
 					else
-						particleAlpha *= 0.65;
+						particleAlpha *= 0.65F;
 				}
 
 				if (particleAlpha <= 0.01)
@@ -113,9 +113,9 @@ public class FBPParticleSnow extends ParticleDigging {
 			} else {
 				if (particleScale < 1) {
 					if (FBP.randomFadingSpeed)
-						particleScale += 0.075 * endMult;
+						particleScale += (float) (0.075 * endMult);
 					else
-						particleScale += 0.075;
+						particleScale += 0.075F;
 
 					if (particleScale > 1)
 						particleScale = 1;
@@ -123,9 +123,9 @@ public class FBPParticleSnow extends ParticleDigging {
 
 				if (particleAlpha < 1) {
 					if (FBP.randomFadingSpeed)
-						particleAlpha += 0.045 * endMult;
+						particleAlpha += (float) (0.045 * endMult);
 					else
-						particleAlpha += 0.045;
+						particleAlpha += 0.045F;
 
 					if (particleAlpha > 1)
 						particleAlpha = 1;

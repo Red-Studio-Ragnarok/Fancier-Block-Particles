@@ -62,20 +62,17 @@ public class FBPParticleDigging extends ParticleDigging {
 
 	private AxisAlignedBB boundingBox;
 
-	static Entity dummyEntity = new Entity(null) {
+	private static final Entity dummyEntity = new Entity(null) {
 		@Override
 		protected void writeEntityToNBT(NBTTagCompound compound) {
-			// TODO Auto-generated method stub?
 		}
 
 		@Override
 		protected void readEntityFromNBT(NBTTagCompound compound) {
-			// TODO Auto-generated method stub?
 		}
 
 		@Override
 		protected void entityInit() {
-			// TODO Auto-generated method stub?
 		}
 	};
 
@@ -194,9 +191,9 @@ public class FBPParticleDigging extends ParticleDigging {
 			return;
 
 		int i = MC.getBlockColors().colorMultiplier(blockState, world, p_187154_1_, 0);
-		particleRed *= (i >> 16 & 255) / 255.0;
-		particleGreen *= (i >> 8 & 255) / 255.0;
-		particleBlue *= (i & 255) / 255.0;
+		particleRed *= (i >> 16 & 255) / 255F;
+		particleGreen *= (i >> 8 & 255) / 255F;
+		particleBlue *= (i & 255) / 255F;
 	}
 
 	@Override
@@ -294,10 +291,10 @@ public class FBPParticleDigging extends ParticleDigging {
 				particleAge++;
 
 			if (particleAge >= particleMaxAge) {
-				particleScale *= 0.88 * endMult;
+				particleScale *= (float) (0.88 * endMult);
 
 				if (particleAlpha > 0.01 && particleScale <= scaleAlpha)
-					particleAlpha *= 0.68 * endMult;
+					particleAlpha *= (float) (0.68 * endMult);
 
 				if (particleAlpha <= 0.01)
 					setExpired();

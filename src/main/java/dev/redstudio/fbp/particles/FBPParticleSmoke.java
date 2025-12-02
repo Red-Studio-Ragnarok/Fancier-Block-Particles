@@ -42,8 +42,8 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 		Block block = worldIn.getBlockState(new BlockPos(xCoordIn, yCoordIn, zCoordIn)).getBlock();
 
 		if (block == Blocks.FIRE) {
-			particleScale *= 0.65;
-			particleGravity *= 0.25;
+			particleScale *= 0.65F;
+			particleGravity *= 0.25F;
 
 			motionX = FBP.RANDOM.nextDouble(-0.05, 0.05);
 			motionY = FBP.RANDOM.nextDouble() * 0.5;
@@ -55,7 +55,7 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 			particleMaxAge = FBP.RANDOM.nextInt(7, 18);
 		} else if (block == Blocks.TORCH) {
-			particleScale *= 0.45;
+			particleScale *= 0.45F;
 
 			motionX = FBP.RANDOM.nextDouble(-0.05, 0.05);
 			motionY = FBP.RANDOM.nextDouble() * 0.5;
@@ -119,15 +119,15 @@ public class FBPParticleSmoke extends ParticleSmokeNormal {
 
 		if (++particleAge >= particleMaxAge) {
 			if (FBP.randomFadingSpeed)
-				particleScale *= 0.88 * endMult;
+				particleScale *= (float) (0.88 * endMult);
 			else
-				particleScale *= 0.88;
+				particleScale *= 0.88F;
 
 			if (particleAlpha > 0.01 && particleScale <= scaleAlpha) {
 				if (FBP.randomFadingSpeed)
-					particleAlpha *= 0.76 * endMult;
+					particleAlpha *= (float) (0.76 * endMult);
 				else
-					particleAlpha *= 0.76;
+					particleAlpha *= 0.76F;
 			}
 
 			if (particleAlpha <= 0.01)

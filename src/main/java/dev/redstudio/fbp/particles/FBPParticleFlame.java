@@ -46,7 +46,7 @@ public class FBPParticleFlame extends ParticleFlame {
 		motionY = -0.00085;
 		particleGravity = -0.05f;
 
-		particleScale *= FBP.scaleMult * 2.5;
+		particleScale *= FBP.scaleMult * 2.5F;
 		particleMaxAge = FBP.RANDOM.nextInt(3, 5);
 
 		particleRed = 1;
@@ -96,15 +96,15 @@ public class FBPParticleFlame extends ParticleFlame {
 
 		if (++particleAge >= particleMaxAge) {
 			if (FBP.randomFadingSpeed)
-				particleScale *= 0.95 * endMult;
+				particleScale *= (float) (0.95 * endMult);
 			else
-				particleScale *= 0.95;
+				particleScale *= 0.95F;
 
 			if (particleAlpha > 0.01 && particleScale <= scaleAlpha) {
 				if (FBP.randomFadingSpeed)
-					particleAlpha *= 0.9 * endMult;
+					particleAlpha *= (float) (0.9 * endMult);
 				else
-					particleAlpha *= 0.9;
+					particleAlpha *= 0.9F;
 			}
 
 			if (particleAlpha <= 0.01)
