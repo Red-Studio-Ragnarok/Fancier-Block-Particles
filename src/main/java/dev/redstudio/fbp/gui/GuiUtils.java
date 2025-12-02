@@ -7,25 +7,23 @@ import org.lwjgl.util.Color;
 
 import static dev.redstudio.fbp.ProjectConstants.RED_LOGGER;
 
-public class GuiUtils {
+public final class GuiUtils {
 
 	public static final String WHITE = "#FFFCFC";
 	public static final String GREY = "#C9C9C9";
 	public static final String RED = "#E44444";
 	public static final String GREEN = "#55FF55";
 
-	/**
-	 * Determines if the mouse cursor is inside a stadium defined by its bounding rectangle.
-	 *
-	 * @param mouseX The x-coordinate of the mouse cursor.
-	 * @param mouseY The y-coordinate of the mouse cursor.
-	 * @param x The x-coordinate of the top-left corner of the bounding rectangle of the stadium.
-	 * @param y The y-coordinate of the top-left corner of the bounding rectangle of the stadium.
-	 * @param width The width of the bounding rectangle of the stadium.
-	 * @param height The height of the bounding rectangle of the stadium.
-	 *
-	 * @return true if the mouse cursor is inside the stadium, false otherwise.
-	 */
+	/// Determines if the mouse cursor is inside a stadium defined by its bounding rectangle.
+	///
+	/// @param mouseX The x-coordinate of the mouse cursor.
+	/// @param mouseY The y-coordinate of the mouse cursor.
+	/// @param x The x-coordinate of the top-left corner of the bounding rectangle of the stadium.
+	/// @param y The y-coordinate of the top-left corner of the bounding rectangle of the stadium.
+	/// @param width The width of the bounding rectangle of the stadium.
+	/// @param height The height of the bounding rectangle of the stadium.
+	///
+	/// @return true if the mouse cursor is inside the stadium, false otherwise.
 	public static boolean isMouseInsideStadium(final int mouseX, final int mouseY, final int x, final int y, final int width, final int height) {
 		final int middleY = height / 2;
 
@@ -50,16 +48,14 @@ public class GuiUtils {
 		return (distanceLeftSquared <= radiusSquared || distanceRightSquared <= radiusSquared) || isOverRectangle;
 	}
 
-	/**
-	 * Converts a hexadecimal color string to its decimal equivalent.
-	 * The input string should start with a '#' character followed by a 6-character hexadecimal value.
-	 * <p>
-	 * If the input is invalid, the method returns the decimal value for white (16777215) and logs an error.
-	 *
-	 * @param hexColor The hexadecimal color string to convert.
-	 *
-	 * @return The decimal equivalent of the hexadecimal color or the decimal value for white if the input is invalid.
-	 */
+	/// Converts a hexadecimal color string to its decimal equivalent.
+	/// The input string should start with a '#' character followed by a 6-character hexadecimal value.
+	///
+	/// If the input is invalid, the method returns the decimal value for white (16777215) and logs an error.
+	///
+	/// @param hexColor The hexadecimal color string to convert.
+	///
+	/// @return The decimal equivalent of the hexadecimal color or the decimal value for white if the input is invalid.
 	public static int hexToDecimalColor(final String hexColor) {
 		try {
 			// Parse the hexadecimal string (excluding the '#' character) to an integer
@@ -74,33 +70,27 @@ public class GuiUtils {
 		}
 	}
 
-	/**
-	 * Draws a rectangle on the screen using the specified coordinates and color.
-	 *
-	 * @param x The x coordinate of the top left corner of the rectangle.
-	 * @param y The y coordinate of the top left corner of the rectangle.
-	 * @param x2 The width of the rectangle.
-	 * @param y2 The height of the rectangle.
-	 * @param rgba The color of the rectangle.
-	 */
-	protected static void drawRectangle(final double x, final double y, final double x2, final double y2, final Color rgba) {
+	/// Draws a rectangle on the screen using the specified coordinates and color.
+	///
+	/// @param x The x coordinate of the top left corner of the rectangle.
+	/// @param y The y coordinate of the top left corner of the rectangle.
+	/// @param x2 The width of the rectangle.
+	/// @param y2 The height of the rectangle.
+	/// @param rgba The color of the rectangle.
+	public static void drawRectangle(final double x, final double y, final double x2, final double y2, final Color rgba) {
 		final Tessellator tessellator = Tessellator.getInstance();
 		final BufferBuilder buffer = tessellator.getBuffer();
 
-		// Disable textures and enable blending for smooth color transitions
 		GlStateManager.disableTexture2D();
 		GlStateManager.enableBlend();
 
-		// Begin drawing a triangle strip with the specified vertex format
 		buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
 
-		// Get the red green blue and alpha components of the rgba argument
 		final int red = rgba.getRed();
 		final int green = rgba.getGreen();
 		final int blue = rgba.getBlue();
 		final int alpha = rgba.getAlpha();
 
-		// Add vertices to form a rectangle using the given coordinates and color
 		buffer.pos(x, y, 0).color(red, green, blue, alpha).endVertex();
 		buffer.pos(x, y + y2, 0).color(red, green, blue, alpha).endVertex();
 		buffer.pos(x + x2, y, 0).color(red, green, blue, alpha).endVertex();
@@ -108,7 +98,6 @@ public class GuiUtils {
 
 		tessellator.draw();
 
-		// Disable blending and re-enable textures after drawing
 		GlStateManager.disableBlend();
 		GlStateManager.enableTexture2D();
 	}

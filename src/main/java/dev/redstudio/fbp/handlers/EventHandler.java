@@ -35,103 +35,100 @@ import java.util.Objects;
 
 import static dev.redstudio.fbp.FBP.MC;
 
-public class EventHandler {
+public final class EventHandler {
 
-	static IWorldEventListener worldEventListener;
+	private static final IWorldEventListener worldEventListener = new IWorldEventListener() {
+		@Override
+		public void markBlockRangeForRenderUpdate(int x1, int y1, int z1, int x2, int y2, int z2) {
+		}
 
-	static ConcurrentSet<BlockPosNode> list;
+		@Override
+		public void broadcastSound(int soundID, BlockPos pos, int data) {
+		}
 
-	static IRenderHandler currentWeatherRenderer;
-	static ParticleManager currentEffectRenderer;
+		@Override
+		public void onEntityAdded(Entity entityIn) {
+		}
 
-	public EventHandler() {
-		list = new ConcurrentSet<>();
+		@Override
+		public void spawnParticle(int id, boolean ignoreRange, boolean p_190570_3_, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int... parameters) {
+		}
 
-		worldEventListener = new IWorldEventListener() {
-			@Override
-			public void markBlockRangeForRenderUpdate(int x1, int y1, int z1, int x2, int y2, int z2) {
-			}
+		@Override
+		public void spawnParticle(int particleID, boolean ignoreRange, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, int... parameters) {
+		}
 
-			@Override
-			public void broadcastSound(int soundID, BlockPos pos, int data) {
-			}
+		@Override
+		public void sendBlockBreakProgress(int breakerId, BlockPos pos, int progress) {
+		}
 
-			@Override
-			public void onEntityAdded(Entity entityIn) {
-			}
+		@Override
+		public void playSoundToAllNearExcept(EntityPlayer player, SoundEvent soundIn, SoundCategory category, double x, double y, double z, float volume, float pitch) {
+		}
 
-			@Override
-			public void spawnParticle(int id, boolean ignoreRange, boolean p_190570_3_, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, int... parameters) {
-			}
+		@Override
+		public void playRecord(SoundEvent soundIn, BlockPos pos) {
+		}
 
-			@Override
-			public void spawnParticle(int particleID, boolean ignoreRange, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, int... parameters) {
-			}
+		@Override
+		public void playEvent(EntityPlayer player, int type, BlockPos blockPosIn, int data) {
+		}
 
-			@Override
-			public void sendBlockBreakProgress(int breakerId, BlockPos pos, int progress) {
-			}
+		@Override
+		public void onEntityRemoved(Entity entityIn) {
+		}
 
-			@Override
-			public void playSoundToAllNearExcept(EntityPlayer player, SoundEvent soundIn, SoundCategory category, double x, double y, double z, float volume, float pitch) {
-			}
+		@Override
+		public void notifyLightSet(BlockPos pos) {
+		}
 
-			@Override
-			public void playRecord(SoundEvent soundIn, BlockPos pos) {
-			}
+		@Override
+		public void notifyBlockUpdate(World worldIn, BlockPos pos, IBlockState oldState, IBlockState newState, int flags) {
+			if (FBP.enabled && FBP.fancyPlaceAnim && (flags == 11 || flags == 3) && !oldState.equals(newState)) {
+				BlockPosNode node = getNodeWithPos(pos);
 
-			@Override
-			public void playEvent(EntityPlayer player, int type, BlockPos blockPosIn, int data) {
-			}
+				if (node != null && !node.checked) {
+					if (newState.getBlock() == FBP.DUMMY_BLOCK || newState.getBlock() == Blocks.AIR || oldState.getBlock() == newState.getBlock()) {
+						removePosEntry(pos);
+						return;
+					}
 
-			@Override
-			public void onEntityRemoved(Entity entityIn) {
-			}
+					IBlockState state = newState.getActualState(worldIn, pos);
 
-			@Override
-			public void notifyLightSet(BlockPos pos) {
-			}
+					if (state.getBlock() instanceof BlockDoublePlant || !ModelHelper.isModelValid(state)) {
+						removePosEntry(pos);
+						return;
+					}
 
-			@Override
-			public void notifyBlockUpdate(World worldIn, BlockPos pos, IBlockState oldState, IBlockState newState, int flags) {
-				if (FBP.enabled && FBP.fancyPlaceAnim && (flags == 11 || flags == 3) && !oldState.equals(newState)) {
-					BlockPosNode node = getNodeWithPos(pos);
+					long seed = MathHelper.getPositionRandom(pos);
 
-					if (node != null && !node.checked) {
-						if (newState.getBlock() == FBP.DUMMY_BLOCK || newState.getBlock() == Blocks.AIR || oldState.getBlock() == newState.getBlock()) {
-							removePosEntry(pos);
-							return;
-						}
+					boolean isNotFalling = true;
 
-						IBlockState state = newState.getActualState(worldIn, pos);
+					if (state.getBlock() instanceof BlockFalling) {
+						if (BlockFalling.canFallThrough(worldIn.getBlockState(pos.offset(EnumFacing.DOWN))))
+							isNotFalling = false;
+					}
 
-						if (state.getBlock() instanceof BlockDoublePlant || !ModelHelper.isModelValid(state)) {
-							removePosEntry(pos);
-							return;
-						}
+					if (!ConfigHandler.isBlacklisted(state.getBlock(), false) && isNotFalling) {
+						node.checked = true;
 
-						long seed = MathHelper.getPositionRandom(pos);
+						FBPParticleBlock particleBlock = new FBPParticleBlock(worldIn, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, state, seed);
 
-						boolean isNotFalling = true;
+						MC.effectRenderer.addEffect(particleBlock);
 
-						if (state.getBlock() instanceof BlockFalling) {
-							if (BlockFalling.canFallThrough(worldIn.getBlockState(pos.offset(EnumFacing.DOWN))))
-								isNotFalling = false;
-						}
-
-						if (!ConfigHandler.isBlacklisted(state.getBlock(), false) && isNotFalling) {
-							node.checked = true;
-
-							FBPParticleBlock particleBlock = new FBPParticleBlock(worldIn, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, state, seed);
-
-							MC.effectRenderer.addEffect(particleBlock);
-
-							FBP.DUMMY_BLOCK.copyState(pos, state, particleBlock);
-						}
+						FBP.DUMMY_BLOCK.copyState(pos, state, particleBlock);
 					}
 				}
 			}
-		};
+		}
+	};
+
+	private static final ConcurrentSet<BlockPosNode> list = new ConcurrentSet<>();
+
+	private static IRenderHandler currentWeatherRenderer;
+	private static ParticleManager currentEffectRenderer;
+
+	public EventHandler() {
 	}
 
 	@SubscribeEvent
@@ -157,8 +154,7 @@ public class EventHandler {
 			BlockNode node = FBP.DUMMY_BLOCK.blockNodes.get(pos);
 
 			if (node != null) {
-				node.state.getBlock();
-				boolean activated = node.originalBlock.onBlockActivated(result.getWorld(), pos, node.state, MC.player, result.getHand(), result.getFace(), x, y, z);
+				boolean activated = node.state.getBlock().onBlockActivated(result.getWorld(), pos, node.state, MC.player, result.getHand(), result.getFace(), x, y, z);
 
 				if (activated)
 					return;

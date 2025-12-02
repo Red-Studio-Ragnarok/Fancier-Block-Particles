@@ -107,11 +107,9 @@ public final class FBP {
 		VERTEX_FORMAT.addElement(DefaultVertexFormats.NORMAL_3B);
 	}
 
-	/**
-	 * Enable or disable FBP
-	 * <p>
-	 * Currently, not really documented as it probably won't exist at least not like this when the separation from MC particle system is done
-	 */
+	/// Enable or disable FBP
+	///
+	/// Currently, not really documented as it probably won't exist at least not like this when the separation from MC particle system is done
 	public static void setEnabled(boolean newState) {
 		if (enabled != newState) {
 			if (newState) {

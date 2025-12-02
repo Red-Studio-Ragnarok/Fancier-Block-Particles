@@ -13,9 +13,7 @@ import net.minecraftforge.client.IRenderHandler;
 
 import static dev.redstudio.fbp.FBP.*;
 
-/**
- * This class extends IRenderHandler and is responsible for spawning weather particles.
- */
+/// This class extends IRenderHandler and is responsible for spawning weather particles.
 public class FBPWeatherRenderer extends IRenderHandler {
 
 	private static boolean snowBiome = false;
@@ -34,9 +32,7 @@ public class FBPWeatherRenderer extends IRenderHandler {
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
 	}
 
-	/**
-	 * Updates density and spawn new weather particles.
-	 */
+	/// Updates density and spawn new weather particles.
 	public void onUpdate() {
 		if (MC.world.isRaining()) {
 

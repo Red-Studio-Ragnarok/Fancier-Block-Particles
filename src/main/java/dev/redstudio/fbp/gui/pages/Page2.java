@@ -6,7 +6,7 @@ import dev.redstudio.fbp.handlers.ConfigHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
-public class Page2 extends BasePage {
+public final class Page2 extends BasePage {
 
 	@Override
 	public void initGui() {

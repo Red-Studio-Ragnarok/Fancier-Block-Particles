@@ -156,12 +156,10 @@ public class GuiBlacklist extends GuiBase {
 			closing = true;
 	}
 
-	/**
-	 * Draws a preview of the item on screen at the specified coordinates.
-	 *
-	 * @param x The x coordinate of the top left corner of the preview.
-	 * @param y The y coordinate of the top left corner of the preview.
-	 */
+	/// Draws a preview of the item on screen at the specified coordinates.
+	///
+	/// @param x The x coordinate of the top left corner of the preview.
+	/// @param y The y coordinate of the top left corner of the preview.
 	private void drawPreview(final int x, final int y) {
 		GlStateManager.enableLight(0);
 		GlStateManager.translate(x, y, 0);

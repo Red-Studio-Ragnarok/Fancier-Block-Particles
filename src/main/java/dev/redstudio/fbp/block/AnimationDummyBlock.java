@@ -29,7 +29,7 @@ import static dev.redstudio.fbp.ProjectConstants.ID;
 
 public final class AnimationDummyBlock extends Block {
 
-	public ConcurrentHashMap<BlockPos, BlockNode> blockNodes = new ConcurrentHashMap<>();
+	public final ConcurrentHashMap<BlockPos, BlockNode> blockNodes = new ConcurrentHashMap<>();
 
 	public AnimationDummyBlock() {
 		super(new DummyMaterial());

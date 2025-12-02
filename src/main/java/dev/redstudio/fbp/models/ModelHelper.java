@@ -5,33 +5,29 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
 
-public class ModelHelper {
+public final class ModelHelper {
 
-	static int vertexes = 0;
+	private static int vertexes = 0;
 
-	static boolean isAllCorruptedTexture = true;
+	private static boolean isAllCorruptedTexture = true;
 
-	public static boolean isModelValid(IBlockState state) {
-		IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(state);
+	public static boolean isModelValid(final IBlockState state) {
+		final IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getModelForState(state);
 
 		if (model.getParticleTexture() == null || model.getParticleTexture().getIconName().equals("missingno"))
 			return false;
 
 		vertexes = 0;
 
-		try {
-			ModelTransformer.transform(model, state, 0, (quad, element, data) -> {
-				if (element.getUsage() == VertexFormatElement.EnumUsage.POSITION)
-					vertexes++;
+		ModelTransformer.transform(model, state, 0, (quad, element, data) -> {
+			if (element.getUsage() == VertexFormatElement.EnumUsage.POSITION)
+				vertexes++;
 
-				if (!quad.getSprite().getIconName().equals("missingno"))
-					isAllCorruptedTexture = false;
+			if (!quad.getSprite().getIconName().equals("missingno"))
+				isAllCorruptedTexture = false;
 
-				return data;
-			});
-		} catch (Throwable t) {
-			// Todo: (Debug Mode) This should count to the problem counter and should output a stack trace
-		}
+			return data;
+		});
 
 		return (vertexes >= 3) && !isAllCorruptedTexture;
 	}

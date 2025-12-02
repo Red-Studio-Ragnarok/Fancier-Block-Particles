@@ -6,7 +6,7 @@ import dev.redstudio.fbp.gui.elements.Slider;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
-public class Page3 extends BasePage {
+public final class Page3 extends BasePage {
 
 	Slider weatherParticleDensity, weatherRenderDistance;
 

@@ -7,11 +7,10 @@ import org.lwjgl.input.Keyboard;
 
 import static dev.redstudio.fbp.ProjectConstants.NAME;
 
-/**
- * A class that holds and initialize all the keybindings for the mod.
- *
- * @author Desoroxxx
- */
+/// Holds and initialize all the keybindings for the mod.
+///
+/// @author Desoroxxx
+/// @since 0.8
 public class KeyBindings {
 
 	public static final KeyBinding MENU = new KeyBinding(I18n.format("keyBinding.menu"), Keyboard.KEY_P, NAME);

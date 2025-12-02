@@ -5,7 +5,7 @@ import dev.redstudio.fbp.gui.BasePage;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 
-public class Page1 extends BasePage {
+public final class Page1 extends BasePage {
 
 	@Override
 	public void initGui() {

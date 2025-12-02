@@ -15,12 +15,12 @@ import org.lwjgl.input.Mouse;
 
 import static dev.redstudio.fbp.FBP.MC;
 
-public class KeyInputHandler {
+public final class KeyInputHandler {
 
 	private static boolean blacklistGUIOpen = false;
 
 	@SubscribeEvent
-	public static void onKeyboardInput(InputEvent.KeyInputEvent e) {
+	public static void onKeyboardInput(final InputEvent.KeyInputEvent keyInputEvent) {
 		onInput();
 	}
 
@@ -47,7 +47,8 @@ public class KeyInputHandler {
 
 				blacklistGUIOpen = true;
 			}
-		} else if (blacklistGUIOpen)
+		} else if (blacklistGUIOpen) {
 			blacklistGUIOpen = false;
+		}
 	}
 }

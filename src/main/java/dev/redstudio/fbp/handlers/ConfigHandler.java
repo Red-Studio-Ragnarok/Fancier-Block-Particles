@@ -14,10 +14,8 @@ import java.util.Map;
 import static dev.redstudio.fbp.ProjectConstants.LOGGER;
 import static dev.redstudio.fbp.ProjectConstants.RED_LOGGER;
 
-/**
- * This class handle everything related to the config system.
- */
-public class ConfigHandler {
+/// This class handle everything related to the config system.
+public final class ConfigHandler {
 
 	private static FileInputStream fileInputStream;
 	private static InputStreamReader inputStreamReader;
@@ -27,15 +25,13 @@ public class ConfigHandler {
 
 	private static String line;
 
-	/**
-	 * Initializes the configuration system.
-	 * <p>
-	 * Check if the config files and folder exists, if not, create them.
-	 * It also checks if the old config files exists, if yes, delete them.
-	 * Then read the config files.
-	 * <p>
-	 * Only reads Floating Materials config and Animation Blacklist if theses respective features are enabled.
-	 */
+	/// Initializes the configuration system.
+	///
+	/// Check if the config files and folder exists, if not, create them.
+	/// It also checks if the old config files exists, if yes, delete them.
+	/// Then read the config files.
+	///
+	/// Only reads Floating Materials config and Animation Blacklist if theses respective features are enabled.
 	public static void init() {
 		ensureConfigFilesExist();
 
@@ -52,12 +48,10 @@ public class ConfigHandler {
 			readAnimBlacklist();
 	}
 
-	/**
-	 * Ensure config files exist
-	 * <p>
-	 * This method checks if the files and folders in the config folder exists.
-	 * If not, it creates them.
-	 */
+	/// Ensure config files exist
+	///
+	/// This method checks if the files and folders in the config folder exists.
+	/// If not, it creates them.
 	private static void ensureConfigFilesExist() {
 		try {
 			if (!Paths.get(FBP.mainConfigFile.getParent()).toFile().exists() && (Paths.get(FBP.mainConfigFile.getParent()).toFile().mkdirs()))
@@ -94,9 +88,7 @@ public class ConfigHandler {
 		}
 	}
 
-	/**
-	 * Check for pre 0.8 configs and hopefully delete them
-	 */
+	/// Check for pre 0.8 configs and hopefully delete them
 	private static void deleteOldConfigFiles() {
 		if (FBP.oldMainConfigFile.exists() && !FBP.oldMainConfigFile.delete())
 			LOGGER.error("Could not delete old main config file");
@@ -114,13 +106,11 @@ public class ConfigHandler {
 			LOGGER.error("Could not delete old new main config file");
 	}
 
-	/**
-	 * Initializes file streams for a specified file.
-	 * <p>
-	 * This is used to read the config files.
-	 *
-	 * @param file The file object to create streams for
-	 */
+	/// Initializes file streams for a specified file.
+	///
+	/// This is used to read the config files.
+	///
+	/// @param file The file object to create streams for
 	private static void initStreams(final File file) {
 		try {
 			fileInputStream = new FileInputStream(file);
@@ -139,9 +129,7 @@ public class ConfigHandler {
 		}
 	}
 
-	/**
-	 * Closes file streams.
-	 */
+	/// Closes file streams.
 	private static void closeStreams() {
 		try {
 			if (bufferedReader != null)
@@ -157,13 +145,11 @@ public class ConfigHandler {
 		}
 	}
 
-	/**
-	 * Initializes writer for a specified file.
-	 * <p>
-	 * This is used to write to the config files.
-	 *
-	 * @param file The file object to create writer for
-	 */
+	/// Initializes writer for a specified file.
+	///
+	/// This is used to write to the config files.
+	///
+	/// @param file The file object to create writer for
 	private static void initWriter(final File file) {
 		try {
 			writer = new PrintWriter(file.getPath(), "UTF-8");
@@ -181,18 +167,16 @@ public class ConfigHandler {
 		}
 	}
 
-	/**
-	 * Handle a file not found exception.
-	 * <p>
-	 * It will output an error message to the console.
-	 * And then attempt to create a new file, if it fails, it will output an error message to the console.
-	 *
-	 * @param message The error message associated with the exception
-	 * @param source A string indicating the source of the error
-	 * @param file The file object that could not be found
-	 *
-	 * @return True if the file was created successfully, false otherwise
-	 */
+	/// Handle a file not found exception.
+	///
+	/// It will output an error message to the console.
+	/// And then attempt to create a new file, if it fails, it will output an error message to the console.
+	///
+	/// @param message The error message associated with the exception
+	/// @param source A string indicating the source of the error
+	/// @param file The file object that could not be found
+	///
+	/// @return True if the file was created successfully, false otherwise
 	private static boolean handleFileNotFound(final String message, final String source, final File file) {
 		LOGGER.error("Cannot init " + source + " for " + file + " as the file does not exist, details: " + message);
 		LOGGER.warn("Trying to create file " + file);
@@ -214,9 +198,7 @@ public class ConfigHandler {
 		return false;
 	}
 
-	/**
-	 * Reads the main config file and set the corresponding settings if not found sets default.
-	 */
+	/// Reads the main config file and set the corresponding settings if not found sets default.
 	private static void readMainConfig() {
 		try {
 			initStreams(FBP.mainConfigFile);
@@ -273,9 +255,7 @@ public class ConfigHandler {
 		}
 	}
 
-	/**
-	 * Reads the floating materials config file and add the found material to the floating material list.
-	 */
+	/// Reads the floating materials config file and add the found material to the floating material list.
 	private static void readFloatingMaterials() {
 		try {
 			initStreams(FBP.floatingMaterialsFile);
@@ -403,9 +383,7 @@ public class ConfigHandler {
 		}
 	}
 
-	/**
-	 * Reads the animation blacklist config file and add the found blocks to the animation blacklist list.
-	 */
+	/// Reads the animation blacklist config file and add the found blocks to the animation blacklist list.
 	private static void readAnimBlacklist() {
 		try {
 			initStreams(FBP.animBlacklistFile);
@@ -423,9 +401,7 @@ public class ConfigHandler {
 	}
 
 
-	/**
-	 * Reads the particle blacklist config file and add the found blocks to the particle blacklist list.
-	 */
+	/// Reads the particle blacklist config file and add the found blocks to the particle blacklist list.
 	private static void readParticleBlacklist() {
 		try {
 			initStreams(FBP.particleBlacklistFile);
@@ -442,9 +418,7 @@ public class ConfigHandler {
 		}
 	}
 
-	/**
-	 * Writes the main config file.
-	 */
+	/// Writes the main config file.
 	public static void writeMainConfig() {
 		initWriter(FBP.mainConfigFile);
 
@@ -498,11 +472,9 @@ public class ConfigHandler {
 		writer.close();
 	}
 
-	/**
-	 * Writes the floating materials config file.
-	 * <p>
-	 * Uses hard-coded values for the material names which are the default.
-	 */
+	/// Writes the floating materials config file.
+	///
+	/// Uses hard-coded values for the material names which are the default.
 	private static void writeFloatingMaterials() {
 		initWriter(FBP.floatingMaterialsFile);
 
@@ -521,9 +493,7 @@ public class ConfigHandler {
 		writer.close();
 	}
 
-	/**
-	 * Writes the animation blacklist config file.
-	 */
+	/// Writes the animation blacklist config file.
 	public static void writeAnimBlacklist() {
 		initWriter(FBP.animBlacklistFile);
 
@@ -533,9 +503,7 @@ public class ConfigHandler {
 		writer.close();
 	}
 
-	/**
-	 * Writes the particle blacklist config file.
-	 */
+	/// Writes the particle blacklist config file.
 	public static void writeParticleBlacklist() {
 		initWriter(FBP.particleBlacklistFile);
 
@@ -545,9 +513,7 @@ public class ConfigHandler {
 		writer.close();
 	}
 
-	/**
-	 * Set all the values in the main config file to the default.
-	 */
+	/// Set all the values in the main config file to the default.
 	public static void defaults() {
 		FBP.enabled = true;
 		FBP.bounceOffWalls = true;
@@ -574,9 +540,7 @@ public class ConfigHandler {
 		writeMainConfig();
 	}
 
-	/**
-	 * Set all the values in the floating materials config file to the default.
-	 */
+	/// Set all the values in the floating materials config file to the default.
 	public static void defaultsFloatingMaterials() {
 		FBP.floatingMaterials.clear();
 
@@ -585,11 +549,9 @@ public class ConfigHandler {
 		readFloatingMaterials();
 	}
 
-	/**
-	 * Adds a material to the floating materials list.
-	 *
-	 * @param material The material to add
-	 */
+	/// Adds a material to the floating materials list.
+	///
+	/// @param material The material to add
 	private static void addMaterial(final Material material) {
 		if (!FBP.floatingMaterials.contains(material))
 			FBP.floatingMaterials.add(material);
@@ -598,12 +560,10 @@ public class ConfigHandler {
 			LOGGER.warn("Found duplicated material: " + material + " in Floating Materials.txt, it will be ignored but should be removed.");
 	}
 
-	/**
-	 * Adds a block by name to either the particle or animation blacklist.
-	 *
-	 * @param name The name of the block to add
-	 * @param particle Whether the block should be added to the particle or animation blacklist
-	 */
+	/// Adds a block by name to either the particle or animation blacklist.
+	///
+	/// @param name The name of the block to add
+	/// @param particle Whether the block should be added to the particle or animation blacklist
 	public static void addToBlacklist(final String name, final boolean particle) {
 		if (StringUtils.isEmpty(name))
 			return;
@@ -613,16 +573,14 @@ public class ConfigHandler {
 	}
 
 
-	/**
-	 * Add or remove a block from either the particle or animation blacklist.
-	 * <p>
-	 * If the block is not blacklisted, it is added to either the particle or animation blacklist.
-	 * <p>
-	 * If the block is blacklisted, it is removed from either the particle or animation blacklist.
-	 *
-	 * @param block The block to blacklist
-	 * @param particle Whether the block should be blacklisted from the particle or animation blacklist
-	 */
+	/// Add or remove a block from either the particle or animation blacklist.
+	///
+	/// If the block is not blacklisted, it is added to either the particle or animation blacklist.
+	///
+	/// If the block is blacklisted, it is removed from either the particle or animation blacklist.
+	///
+	/// @param block The block to blacklist
+	/// @param particle Whether the block should be blacklisted from the particle or animation blacklist
 	public static void blacklist(final Block block, final boolean particle) {
 		if (block == null || block.getRegistryName() == null)
 			return;
@@ -640,12 +598,10 @@ public class ConfigHandler {
 			writeAnimBlacklist();
 	}
 
-	/**
-	 * Checks if a block is blacklisted.
-	 *
-	 * @param block The block to check
-	 * @param particle Whether to check if the block is blacklisted in the particle or animation blacklist
-	 */
+	/// Checks if a block is blacklisted.
+	///
+	/// @param block The block to check
+	/// @param particle Whether to check if the block is blacklisted in the particle or animation blacklist
 	public static boolean isBlacklisted(final Block block, final boolean particle) {
 		if (block == null || block.getRegistryName() == null)
 			return true;
@@ -653,11 +609,9 @@ public class ConfigHandler {
 		return (particle ? FBP.blockParticleBlacklist : FBP.blockAnimBlacklist).contains(block.getRegistryName().toString());
 	}
 
-	/**
-	 * Reloads the floating materials list.
-	 * If the list is empty, it is filled by calling readFloatingMaterials().
-	 * Otherwise, the list is cleared using the clear() method of the ArrayList class.
-	 */
+	/// Reloads the floating materials list.
+	/// If the list is empty, it is filled by calling readFloatingMaterials().
+	/// Otherwise, the list is cleared using the clear() method of the ArrayList class.
 	public static void reloadMaterials() {
 		if (FBP.floatingMaterials.isEmpty())
 			readFloatingMaterials();
@@ -665,11 +619,9 @@ public class ConfigHandler {
 			FBP.floatingMaterials.clear();
 	}
 
-	/**
-	 * Reloads the animation blacklist.
-	 * If the list is empty, it is filled by calling readAnimBlacklist().
-	 * Otherwise, the list is cleared using the clear() method of the ArrayList class.
-	 */
+	/// Reloads the animation blacklist.
+	/// If the list is empty, it is filled by calling readAnimBlacklist().
+	/// Otherwise, the list is cleared using the clear() method of the ArrayList class.
 	public static void reloadAnimBlacklist() {
 		if (FBP.blockAnimBlacklist.isEmpty())
 			readAnimBlacklist();

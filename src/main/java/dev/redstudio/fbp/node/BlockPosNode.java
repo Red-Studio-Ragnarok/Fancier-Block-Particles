@@ -3,17 +3,17 @@ package dev.redstudio.fbp.node;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.util.math.BlockPos;
 
-public class BlockPosNode {
+public final class BlockPosNode {
 
-	ConcurrentSet<BlockPos> possible = new ConcurrentSet<>();
+	final ConcurrentSet<BlockPos> possible = new ConcurrentSet<>();
 
 	public boolean checked = false;
 
-	public void add(BlockPos pos) {
-		possible.add(pos);
+	public void add(final BlockPos blockPos) {
+		possible.add(blockPos);
 	}
 
-	public boolean hasPos(BlockPos p1) {
-		return possible.contains(p1);
+	public boolean hasPos(final BlockPos blockPos) {
+		return possible.contains(blockPos);
 	}
 }

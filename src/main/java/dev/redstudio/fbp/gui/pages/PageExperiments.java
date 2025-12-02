@@ -5,7 +5,7 @@ import net.minecraft.client.gui.GuiButton;
 
 import java.io.IOException;
 
-public class PageExperiments extends BasePage {
+public final class PageExperiments extends BasePage {
 
 	@Override
 	public void initGui() {

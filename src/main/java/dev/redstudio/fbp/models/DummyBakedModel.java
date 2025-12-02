@@ -1,5 +1,6 @@
 package dev.redstudio.fbp.models;
 
+import lombok.Setter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -11,29 +12,25 @@ import javax.vecmath.Matrix4f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DummyBakedModel implements IBakedModel {
+public final class DummyBakedModel implements IBakedModel {
 
 	private final List<BakedQuad>[] quads = new List[7];
 	private final IBakedModel parent;
-	private TextureAtlasSprite particle;
+	@Setter private TextureAtlasSprite particle;
 
-	public DummyBakedModel(IBakedModel parent) {
+	public DummyBakedModel(final IBakedModel parent) {
 		this.parent = parent;
-		for (int i = 0; i < quads.length; i++) {
+
+		for (int i = 0; i < quads.length; i++)
 			quads[i] = new ArrayList<>();
-		}
 	}
 
-	public void setParticle(TextureAtlasSprite particle) {
-		this.particle = particle;
-	}
-
-	public void addQuad(EnumFacing side, BakedQuad quad) {
+	public void addQuad(final EnumFacing side, final BakedQuad quad) {
 		quads[side == null ? 6 : side.ordinal()].add(quad);
 	}
 
 	@Override
-	public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
+	public List<BakedQuad> getQuads(final IBlockState state, final EnumFacing side, final long rand) {
 		return quads[side == null ? 6 : side.ordinal()];
 	}
 
@@ -54,11 +51,7 @@ public class DummyBakedModel implements IBakedModel {
 
 	@Override
 	public TextureAtlasSprite getParticleTexture() {
-		if (particle != null) {
-			return particle;
-		} else {
-			return parent != null ? parent.getParticleTexture() : null;
-		}
+		return particle != null ? particle : parent != null ? parent.getParticleTexture() : null;
 	}
 
 	@Override
@@ -67,12 +60,9 @@ public class DummyBakedModel implements IBakedModel {
 	}
 
 	@Override
-	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
-		Pair<? extends IBakedModel, Matrix4f> pair = parent.handlePerspective(cameraTransformType);
-		if (pair.getLeft() != parent) {
-			return pair;
-		} else {
-			return ImmutablePair.of(this, pair.getRight());
-		}
+	public Pair<? extends IBakedModel, Matrix4f> handlePerspective(final ItemCameraTransforms.TransformType cameraTransformType) {
+		final Pair<? extends IBakedModel, Matrix4f> pair = parent.handlePerspective(cameraTransformType);
+
+		return pair.getLeft() != parent ? pair : ImmutablePair.of(this, pair.getRight());
 	}
 }

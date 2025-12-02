@@ -11,7 +11,7 @@ import java.io.IOException;
 import static dev.redstudio.fbp.gui.GuiConfirmation.Action.EnableDebug;
 import static dev.redstudio.fbp.gui.GuiConfirmation.Action.EnableExperiments;
 
-public class PageSettings extends BasePage {
+public final class PageSettings extends BasePage {
 
 	@Override
 	public void initGui() {

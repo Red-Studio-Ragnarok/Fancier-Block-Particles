@@ -34,12 +34,14 @@ public class GuiBase extends GuiScreen {
 		if (FBP.MC.world != null) {
 			final EntityRenderer entityRenderer = FBP.MC.entityRenderer;
 
-			if (entityRenderer.getShaderGroup() == null || !entityRenderer.getShaderGroup().getShaderGroupName().equals("minecraft:shaders/post/blur.json"))
-				entityRenderer.loadShader(new ResourceLocation("minecraft", "shaders/post/blur.json"));
+			final String resourceName = "minecraft:shaders/post/blur.json";
+			if (entityRenderer.getShaderGroup() == null || !entityRenderer.getShaderGroup().getShaderGroupName().equals(resourceName))
+				entityRenderer.loadShader(new ResourceLocation(resourceName));
 
 			GuiUtils.drawRectangle(0, 0, width, height, new Color(0, 0, 0, 191));
-		} else
+		} else {
 			drawBackground(0);
+		}
 	}
 
 	protected void drawCenteredString(final String text, final String color, final int x, final int y) {

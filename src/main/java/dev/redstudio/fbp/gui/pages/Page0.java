@@ -8,7 +8,7 @@ import net.minecraft.client.resources.I18n;
 
 import static dev.redstudio.fbp.gui.elements.Button.ButtonSize.small;
 
-public class Page0 extends BasePage {
+public final class Page0 extends BasePage {
 
 	Slider minAge, maxAge, particlesPerAxis, scaleMult, gravityMult, rotationMult;
 
