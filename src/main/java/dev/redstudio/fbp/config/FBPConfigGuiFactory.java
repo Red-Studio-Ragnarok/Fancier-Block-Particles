@@ -9,22 +9,22 @@ import java.util.Set;
 
 public final class FBPConfigGuiFactory implements IModGuiFactory {
 
-    @Override
-    public void initialize(final Minecraft minecraft) {
-    }
+	@Override
+	public void initialize(final Minecraft minecraft) {
+	}
 
-    @Override
-    public boolean hasConfigGui() {
-        return true;
-    }
+	@Override
+	public boolean hasConfigGui() {
+		return true;
+	}
 
-    @Override
-    public GuiScreen createConfigGui(final GuiScreen parentScreen) {
-        return new Page0();
-    }
+	@Override
+	public GuiScreen createConfigGui(final GuiScreen parentScreen) {
+		return new Page0();
+	}
 
-    @Override
-    public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
-        return null;
-    }
+	@Override
+	public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
+		return null;
+	}
 }

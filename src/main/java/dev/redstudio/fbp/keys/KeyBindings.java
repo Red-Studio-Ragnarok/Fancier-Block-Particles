@@ -14,17 +14,17 @@ import static dev.redstudio.fbp.ProjectConstants.NAME;
  */
 public class KeyBindings {
 
-    public static final KeyBinding MENU = new KeyBinding(I18n.format("keyBinding.menu"), Keyboard.KEY_P, NAME);
-    public static final KeyBinding TOGGLE = new KeyBinding(I18n.format("keyBinding.toggle"), Keyboard.KEY_NONE, NAME);
-    public static final KeyBinding FREEZE = new KeyBinding(I18n.format("keyBinding.freeze"), Keyboard.KEY_NONE, NAME);
-    public static final KeyBinding KILL_PARTICLES = new KeyBinding(I18n.format("keyBinding.kill"), Keyboard.KEY_NONE, NAME);
-    public static final KeyBinding BLACKLIST_GUI = new KeyBinding(I18n.format("keyBinding.blacklistGUI"), Keyboard.KEY_B, NAME);
+	public static final KeyBinding MENU = new KeyBinding(I18n.format("keyBinding.menu"), Keyboard.KEY_P, NAME);
+	public static final KeyBinding TOGGLE = new KeyBinding(I18n.format("keyBinding.toggle"), Keyboard.KEY_NONE, NAME);
+	public static final KeyBinding FREEZE = new KeyBinding(I18n.format("keyBinding.freeze"), Keyboard.KEY_NONE, NAME);
+	public static final KeyBinding KILL_PARTICLES = new KeyBinding(I18n.format("keyBinding.kill"), Keyboard.KEY_NONE, NAME);
+	public static final KeyBinding BLACKLIST_GUI = new KeyBinding(I18n.format("keyBinding.blacklistGUI"), Keyboard.KEY_B, NAME);
 
-    public static void init() {
-        ClientRegistry.registerKeyBinding(MENU);
-        ClientRegistry.registerKeyBinding(TOGGLE);
-        ClientRegistry.registerKeyBinding(FREEZE);
-        ClientRegistry.registerKeyBinding(KILL_PARTICLES);
-        ClientRegistry.registerKeyBinding(BLACKLIST_GUI);
-    }
+	public static void init() {
+		ClientRegistry.registerKeyBinding(MENU);
+		ClientRegistry.registerKeyBinding(TOGGLE);
+		ClientRegistry.registerKeyBinding(FREEZE);
+		ClientRegistry.registerKeyBinding(KILL_PARTICLES);
+		ClientRegistry.registerKeyBinding(BLACKLIST_GUI);
+	}
 }

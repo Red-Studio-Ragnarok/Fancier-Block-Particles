@@ -7,31 +7,31 @@ import net.minecraft.client.resources.I18n;
 
 public class ButtonExperiments extends InteractiveElement {
 
-    private static final String hoverText = I18n.format("menu.experiments");
+	private static final String hoverText = I18n.format("menu.experiments");
 
-    public ButtonExperiments(final int id, final int x, final int y) {
-        super(id, x, y, "");
-    }
+	public ButtonExperiments(final int id, final int x, final int y) {
+		super(id, x, y, "");
+	}
 
-    public void update(final int mouseX, final int mouseY) {
-        hovered = GuiUtils.isMouseInsideStadium(mouseX, mouseY, x, y, width, height);
-    }
+	public void update(final int mouseX, final int mouseY) {
+		hovered = GuiUtils.isMouseInsideStadium(mouseX, mouseY, x, y, width, height);
+	}
 
-    @Override
-    public void drawButton(final Minecraft mc, final int mouseX, final int mouseY, final float partialTicks) {
-        startDrawing(true);
+	@Override
+	public void drawButton(final Minecraft mc, final int mouseX, final int mouseY, final float partialTicks) {
+		startDrawing(true);
 
-        drawTexturedModalRect(x, y, 0, 110 + (hovered ? height : 0), width, height);
+		drawTexturedModalRect(x, y, 0, 110 + (hovered ? height : 0), width, height);
 
-        drawHoverText(hoverText, mouseX, mouseY, true);
-    }
+		drawHoverText(hoverText, mouseX, mouseY, true);
+	}
 
-    @Override
-    public boolean mousePressed(final Minecraft mc, final int mouseX, final int mouseY) {
-        if (hovered) {
-            playPressSound(mc.getSoundHandler());
-            return true;
-        } else
-            return false;
-    }
+	@Override
+	public boolean mousePressed(final Minecraft mc, final int mouseX, final int mouseY) {
+		if (hovered) {
+			playPressSound(mc.getSoundHandler());
+			return true;
+		} else
+			return false;
+	}
 }

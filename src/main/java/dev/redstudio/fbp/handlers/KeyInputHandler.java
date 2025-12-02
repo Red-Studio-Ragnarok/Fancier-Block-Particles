@@ -17,37 +17,37 @@ import static dev.redstudio.fbp.FBP.MC;
 
 public class KeyInputHandler {
 
-    private static boolean blacklistGUIOpen = false;
+	private static boolean blacklistGUIOpen = false;
 
-    @SubscribeEvent
-    public static void onKeyboardInput(InputEvent.KeyInputEvent e) {
-        onInput();
-    }
+	@SubscribeEvent
+	public static void onKeyboardInput(InputEvent.KeyInputEvent e) {
+		onInput();
+	}
 
-    public static void onInput() {
-        if (KeyBindings.MENU.isPressed())
-            MC.displayGuiScreen(new Page0());
+	public static void onInput() {
+		if (KeyBindings.MENU.isPressed())
+			MC.displayGuiScreen(new Page0());
 
-        if (KeyBindings.FREEZE.isPressed() && FBP.enabled)
-            FBP.frozen = !FBP.frozen;
+		if (KeyBindings.FREEZE.isPressed() && FBP.enabled)
+			FBP.frozen = !FBP.frozen;
 
-        if (KeyBindings.TOGGLE.isPressed())
-            FBP.setEnabled(!FBP.enabled);
+		if (KeyBindings.TOGGLE.isPressed())
+			FBP.setEnabled(!FBP.enabled);
 
-        if (KeyBindings.BLACKLIST_GUI.isKeyDown()) {
-            Block block;
-            ItemStack stack = null;
+		if (KeyBindings.BLACKLIST_GUI.isKeyDown()) {
+			Block block;
+			ItemStack stack = null;
 
-            boolean useHeldBlock = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && (block = Block.getBlockFromName((stack = MC.player.getHeldItemMainhand()).getItem().getRegistryName().toString())) != null && block != Blocks.AIR;
+			boolean useHeldBlock = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && (block = Block.getBlockFromName((stack = MC.player.getHeldItemMainhand()).getItem().getRegistryName().toString())) != null && block != Blocks.AIR;
 
-            if (!blacklistGUIOpen && (MC.objectMouseOver != null && MC.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || useHeldBlock) && MC.world.getBlockState(MC.objectMouseOver.getBlockPos()).getBlock() != FBP.DUMMY_BLOCK) {
-                MC.displayGuiScreen(useHeldBlock ? (new GuiBlacklist(stack)) : (new GuiBlacklist(MC.objectMouseOver.getBlockPos())));
+			if (!blacklistGUIOpen && (MC.objectMouseOver != null && MC.objectMouseOver.typeOfHit.equals(RayTraceResult.Type.BLOCK) || useHeldBlock) && MC.world.getBlockState(MC.objectMouseOver.getBlockPos()).getBlock() != FBP.DUMMY_BLOCK) {
+				MC.displayGuiScreen(useHeldBlock ? (new GuiBlacklist(stack)) : (new GuiBlacklist(MC.objectMouseOver.getBlockPos())));
 
-                Mouse.setGrabbed(true);
+				Mouse.setGrabbed(true);
 
-                blacklistGUIOpen = true;
-            }
-        } else if (blacklistGUIOpen)
-            blacklistGUIOpen = false;
-    }
+				blacklistGUIOpen = true;
+			}
+		} else if (blacklistGUIOpen)
+			blacklistGUIOpen = false;
+	}
 }

@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material;
 
 public class DummyMaterial extends Material {
 
-    public DummyMaterial() {
-        super(MapColor.AIR);
-    }
+	public DummyMaterial() {
+		super(MapColor.AIR);
+	}
 }

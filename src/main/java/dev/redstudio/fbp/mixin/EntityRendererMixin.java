@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EntityRenderer.class)
 public final class EntityRendererMixin {
 
-    @Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/particle/ParticleManager;renderParticles(Lnet/minecraft/entity/Entity;F)V", shift = Shift.AFTER))
-    private void afterParticlesRendered(final CallbackInfo callbackInfo) {
-        CubeBatchRenderer.endAllBatches();
-    }
+	@Inject(method = "renderWorldPass", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/particle/ParticleManager;renderParticles(Lnet/minecraft/entity/Entity;F)V", shift = Shift.AFTER))
+	private void afterParticlesRendered(final CallbackInfo callbackInfo) {
+		CubeBatchRenderer.endAllBatches();
+	}
 }
