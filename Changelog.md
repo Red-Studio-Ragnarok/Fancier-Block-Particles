@@ -51,6 +51,9 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - Blacklist GUI cursor is now darker and becomes as light as before when hovering a button
 - Changed freeze effect text color from orange to aqua
 - You can navigate pages with the scroll wheel
+- Now requires:
+  - Red Core 0.6 and up
+  - MixinBooter 10.7 and up
 
 ### Fixed
 

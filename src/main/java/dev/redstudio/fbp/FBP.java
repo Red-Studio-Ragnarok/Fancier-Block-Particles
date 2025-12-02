@@ -31,7 +31,7 @@ import static dev.redstudio.fbp.ProjectConstants.*;
 //  | $$   /$$__  $$| $$  | $$| $$      | $$| $$_____/| $$            | $$  \ $$| $$| $$  | $$| $$      | $$_  $$       | $$      /$$__  $$| $$        | $$ /$$| $$| $$      | $$| $$_____/ \____  $$
 //  | $$  |  $$$$$$$| $$  | $$|  $$$$$$$| $$|  $$$$$$$| $$            | $$$$$$$/| $$|  $$$$$$/|  $$$$$$$| $$ \  $$      | $$     |  $$$$$$$| $$        |  $$$$/| $$|  $$$$$$$| $$|  $$$$$$$ /$$$$$$$/
 //  |__/   \_______/|__/  |__/ \_______/|__/ \_______/|__/            |_______/ |__/ \______/  \_______/|__/  \__/      |__/      \_______/|__/         \___/  |__/ \_______/|__/ \_______/|_______/
-@Mod(clientSideOnly = true, modid = ID, name = NAME, version = VERSION, dependencies = "required-after:redcore@[0.4-Dev-3,)", guiFactory = "dev.redstudio.fbp.config.FBPConfigGuiFactory", updateJSON = "https://forge.curseupdate.com/666575/fbp")
+@Mod(clientSideOnly = true, modid = ID, name = NAME, version = VERSION, dependencies = "required-after:mixinbooter@[10.7,);required-after:redcore@[0.6,)", guiFactory = "dev.redstudio.fbp.config.FBPConfigGuiFactory", updateJSON = "https://forge.curseupdate.com/666575/" + ID)
 public class FBP {
 
     public static final Minecraft MC = Minecraft.getMinecraft();
