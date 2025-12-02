@@ -1,18 +1,13 @@
 package dev.redstudio.fbp.node;
 
 import dev.redstudio.fbp.particles.FBPParticleBlock;
+import lombok.RequiredArgsConstructor;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 
-public class BlockNode {
+@RequiredArgsConstructor
+public final class BlockNode {
 
-    public FBPParticleBlock particle;
-    public IBlockState state;
-    public Block originalBlock;
-
-    public BlockNode(IBlockState inputState, FBPParticleBlock inputParticle) {
-        particle = inputParticle;
-        state = inputState;
-        originalBlock = inputState.getBlock();
-    }
+    public final FBPParticleBlock particle;
+    public final IBlockState state;
 }
