@@ -12,9 +12,7 @@
 
 Turn boring particles into fancier particles!
 
-Now with a [Trello] to see what is being worked on and a roadmap
-
-Fancier Block Particles is a fork of the popular [Fancy Block Particles] by [MorphoxL] which is more optimized and less buggy than the original mod.
+Fancier Block Particles is a fork of the popular [Fancy Block Particles](https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles) by [MorphoxL](https://www.curseforge.com/members/morphoxl/projects) which is more optimized and less buggy than the original mod.
 
 - Fancier Block Particles now run 276% faster than Fancy Block Particles
 - Fancier Block Particles now load 25% faster than Fancy Block Particles
@@ -25,12 +23,12 @@ Fancier Block Particles is a fork of the popular [Fancy Block Particles] by [Mor
 
 Issues From Fancy Block Particles Fixed:
 
-- Fancy Block Placement Ghosting ([#69])
+- Fancy Block Placement Ghosting ([#69](https://github.com/TominoCZ/FancyBlockParticles/issues/69))
 - Multiple Potential Crashes (Not reported on Fancy Blocks Particles GitHub)
 
 ## Overview
 
-This mod replace the Minecraft 2D particles with fancier 3D particles, it also adds a fancier block placing animation
+This mod replaces the Minecraft 2D particles with fancier 3D particles, it also adds a fancier block placing animation
 
 ![Example](https://i.imgur.com/ZfiAoir.gif)
 ### Blacklist System
@@ -40,17 +38,17 @@ This mod replace the Minecraft 2D particles with fancier 3D particles, it also a
 
 ---
 
-[![BisectHostingPromoBanner](https://www.bisecthosting.com/partners/custom-banners/d410513a-9aee-467a-96eb-88eb0976af9d.webp)](https://bisecthosting.com/Desoroxxx?r=Fancier+Block+Particles+GitHub)
+[![BisectHostingPromoBanner](https://github.com/user-attachments/assets/8e66200c-1a7c-4f0a-a12a-387bf7d7f0f6)](https://bisecthosting.com/Desoroxxx?r=Fancier+Block+Particles+GitHub)
 
-## Want to have your own mod or support me?
+# Want to have your own mod or support me?
 
-If you are looking for a mod but do not have the development skills or time, consider commissioning me!
-My commissions are currently open, and I would be happy to create a custom mod to fit your needs as long as you provide assets.
+If you're looking for a mod but don't have the development skills or time, consider commissioning me!
+My commissions are currently open, and I’d be happy to create a custom mod to fit your needs as long as you provide assets.
 
 [Commissions]
 
-You can also support me monthly by becoming a member.
-To thank you will have the possibility to access exclusive post and messages, Discord channel for WIP content, and even access to unreleased Prototypes or WIP Projects.
+You can also support me on a monthly basis by becoming a member.
+To thank you, you’ll have the possibility to access exclusive post and messages, Discord channel for WIP content, and even access to unreleased Prototypes or WIP Projects.
 
 [Membership]
 
@@ -59,8 +57,3 @@ You can also [buy me a hot chocolate].
 [Commissions]: https://www.buymeacoffee.com/desoroxxx/commissions
 [Membership]: https://www.buymeacoffee.com/desoroxxx/membership
 [buy me a hot chocolate]: https://www.buymeacoffee.com/desoroxxx
-
-[Trello]: https://trello.com/b/nlEU4rO2
-[MorphoxL]: https://www.curseforge.com/members/morphoxl/projects
-[Fancy Block Particles]: https://www.curseforge.com/minecraft/mc-mods/fancy-block-particles
-[#69]: https://github.com/TominoCZ/FancyBlockParticles/issues/69
