@@ -81,8 +81,8 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - FBP now use Red Core
 - GUI's text colors now never uses decimal colors directly and should use when possible hexadecimal colors when possible
 - Added documentation for Vector2D, Vector3D, and FBPRenderer
-- Switched to [RetroFuturaGradle](https://github.com/GTNewHorizons/RetroFuturaGradle) 1.4.0
-- Updated to [Gradle](https://gradle.org) 8.13
+- Switched to [RetroFuturaGradle](https://github.com/GTNewHorizons/RetroFuturaGradle) 2.0.2
+- Updated to [Gradle](https://gradle.org) 9.2.1
 - Set a minimum Gradle Daemon JVM version requirement
 - Cleanup build.gradle & gradle.properties
 - Cleanup the entire code
@@ -97,7 +97,7 @@ Now weather will follow the current weather, it will rain heavier when a thunder
 - Switched to [Gradle](https://gradle.org) Kotlin DSL
 - Switched to the new Group ID
 - Switched to the new standard `gradle.properties`
-- Updated [foojay-resolver](https://github.com/gradle/foojay-toolchains) to version 0.9.0
+- Updated [foojay-resolver](https://github.com/gradle/foojay-toolchains) to version 1.0.0
 
 ##### Credits
 
