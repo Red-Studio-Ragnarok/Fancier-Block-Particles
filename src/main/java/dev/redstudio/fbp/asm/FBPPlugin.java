@@ -1,12 +1,17 @@
 package dev.redstudio.fbp.asm;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import zone.rong.mixinbooter.IEarlyMixinLoader;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
-@IFMLLoadingPlugin.TransformerExclusions("io.redstudioragnarok.fbp.asm")
-public class FBPPlugin implements IFMLLoadingPlugin, IEarlyMixinLoader {
+import static dev.redstudio.fbp.ProjectConstants.ID;
+
+@IFMLLoadingPlugin.MCVersion("1.12.2")
+@IFMLLoadingPlugin.TransformerExclusions("dev.redstudio." + ID + ".asm")
+public final class FBPPlugin implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
 	@Override
 	public String[] getASMTransformerClass() {
@@ -25,7 +30,6 @@ public class FBPPlugin implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
 	@Override
 	public void injectData(final Map<String, Object> data) {
-
 	}
 
 	@Override
@@ -35,7 +39,6 @@ public class FBPPlugin implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
 	@Override
 	public List<String> getMixinConfigs() {
-		return Collections.singletonList("mixins.fbp.json");
+		return ImmutableList.of("mixins." + ID + ".json");
 	}
-
 }
