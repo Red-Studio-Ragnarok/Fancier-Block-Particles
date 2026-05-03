@@ -26,7 +26,7 @@ val memoryUtilVersion = "1.1.0"
 minecraft {
 	mcVersion = "1.12.2"
 	username = "Desoroxxx"
-	extraRunJvmArguments = listOf("-Dforge.logging.console.level=debug", "-Dfml.coreMods.load=${plugin}", "-Dmixin.checks.mixininterfaces=true", "-Dmixin.debug.export=true", "-XX:+UseStringDeduplication") + jvmCommonArgs.split(" ")
+	extraRunJvmArguments = listOf("-Dforge.logging.console.level=debug", "-Dfml.coreMods.load=${plugin}", "-Dmixin.checks.mixininterfaces=true", "-Dmixin.debug.export=true") + jvmCommonArgs.split(" ")
 }
 
 repositories {
