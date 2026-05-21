@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -70,6 +71,8 @@ public final class FBP {
 	public static final AnimationDummyBlock DUMMY_BLOCK = new AnimationDummyBlock();
 
 	public static final VertexFormat VERTEX_FORMAT = new VertexFormat();
+
+	public static final boolean IS_CELERITASDYNAMICLIGHTS_LOADED = Loader.isModLoaded("celeritasdynamiclights");
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent preInitializationEvent) {

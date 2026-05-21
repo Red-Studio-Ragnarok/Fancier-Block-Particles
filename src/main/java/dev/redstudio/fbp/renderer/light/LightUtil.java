@@ -1,10 +1,12 @@
 package dev.redstudio.fbp.renderer.light;
 
+import dev.redstudio.fbp.compat.CeleritasDynamicLightsHandler;
 import dev.redstudio.redcore.math.MathUtil;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 
+import static dev.redstudio.fbp.FBP.IS_CELERITASDYNAMICLIGHTS_LOADED;
 import static dev.redstudio.fbp.FBP.MC;
 
 public class LightUtil {
@@ -49,6 +51,7 @@ public class LightUtil {
 		world = MC.player.world;
 		chunk = world.getChunk(x >> 4, z >> 4);
 		section = chunk.getBlockStorageArray()[y >> 4];
+		int result;
 		if (section != null) {
 			if (section.get(x & 15, y & 15, z & 15).useNeighborBrightness()) {
 				int light = 0;
@@ -59,15 +62,22 @@ public class LightUtil {
 				light = getNeighborLight(world, chunk, section, x, y, z - 1, light);
 				light = getNeighborLight(world, chunk, section, x, y, z + 1, light);
 				light = getNeighborLight(world, chunk, section, x - 1, y, z, light);
-				return getNeighborLight(world, chunk, section, x + 1, y, z, light);
+				result = getNeighborLight(world, chunk, section, x + 1, y, z, light);
 			} else {
-				return pack(world.provider.hasSkyLight() ? section.getSkyLight(x & 15, y & 15, z & 15) : 0,
+				result = pack(world.provider.hasSkyLight() ? section.getSkyLight(x & 15, y & 15, z & 15) : 0,
 						section.getBlockLight(x & 15, y & 15, z & 15));
 			}
 		} else {
-			return pack(world.provider.hasSkyLight() && y >= chunk.getHeightMap()[(z & 15) << 4 | (x & 15)] ? 15 : 0,
+			result =  pack(world.provider.hasSkyLight() && y >= chunk.getHeightMap()[(z & 15) << 4 | (x & 15)] ? 15 : 0,
 					0);
 		}
+
+		if(IS_CELERITASDYNAMICLIGHTS_LOADED) {
+			int dynamic = CeleritasDynamicLightsHandler.getDynamicLight(x,y,z);
+			result = pack(sky(result), Math.max(block(result), dynamic));
+		}
+
+		return result;
 	}
 
 	private static int getNeighborLight(World world, Chunk chunk, ExtendedBlockStorage section, int x, int y, int z,
